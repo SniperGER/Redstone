@@ -19,7 +19,7 @@ The feature set of Redstone is almost identical to Paragon:
 - [ ] Custom Volume HUD
 - [ ] Custom Notifications
 - [ ] Custom Lockscreen
-- [ ] Accent Color based personalization
+- [x] Accent Color based personalization
 - [ ] NEW: Accent Colors based on your wallpaper
 - [ ] NEW: Status Bar themes for Anemone (WiFi, Cellular) and Alkaline (Battery)
 

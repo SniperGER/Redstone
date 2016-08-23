@@ -2,22 +2,25 @@
 //  RSTileDelegate.h
 //  
 //
-//  Created by Janik Schmidt on 05.08.16.
+//  Created by Janik Schmidt on 06.08.16.
 //
 //
 
 #import <Foundation/Foundation.h>
-
-@class Redstone;
+#import "Headers.h"
 
 @interface RSTileDelegate : NSObject
 
 +(NSArray*)getTileList;
 
-+(NSDictionary*)getTileInformation:(NSString*)bundleIdentifier;
-+(NSString*)getGlobalTileAccentColor;
-+(NSString*)getIndividualTileAccentColor:(NSString*)bundleIdentifier;
++(NSDictionary*)getTileInfo:(NSString*)bundleIdentifier;
++(NSString*)getTileDisplayName:(NSString*)bundleIdentifier;
++(UIColor*)getGlobalAccentColor;
++(UIColor*)getIndividualTileColor:(NSString*)bundleIdentifier;
++(UIColor*)getTileLaunchImageColor:(NSString*)bundleIdentifier;
++(CGFloat)getTileOpacity;
++(UIImage*)getTileImage:(NSString*)bundleIdentifier withSize:(NSString*)size;
 
-+(BOOL)isTileHidden:(NSString*)bundleIdentifier;
++(BOOL)isAppHidden:(NSString*)bundleIdentifier;
 
 @end

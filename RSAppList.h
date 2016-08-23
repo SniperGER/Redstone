@@ -1,19 +1,19 @@
 //
 //  RSAppList.h
-//  Threshold
+//  
 //
-//  Created by Janik Schmidt on 30.07.16.
-//  Copyright © 2016 FESTIVAL Development. All rights reserved.
+//  Created by Janik Schmidt on 07.08.16.
+//
 //
 
 #import <UIKit/UIKit.h>
-#import "Headers.h"
-#import "RSAppListSection.h"
-#import "RSApp.h"
-#include <objc/runtime.h>
 
-@class Redstone;
+@interface RSAppList : UITableViewController <UITableViewDelegate, UITableViewDataSource> {
+    NSDictionary* _appData;
+}
 
-@interface RSAppList : UIScrollView
+@property (retain) RSRootScrollView* parentRootScrollView;
+
+-(void)resetAppVisibility;
 
 @end

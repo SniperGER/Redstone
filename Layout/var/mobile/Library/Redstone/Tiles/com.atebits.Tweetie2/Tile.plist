@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>isSystemApp</key>
+	<false/>
+	<key>usesGlobalAccentColor</key>
+	<false/>
+	<key>customAccentColor</key>
+	<string>1A97F1</string>
+	<key>bundleIdentifier</key>
+	<string>com.atebits.Tweetie2</string>
+	<key>availableTileSizes</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+		<integer>3</integer>
+	</array>
+	<key>isLiveTile</key>
+	<false/>
+</dict>
+</plist>

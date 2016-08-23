@@ -1,27 +1,36 @@
 //
 //  RSRootScrollView.h
-//  Redstone
+//  
 //
-//  Created by Janik Schmidt on 30.07.16.
-//  Copyright © 2016 FESTIVAL Development. All rights reserved.
+//  Created by Janik Schmidt on 06.08.16.
+//
 //
 
 #import <UIKit/UIKit.h>
-#import "RSAppListTable.h"
+#import "UIFont+WDCustomLoader.h"
+#import "RSAppList.h"
 #import "Headers.h"
 
-@class Redstone;
-
 @interface RSRootScrollView : UIScrollView <UIScrollViewDelegate> {
-    RSStartScrollView* _startScrollView;
-    RSAppListTable* appListScrollView;
-    UIView* transparentBG;
-    UIView* launchBG;
+    RSTileScrollView* _startScrollView;
+    RSAppList* _appListScrollView;
+    RSJumpListView* _jumpListView;
+    UIView* _transparentBG;
+    UIView* _launchBG;
 }
 
-@property (retain) RSStartScrollView* startScrollView;
+@property (retain) RSTileScrollView* startScrollView;
+@property (retain) RSAppList* appListScrollView;
+@property (retain) RSJumpListView* jumpListView;
+@property (retain) UIView* transparentBG;
+@property (retain) UIView* launchBG;
 
-//-(void)didAnimateActivationForApp;
 -(void)showLaunchImage:(NSString*)bundleIdentifier;
+-(void)showJumpList;
+
+-(void)willAnimateDeactivation;
+-(void)deckSwitcherDidAppear;
+-(void)applicationDidFinishLaunching;
+-(void)hanldeHomeButtonPress;
 
 @end

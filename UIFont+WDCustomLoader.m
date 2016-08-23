@@ -14,7 +14,7 @@
 #endif
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 40100
-#error This file must be compiled with Deployment Target greater or equal to 4.1
+//#error This file must be compiled with Deployment Target greater or equal to 4.1
 #endif
 
 // Activate Xcode only logging

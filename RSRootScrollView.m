@@ -1,32 +1,21 @@
 //
 //  RSRootScrollView.m
-//  Redstone
+//  
 //
-//  Created by Janik Schmidt on 30.07.16.
-//  Copyright © 2016 FESTIVAL Development. All rights reserved.
+//  Created by Janik Schmidt on 06.08.16.
+//
 //
 
-//#import "RSRootScrollView.h"
 #import "Headers.h"
-#import "UIFont+WDCustomLoader.h"
-#import "CAKeyframeAnimation+AHEasing.h"
 
 @implementation RSRootScrollView
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
-NSUserDefaults *defaults;
 
 -(id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     
     self.delegate = self;
+    [self setPagingEnabled:YES];
+    [self setShowsHorizontalScrollIndicator:NO];
     
 #if !TARGET_IPHONE_SIMULATOR
     [UIFont registerFontFromURL:[NSURL fileURLWithPath:@"/var/mobile/Library/Redstone/Fonts/segoeui.ttf"]];
@@ -34,44 +23,52 @@ NSUserDefaults *defaults;
     [UIFont registerFontFromURL:[NSURL fileURLWithPath:@"/var/mobile/Library/Redstone/Fonts/segmdl2.ttf"]];
 #endif
     
+    [self setContentSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width*2, [[UIScreen mainScreen] bounds].size.height)];
+    
     // Background
-    transparentBG = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width*3, [[UIScreen mainScreen] bounds].size.height)];
-    [transparentBG setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.5]];
-    [transparentBG setAlpha:0];
-    [self addSubview:transparentBG];
+    self.transparentBG = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+    [self.transparentBG setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.6]];
+    [self.transparentBG setAlpha:0];
     
     // Tiles
-    [self setContentSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width*2, [[UIScreen mainScreen] bounds].size.height)];
-    [self setPagingEnabled:YES];
-    [self setShowsHorizontalScrollIndicator:NO];
-    
-    _startScrollView = [[RSStartScrollView alloc] initWithFrame:CGRectMake(2, 0, [[UIScreen mainScreen] bounds].size.width-4, [[UIScreen mainScreen] bounds].size.height)];
-    _startScrollView.parentRootScrollView = self;
-    [self addSubview:_startScrollView];
+    self.startScrollView = [[RSTileScrollView alloc] initWithFrame:CGRectMake(2, 0, [[UIScreen mainScreen] bounds].size.width-4, [[UIScreen mainScreen] bounds].size.height)];
+    self.startScrollView.parentRootScrollView = self;
     
     // App List
-    appListScrollView = [[RSAppListTable alloc] init];
-    appListScrollView.parentRootScrollView = self;
-    [self addSubview:appListScrollView.tableView];
+    self.appListScrollView = [[RSAppList alloc] init];
+    self.appListScrollView.parentRootScrollView = self;
     
-    // Application Launch image
-    launchBG = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
-    UIColor* actualTileColor = [self colorWithHexString:[defaults objectForKey:@"accentColor"]];
-    launchBG.backgroundColor = actualTileColor;
-    launchBG.hidden = YES;
-    [self addSubview: launchBG];
+    // Jump List
+    self.jumpListView = [[RSJumpListView alloc] initWithFrame:CGRectMake([[UIScreen mainScreen] bounds].size.width, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height) withAppList:self.appListScrollView];
+    [self.jumpListView setHidden:YES];
+    
+    // Application Launch Image
+    self.launchBG = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+    [self.launchBG setBackgroundColor:[UIColor blackColor]];
+    [self.launchBG setHidden:YES];
+    
+    
+    [self addSubview:self.transparentBG];
+    [self addSubview:self.startScrollView];
+    
+    //RSTiltButton* testTiltButton = [[RSTiltButton alloc] initWithFrame:CGRectMake(80,80,140,140)];
+    //[self addSubview:testTiltButton];
+    
+    [self addSubview:self.appListScrollView.tableView];
+    [self addSubview:self.jumpListView];
+    [self addSubview:self.launchBG];
     
     return self;
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)sender {
+-(void)scrollViewDidScroll:(UIScrollView*)sender {
     CGFloat width = sender.frame.size.width;
-    CGFloat page = (sender.contentOffset.x  / width);
+    CGFloat page = (sender.contentOffset.x / width);
     
-    launchBG.frame = CGRectMake(sender.contentOffset.x, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    [self.transparentBG setFrame:CGRectMake(sender.contentOffset.x,0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+    [self.launchBG setFrame:CGRectMake(sender.contentOffset.x,0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
     
-    [transparentBG setAlpha:page];
-    
+    [self.transparentBG setAlpha:page];
 }
 
 -(void)showLaunchImage:(NSString*)bundleIdentifier {
@@ -79,7 +76,7 @@ NSUserDefaults *defaults;
                                                             function:CubicEaseOut
                                                            fromValue:0.0
                                                              toValue:1.0];
-    opacity.duration = 0.4;
+    opacity.duration = 0.3;
     opacity.removedOnCompletion = NO;
     opacity.fillMode = kCAFillModeForwards;
     
@@ -91,9 +88,16 @@ NSUserDefaults *defaults;
     scale.removedOnCompletion = NO;
     scale.fillMode = kCAFillModeForwards;
     
-    [launchBG setHidden:NO];
-    [launchBG.layer addAnimation:scale forKey:@"scale"];
-    [launchBG.layer addAnimation:opacity forKey:@"opacity"];
+    [[self.launchBG subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    UIImageView* launchBGImage = [[UIImageView alloc] initWithImage:[RSTileDelegate getTileImage:bundleIdentifier withSize:@"large"]];
+    [launchBGImage setFrame:CGRectMake(CGRectGetMidX(self.launchBG.bounds)-34, CGRectGetMidY(self.launchBG.bounds)-34, 68 , 68)];
+    [self.launchBG addSubview:launchBGImage];
+    
+    [self.launchBG setBackgroundColor:[RSTileDelegate getIndividualTileColor:bundleIdentifier]];
+    
+    [self.launchBG setHidden:NO];
+    [[[self.launchBG subviews] objectAtIndex:0].layer addAnimation:scale forKey:@"scale"];
+    [self.launchBG.layer addAnimation:opacity forKey:@"opacity"];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         id app = [[objc_getClass("SBApplicationController") sharedInstance] applicationWithBundleIdentifier:bundleIdentifier];
@@ -102,40 +106,33 @@ NSUserDefaults *defaults;
     });
 }
 
--(UIColor*)colorWithHexString:(NSString*)hex
-{
-    NSString *cString = [[hex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+-(void)showJumpList {
+    [self.jumpListView show];
+}
+
+-(void)willAnimateDeactivation {
+    [self setHidden:NO];
+    [self.launchBG setHidden:YES];
+    [self setContentOffset:CGPointMake(0, 0)];
+    [self.startScrollView tileEntryAnimation];
+    [self.appListScrollView resetAppVisibility];
+}
+
+-(void)deckSwitcherDidAppear {
+    [self setHidden:NO];
+    [self.startScrollView resetTileVisibility];
+    [self.appListScrollView resetAppVisibility];
+}
+
+-(void)applicationDidFinishLaunching {
+    [self setHidden:YES];
+    [self.launchBG setHidden:YES];
+    [self setContentOffset:CGPointMake(0, 0)];
+    [self.appListScrollView resetAppVisibility];
+}
+
+-(void)handleHomeButtonPress {
     
-    // String should be 6 or 8 characters
-    if ([cString length] < 6) return [UIColor grayColor];
-    
-    // strip 0X if it appears
-    if ([cString hasPrefix:@"0X"]) cString = [cString substringFromIndex:2];
-    
-    if ([cString length] != 6) return  [UIColor grayColor];
-    
-    // Separate into r, g, b substrings
-    NSRange range;
-    range.location = 0;
-    range.length = 2;
-    NSString *rString = [cString substringWithRange:range];
-    
-    range.location = 2;
-    NSString *gString = [cString substringWithRange:range];
-    
-    range.location = 4;
-    NSString *bString = [cString substringWithRange:range];
-    
-    // Scan values
-    unsigned int r, g, b;
-    [[NSScanner scannerWithString:rString] scanHexInt:&r];
-    [[NSScanner scannerWithString:gString] scanHexInt:&g];
-    [[NSScanner scannerWithString:bString] scanHexInt:&b];
-    
-    return [UIColor colorWithRed:((float) r / 255.0f)
-                           green:((float) g / 255.0f)
-                            blue:((float) b / 255.0f)
-                           alpha:1.0f];
 }
 
 @end

@@ -1,9 +1,12 @@
+export TARGET=iphone:latest:9.3
 export GO_EASY_ON_ME=1
 export DEBUG=0
+
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = Redstone
-Redstone_FILES = Tweak.xm RSRootScrollView.m RSStartScrollView.m RSAllAppsButton.m RSAppList.m RSAppListTable.m RSAppListSection.m RSApp.m RSTile.m CAKeyframeAnimation+AHEasing.m easing.c UIFont+WDCustomLoader.m RSTileDelegate.m
+Redstone_FILES = Tweak.xm RSTileDelegate.m UIFont+WDCustomLoader.m easing.c CAKeyframeAnimation+AHEasing.m
+Redstone_FILES += RSRootScrollView.m RSTileScrollView.m RSTileView.m RSAppList.m RSAppListApp.m RSAppListSection.m RSJumpListView.m RSTiltButton.m RSAllAppsButton.m
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 

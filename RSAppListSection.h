@@ -1,19 +1,12 @@
-//
-//  RSAppListSection.h
-//  Redstone
-//
-//  Created by Janik Schmidt on 02.08.16.
-//  Copyright © 2016 FESTIVAL Development. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
-
-@class Redstone;
+#import "Headers.h"
 
 @interface RSAppListSection : UIView {
     UILabel* _sectionTitle;
+    RSAppList* _parentAppList;
 }
 
 @property (retain) UILabel* sectionTitle;
+@property (retain) RSAppList* parentAppList;
 
 @end

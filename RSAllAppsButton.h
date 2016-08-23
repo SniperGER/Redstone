@@ -1,19 +1,13 @@
 //
 //  RSAllAppsButton.h
-//  Threshold
+//  
 //
-//  Created by Janik Schmidt on 30.07.16.
-//  Copyright © 2016 FESTIVAL Development. All rights reserved.
+//  Created by Janik Schmidt on 09.08.16.
+//
 //
 
 #import <UIKit/UIKit.h>
-#import "Headers.h"
 
-@class Redstone;
-
-@interface RSAllAppsButton : UIView {
-    UILabel* allAppsArrow;
-    UILabel* allAppsText;
-}
+@interface RSAllAppsButton : UIButton
 
 @end
