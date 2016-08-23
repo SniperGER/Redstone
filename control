@@ -1,0 +1,11 @@
+Package: ml.festival.redstone
+Name: Redstone
+Depends: mobilesubstrate
+Version: 10.0.14393.8
+Architecture: iphoneos-arm
+Depiction: https://festival.ml/repo/depictions?p=ml.festival.redstone
+Description: Windows 10 Mobile on your iPhone
+Conflicts: gsc.ipad
+Maintainer: Sniper_GER
+Author: Sniper_GER
+Section: Tweaks
