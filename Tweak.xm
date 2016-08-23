@@ -1,64 +1,83 @@
-#import "Headers.h"
-
-#define PREF_PATH @"/var/mobile/Library/Preferences/ml.festival.redstone.plist"
-
-RSRootScrollView* rootScrollView;
-
-@interface SBHomeScreenViewController : UIViewController
-@end
-
-@interface SBHomeScreenView : UIView
-@end
+#import "RSRootView.h"
+#import "CAKeyframeAnimation+AHEasing.h"
 
 @interface SBHomeScreenWindow : UIWindow
 @end
 
-@interface FBProcessState
-@property (assign,getter=isForeground,nonatomic) BOOL foreground;              //@synthesize foreground=_foreground - In the implementation block
-@property (assign,nonatomic) int taskState;                                    //@synthesize taskState=_taskState - In the implementation block
-@property (assign,nonatomic) int visibility;
-@end
+extern "C" UIImage * _UICreateScreenUIImage();
 
+RSRootView* rootView;
 SBHomeScreenWindow* homeScreenView;
-NSUserDefaults *defaults;
 BOOL appSwitcherIsOpen = NO;
-BOOL activeAppIsOpen = NO;
+BOOL activeAppIsOpen;
 
 static void LoadSettings() {
-    defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ml.festival.redstone"];
+    /*defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ml.festival.redstone"];
     [defaults registerDefaults:@{
         @"enabled": @YES,
         @"accentColor": @"0078D7",
         @"tileOpacity": @0.6
-    }];
+    }];*/
     
-    CGRect rootViewRect = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
-    rootScrollView = [[RSRootScrollView alloc] initWithFrame:rootViewRect];
+    //CGRect rootViewRect = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    //rootView = [[RSRootView alloc] initWithFrame:rootViewRect];
 }
 
 static void addTileViewToHomescreen() {
+    if (!rootView) {
+        CGRect rootViewRect = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+        rootView = [[RSRootView alloc] initWithFrame:rootViewRect];
+    }
     if (homeScreenView != nil) {
         /*for (UIView* subview in [homeScreenView subviews]) {
             if (![subview isKindOfClass:[RSRootScrollView class]]) {
                 [subview setHidden:YES];
             }
         }*/
-        
-        [rootScrollView removeFromSuperview];
-        [rootScrollView deckSwitcherDidAppear];
-        [homeScreenView addSubview:rootScrollView];
+        [rootView removeFromSuperview];
+        [homeScreenView addSubview:rootView];
+        [rootView setHomescreenWallpaper];
+        [rootView resetHomeScrollPosition];
     }
 }
 
-static void resetHomeScreen() {
-    if (homeScreenView != nil) {
-        for (UIView* subview in [homeScreenView subviews]) {
-            if (![subview isKindOfClass:[RSRootScrollView class]]) {
-                [subview setHidden:NO];
-            }
+%hook SpringBoard
+
+-(void)_handleMenuButtonEvent {
+//-(void)_menuButtonUp:(id)arg1 {
+    if (!appSwitcherIsOpen) {
+        if (![rootView handleMenuButtonPressed]) {
+            %orig;
+        } else {
+            [self clearMenuButtonTimer];
+            [self cancelMenuButtonRequests];
         }
+    } else {
+        %orig;
     }
 }
+
+-(void)frontDisplayDidChange:(id)arg1 {
+    %orig(arg1);
+
+    [rootView setCurrentApplication:arg1];
+    
+    //if ([defaults boolForKey:@"enabled"]) {
+        if (arg1 != nil && [arg1 isKindOfClass:[%c(SBApplication) class]]) {
+            activeAppIsOpen = YES;
+            //dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if (activeAppIsOpen && !appSwitcherIsOpen) {
+                    [rootView applicationDidFinishLaunching];
+                }
+            //});
+        } else {
+            activeAppIsOpen = NO;
+        }
+    //}
+}
+
+%end
+
 
 %hook SBHomeScreenWindow
 
@@ -67,9 +86,9 @@ static void resetHomeScreen() {
     
     homeScreenView = r;
     
-    if ([defaults boolForKey:@"enabled"]) {
-        addTileViewToHomescreen();
-    } 
+    //if ([defaults boolForKey:@"enabled"]) {
+        //addTileViewToHomescreen();
+    //} 
     return r;
 }
 %end
@@ -79,10 +98,10 @@ static void resetHomeScreen() {
 -(void)_finishUIUnlockFromSource:(int)arg1 withOptions:(id)arg2 {
     %orig(arg1,arg2);
     
-    if ([defaults boolForKey:@"enabled"]) {
+    //if ([defaults boolForKey:@"enabled"]) {
         addTileViewToHomescreen();
-        [rootScrollView willAnimateDeactivation];
-    }
+        //[rootScrollView willAnimateDeactivation];
+    //}
 }
 
 %end
@@ -92,13 +111,13 @@ static void resetHomeScreen() {
 -(void)willAnimateDeactivation:(BOOL)arg1 {
     %orig(arg1);
 
-    if ([defaults boolForKey:@"enabled"]) {
+    //if ([defaults boolForKey:@"enabled"]) {
         addTileViewToHomescreen();
-        activeAppIsOpen = NO;
+        /*activeAppIsOpen = NO;
         if (!appSwitcherIsOpen) {
             [rootScrollView willAnimateDeactivation];
-        }
-    }
+        }*/
+    //}
 }
 
 %end
@@ -108,80 +127,88 @@ static void resetHomeScreen() {
 -(void)viewDidAppear:(BOOL)arg1 {
     %orig(arg1);
     
-    if ([defaults boolForKey:@"enabled"]) {
+    //if ([defaults boolForKey:@"enabled"]) {
         appSwitcherIsOpen = YES;
         addTileViewToHomescreen();
-    }
+    //}
 }
 -(void)viewWillDisappear:(BOOL)arg1 {
     %orig(arg1);
     
-    if ([defaults boolForKey:@"enabled"]) {
+    //if ([defaults boolForKey:@"enabled"]) {
         appSwitcherIsOpen = NO;
-        [rootScrollView deckSwitcherDidAppear];
-    }
+        //[rootScrollView deckSwitcherDidAppear];
+    //}
 }
 
 %end
 
-// Disable Homescreen Rotation
+%hook SBHomeScreenViewController
 
-%hook SpringBoard
-
--(long long)homeScreenRotationStyle {
-    if ([defaults boolForKey:@"enabled"]) {
-        return 0;
-    }
-    
-    return %orig;
-}
-
--(BOOL)homeScreenSupportsRotation {
-    if ([defaults boolForKey:@"enabled"]) {
-        return NO;
-    }
-    
-    return %orig;
-}
-
-// Application did finish launching
--(void)frontDisplayDidChange:(id)arg1 {
-    %orig(arg1);
-    %log;
-    
-    if ([defaults boolForKey:@"enabled"]) {
-        if (arg1 != nil && [arg1 isKindOfClass:[%c(SBApplication) class]]) {
-            activeAppIsOpen = YES;
-            //dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                if (activeAppIsOpen && !appSwitcherIsOpen) {
-                    [rootScrollView applicationDidFinishLaunching];
-                }
-            //});
-        } else {
-            activeAppIsOpen = NO;
-        }
-    }
-}
-
-// Hook home button press (hopefully it works as expected inside apps)
--(void)_menuButtonUp:(id)arg1 {
-    %orig(arg1);
-    
-    if ([defaults boolForKey:@"enabled"]) {
-        unsigned test = MSHookIvar<unsigned>(self, "_menuButtonClickCount");
-        if (test == 0) {
-            [rootScrollView handleHomeButtonPress];
-        }
-    }
+-(unsigned long long)supportedInterfaceOrientations {
+    return 1;
 }
 
 %end
+
+// UIAnimations
+
+%hook SBUIAnimationZoomDownApp
+
+-(void)_startAnimation {
+    %orig;
+
+    [rootView->rootScrollView->tileScrollView prepareForEntryAnimation];
+
+    UIImage *screenImage = _UICreateScreenUIImage();
+    UIImageView *screenImageView = [[UIImageView alloc] initWithImage:screenImage];
+    [rootView addSubview:screenImageView];
+
+    CAAnimation *opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
+                                                            function:CubicEaseInOut
+                                                           fromValue:1.0
+                                                             toValue:0.0];
+    opacity.duration = 0.4;
+    opacity.removedOnCompletion = NO;
+    opacity.fillMode = kCAFillModeForwards;
+    
+    CAAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
+                                                          function:CubicEaseInOut
+                                                         fromValue:1.0
+                                                           toValue:1.5];
+    scale.duration = 0.4;
+    scale.removedOnCompletion = NO;
+    scale.fillMode = kCAFillModeForwards;
+
+    [screenImageView.layer addAnimation:opacity forKey:@"opacity"];
+    [screenImageView.layer addAnimation:scale forKey:@"scale"];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [screenImageView removeFromSuperview];
+        [rootView->rootScrollView->tileScrollView tileEntryAnimation];
+    });
+}
+
+%end
+
+/*%hook% SBUIAnimationZoomDownLockScreenToHome
+%end*/
 
 static void ChangeNotification(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
     LoadSettings();
 }
 
+static void lockedDevice(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+    UIKeyboardImpl *impl = [%c(UIKeyboardImpl) activeInstance];
+    [impl dismissKeyboard];
+}
+
 %ctor {
+    // Settings changed
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, ChangeNotification, CFSTR("ml.festival.redstone.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+
+    // Device has been locked
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, lockedDevice, CFSTR("com.apple.springboard.lockcomplete"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+
     LoadSettings();
 }

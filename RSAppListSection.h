@@ -1,12 +1,14 @@
-#import <UIKit/UIKit.h>
-#import "Headers.h"
+#import "CommonHeaders.h"
+#import "RSTiltView.h"
+#import "RSJumpListView.h"
+#import "RSRootScrollView.h"
 
-@interface RSAppListSection : UIView {
-    UILabel* _sectionTitle;
-    RSAppList* _parentAppList;
+@interface RSAppListSection : RSTiltView {
+	UILabel* sectionTitleLabel;
 }
 
-@property (retain) UILabel* sectionTitle;
-@property (retain) RSAppList* parentAppList;
+@property (retain) RSRootScrollView* rootScrollView;
+
+-(id)initWithFrame:(CGRect)frame withSectionTitle:(NSString*)sectionTitle;
 
 @end

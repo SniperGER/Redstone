@@ -1,6 +1,8 @@
 # Redstone
 ## A Windows 10 Mobile Experience for iOS 9
 
+**NOTE: This is the internal version of Redstone. THERE WILL BE BUGS! Compiling and installing is done at your own risk. There will be no support for using Redstone Internal!**
+
 Back in the days of iOS 5, a developer named EndFinity released a DreamBoard theme called Strife that brought us a Windows Phone 7 experience on iPhone. When iOS 6 was finally jailbroken, he released Paragon, another DreamBoard theme, which brought a Windows Phone 8.1 experience. This DreamBoard theme was updated when iOS 8 was jailbroken to become a native tweak that removed the need for DreamBoard. But since then, nothing.
 
 In early August 2016, I've started a new project called Redstone, which should pick up the idea of having Windows Phone running on your iPhone. But a little bit more modern.
@@ -11,7 +13,7 @@ The feature set of Redstone is almost identical to Paragon:
 
 - [x] Tile-based Homescreen
 - [ ] Tile Pinning
-- [ ] Layout Customization
+- [ ] Layout Customization (partially implemented)
 - [ ] Live Tiles
 - [x] App List (including Jump List)
 - [ ] App Searching
@@ -20,8 +22,8 @@ The feature set of Redstone is almost identical to Paragon:
 - [ ] Custom Notifications
 - [ ] Custom Lockscreen
 - [x] Accent Color based personalization
-- [ ] NEW: Accent Colors based on your wallpaper
-- [ ] NEW: Status Bar themes for Anemone (WiFi, Cellular) and Alkaline (Battery)
+- [x] NEW: Accent Colors based on your wallpaper
+- [x] NEW: Status Bar themes for Anemone (WiFi, Cellular) and Alkaline (Battery)
 
 ## Availability
 
@@ -31,4 +33,20 @@ It will be completely free (unlike Strife and Paragon) and, as you can see, open
 
 ## How to contribute
 
-You can contribute to Redstone by submitting your own application tiles following the guide [here](http://stories.festival.ml/be-a-part-of-project-redstone-and-submit-your-own-tile-icons-99f260334c11)
+You can contribute to Redstone in two ways:
+
+1: You can submit your own application tiles following the guide [here](http://stories.festival.ml/be-a-part-of-project-redstone-and-submit-your-own-tile-icons-99f260334c11)
+
+2: You can help me finding solutions for the problems in the list(s) below by forking this repo, adding your solution and submit a pull request.
+
+General:
+
+- [ ] Tweak.xm: Find better solutions for initializing, showing and hiding Redstone when needed
+
+Start Screen:
+
+- [ ] The Tile layout engine needs to have a grid where tiles can be cross referenced
+- [ ] Tiles need to know where other tiles are, so they can snap automatically
+- [ ] If a tile is hovering over another tile (or more), the lower tile(s) should move down to make space for the new tile
+- [ ] Tiles need to respect a) other tiles sizes and b) start screen bounds (no overlapping)
+- [ ] When resizing a tile to "wide", the tile should not leave the start screen bounds

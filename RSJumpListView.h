@@ -1,17 +1,20 @@
-#import <UIKit/UIKit.h>
-#import "Headers.h"
+#import "CommonHeaders.h"
+#import "RSTiltView.h"
+
+@class RSRootScrollView;
 
 @interface RSJumpListView : UIScrollView {
-    NSMutableDictionary* sections;
-    RSAppList* _parentAppListView;
+	NSArray* appsInList;
+	NSMutableDictionary* appSections;
+	NSMutableArray* sectionKeysWithApps;
+
+@public
+	BOOL isOpen;
 }
 
-@property (retain) RSAppList* parentAppListView;
+@property (retain) RSRootScrollView* rootScrollView;
 
--(id)initWithFrame:(CGRect)frame withAppList:(RSAppList*)appList;
-
--(void)setCategoriesWithApps:(NSDictionary*)sectionsWithApps;
 -(void)show;
--(void)hide;
+-(void)hide:(id)sender;
 
 @end

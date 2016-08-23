@@ -2,19 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>isSystemApp</key>
-	<true/>
-	<key>usesGlobalAccentColor</key>
-	<true/>
-	<key>bundleIdentifier</key>
-	<string>com.saurik.Cydia</string>
+	<key>tileDisplayName</key>
+	<string>Cydia</string>
+	<key>isFullsizeTile</key>
+	<false/>
 	<key>availableTileSizes</key>
 	<array>
 		<integer>1</integer>
 		<integer>2</integer>
 		<integer>3</integer>
 	</array>
-	<key>isLiveTile</key>
-	<false/>
 </dict>
 </plist>
