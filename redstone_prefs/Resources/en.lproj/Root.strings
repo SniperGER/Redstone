@@ -1,0 +1,13 @@
+"TWEAK_ENABLED" = "Enabled";
+
+"ACCENT_COLOR" = "Accent Color";
+"TILE_OPCACITY" = "Tile Transparency";
+"SHOW_WALLPAPER" = "Show Wallpaper (Beta)";
+
+"RESET_LAYOUT" = "Reset Start Screen Layout";
+"RESET_LAYOUT_MESSAGE" = "Are you sure you want to restore the default Start Screen layout?";
+"RESET_OK" = "Reset";
+"RESET_CANCEL" = "Cancel";
+
+"KILL_SPRINGBOARD" = "Restart SpringBoard";
+"BETA_DISCLAIMER" = "You are using a beta version of Redstone. If you encounter any game-breaking bugs, contact me on Twitter (@Sniper_GER) or reddit (/u/Sniper_GER) so I can fix them";

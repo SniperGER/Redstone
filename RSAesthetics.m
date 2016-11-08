@@ -1,26 +1,30 @@
 #import "RSAesthetics.h"
-#define REDSTONE_LIBRARY_PATH @"/private/var/mobile/Library/Redstone"
+#include <objc/runtime.h>
+
+#define REDSTONE_LIBRARY_PATH @"/private/var/mobile/Library/FESTIVAL/Redstone.bundle"
 #define REDSTONE_PREF_PATH @"/var/mobile/Library/Preferences/ml.festival.redstone.plist"
 #define DEFAULT_SUITE @"ml.festival.redstone"
 
 extern CFArrayRef CPBitmapCreateImagesFromData(CFDataRef cpbitmap, void*, int, void*);
 
+NSBundle* redstoneBundle;
+
 @implementation RSAesthetics
 
 +(UIColor *)accentColor {
-	//NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:DEFAULT_SUITE];
-    NSMutableDictionary* defaults = [NSMutableDictionary dictionaryWithContentsOfFile:REDSTONE_PREF_PATH];
-    
-    if ([defaults objectForKey:@"accentColor"]) {
-        if ([[defaults objectForKey:@"accentColor"] isEqualToString:@"auto"]) {
-            return [self colorFromHexString:[defaults objectForKey:@"autoAccentColor"]];
-        }
-    
-        return [self colorFromHexString:[defaults objectForKey:@"accentColor"]];
-    } else {
-        [defaults setObject:@"0078D7" forKey:@"accentColor"];
+	//NSMutableDictionary* defaults = [NSMutableDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/ml.festival.redstone.plist"];
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ml.festival.redstone"];
+
+	/* if ([[defaults objectForKey:@"useAutoAccentColor"] boolValue] && [defaults objectForKey:@"autoAccentColor"] && [[defaults objectForKey:@"showWallpaper"] boolValue]) {
+		return [self colorFromHexString:[defaults objectForKey:@"autoAccentColor"]];
+	} else */ if ([defaults objectForKey:@"accentColor"]) {
+		return [self colorFromHexString:[defaults objectForKey:@"accentColor"]];
+	} else {
+		[defaults setObject:@"0078D7" forKey:@"accentColor"];
+		//[defaults writeToFile:@"/var/mobile/Library/Preferences/ml.festival.redstone.plist" atomically:YES];
+
         return [self colorFromHexString:@"0078D7"];
-    }
+	}
 }
 
 +(UIColor *)accentColorForApp:(NSString *)bundleIdentifier {
@@ -43,24 +47,6 @@ extern CFArrayRef CPBitmapCreateImagesFromData(CFDataRef cpbitmap, void*, int, v
     }
 }
 
-+(UIImage*)getTileImage:(NSString*)bundleIdentifier withSize:(NSInteger)size {
-    NSString* _size = @"";
-    int screenScale = (int)[[UIScreen mainScreen] scale];
-    NSString* scale = [[UIScreen mainScreen] scale] > 1 ? [NSString stringWithFormat:@"@%dx", screenScale] : @"";
-
-    switch (size) {
-        case 0: _size = @"-AppList"; break;
-        case 1: _size = @"-Small"; break;
-        case 2: _size = @"-Medium"; break;
-        case 3: _size = @"-Wide"; break;
-        case 10: _size = @"-LaunchScreen"; break;
-        default: break;
-    }
-
-    NSURL* tileImageDataURL = [NSURL URLWithString:[[NSString stringWithFormat:@"file://%@/Tiles/%@/icon%@%@.png", REDSTONE_LIBRARY_PATH, bundleIdentifier, _size, scale] stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet]];
-    return [UIImage imageWithData:[NSData dataWithContentsOfURL:tileImageDataURL]];
-}
-
 +(CGFloat)getTileOpacity {
     NSMutableDictionary* defaults = [NSMutableDictionary dictionaryWithContentsOfFile:REDSTONE_PREF_PATH];
     
@@ -71,6 +57,55 @@ extern CFArrayRef CPBitmapCreateImagesFromData(CFDataRef cpbitmap, void*, int, v
         [defaults writeToFile:REDSTONE_PREF_PATH atomically:YES];
         return 0.6;
     }
+}
+
++(UIImage*)getCurrentHomeWallpaper {
+	//NSMutableDictionary* defaults = [NSMutableDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/ml.festival.redstone.plist"];
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ml.festival.redstone"];
+
+	// Get current Homescreen wallpaper (if exists)
+	NSData *homeWallpaperData = [NSData dataWithContentsOfFile:@"/var/mobile/Library/SpringBoard/HomeBackground.cpbitmap"];
+
+	// Homescreen wallpaper doesn't exist, use Lockscreen data instead
+	// If the same wallpaper is used for both Homescreen and Lockscreen, only Lockscreen data is saved
+	if (!homeWallpaperData) {
+		homeWallpaperData = [NSData dataWithContentsOfFile:@"/var/mobile/Library/SpringBoard/LockBackground.cpbitmap"];;
+	}
+
+	if (homeWallpaperData && [[defaults objectForKey:@"showWallpaper"] boolValue]) {
+		CFDataRef homeWallpaperDataRef = (__bridge CFDataRef)homeWallpaperData;
+		NSArray *imageArray = (__bridge NSArray *)CPBitmapCreateImagesFromData(homeWallpaperDataRef, NULL, 1, NULL);
+		UIImage *homeWallpaper = [UIImage imageWithCGImage:(CGImageRef)imageArray[0]];
+
+		//[defaults setObject:[self hexStringFromColor:[[homeWallpaper mainColorsInImage] objectAtIndex:0]] forKey:@"autoAccentColor"];
+		//[defaults writeToFile:@"/var/mobile/Library/Preferences/ml.festival.redstone.plist" atomically:YES];
+
+		return homeWallpaper;
+	} else {
+		return [self imageWithColor:[UIColor blackColor] size:[UIScreen mainScreen].bounds.size];
+	}
+}
+
++(id)localizedStringForKey:(NSString*)key {
+    if (!redstoneBundle) {
+        redstoneBundle = [NSBundle bundleWithPath:REDSTONE_LIBRARY_PATH];
+    }
+
+    if ([redstoneBundle localizedStringForKey:key value:@"nil" table:nil] != nil) {
+        return [redstoneBundle localizedStringForKey:key value:@"nil" table:nil];
+    } else {
+        return [[NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/FESTIVAL/Redstone.bundle/en.lproj/Localizable.strings"] objectForKey:key];
+    }
+    /*NSString *language = [[NSLocale componentsFromLocaleIdentifier:[[NSLocale preferredLanguages] objectAtIndex:0]] objectForKey:@"kCFLocaleLanguageCodeKey"];
+
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:[NSString stringWithFormat:@"/var/mobile/Library/Redstone/Localization/%@.lproj/Localizable.strings", language]]) {
+        return [[NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"/var/mobile/Library/Redstone/Localization/%@.lproj/Localizable.strings", language]] objectForKey:key];
+    } else if ([fileManager fileExistsAtPath:@"/var/mobile/Library/Redstone/Localization/en.lproj/Localizable.strings"]) {
+        return [[NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Redstone/Localization/en.lproj/Localizable.strings"] objectForKey:key];
+    } else {
+        return nil;
+    }*/
 }
 
 +(UIColor*)colorFromHexString:(NSString*)arg1 {
@@ -109,6 +144,18 @@ extern CFArrayRef CPBitmapCreateImagesFromData(CFDataRef cpbitmap, void*, int, v
             lroundf(r * 255),
             lroundf(g * 255),
             lroundf(b * 255)];
+}
+
+
++ (UIImage*) imageWithColor:(UIColor*)color size:(CGSize)size
+{
+    UIGraphicsBeginImageContext(size);
+    UIBezierPath* rPath = [UIBezierPath bezierPathWithRect:CGRectMake(0., 0., size.width, size.height)];
+    [color setFill];
+    [rPath fill];
+    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image; 
 }
 
 @end

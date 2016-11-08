@@ -1,38 +1,59 @@
 #import "RSPinMenu.h"
+#import "RSApp.h"
+#import "RSAesthetics.h"
+#import "RSAppListController.h"
+#import "RSStartScreenController.h"
 #import "RSTiltView.h"
 
 @implementation RSPinMenu
 
--(id)initWithFrame:(CGRect)frame {
+-(id)initWithFrame:(CGRect)frame app:(RSApp*)app {
 	self = [super initWithFrame:frame];
-
-	self.backgroundColor = [UIColor colorWithWhite:0.16 alpha:1.0];
-	self.layer.borderWidth = 2.0;
-	self.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.2].CGColor;
-
-	RSTiltView* pinToStart = [[RSTiltView alloc] initWithFrame:CGRectMake(0,0,frame.size.width,frame.size.height)];
-	UILabel* pinToStartLabel = [[UILabel alloc] initWithFrame:CGRectMake(12,0,frame.size.width-24,frame.size.height)];
-	pinToStartLabel.font = [UIFont fontWithName:@"SegoeUI" size:18];
-	pinToStartLabel.textColor = [UIColor whiteColor];
-	[pinToStartLabel setText:@"Pin to Start"];
-	[pinToStart addSubview:pinToStartLabel];
-
-	[pinToStart setActionForTapped:@selector(pinTileToStart:) forTarget:self];
-
-	[self addSubview:pinToStart];
-
-	[self.layer setOpacity:0.0];
-
-	return self;
-}
-
--(void)pinTileToStart:(id)sender {
-	NSDictionary* userInfo = @{
-		@"bundleIdentifier": appBundleIdentifier
-	};
 	
-	NSLog(@"[RedstoneLog] Tile pinned");
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"applicationPinned" object:self userInfo:userInfo];
+	if (self) {
+		self.backgroundColor = [UIColor colorWithWhite:0.16 alpha:1.0];
+		self.layer.borderWidth = 1.0;
+		self.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.2].CGColor;
+		self.clipsToBounds = YES;
+		
+		self->appIcon = app;
+
+		RSTiltView* pinButton = [[RSTiltView alloc] initWithFrame:CGRectMake(1,1,self.frame.size.width-2,52)];
+		pinButton.hasHighlight = YES;
+		pinButton.transformMultiplierX = 0.2;
+		[self addSubview:pinButton];
+
+		UILabel* pinLabel = [[UILabel alloc] initWithFrame:CGRectMake(12,0,self.frame.size.width-24,52)];
+		[pinLabel setText:[RSAesthetics localizedStringForKey:@"PIN_TO_START"]];
+		[pinLabel setFont:[UIFont fontWithName:@"SegoeUI" size:18]];
+		[pinLabel setTextColor:[UIColor whiteColor]];
+		[pinLabel setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.0]];
+		[pinButton addSubview:pinLabel];
+
+		if ([[[RSStartScreenController sharedInstance] pinnedLeafIdentifiers] containsObject:[self->appIcon leafIdentifier]]) {
+			[pinButton setUserInteractionEnabled:NO];
+			[pinLabel setAlpha:0.4];
+		} else {
+			UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pinApp:)];
+			[pinButton addGestureRecognizer:tap];
+		}
+
+		if ([[self->appIcon appIcon] isUninstallSupported]) {
+			RSTiltView* uninstallButton = [[RSTiltView alloc] initWithFrame:CGRectMake(1,53,self.frame.size.width-2,52)];
+			uninstallButton.hasHighlight = YES;
+			uninstallButton.transformMultiplierX = 0.2;
+			[self addSubview:uninstallButton];
+
+			UILabel* uninstallLabel = [[UILabel alloc] initWithFrame:CGRectMake(12,0,self.frame.size.width-24,55)];
+			[uninstallLabel setText:[RSAesthetics localizedStringForKey:@"UNINSTALL"]];
+			[uninstallLabel setFont:[UIFont fontWithName:@"SegoeUI" size:18]];
+			[uninstallLabel setTextColor:[UIColor whiteColor]];
+			[uninstallLabel setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.0]];
+			[uninstallButton addSubview:uninstallLabel];
+		}
+	}
+	
+	return self;
 }
 
 -(void)playOpeningAnimation:(BOOL)comesFromTop {
@@ -67,8 +88,9 @@
 	[self.layer setOpacity:1.0];
 }
 
--(void)setAppBundleIdentifier:(NSString*)bundleIdentifier {
-	appBundleIdentifier = bundleIdentifier;
+-(void)pinApp:(id)sender {
+	[[RSAppListController sharedInstance] hidePinMenu];
+	[[RSStartScreenController sharedInstance] pinTileWithId:[self->appIcon leafIdentifier]];
 }
 
 @end

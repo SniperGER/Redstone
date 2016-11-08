@@ -1,47 +1,40 @@
+#import <UIKit/UIKit.h>
 #import "CommonHeaders.h"
-#import "RSTiltView.h"
 
-@class RSTileScrollView;
+@class SBIcon, RSTiltView;
 
 @interface RSTile : UIView {
-	int _tileSize;
-	float _tileX;
-	float _tileY;
-	RSTileScrollView* _parentView;
-	UILabel* _appLabel;
-	NSString* _applicationIdentifier;
-	RSTiltView* _tileInnerView;
-	RSTiltView* _tiltButton;
-	UIImageView* _tileImage;
-	UIView* editingModeButtons;
-
+	RSTiltView* innerView;
+	NSArray* supportedSizes;
+	NSString* leafId;
+	NSString* resourcePath;
+	SBIcon* icon;
 	UIView* unpinButton;
-	UIView* changeSizeButton;
-
-	BOOL isCurrentlyEditing;
-
-@public
-	CGPoint tileOrigin;
-	NSMutableArray* activePositions;
-
+	UIView* scaleButton;
+	UILabel* appLabel;
+	int size;
+	BOOL isSelectedTile;
+	BOOL isPlayingLiftAnimation;
+	BOOL launchEnabled;
+	BOOL shouldHover;
+	BOOL isInactive;
+	BOOL isBeingMoved;
 	CGPoint originalCenter;
 }
 
-@property (assign) int tileSize;
-@property (assign) float tileX;
-@property (assign) float tileY;
-@property (retain) RSTileScrollView* parentView;
-@property (retain) UILabel* appLabel;
-@property (retain) NSString* applicationIdentifier;
-@property (retain) UIView* tileInnerView;
-@property (retain) RSTiltView* tiltButton;
-@property (retain) UIImageView* tileImage;
+@property (nonatomic,assign) int tileX;
+@property (nonatomic,assign) int tileY;
 
--(id)initWithTileSize:(int)tileSize withOptions:(NSDictionary*)options;
+-(id)initWithFrame:(CGRect)frame leafId:(id)arg2 size:(int)arg3;
+-(void)setIsSelectedTile:(BOOL)isSelected;
+-(void)tapped:(id)sender;
+-(void)pressed:(id)sender;
+-(void)unpin:(id)sender;
+-(void)setNextSize:(id)sender;
+-(int)size;
+-(CGPoint)originalCenter;
+-(NSString*)leafId;
+-(SBIcon*)icon;
 -(void)updateTileColor;
--(float)scaleButtonRotationForCurrentSize;
--(void)exitEditMode;
--(void)changeEditFocusToOtherTile;
--(void)setIsCurrentlyEditing:(BOOL)isEditing;
 
 @end

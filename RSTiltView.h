@@ -1,32 +1,28 @@
-#import "CommonHeaders.h"
+#import <UIKit/UIKit.h>
 
-@interface RSTiltView : UIView <UILongPressGestureRecognizerDelegate> {
+@interface RSTiltView : UIView {
 	CATransform3D _layerTransform;
 	float _transformAngle;
 	float _transformMultiplierX;
 	float _transformMultiplierY;
 	BOOL _hasHighlight;
-	BOOL hasTransformed;
-
-	SEL actionForTapped;
-	id targetForTapped;
-	SEL actionForPressed;
-	id targetForPressed;
+	BOOL _keepsHighlightOnLongPress;
+	BOOL _isUntilted;
 }
 
-@property (assign) float transformAngle;
-@property (assign) BOOL hasHighlight;
+@property (nonatomic,assign) float transformAngle;
+@property (nonatomic,assign) float transformMultiplierX;
+@property (nonatomic,assign) float transformMultiplierY;
+@property (nonatomic,assign) BOOL hasHighlight;
+@property (nonatomic,assign) BOOL keepsHighlightOnLongPress;
 
 -(void)setTransformOptions:(NSDictionary*)options;
-
--(void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view;
--(void)tapped:(UITapGestureRecognizer*)sender;
--(void)pressed:(UILongPressGestureRecognizer*)sender;
-
 -(void)setHighlighted:(BOOL)highlighted;
 
--(void)untilt:(BOOL)animated overridesHighlight:(BOOL)highlightOverride;
+-(void)setTransformMultiplierAngle:(float)angle;
+-(void)setTransformMultiplierX:(float)multiplier;
+-(void)setTransformMultiplierY:(float)multiplier;
 
--(void)setActionForTapped:(SEL)newActionForTapped forTarget:(id)target;
--(void)setActionForPressed:(SEL)newActionForPressed forTarget:(id)target;
+-(void)untilt:(BOOL)animated;
+
 @end

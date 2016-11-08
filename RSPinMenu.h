@@ -1,10 +1,14 @@
+#import <UIKit/UIKit.h>
 #import "CommonHeaders.h"
 
+@class RSApp;
+
 @interface RSPinMenu : UIView {
-	NSString* appBundleIdentifier;
+	RSApp* appIcon;
 }
 
+-(id)initWithFrame:(CGRect)frame app:(RSApp*)app;
+-(void)pinApp:(id)sender;
 -(void)playOpeningAnimation:(BOOL)comesFromTop;
--(void)setAppBundleIdentifier:(NSString*)bundleIdentifirer;
 
 @end

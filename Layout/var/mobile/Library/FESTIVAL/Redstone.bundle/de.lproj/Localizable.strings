@@ -1,0 +1,8 @@
+/* General */
+"ALPHABET" = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
+
+/* App List */
+"SEARCH" = "Suchen";
+"PIN_TO_START" = "Auf Startseite anheften";
+"UNINSTALL" = "Deinstallieren";
+"NO_RESULTS_FOUND" = "Keine Ergebnisse für %@ gefunden.";

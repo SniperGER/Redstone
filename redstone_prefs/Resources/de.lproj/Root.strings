@@ -1,0 +1,13 @@
+"TWEAK_ENABLED" = "Aktiviert";
+
+"ACCENT_COLOR" = "Akzentfarbe";
+"TILE_OPCACITY" = "Kachel-Transparenz";
+"SHOW_WALLPAPER" = "Hintergrundbild (Beta)";
+
+"RESET_LAYOUT" = "Startbildschrim zurücksetzen";
+"RESET_LAYOUT_MESSAGE" = "Möchten Sie wirklich den Startbildschrim zurücksetzen?";
+"RESET_OK" = "Zurücksetzen";
+"RESET_CANCEL" = "Abbrechen";
+
+"KILL_SPRINGBOARD" = "SpringBoard neustarten";
+"BETA_DISCLAIMER" = "Du benutzt eine Beta-Version von Redstone. Wenn schwerwiegende Fehler auftreten sollten, kontaktiere mich auf Twitter (@Sniper_GER) oder reddit (/u/Sniper_GER), damit ich sie schnellstmöglichst beheben kann";

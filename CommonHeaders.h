@@ -1,74 +1,38 @@
-#import <UIKit/UIKit.h>
-#include <objc/runtime.h>
-
+#import <objc/runtime.h>
 #import "CAKeyframeAnimation+AHEasing.h"
-#import "UIFont+WDCustomLoader.h"
-#import "UIImageAverageColorAddition.h"
-#import "RSApplicationDelegate.h"
-#import "RSAesthetics.h"
-#import "RSTileDelegate.h"
+#import <AudioToolbox/AudioServices.h>
 
-//#import "RSRootView.h"
-//#import "RSRootScrollView.h"
-//#import "RSTiltView.h"
-//#import "RSTileScrollView.h"
-//#import "RSAppListScrollView.h"
-//#import "RSAppListSection.h"
+#define ANIM_SCALE_DURATION 0.225
+#define ANIM_ALPHA_DURATION 0.2
+#define ANIM_DELAY 0.01
 
-#define RSLog(string) NSLog(@"[RedstoneLog] %@", string);
-#define REDSTONE_LIBRARY_PATH @"/private/var/mobile/Library/Redstone"
+extern void AudioServicesPlaySystemSoundWithVibration(int, id, NSDictionary *);
 
-@class RSRootView, /* RSTileScrollView, */ RSTiltView;
+@interface SBIcon
 
-@interface SBIconController : UIViewController
-
--(id)model;
-+(id)sharedInstance;
--(void)_launchIcon:(id)tapped;
+-(NSString *)displayName;
+-(id)leafIdentifier;
+-(BOOL)isUninstallSupported;
 
 @end
 
 @interface SBIconModel : NSObject
 
+-(id)leafIconForIdentifier:(id)arg1;
 -(id)visibleIconIdentifiers;
--(id)leafIconForIdentifier:(id)arg1 ;
 
 @end
 
-@interface SBIcon : NSObject
--(id)application;
+@interface SBIconController : NSObject
+
++(id)sharedInstance;
+-(id)model;
+-(void)_launchIcon:(id)arg1;
+
 @end
 
 @interface SBApplicationInfo : NSObject
+
 @property (nonatomic,copy,readonly) NSString * displayName;
-@end
 
-@interface SBApplication : NSObject
-@property(readonly, nonatomic) int pid;
--(SBApplicationInfo*)_appInfo;
--(id)displayName;
--(void)setFlag:(int64_t)flag forActivationSetting:(unsigned)setting;
-@end
-
-@interface SBApplicationController : NSObject
-+(id) sharedInstance;
--(SBApplication*) applicationWithBundleIdentifier:(NSString*)identifier;
--(SBApplication*) applicationWithDisplayIdentifier:(NSString*)identifier;
--(SBApplication*)applicationWithPid:(int)arg1;
--(SBApplication*) RA_applicationWithBundleIdentifier:(NSString*)bundleIdentifier;
-@end
-
-@interface SBUIController
-+(id)sharedInstance;
--(void)activateApplication:(id)arg1 ;
-@end
-
-@interface SpringBoard
--(void)cancelMenuButtonRequests;
--(void)clearMenuButtonTimer;
-@end
-
-@interface UIKeyboardImpl : UIView
-+ (UIKeyboardImpl*)activeInstance;
-- (void)dismissKeyboard;
 @end

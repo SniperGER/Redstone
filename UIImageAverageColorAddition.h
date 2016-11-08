@@ -13,5 +13,6 @@
 - (UIColor *)averageColor;
 - (UIColor *)mergedColor;
 - (UIColor *)dominantColor;
+-(NSArray*)mainColorsInImage;
 
 @end

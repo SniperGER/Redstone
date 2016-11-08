@@ -2,7 +2,15 @@
 	"folders":
 	[
 		{
-			"path": "."
+			"path": ".",
+			"folder_exclude_patterns": [
+				".theos",
+				"obj",
+				"packages"
+			],
+			"file_exclude_patterns": [
+				"*.sublime*"
+			]
 		}
 	]
 }

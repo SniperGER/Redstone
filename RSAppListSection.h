@@ -1,14 +1,17 @@
-#import "CommonHeaders.h"
+#import <UIKit/UIKit.h>
 #import "RSTiltView.h"
-#import "RSJumpListView.h"
-#import "RSRootScrollView.h"
 
-@interface RSAppListSection : RSTiltView {
-	UILabel* sectionTitleLabel;
+@interface RSAppListSection : UIView {
+	NSString* displayName;
+	double yCoordinate;
+	RSTiltView* innerView;
+	UIImageView* bgImage;
 }
 
-@property (retain) RSRootScrollView* rootScrollView;
-
--(id)initWithFrame:(CGRect)frame withSectionTitle:(NSString*)sectionTitle;
+-(id)initWithFrame:(CGRect)frame letter:(NSString*)letter;
+-(NSString *)displayName;
+-(void)setYCoordinate:(double)y;
+-(double)yCoordinate;
+-(void)updatePreferences;
 
 @end
