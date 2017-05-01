@@ -7,6 +7,8 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>ENABLE_RESPRING</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -25,7 +27,72 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>COMPONENTS</string>
 		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>ml.festival.redstone</string>
+			<key>key</key>
+			<string>startScreenEnabled</string>
+			<key>label</key>
+			<string>START_SCREEN</string>
+			<key>PostNotification</key>
+			<string>ml.festival.redstone.settingschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>enabled</key>
+			<false/>
+			<key>label</key>
+			<string>LOCK_SCREEN</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>enabled</key>
+			<false/>
+			<key>label</key>
+			<string>VOLUME_AND_NOTIFICATIONS</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>APPEARANCE</string>
+		</dict>
+		<dict>
+            <key>cell</key>
+            <string>PSSegmentCell</string>
+            <key>defaults</key>
+            <string>ml.festival.redstone</string>
+            <key>key</key>
+            <string>themeColor</string>
+            <key>label</key>
+            <string>THEME_COLOR</string>
+            <key>validTitles</key>
+            <array>
+				<string>THEME_DARK</string>
+				<string>THEME_LIGHT</string>
+			</array>
+            <key>validValues</key>
+            <array>
+				<string>dark</string>
+				<string>light</string>
+			</array>
+			<key>PostNotification</key>
+			<string>ml.festival.redstone.settingschanged</string>
+        </dict>
 		<dict>
             <key>cell</key>
             <string>PSLinkListCell</string>
@@ -145,8 +212,30 @@
         <dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>AUTO_ACCENT_FOOTER</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>ml.festival.redstone</string>
+			<key>key</key>
+			<string>useAutoAccentColor</string>
+			<key>label</key>
+			<string>AUTO_ACCENT_COLOR</string>
+			<key>PostNotification</key>
+			<string>ml.festival.redstone.settingschanged</string>
+		</dict>
+        <dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>TILE_OPCACITY</string>
+			<key>footerText</key>
+			<string>TILE_OPACITY_FOOTER</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -181,6 +270,20 @@
 			<string>showWallpaper</string>
 			<key>label</key>
 			<string>SHOW_WALLPAPER</string>
+			<key>PostNotification</key>
+			<string>ml.festival.redstone.settingschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>ml.festival.redstone</string>
+			<key>key</key>
+			<string>showMoreTiles</string>
+			<key>label</key>
+			<string>SHOW_MORE_TILES</string>
 			<key>PostNotification</key>
 			<string>ml.festival.redstone.settingschanged</string>
 		</dict>

@@ -25,6 +25,26 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>COMPONENTS</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>ml.festival.redstone</string>
+			<key>key</key>
+			<string>startScreenEnabled</string>
+			<key>label</key>
+			<string>START_ENABLED</string>
+			<key>PostNotification</key>
+			<string>ml.festival.redstone.settingschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
 		</dict>
 		<dict>
             <key>cell</key>
@@ -32,7 +52,7 @@
             <key>defaults</key>
             <string>ml.festival.redstone</string>
             <key>detail</key>
-            <string>RDSAccentColorList</string>
+            <string>PSListItemsController</string>
             <key>key</key>
             <string>accentColor</string>
             <key>label</key>
@@ -139,6 +159,8 @@
 				<string>#847545</string>
 				<string>#7E735F</string>
 			</array>
+			<key>PostNotification</key>
+			<string>ml.festival.redstone.settingschanged</string>
         </dict>
         <dict>
 			<key>cell</key>
@@ -162,7 +184,7 @@
 			<key>showValue</key>
 			<true/>
 			<key>PostNotification</key>
-			<string>ml.festival.redstone-PreferencesChanged</string>
+			<string>ml.festival.redstone.settingschanged</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -184,6 +206,20 @@
 		</dict>
 		<dict>
 			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>ml.festival.redstone</string>
+			<key>key</key>
+			<string>showMoreTiles</string>
+			<key>label</key>
+			<string>SHOW_MORE_TILES</string>
+			<key>PostNotification</key>
+			<string>ml.festival.redstone.settingschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>PSGroupCell</string>
 		</dict>
 		<dict>
@@ -191,8 +227,8 @@
 			<string>PSButtonCell</string>
 			<key>label</key>
 			<string>RESET_LAYOUT</string>
-			<key>PostNotification</key>
-			<string>ml.festival.redstone.resetHomeLayout</string>
+			<key>action</key>
+			<string>resetHomeScreenLayout</string>
 		</dict>
 		<dict>
 			<key>cell</key>

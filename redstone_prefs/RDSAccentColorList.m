@@ -2,6 +2,22 @@
 
 @implementation RDSAccentColorList
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    settingsView = [[UIApplication sharedApplication] keyWindow];
+
+    settingsView.tintColor = [UIColor redColor];
+    self.navigationController.navigationBar.tintColor = [UIColor redColor];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    settingsView.tintColor = nil;
+    self.navigationController.navigationBar.tintColor = nil;
+}
+
 - (id)tableView:(UITableView *)arg1 cellForRowAtIndexPath:(NSIndexPath *)arg2 {
     PSTableCell *cell = [super tableView:arg1 cellForRowAtIndexPath:arg2];
 

@@ -1,8 +1,25 @@
 "TWEAK_ENABLED" = "Aktiviert";
+"ENABLE_RESPRING" = "Das Ein- bzw. Ausschalten von Redstone erfordert einen Neustart des SpringBoards.";
 
+"COMPONENTS" = "Komponenten";
+"START_SCREEN" = "Startbildschirm";
+"LOCK_SCREEN" = "Sperrbildschirm";
+"VOLUME_AND_NOTIFICATIONS" = "Benachrichtigungen & Lautstärke";
+
+"APPEARANCE" = "Aussehen";
+"THEME_COLOR" = "Hintergrund";
+"THEME_DARK" = "Dunkel";
+"THEME_LIGHT" = "Hell";
 "ACCENT_COLOR" = "Akzentfarbe";
+
+"AUTO_ACCENT_COLOR" = "Akzentfarbe aus Hintergrund";
+"AUTO_ACCENT_FOOTER" = "Automatisch eine Akzentfarbe aus meinem Hintergrund auswählen";
+
 "TILE_OPCACITY" = "Kachel-Transparenz";
-"SHOW_WALLPAPER" = "Hintergrundbild (Beta)";
+"TILE_OPACITY_FOOTER" = "Die Kachel-Tranzparenz ist nur verfügbar, wenn \"Hintergrundbild\" aktiviert ist.";
+
+"SHOW_WALLPAPER" = "Hintergrundbild";
+"SHOW_MORE_TILES" = "Mehr Kacheln zeigen";
 
 "RESET_LAYOUT" = "Startbildschrim zurücksetzen";
 "RESET_LAYOUT_MESSAGE" = "Möchten Sie wirklich den Startbildschrim zurücksetzen?";

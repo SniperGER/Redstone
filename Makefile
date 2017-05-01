@@ -1,25 +1,38 @@
-#export THEOS_DEVICE_IP=192.168.178.103
-#export THEOS_DEVICE_IP=192.168.178.38
-export THEOS_DEVICE_IP=10.60.17.114
-
+export THEOS_DEVICE_IP=192.168.178.38
 #export THEOS_DEVICE_IP=localhost
 #export THEOS_DEVICE_PORT=2222
 
-export TARGET=iphone:latest:6.1
-export GO_EASY_ON_ME=1
+#export TARGET=iphone:latest:7.0
+ARCHS=x86_64 i386
+TARGET=simulator:clang
 export PACKAGE_VERSION="$(shell date +%y)w$(shell date +%V)a"
 
-include $(THEOS)/makefiles/common.mk
+include /opt/theos/makefiles/common.mk
 
 TWEAK_NAME = Redstone
-Redstone_FILES = Tweak.xm UIImageAverageColorAddition.m UIFont+WDCustomLoader.m
-Redstone_FILES +=  Redstone.m RSRootScrollView.m RSStartScreenController.m RSStartScrollView.m RSMetrics.m RSTile.m RSAesthetics.m RSTiltView.m RSAppListController.m RSAppList.m RSAppListSection.m RSApp.m RSSearchBar.m RSPinMenu.m RSJumpList.m CAKeyframeAnimation+AHEasing.m easing.c RSLaunchScreenController.m RSLaunchScreen.m
+
+# Redstone Core Files
+Redstone_FILES = Tweak.xm core/Redstone.m core/RSAesthetics.m core/RSAnimation.m core/RSMetrics.m core/RSPreferences.m core/RSRootScrollView.m core/RSTiltView.m
+Redstone_FILES += lib/CAKeyframeAnimation+AHEasing.m lib/easing.c lib/UIFont+WDCustomLoader.m lib/UIImageAverageColorAddition.m
+
+# Redstone Start Screen Files
+Redstone_FILES += start/RSStartScreenController.m start/RSStartScrollView.m start/RSTile.m
+
+# Redstone App List Files
+# Redstone_FILES +=
+
+# Redstone Jump List Files
+# Redstone_FILES +=
+
+# Redstone Launch Screen Files
+Redstone_FILES += launch/RSLaunchScreen.m launch/RSLaunchScreenController.m
+
 Redstone_FRAMEWORKS = UIKit
 Redstone_PRIVATE_FRAMEWORKS = AppSupport
 
-include $(THEOS_MAKE_PATH)/tweak.mk
+include /opt/theos/makefiles/tweak.mk
 
-after-install::
-	install.exec "killall -9 SpringBoard"
+#after-install::
+#	install.exec "killall -9 SpringBoard"
 SUBPROJECTS += redstone_prefs
-include $(THEOS_MAKE_PATH)/aggregate.mk
+include /opt/theos/makefiles/aggregate.mk

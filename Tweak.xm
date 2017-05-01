@@ -1,245 +1,140 @@
-@interface UIStatusBar
--(void)setForegroundColor:(UIColor *)arg1 ;
-@end
+#import "Tweak.h"
+#import "RedstoneHeaders.h"
 
-@interface SpringBoard {
-	UIStatusBar* _statusBar;
-}
-+(id)sharedApplication;
--(void)loadRedstone;
--(void)cancelMenuButtonRequests;
--(void)clearMenuButtonTimer;
-@end
-
-@interface SBUIController
-+(id)sharedUserAgent;
--(id)foregroundApplicationDisplayID;
--(BOOL)deviceIsLocked;
--(BOOL)isAppSwitcherShowing;
-@end
-
-@interface _UILegibilitySettings
--(void)setStyle:(long long)arg1;
--(void)setContentColor:(UIColor *)arg1 ;
--(void)setPrimaryColor:(UIColor *)arg1 ;
--(void)setSecondaryColor:(UIColor *)arg1 ;
-@end
-
-@interface SBWallpaperController
-+(id)sharedInstance;
--(void)_updateSeparateWallpaper;
-@end
-
-@interface UIKeyboardImpl : UIView
-+ (UIKeyboardImpl*)activeInstance;
-- (void)dismissKeyboard;
-@end
-
-#import "Redstone.h"
-#import "RSAppListController.h"
-#import "RSStartScreenController.h"
-#import "CAKeyframeAnimation+AHEasing.h"
-
+NSMutableDictionary* settings;
 Redstone* redstone;
-UIStatusBar *statusBar;
-BOOL appSwitcherIsOpen = NO;
 
-extern "C" UIImage * _UICreateScreenUIImage();
+static void loadPrefs() {
+	settings = [NSMutableDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/ml.festival.redstone.plist"];
 
-%group main;
+	if (!settings) {
+		// Set default settings if they're not set
+		settings = [[NSMutableDictionary alloc] init];
+
+		[settings setValue:[NSNumber numberWithBool:YES] forKey:@"enabled"];
+		[settings setValue:[NSNumber numberWithBool:YES] forKey:@"startScreenEnabled"];
+		[settings writeToFile:@"/var/mobile/Library/Preferences/ml.festival.redstone.plist" atomically:YES];
+	}
+}
+
+static void PreferencesChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+	loadPrefs();
+
+	if (redstone) {
+		[redstone updatePreferences];
+		
+		if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"startScreenEnabled"] boolValue]) {
+			[Redstone hideAllExcept:nil];
+		} else {
+			[Redstone showAllExcept:nil];
+		}
+	}
+}
+
+
+%group main
 
 %hook SpringBoard
 
--(BOOL)canShowLockScreenHUDControls {
-	return %orig;
-}
-
 %new
--(void)loadRedstone {
-	NSMutableDictionary* settings = [NSMutableDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/ml.festival.redstone.plist"];
-
-	if (settings == nil) {
-		[settings setValue:[NSNumber numberWithBool:YES] forKey:@"enabled"];
-		[settings setValue:[NSNumber numberWithBool:YES] forKey:@"startScreenEnabled"];
-	}
-
-	if ([[settings objectForKey:@"enabled"] boolValue]) {
-		//[RSAesthetics loadFonts];
-
-		//if ([[settings objectForKey:@"startScreenEnabled"] boolValue]) {
-			redstone = [[Redstone alloc] initWithWindow:[[%c(SBUIController) sharedInstance] window]];
-
-			[[redstone window] setUserInteractionEnabled:YES];
-
-			id hiddenView = nil;
-			if (![[%c(SBUserAgent) sharedUserAgent] deviceIsLocked]) {
-				hiddenView = redstone.rootScrollView;
-			}
-
-			[Redstone hideAllExcept:hiddenView];
-			[[%c(SBWallpaperController) sharedInstance] _updateSeparateWallpaper];
-		//}
-	}
+- (void)loadRedstone {
+	// Create Redstone instance
+	redstone = [[Redstone alloc] initWithWindow:[[%c(SBUIController) sharedInstance] window]];
 }
 
--(void)applicationDidFinishLaunching:(id)arg1 {
+- (void)applicationDidFinishLaunching:(id)arg1 {
 	%orig(arg1);
 
-	statusBar = MSHookIvar<UIStatusBar *>([%c(SpringBoard) sharedApplication], "_statusBar");
 	[self loadRedstone];
 }
 
--(void)_handleMenuButtonEvent {
-	if (!appSwitcherIsOpen && redstone) {
-		if (![redstone hanldeMenuButtonPressed]) {
-			%orig;
-		} else {
-			[self clearMenuButtonTimer];
-			[self cancelMenuButtonRequests];
-		}
-	} else {
-		%orig;
-	}
+- (void)_handleMenuButtonEvent {
+	%orig;
 }
 
--(void)frontDisplayDidChange:(id)arg1 {
+- (void)frontDisplayDidChange:(id)arg1 {
 	%orig(arg1);
-	
-	if (redstone) {
-		[redstone setCurrentApplication:arg1];
+
+	loadPrefs();
+	if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"startScreenEnabled"] boolValue]) {
+		[redstone frontDisplayDidChange:arg1];
 	}
 }
 
+// Disable Home Screen Rotation (montajd)
+- (long long)homeScreenRotationStyle {
+	loadPrefs();
 
-%end
+	if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"startScreenEnabled"] boolValue]) {
+		return 0;
+	}
+	return %orig;
+}
+- (bool)homeScreenSupportsRotation {
+	loadPrefs();
+
+	if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"startScreenEnabled"] boolValue]) {
+		return NO;
+	}
+	return %orig;
+}
+
+%end // %hook SpringBoard
 
 %hook SBLockScreenViewController
 
 -(void)finishUIUnlockFromSource:(int)arg1 {
 	%orig(arg1);
+	loadPrefs();
 
-	if (redstone) {
-		id hiddenView = nil;
-
-		if ([[%c(SBUserAgent) sharedUserAgent] foregroundApplicationDisplayID]) {
-			hiddenView = nil;
-		} else {
-			hiddenView = redstone.rootScrollView;
-			[redstone.startScreenController returnToHomescreen];
-			if ([[RSAppListController sharedInstance] pinMenu]) {
-				[[RSAppListController sharedInstance] hidePinMenu];
-			}
-		}
-
-		[Redstone hideAllExcept:hiddenView];
+	if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"startScreenEnabled"] boolValue]) {
+		[redstone finishUIUnlockFromSource];
 	}
 }
 
--(long long)statusBarStyle {
-	return 0;
-}
-
-%end
-
-%hook SBHomeScreenViewController
-
--(unsigned long long)supportedInterfaceOrientations {
-	return 1;
-}
-
-%end
-
-%hook SBWallpaperController
-
--(id)legibilitySettingsForVariant:(long long)arg1 {
-	_UILegibilitySettings* settings = %orig(arg1);
-
-	if (redstone && arg1 == 1) {
-		if ([[%c(SBUIController) sharedInstance] isAppSwitcherShowing]) {
-			[settings setStyle:1];
-			[settings setContentColor:[UIColor whiteColor]];
-			[settings setPrimaryColor:[UIColor whiteColor]];
-			[settings setSecondaryColor:[UIColor whiteColor]];
-		} else {
-			[settings setStyle:1];
-			[settings setContentColor:[UIColor whiteColor]];
-			[settings setPrimaryColor:[UIColor whiteColor]];
-			[settings setSecondaryColor:[UIColor whiteColor]];
-		}
-	}
-
-	return settings;
-}
-
-%end
-
-%hook SBDeckSwitcherViewController
-
--(void)viewDidAppear:(BOOL)arg1 {
-	%orig(arg1);
-
-	appSwitcherIsOpen = YES;
-
-	if (redstone) {
-		[redstone.rootScrollView setHidden:NO];
-		[[redstone wallpaperView] setHidden:NO];
-	}
-}
--(void)viewWillDisappear:(BOOL)arg1 {
-	%orig(arg1);
-
-	appSwitcherIsOpen = NO;
-
-	if (redstone) {
-		[redstone.rootScrollView setHidden:YES];
-		[[redstone wallpaperView] setHidden:YES];
-	}
-}
-
-%end
+%end // %hook SBLockScreenViewController
 
 %hook SBUIAnimationZoomDownApp
 
 -(void)_startAnimation {
 	%orig;
+	loadPrefs();
 
-	if (redstone) {
-		[redstone.rootScrollView setHidden:NO];
-		[[redstone wallpaperView] setHidden:NO];
-		[redstone.startScreenController setIsEditing:NO];
+	if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"startScreenEnabled"] boolValue]) {
+		[Redstone hideAllExcept:[redstone rootScrollView]];
+		[[RSStartScreenController sharedInstance] returnToHomescreen];
+	}
+}
 
-		for (UIView* subview in [[redstone.startScreenController startScrollView] subviews]) {
-			[subview.layer setOpacity:0];
-		}
+%end // %hook SBUIAnimationZoomDownApp
 
-		UIImage *screenImage = _UICreateScreenUIImage();
-		UIImageView *screenImageView = [[UIImageView alloc] initWithImage:screenImage];
-		[redstone.window addSubview:screenImageView];
+%hook SBWallpaperController
+- (void)_handleWallpaperChangedForVariant:(int)variant {
+    %orig();
+    loadPrefs();
 
-		CAAnimation *opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
-																function:CubicEaseInOut
-															   fromValue:1.0
-																 toValue:0.0];
-		opacity.duration = 0.325;
-		opacity.removedOnCompletion = NO;
-		opacity.fillMode = kCAFillModeForwards;
-		
-		CAAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
-															  function:CubicEaseInOut
-															 fromValue:1.0
-															   toValue:1.5];
-		scale.duration = 0.35;
-		scale.removedOnCompletion = NO;
-		scale.fillMode = kCAFillModeForwards;
+    if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"startScreenEnabled"] boolValue]) {
+		[[RSStartScreenController sharedInstance] loadTiles];
+	}
+}
+%end // %hook SBWallpaperController
 
-		[screenImageView.layer addAnimation:opacity forKey:@"opacity"];
-		[screenImageView.layer addAnimation:scale forKey:@"scale"];
+%hook SBDeckSwitcherViewController
 
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-			[screenImageView removeFromSuperview];
+-(void)viewDidAppear:(BOOL)arg1 {
+	%orig(arg1);
+	loadPrefs();
 
-			[redstone.startScreenController returnToHomescreen];
-		});
+	if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"startScreenEnabled"] boolValue]) {
+		[Redstone hideAllExcept:[redstone rootScrollView]];
+	}
+}
+-(void)viewWillDisappear:(BOOL)arg1 {
+	%orig(arg1);
+	loadPrefs();
+
+	if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"startScreenEnabled"] boolValue]) {
+		[Redstone hideAllExcept:nil];
 	}
 }
 
@@ -247,31 +142,13 @@ extern "C" UIImage * _UICreateScreenUIImage();
 
 %end // %group main
 
-static void lockedDevice(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
-	UIKeyboardImpl *impl = [%c(UIKeyboardImpl) activeInstance];
-	[impl dismissKeyboard];
-}
-
-static void PreferencesChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
-{
-	NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"ml.festival.redstone"];
-	if ([[defaults objectForKey:@"enabled"] boolValue]) {
-		if (redstone) {
-			[redstone updatePreferences];
-		}
-	} else {
-		[Redstone hideAllExcept:nil];
-	}
-}
-
 %ctor {
-	//if (redstone) {
-		// Device has been locked
-		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, lockedDevice, CFSTR("com.apple.springboard.lockcomplete"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+	loadPrefs();
 
-		// Preferences changes
+	// Preferences changes
 		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, PreferencesChangedCallback, CFSTR("ml.festival.redstone.settingschanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 
+	if ([[settings objectForKey:@"enabled"] boolValue]) {
 		%init(main);
-	//}
+	}
 }

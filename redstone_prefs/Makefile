@@ -3,9 +3,10 @@ export GO_EASY_ON_ME=1
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = redstone_prefs
+#redstone_prefs_FILES = RDSRootListController.xm RDSAccentColorList.m
 redstone_prefs_FILES = RDSRootListController.xm RDSAccentColorList.m
 redstone_prefs_INSTALL_PATH = /Library/PreferenceBundles
-redstone_prefs_FRAMEWORKS = UIKit
+redstone_prefs_FRAMEWORKS = UIKit Foundation
 redstone_prefs_PRIVATE_FRAMEWORKS = Preferences
 
 include $(THEOS_MAKE_PATH)/bundle.mk

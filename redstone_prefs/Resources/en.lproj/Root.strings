@@ -1,8 +1,25 @@
 "TWEAK_ENABLED" = "Enabled";
+"ENABLE_RESPRING" = "Turning Redstone on or off requires a respring.";
 
+"COMPONENTS" = "Components";
+"START_SCREEN" = "Start Screen";
+"LOCK_SCREEN" = "Lock Screen";
+"VOLUME_AND_NOTIFICATIONS" = "Notifications & Volume HUD";
+
+"APPEARANCE" = "Appearance";
+"THEME_COLOR" = "Theme Color";
+"THEME_DARK" = "Dark";
+"THEME_LIGHT" = "Light";
 "ACCENT_COLOR" = "Accent Color";
+
+"AUTO_ACCENT_COLOR" = "Accent Color from Background";
+"AUTO_ACCENT_FOOTER" = "Automatically choose an accent color from my wallpaper";
+
 "TILE_OPCACITY" = "Tile Transparency";
-"SHOW_WALLPAPER" = "Show Wallpaper (Beta)";
+"TILE_OPACITY_FOOTER" = "Tile Transparency is only available if \"Show Wallpaper\" is active.";
+
+"SHOW_WALLPAPER" = "Show Wallpaper";
+"SHOW_MORE_TILES" = "Show More Tiles";
 
 "RESET_LAYOUT" = "Reset Start Screen Layout";
 "RESET_LAYOUT_MESSAGE" = "Are you sure you want to restore the default Start Screen layout?";
