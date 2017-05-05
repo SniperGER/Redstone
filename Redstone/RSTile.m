@@ -44,4 +44,11 @@
 	}
 }
 
+- (CGRect)positionWithoutTransform {
+	return CGRectMake(self.layer.position.x - (self.bounds.size.width/2),
+					  self.layer.position.y - (self.bounds.size.height/2),
+					  self.bounds.size.width,
+					  self.bounds.size.height);
+}
+
 @end

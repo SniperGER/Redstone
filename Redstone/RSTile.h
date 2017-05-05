@@ -4,4 +4,6 @@
 	CGPoint centerOffset;
 }
 
+- (CGRect)positionWithoutTransform;
+
 @end

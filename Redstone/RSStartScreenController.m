@@ -17,7 +17,7 @@
 	self->pinnedTiles = [NSMutableArray new];
 	
 	CGSize smallSize = [RSMetrics tileDimensionsForSize:1];
-	RSTile* tile1 = [[RSTile alloc] initWithFrame:CGRectMake(0, 137, smallSize.width, smallSize.height)];
+	RSTile* tile1 = [[RSTile alloc] initWithFrame:CGRectMake(274, 137, smallSize.width, smallSize.height)];
 	[self.startScrollView addSubview:tile1];
 	[self->pinnedTiles addObject:tile1];
 	
@@ -26,42 +26,28 @@
 	[self.startScrollView addSubview:tile2];
 	[self->pinnedTiles addObject:tile2];
 	
-	CGSize largeSize = [RSMetrics tileDimensionsForSize:3];
-	RSTile* tile3 = [[RSTile alloc] initWithFrame:CGRectMake(137, 0, largeSize.width, largeSize.height)];
+	CGSize wideSize = [RSMetrics tileDimensionsForSize:3];
+	RSTile* tile3 = [[RSTile alloc] initWithFrame:CGRectMake(137, 0, wideSize.width, wideSize.height)];
 	[self.startScrollView addSubview:tile3];
 	[self->pinnedTiles addObject:tile3];
+	
+	CGSize largeSize = [RSMetrics tileDimensionsForSize:4];
+	RSTile* tile4 = [[RSTile alloc] initWithFrame:CGRectMake(0, 137, largeSize.width, largeSize.width)];
+	[self.startScrollView addSubview:tile4];
+	[self->pinnedTiles addObject:tile4];
 }
 
 - (void)moveDownAffectedTilesForTile:(RSTile*)movedTile withFrame:(CGRect)tileFrame {
+	NSMutableArray* affectedTiles = [NSMutableArray new];
+	CGFloat intersectionWidth = 0, intersectionHeight = 0;
+	
 	for (RSTile* tile in self->pinnedTiles) {
 		if (tile != movedTile) {
 			if (CGRectIntersectsRect(tileFrame, tile.frame)) {
-				NSLog(@"[Redstone] intersect");
-				
-				CGFloat intersectWidth;
-				if (tileFrame.origin.x <= tile.frame.origin.x) {
-					intersectWidth = CGRectGetMaxX(tileFrame) - CGRectGetMinX(tile.frame);
-				} else {
-					intersectWidth = CGRectGetMaxX(tile.frame) - CGRectGetMinX(tileFrame);
-				}
-				
-				if (intersectWidth >= [RSMetrics tileDimensionsForSize:1].width/2) {
-					for (RSTile* _tile in self->pinnedTiles) {
-						if (_tile != movedTile) {
-							if (_tile.frame.origin.y >= tile.frame.origin.y) {
-								[UIView animateWithDuration:.3 animations:^{
-									[_tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-									[_tile setFrame:CGRectMake(_tile.frame.origin.x,
-															  _tile.frame.origin.y + tileFrame.size.height + [RSMetrics tileBorderSpacing],
-															  _tile.frame.size.width,
-															  _tile.frame.size.height)];
-								} completion:^(BOOL finished) {
-									[_tile removeEasingFunctionForKeyPath:@"frame"];
-								}];
-							}
-						}
-					}
-				}
+				[affectedTiles addObject:tile];
+
+				intersectionHeight = (CGRectGetMaxY(tileFrame) - CGRectGetMinY(tile.frame)) + [RSMetrics tileBorderSpacing];
+				[affectedTiles addObjectsFromArray:[self affectedTilesForTile:tile moveDistance:intersectionHeight horizontal:NO]];
 				
 				break;
 			}
@@ -76,6 +62,36 @@
 			}*/
 		}
 	}
+	
+	if ([affectedTiles count] > 0) {
+		[UIView animateWithDuration:.3 animations:^{
+			for (RSTile* tile in affectedTiles) {
+				[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+				[tile setFrame:CGRectOffset(tile.frame, intersectionWidth, intersectionHeight)];
+			}
+		} completion:^(BOOL finished) {
+			for (RSTile* tile in affectedTiles) {
+				[tile removeEasingFunctionForKeyPath:@"frame"];
+			}
+		}];
+	}
+}
+
+- (NSArray*)affectedTilesForTile:(RSTile*)tile moveDistance:(CGFloat)distance horizontal:(BOOL)horizontal {
+	NSMutableArray* affectedTiles = [NSMutableArray new];
+	
+	CGRect changedFrame = CGRectOffset(tile.frame, 0, distance);
+	for (RSTile* _tile in self->pinnedTiles) {
+		if (_tile.frame.origin.y > tile.frame.origin.y) {
+			if (CGRectIntersectsRect(_tile.frame, changedFrame)) {
+				[affectedTiles addObject:_tile];
+				
+				[affectedTiles addObjectsFromArray:[self affectedTilesForTile:_tile moveDistance:distance horizontal:horizontal]];
+			}
+		}
+	}
+	
+	return affectedTiles;
 }
 
 @end
