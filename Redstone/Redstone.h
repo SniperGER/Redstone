@@ -13,6 +13,12 @@
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
 
+#if TARGET_OS_SIMULATOR
+#define RESOURCE_PATH @"/opt/simject/FESTIVAL/Redstone"
+#else
+#define RESOURCE_PATH @"/var/mobile/Library/FESTIVAL/Redstone"
+#endif
+
 @interface SBUIController : NSObject
 + (id)sharedInstance;
 - (id)window;

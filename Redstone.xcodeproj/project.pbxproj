@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8D0CB4E71EB9ED2800E39A02 /* RSMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CB4E61EB9ED2800E39A02 /* RSMetrics.m */; };
 		8D0CB4F11EBA0E0900E39A02 /* UIView+Easing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CB4F01EBA0E0900E39A02 /* UIView+Easing.m */; };
+		8D0F3D9E1EBF7A3C00F1D07F /* 3ColumnDefaultLayout.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F3D9D1EBF7A3C00F1D07F /* 3ColumnDefaultLayout.plist */; };
 		8D1D34111EB7DCBA00BA9956 /* Redstone.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */; };
 		8D1D34121EB7DCBA00BA9956 /* Redstone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */; };
 		8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 8D1D34101EB7DCBA00BA9956 /* Makefile */; };
@@ -25,6 +26,7 @@
 		8D0CB4E61EB9ED2800E39A02 /* RSMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSMetrics.m; path = Redstone/RSMetrics.m; sourceTree = "<group>"; };
 		8D0CB4EF1EBA0E0900E39A02 /* UIView+Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Easing.h"; path = "Redstone/UIView+Easing.h"; sourceTree = "<group>"; };
 		8D0CB4F01EBA0E0900E39A02 /* UIView+Easing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Easing.m"; path = "Redstone/UIView+Easing.m"; sourceTree = "<group>"; };
+		8D0F3D9D1EBF7A3C00F1D07F /* 3ColumnDefaultLayout.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = 3ColumnDefaultLayout.plist; sourceTree = "<group>"; };
 		8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Redstone.xm; path = Redstone/Redstone.xm; sourceTree = "<group>"; };
 		8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Redstone.plist; path = Redstone/Redstone.plist; sourceTree = "<group>"; };
 		8D1D34101EB7DCBA00BA9956 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = Redstone/Makefile; sourceTree = "<group>"; };
@@ -75,6 +77,55 @@
 			name = Lib;
 			sourceTree = "<group>";
 		};
+		8D0F3D971EBF7A3C00F1D07F /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F3D981EBF7A3C00F1D07F /* var */,
+			);
+			name = Layout;
+			path = Redstone/Layout;
+			sourceTree = "<group>";
+		};
+		8D0F3D981EBF7A3C00F1D07F /* var */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F3D991EBF7A3C00F1D07F /* mobile */,
+			);
+			path = var;
+			sourceTree = "<group>";
+		};
+		8D0F3D991EBF7A3C00F1D07F /* mobile */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F3D9A1EBF7A3C00F1D07F /* Library */,
+			);
+			path = mobile;
+			sourceTree = "<group>";
+		};
+		8D0F3D9A1EBF7A3C00F1D07F /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F3D9B1EBF7A3C00F1D07F /* FESTIVAL */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		8D0F3D9B1EBF7A3C00F1D07F /* FESTIVAL */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F3D9C1EBF7A3C00F1D07F /* Redstone */,
+			);
+			path = FESTIVAL;
+			sourceTree = "<group>";
+		};
+		8D0F3D9C1EBF7A3C00F1D07F /* Redstone */ = {
+			isa = PBXGroup;
+			children = (
+				8D0F3D9D1EBF7A3C00F1D07F /* 3ColumnDefaultLayout.plist */,
+			);
+			path = Redstone;
+			sourceTree = "<group>";
+		};
 		8D1D33E81EB7DC3D00BA9956 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +142,7 @@
 				8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */,
 				8D1D341B1EB7E34700BA9956 /* Redstone.h */,
 				8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */,
+				8D0F3D971EBF7A3C00F1D07F /* Layout */,
 				8D0CB4E81EBA0BA000E39A02 /* Lib */,
 				8D0CB4E41EB9ED1000E39A02 /* Core */,
 				8D9B04C31EBB048B00EB1475 /* Start Screen */,
@@ -212,6 +264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D0F3D9E1EBF7A3C00F1D07F /* 3ColumnDefaultLayout.plist in Resources */,
 				8D1D34121EB7DCBA00BA9956 /* Redstone.plist in Resources */,
 				8D1D34111EB7DCBA00BA9956 /* Redstone.xm in Resources */,
 			);

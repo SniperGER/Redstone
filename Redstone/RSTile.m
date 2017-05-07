@@ -6,6 +6,7 @@
 	self = [super initWithFrame:frame];
 	
 	if (self) {
+		self.size = tileSize;
 		self.icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafId];
 		
 		self->tileLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, frame.size.height-30, frame.size.height-20, 20)];
@@ -14,10 +15,14 @@
 		[self->tileLabel setTextColor:[UIColor whiteColor]];
 		[self addSubview:self->tileLabel];
 		
+		if (tileSize < 2) {
+			[self->tileLabel setHidden:YES];
+		}
+		
 		[self setBackgroundColor:[UIColor colorWithRed:0.0 green:0.47 blue:0.843 alpha:1.0]];
 		
 		UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGestureRecognizer:)];
-		[self addGestureRecognizer:pan];
+		//[self addGestureRecognizer:pan];
 		
 		UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
 		[tap requireGestureRecognizerToFail:pan];
