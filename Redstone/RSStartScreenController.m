@@ -16,25 +16,11 @@
 - (void)loadTiles {
 	self->pinnedTiles = [NSMutableArray new];
 	
-	CGSize smallSize = [RSMetrics tileDimensionsForSize:1];
-	RSTile* tile1 = [[RSTile alloc] initWithFrame:CGRectMake(274, 137, smallSize.width, smallSize.height)];
-	[self.startScrollView addSubview:tile1];
-	[self->pinnedTiles addObject:tile1];
-	
 	CGSize mediumSize = [RSMetrics tileDimensionsForSize:2];
-	RSTile* tile2 = [[RSTile alloc] initWithFrame:CGRectMake(0, 0, mediumSize.width, mediumSize.height)];
-	[self.startScrollView addSubview:tile2];
-	[self->pinnedTiles addObject:tile2];
+	RSTile* tile1 = [[RSTile alloc] initWithFrame:CGRectMake(0, 0, mediumSize.width, mediumSize.height) leafIdentifier:@"com.apple.Maps" size:2];
+	[self.startScrollView addSubview:tile1];
 	
-	CGSize wideSize = [RSMetrics tileDimensionsForSize:3];
-	RSTile* tile3 = [[RSTile alloc] initWithFrame:CGRectMake(137, 0, wideSize.width, wideSize.height)];
-	[self.startScrollView addSubview:tile3];
-	[self->pinnedTiles addObject:tile3];
-	
-	CGSize largeSize = [RSMetrics tileDimensionsForSize:4];
-	RSTile* tile4 = [[RSTile alloc] initWithFrame:CGRectMake(0, 137, largeSize.width, largeSize.width)];
-	[self.startScrollView addSubview:tile4];
-	[self->pinnedTiles addObject:tile4];
+	[self->pinnedTiles addObject:tile1];
 }
 
 - (void)moveAffectedTilesForTile:(RSTile*)movedTile {
