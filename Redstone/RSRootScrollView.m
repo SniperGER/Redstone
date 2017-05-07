@@ -12,10 +12,14 @@
 		[self setPagingEnabled:YES];
 		[self setBounces:NO];
 		
-		[self setScrollEnabled:NO];
+		//[self setScrollEnabled:NO];
 	}
 	
 	return self;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	[self setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:MIN(scrollView.contentOffset.x / scrollView.frame.size.width, 0.75)]];
 }
 
 @end

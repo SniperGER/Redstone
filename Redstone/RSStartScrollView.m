@@ -8,6 +8,8 @@
 	if (self) {
 		[self setContentInset:UIEdgeInsetsMake(24, 0, 60, 0)];
 		[self setClipsToBounds:NO];
+		[self setShowsVerticalScrollIndicator:NO];
+		[self setShowsHorizontalScrollIndicator:NO];
 	}
 	
 	return self;
