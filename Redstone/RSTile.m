@@ -28,17 +28,17 @@
 		float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 		
 		CGRect newTilePosition = CGRectMake(MIN(MAX(step * roundf((self.frame.origin.x / step)), 0), self.superview.frame.size.width - self.frame.size.width),
-											MIN(MAX(step * roundf((self.frame.origin.y / step)), 0), CGFLOAT_MAX),
+											MIN(MAX(step * roundf((self.frame.origin.y / step)), 0), self.superview.frame.size.height - self.frame.size.height),
 											self.frame.size.width,
 											self.frame.size.height);
-		[[[RSCore sharedInstance] startScreenController] moveDownAffectedTilesForTile:self withFrame:newTilePosition];
+		
 		[UIView animateWithDuration:.3 animations:^{
 			[self setEasingFunction:easeOutQuint forKeyPath:@"frame"];
 			[self setFrame:newTilePosition];
 		} completion:^(BOOL finished) {
 			[self removeEasingFunctionForKeyPath:@"frame"];
 		}];
-		
+		[[[RSCore sharedInstance] startScreenController] moveAffectedTilesForTile:self];
 	} else {
 		self.center = CGPointMake(touchLocation.x + self->centerOffset.x, touchLocation.y + self->centerOffset.y);
 	}

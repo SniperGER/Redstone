@@ -9,6 +9,6 @@
 
 @property (nonatomic, retain) RSStartScrollView* startScrollView;
 
-- (void)moveDownAffectedTilesForTile:(RSTile*)movedTile withFrame:(CGRect)tileFrame;
+- (void)moveAffectedTilesForTile:(RSTile*)movedTile;
 
 @end

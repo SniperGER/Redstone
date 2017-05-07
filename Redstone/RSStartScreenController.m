@@ -37,61 +37,33 @@
 	[self->pinnedTiles addObject:tile4];
 }
 
-- (void)moveDownAffectedTilesForTile:(RSTile*)movedTile withFrame:(CGRect)tileFrame {
-	NSMutableArray* affectedTiles = [NSMutableArray new];
-	CGFloat intersectionWidth = 0, intersectionHeight = 0;
+- (void)moveAffectedTilesForTile:(RSTile*)movedTile {
+	// This algorithm is based on Daniel T.'s answer here:
+	// http://stackoverflow.com/questions/43825803/get-all-uiviews-affected-by-moving-another-uiview-above-them/
 	
-	for (RSTile* tile in self->pinnedTiles) {
-		if (tile != movedTile) {
-			if (CGRectIntersectsRect(tileFrame, tile.frame)) {
-				[affectedTiles addObject:tile];
-
-				intersectionHeight = (CGRectGetMaxY(tileFrame) - CGRectGetMinY(tile.frame)) + [RSMetrics tileBorderSpacing];
-				[affectedTiles addObjectsFromArray:[self affectedTilesForTile:tile moveDistance:intersectionHeight horizontal:NO]];
-				
-				break;
-			}
+	NSMutableArray* stack = [NSMutableArray new];
+	
+	[stack addObject:movedTile];
+	
+	while ([stack count] > 0) {
+		RSTile* current = [stack objectAtIndex:0];
+		[stack removeObject:current];
 		
-			/*if (tile.frame.origin.y >= tileFrame.origin.y) {
+		for (RSTile* tile in self->pinnedTiles) {
+			if (tile != current && CGRectIntersectsRect(current.frame, tile.frame)) {
+				[stack addObject:tile];
+				
+				CGFloat moveDistance = (CGRectGetMaxY(current.frame) - CGRectGetMinY(tile.frame)) + [RSMetrics tileBorderSpacing];
+				
 				[UIView animateWithDuration:.3 animations:^{
 					[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-					[tile setFrame:CGRectMake(tile.frame.origin.x, tile.frame.origin.y+tileFrame.size.height, tile.frame.size.width, tile.frame.size.height)];
+					[tile setFrame:CGRectOffset(tile.frame, 0, moveDistance)];
 				} completion:^(BOOL finished) {
 					[tile removeEasingFunctionForKeyPath:@"frame"];
 				}];
-			}*/
-		}
-	}
-	
-	if ([affectedTiles count] > 0) {
-		[UIView animateWithDuration:.3 animations:^{
-			for (RSTile* tile in affectedTiles) {
-				[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-				[tile setFrame:CGRectOffset(tile.frame, intersectionWidth, intersectionHeight)];
-			}
-		} completion:^(BOOL finished) {
-			for (RSTile* tile in affectedTiles) {
-				[tile removeEasingFunctionForKeyPath:@"frame"];
-			}
-		}];
-	}
-}
-
-- (NSArray*)affectedTilesForTile:(RSTile*)tile moveDistance:(CGFloat)distance horizontal:(BOOL)horizontal {
-	NSMutableArray* affectedTiles = [NSMutableArray new];
-	
-	CGRect changedFrame = CGRectOffset(tile.frame, 0, distance);
-	for (RSTile* _tile in self->pinnedTiles) {
-		if (_tile.frame.origin.y > tile.frame.origin.y) {
-			if (CGRectIntersectsRect(_tile.frame, changedFrame)) {
-				[affectedTiles addObject:_tile];
 				
-				[affectedTiles addObjectsFromArray:[self affectedTilesForTile:_tile moveDistance:distance horizontal:horizontal]];
 			}
 		}
 	}
-	
-	return affectedTiles;
 }
-
 @end
