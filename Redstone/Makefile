@@ -9,7 +9,7 @@ export PACKAGE_VERSION = $(shell date +%y)w$(shell date +%V)a
 
 # Configure the target here
 TARGET = iphone:latest		# Phyiscal devices
-#TARGET = simulator:clang	# Simulator
+TARGET = simulator:clang	# Simulator
 
 
 # DO NOT EDIT ANYTHING BEYOND THIS POINT
@@ -18,12 +18,13 @@ export GO_EASY_ON_ME = 1
 include /opt/theos/makefiles/common.mk
 
 TWEAK_NAME = Redstone
+Redstone_PRIVATE_FRAMEWORKS = AppSupport
 
 # Core
-Redstone_FILES = Redstone.xm RSCore.m RSMetrics.m RSRootScrollView.m
+Redstone_FILES = Redstone.xm RSCore.m RSAesthetics.m RSMetrics.m RSRootScrollView.m
 
 # Lib
-Redstone_FILES += UIView+Easing.m
+Redstone_FILES += UIView+Easing.m easing.c CAKeyframeAnimation+AHEasing.m
 
 # Start Screen
 Redstone_FILES += RSStartScreenController.m RSStartScrollView.m RSTile.m

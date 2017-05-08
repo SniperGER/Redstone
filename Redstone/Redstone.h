@@ -1,8 +1,10 @@
 #import <objc/runtime.h>
 
 #import "UIView+Easing.h"
+#import "CAKeyframeAnimation+AHEasing.h"
 
 #import "RSCore.h"
+#import "RSAesthetics.h"
 #import "RSMetrics.h"
 #import "RSRootScrollView.h"
 

@@ -63,7 +63,8 @@
 }
 
 - (void)tapped:(UITapGestureRecognizer*)tapGestureRecognizer {
-	[[objc_getClass("SBIconController") sharedInstance] _launchIcon:self.icon];
+	//[[objc_getClass("SBIconController") sharedInstance] _launchIcon:self.icon];
+	[[[RSCore sharedInstance] startScreenController] prepareForAppLaunch:self];
 }
 
 - (CGRect)positionWithoutTransform {

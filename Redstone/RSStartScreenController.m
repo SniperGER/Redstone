@@ -19,7 +19,7 @@
 	NSLog(@"[Redstone] %@/3ColumnDefaultLayout.plist", RESOURCE_PATH);
 	
 	for (int i=0; i<[tileLayout count]; i++) {
-		if ([[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[tileLayout objectAtIndex:i][@"bundleIdentifier"]]) {
+		//if ([[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[tileLayout objectAtIndex:i][@"bundleIdentifier"]]) {
 			NSLog(@"[Redstone] %@", [tileLayout objectAtIndex:i][@"bundleIdentifier"]);
 			
 			CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
@@ -34,7 +34,7 @@
 			
 			[self.startScrollView addSubview:tile];
 			[self->pinnedTiles addObject:tile];
-		}
+		//}
 	}
 	
 	[self updateStartContentSize];
@@ -82,5 +82,96 @@
 			}
 		}
 	}
+	
+	[self updateStartContentSize];
 }
+
+- (void)prepareForAppLaunch:(RSTile*)sender {
+	[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:NO];
+	
+	NSMutableArray* appsInView = [NSMutableArray new];
+	NSMutableArray* appsNotInView = [NSMutableArray new];
+	
+	for (RSTile* tile in self->pinnedTiles) {
+		if (CGRectIntersectsRect(self.startScrollView.bounds, tile.frame)) {
+			[appsInView addObject:tile];
+		} else {
+			[appsNotInView addObject:tile];
+		}
+	}
+	
+	for (RSTile* tile in appsNotInView) {
+		[tile setHidden:YES];
+	}
+	
+	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
+														  function:CubicEaseIn
+														 fromValue:1.0
+														   toValue:4.0];
+	[scale setDuration:0.225];
+	[scale setRemovedOnCompletion:NO];
+	[scale setFillMode:kCAFillModeForwards];
+	
+	CAAnimation* opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
+														  function:CubicEaseIn
+														 fromValue:1.0
+														   toValue:0.0];
+	[opacity setDuration:0.2];
+	[opacity setRemovedOnCompletion:NO];
+	[opacity setFillMode:kCAFillModeForwards];
+	
+	int minX = INT_MAX, maxX = INT_MIN, minY = INT_MAX, maxY = INT_MIN;
+	for (RSTile* tile in self->pinnedTiles) {
+		CGFloat tileX = tile.frame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
+		CGFloat tileY = tile.frame.origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
+		
+		minX = MIN(tileX, minX);
+		maxX = MAX(tileX, maxX);
+		
+		minY = MIN(tileY, minY);
+		maxY = MAX(tileY, maxY);
+	}
+	
+	float maxDelay = ((maxY - minY) * 0.01) + (maxX * 0.01);
+	
+	for (RSTile* tile in self->pinnedTiles) {
+		[tile.layer setShouldRasterize:YES];
+		[tile.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
+		[tile.layer setContentsScale:[[UIScreen mainScreen] scale]];
+		
+		CGPoint basePoint = [tile convertPoint:tile.bounds.origin toView:self.startScrollView];
+		
+		CGFloat layerX = -(basePoint.x - CGRectGetMidX(self.startScrollView.bounds))/tile.frame.size.width;
+		CGFloat layerY = -(basePoint.y - CGRectGetMidY(self.startScrollView.bounds))/tile.frame.size.height;
+		
+		CGFloat tileX = tile.frame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
+		CGFloat tileY = tile.frame.origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
+		
+		CGFloat delay = (tileX * 0.01) + (tileY - minY) * 0.01;
+		
+		[tile setCenter:CGPointMake(CGRectGetMidX(self.startScrollView.bounds),
+									CGRectGetMidY(self.startScrollView.bounds))];
+		[tile.layer setAnchorPoint:CGPointMake(layerX, layerY)];
+		
+		if (tile == sender) {
+			[scale setBeginTime:CACurrentMediaTime() + delay + 0.1];
+			[opacity setBeginTime:CACurrentMediaTime() + delay + 0.1];
+		} else {
+			[scale setBeginTime:CACurrentMediaTime() + delay];
+			[opacity setBeginTime:CACurrentMediaTime() + delay];
+		}
+		
+		[tile.layer addAnimation:scale forKey:@"scale"];
+		[tile.layer addAnimation:opacity forKey:@"opacity"];
+	}
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:YES];
+		for (RSTile* tile in self->pinnedTiles) {
+			[tile.layer removeAllAnimations];
+			[tile setHidden:NO];
+		}
+	});
+}
+
 @end

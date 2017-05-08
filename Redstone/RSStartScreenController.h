@@ -10,5 +10,6 @@
 @property (nonatomic, retain) RSStartScrollView* startScrollView;
 
 - (void)moveAffectedTilesForTile:(RSTile*)movedTile;
+- (void)prepareForAppLaunch:(RSTile*)sender;
 
 @end

@@ -10,6 +10,7 @@
 		8D0CB4E71EB9ED2800E39A02 /* RSMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CB4E61EB9ED2800E39A02 /* RSMetrics.m */; };
 		8D0CB4F11EBA0E0900E39A02 /* UIView+Easing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D0CB4F01EBA0E0900E39A02 /* UIView+Easing.m */; };
 		8D0F3D9E1EBF7A3C00F1D07F /* 3ColumnDefaultLayout.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F3D9D1EBF7A3C00F1D07F /* 3ColumnDefaultLayout.plist */; };
+		8D0F3DA31EBFD5E600F1D07F /* RSAesthetics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F3DA21EBFD5E600F1D07F /* RSAesthetics.m */; };
 		8D1D34111EB7DCBA00BA9956 /* Redstone.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */; };
 		8D1D34121EB7DCBA00BA9956 /* Redstone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */; };
 		8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 8D1D34101EB7DCBA00BA9956 /* Makefile */; };
@@ -18,6 +19,8 @@
 		8D9B04C91EBB05D300EB1475 /* RSStartScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9B04C81EBB05D300EB1475 /* RSStartScrollView.m */; };
 		8D9B04CC1EBB05E400EB1475 /* RSStartScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9B04CB1EBB05E400EB1475 /* RSStartScreenController.m */; };
 		8D9B04CF1EBB076600EB1475 /* RSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9B04CE1EBB076600EB1475 /* RSTile.m */; };
+		8DECF0701EC084FC00A16660 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 8DECF06E1EC084FC00A16660 /* easing.c */; };
+		8DECF0711EC084FC00A16660 /* CAKeyframeAnimation+AHEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DECF06F1EC084FC00A16660 /* CAKeyframeAnimation+AHEasing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,8 @@
 		8D0CB4EF1EBA0E0900E39A02 /* UIView+Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Easing.h"; path = "Redstone/UIView+Easing.h"; sourceTree = "<group>"; };
 		8D0CB4F01EBA0E0900E39A02 /* UIView+Easing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Easing.m"; path = "Redstone/UIView+Easing.m"; sourceTree = "<group>"; };
 		8D0F3D9D1EBF7A3C00F1D07F /* 3ColumnDefaultLayout.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = 3ColumnDefaultLayout.plist; sourceTree = "<group>"; };
+		8D0F3DA11EBFD5E600F1D07F /* RSAesthetics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSAesthetics.h; path = Redstone/RSAesthetics.h; sourceTree = "<group>"; };
+		8D0F3DA21EBFD5E600F1D07F /* RSAesthetics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSAesthetics.m; path = Redstone/RSAesthetics.m; sourceTree = "<group>"; };
 		8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Redstone.xm; path = Redstone/Redstone.xm; sourceTree = "<group>"; };
 		8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Redstone.plist; path = Redstone/Redstone.plist; sourceTree = "<group>"; };
 		8D1D34101EB7DCBA00BA9956 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = Redstone/Makefile; sourceTree = "<group>"; };
@@ -42,6 +47,10 @@
 		8D9B04CB1EBB05E400EB1475 /* RSStartScreenController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSStartScreenController.m; path = Redstone/RSStartScreenController.m; sourceTree = "<group>"; };
 		8D9B04CD1EBB076600EB1475 /* RSTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTile.h; path = Redstone/RSTile.h; sourceTree = "<group>"; };
 		8D9B04CE1EBB076600EB1475 /* RSTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTile.m; path = Redstone/RSTile.m; sourceTree = "<group>"; };
+		8DECF06C1EC084FC00A16660 /* CAKeyframeAnimation+AHEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CAKeyframeAnimation+AHEasing.h"; path = "Redstone/CAKeyframeAnimation+AHEasing.h"; sourceTree = "<group>"; };
+		8DECF06D1EC084FC00A16660 /* easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = easing.h; path = Redstone/easing.h; sourceTree = "<group>"; };
+		8DECF06E1EC084FC00A16660 /* easing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = easing.c; path = Redstone/easing.c; sourceTree = "<group>"; };
+		8DECF06F1EC084FC00A16660 /* CAKeyframeAnimation+AHEasing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CAKeyframeAnimation+AHEasing.m"; path = "Redstone/CAKeyframeAnimation+AHEasing.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +69,8 @@
 			children = (
 				8D1D34181EB7DD2000BA9956 /* RSCore.h */,
 				8D1D34191EB7DD2000BA9956 /* RSCore.m */,
+				8D0F3DA11EBFD5E600F1D07F /* RSAesthetics.h */,
+				8D0F3DA21EBFD5E600F1D07F /* RSAesthetics.m */,
 				8D0CB4E51EB9ED2800E39A02 /* RSMetrics.h */,
 				8D0CB4E61EB9ED2800E39A02 /* RSMetrics.m */,
 				8D4739711EB9AE0A007EA214 /* RSRootScrollView.h */,
@@ -73,6 +84,10 @@
 			children = (
 				8D0CB4EF1EBA0E0900E39A02 /* UIView+Easing.h */,
 				8D0CB4F01EBA0E0900E39A02 /* UIView+Easing.m */,
+				8DECF06C1EC084FC00A16660 /* CAKeyframeAnimation+AHEasing.h */,
+				8DECF06D1EC084FC00A16660 /* easing.h */,
+				8DECF06E1EC084FC00A16660 /* easing.c */,
+				8DECF06F1EC084FC00A16660 /* CAKeyframeAnimation+AHEasing.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -279,8 +294,11 @@
 			files = (
 				8D0CB4F11EBA0E0900E39A02 /* UIView+Easing.m in Sources */,
 				8D9B04CF1EBB076600EB1475 /* RSTile.m in Sources */,
+				8DECF0711EC084FC00A16660 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				8D9B04C91EBB05D300EB1475 /* RSStartScrollView.m in Sources */,
 				8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */,
+				8DECF0701EC084FC00A16660 /* easing.c in Sources */,
+				8D0F3DA31EBFD5E600F1D07F /* RSAesthetics.m in Sources */,
 				8D0CB4E71EB9ED2800E39A02 /* RSMetrics.m in Sources */,
 				8D9B04CC1EBB05E400EB1475 /* RSStartScreenController.m in Sources */,
 				8D4739731EB9AE0A007EA214 /* RSRootScrollView.m in Sources */,

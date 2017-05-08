@@ -3,6 +3,7 @@
 @implementation RSCore
 
 static RSCore* sharedInstance;
+static UIImageView* wallpaperView;
 
 + (id)sharedInstance {
 	return sharedInstance;
@@ -14,7 +15,7 @@ static RSCore* sharedInstance;
 	}
 	
 	for (UIView* view in [[[objc_getClass("SBUIController") sharedInstance] window] subviews]) {
-		if ([view isKindOfClass:[RSRootScrollView class]]) {
+		if ([view isKindOfClass:[RSRootScrollView class]] || view == wallpaperView) {
 			[view setHidden:NO];
 		} else if (view != objectToShow) {
 			[view setHidden:YES];
@@ -28,7 +29,7 @@ static RSCore* sharedInstance;
 	}
 	
 	for (UIView* view in [[[objc_getClass("SBUIController") sharedInstance] window] subviews]) {
-		if ([view isKindOfClass:[RSRootScrollView class]]) {
+		if ([view isKindOfClass:[RSRootScrollView class]] || view == wallpaperView) {
 			[view setHidden:YES];
 		} else if (view != objectToHide) {
 			[view setHidden:NO];
@@ -44,6 +45,10 @@ static RSCore* sharedInstance;
 	if (self) {
 		sharedInstance = self;
 		self->_window = window;
+		
+		wallpaperView = [[UIImageView alloc] initWithImage:[RSAesthetics getCurrentWallpaper]];
+		[wallpaperView setFrame:[[UIScreen mainScreen] bounds]];
+		[self->_window addSubview:wallpaperView];
 		
 		self.rootScrollView = [[RSRootScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[self->_window addSubview:self.rootScrollView];
