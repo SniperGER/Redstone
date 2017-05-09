@@ -67,14 +67,21 @@
 		[stack removeObject:current];
 		
 		for (RSTile* tile in self->pinnedTiles) {
-			if (tile != current && CGRectIntersectsRect(current.frame, tile.frame)) {
+			if (tile != current && CGRectIntersectsRect([current positionWithoutTransform], [tile positionWithoutTransform])) {
 				[stack addObject:tile];
 				
-				CGFloat moveDistance = (CGRectGetMaxY(current.frame) - CGRectGetMinY(tile.frame)) + [RSMetrics tileBorderSpacing];
+				CGFloat moveDistance = (CGRectGetMaxY([current positionWithoutTransform]) - CGRectGetMinY([tile positionWithoutTransform])) + [RSMetrics tileBorderSpacing];
 				
 				[UIView animateWithDuration:.3 animations:^{
 					[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-					[tile setFrame:CGRectOffset(tile.frame, 0, moveDistance)];
+					
+					//CGRect newFrame = CGRectOffset([tile positionWithoutTransform], 0, moveDistance);
+					CGRect newFrame = CGRectMake(tile.frame.origin.x,
+												 tile.frame.origin.y + moveDistance,
+												 tile.frame.size.width,
+												 tile.frame.size.height);
+					//newFrame = CGRectInset(newFrame, newFrame.size.width * (1-0.8320610687), newFrame.size.height * (1-0.8320610687));
+					[tile setFrame:newFrame];
 				} completion:^(BOOL finished) {
 					[tile removeEasingFunctionForKeyPath:@"frame"];
 				}];
@@ -262,6 +269,32 @@
 		
 		[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:YES];
 	});
+}
+
+- (void)setIsEditing:(BOOL)isEditing {
+	if (!self->_isEditing && isEditing) {
+		AudioServicesPlaySystemSound(1520);
+	}
+	
+	self->_isEditing = isEditing;
+	
+	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:!isEditing];
+	
+	if (!isEditing) {
+		[self setSelectedTile:nil];
+	}
+}
+
+- (void)setSelectedTile:(RSTile*)selectedTile {
+	self->_selectedTile = selectedTile;
+	
+	for (RSTile* tile in self->pinnedTiles) {
+		if (tile == selectedTile) {
+			[tile setIsSelectedTile:YES];
+		} else {
+			[tile setIsSelectedTile:NO];
+		}
+	}
 }
 
 @end
