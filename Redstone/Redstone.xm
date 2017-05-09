@@ -25,3 +25,11 @@ RSCore* redstone;
 }
 
 %end
+
+%hook SBHomeScreenViewController
+
+- (NSInteger)supportedInterfaceOrientations {
+	return 1;
+}
+
+%end

@@ -16,11 +16,9 @@
 - (void)loadTiles {
 	self->pinnedTiles = [NSMutableArray new];
 	NSArray* tileLayout = [NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/3ColumnDefaultLayout.plist", RESOURCE_PATH]];
-	NSLog(@"[Redstone] %@/3ColumnDefaultLayout.plist", RESOURCE_PATH);
 	
 	for (int i=0; i<[tileLayout count]; i++) {
 		//if ([[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[tileLayout objectAtIndex:i][@"bundleIdentifier"]]) {
-			NSLog(@"[Redstone] %@", [tileLayout objectAtIndex:i][@"bundleIdentifier"]);
 			
 			CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 			CGSize tileSize = [RSMetrics tileDimensionsForSize:[[tileLayout objectAtIndex:i][@"size"] intValue]];
@@ -44,13 +42,16 @@
 	RSTile* lastTile = [self->pinnedTiles objectAtIndex:0];
 	
 	for (RSTile* tile in self->pinnedTiles) {
-		if (tile.frame.origin.y > lastTile.frame.origin.y || (tile.frame.origin.y == lastTile.frame.origin.y && tile.frame.size.height > lastTile.frame.size.height)) {
+		CGRect lastTileFrame = [lastTile positionWithoutTransform];
+		CGRect currentTileFrame = [tile positionWithoutTransform];
+		
+		if (currentTileFrame.origin.y > lastTileFrame.origin.y || (currentTileFrame.origin.y == lastTileFrame.origin.y && currentTileFrame.size.height > lastTileFrame.size.height)) {
 			lastTile = tile;
 		}
 	}
 
 	CGSize contentSize = CGSizeMake(self.startScrollView.frame.size.width,
-									lastTile.frame.origin.y + lastTile.frame.size.height);
+									[lastTile positionWithoutTransform].origin.y + [lastTile positionWithoutTransform].size.height);
 	[self.startScrollView setContentSize:contentSize];
 }
 
@@ -75,15 +76,14 @@
 				[UIView animateWithDuration:.3 animations:^{
 					[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
 					
-					//CGRect newFrame = CGRectOffset([tile positionWithoutTransform], 0, moveDistance);
 					CGRect newFrame = CGRectMake(tile.frame.origin.x,
 												 tile.frame.origin.y + moveDistance,
 												 tile.frame.size.width,
 												 tile.frame.size.height);
-					//newFrame = CGRectInset(newFrame, newFrame.size.width * (1-0.8320610687), newFrame.size.height * (1-0.8320610687));
 					[tile setFrame:newFrame];
 				} completion:^(BOOL finished) {
 					[tile removeEasingFunctionForKeyPath:@"frame"];
+					[tile setOriginalCenter:tile.center];
 				}];
 				
 			}
@@ -191,6 +191,8 @@
 		[tile.layer removeAllAnimations];
 		if (CGRectIntersectsRect(self.startScrollView.bounds, tile.frame)) {
 			[appsInView addObject:tile];
+			
+			[tile.layer setOpacity:0];
 			[tile setHidden:NO];
 		} else {
 			[appsNotInView addObject:tile];

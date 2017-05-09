@@ -71,6 +71,23 @@ int columns;
 	return CGSizeZero;
 }
 
++ (CGSize)tileIconDimensionsForSize:(int)size {
+	switch ((int)screenWidth) {
+		case 414:
+			if (size == 1) {
+				return CGSizeMake(31.75, 31.75);
+			} else if (size == 2 || size == 3) {
+				return CGSizeMake(44, 44);
+			} else if (size == 4) {
+				return CGSizeMake(89.66666, 89.66666);
+			}
+			break;
+		default: break;
+	}
+	
+	return CGSizeZero;
+}
+
 + (CGFloat)tileBorderSpacing {
 	return 5.0;
 }
