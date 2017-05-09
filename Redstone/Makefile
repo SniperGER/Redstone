@@ -19,15 +19,16 @@ include /opt/theos/makefiles/common.mk
 
 TWEAK_NAME = Redstone
 Redstone_PRIVATE_FRAMEWORKS = AppSupport
+Redstone_FILES = Redstone.xm
 
 # Core
-Redstone_FILES = Redstone.xm RSCore.m RSAesthetics.m RSMetrics.m RSRootScrollView.m
+Redstone_FILES += Core/RSCore.m Core/RSAesthetics.m Core/RSMetrics.m Core/RSRootScrollView.m
 
 # Lib
-Redstone_FILES += UIView+Easing.m easing.c CAKeyframeAnimation+AHEasing.m
+Redstone_FILES += Lib/UIView+Easing.m Lib/easing.c Lib/CAKeyframeAnimation+AHEasing.m
 
 # Start Screen
-Redstone_FILES += RSStartScreenController.m RSStartScrollView.m RSTile.m
+Redstone_FILES += Start/RSStartScreenController.m Start/RSStartScrollView.m Start/RSTile.m
 
 include /opt/theos/makefiles/tweak.mk
 

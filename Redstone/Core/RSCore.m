@@ -1,4 +1,4 @@
-#import "Redstone.h"
+#import "../Redstone.h"
 
 @implementation RSCore
 

@@ -1,17 +1,17 @@
 #import <objc/runtime.h>
 #import <AudioToolbox/AudioServices.h>
 
-#import "UIView+Easing.h"
-#import "CAKeyframeAnimation+AHEasing.h"
+#import "Lib/UIView+Easing.h"
+#import "Lib/CAKeyframeAnimation+AHEasing.h"
 
-#import "RSCore.h"
-#import "RSAesthetics.h"
-#import "RSMetrics.h"
-#import "RSRootScrollView.h"
+#import "Core/RSCore.h"
+#import "Core/RSAesthetics.h"
+#import "Core/RSMetrics.h"
+#import "Core/RSRootScrollView.h"
 
-#import "RSStartScreenController.h"
-#import "RSStartScrollView.h"
-#import "RSTile.h"
+#import "Start/RSStartScreenController.h"
+#import "Start/RSStartScrollView.h"
+#import "Start/RSTile.h"
 
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)

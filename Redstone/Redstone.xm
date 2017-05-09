@@ -26,6 +26,16 @@ RSCore* redstone;
 
 %end
 
+%hook SBUIAnimationZoomDownApp
+
+- (void)_startAnimation {
+	[redstone.startScreenController returnToHomescreen];
+	
+	%orig;
+}
+
+%end
+
 %hook SBHomeScreenViewController
 
 - (NSInteger)supportedInterfaceOrientations {

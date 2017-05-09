@@ -1,4 +1,4 @@
-#import "Redstone.h"
+#import "../Redstone.h"
 
 extern CFArrayRef CPBitmapCreateImagesFromData(CFDataRef cpbitmap, void*, int, void*);
 
