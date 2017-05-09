@@ -4,6 +4,7 @@
 
 @interface RSTile : UIView {
 	CGPoint centerOffset;
+	CGPoint originalCenter;
 	
 	int _size;
 	SBIcon* _icon;
@@ -15,5 +16,6 @@
 
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafId size:(int)tileSize;
 - (CGRect)positionWithoutTransform;
+- (CGPoint)originalCenter;
 
 @end

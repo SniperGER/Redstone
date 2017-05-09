@@ -13,3 +13,15 @@ RSCore* redstone;
 }
 
 %end
+
+%hook SBUIAnimationZoomApp
+
+- (void)__startAnimation {
+	if ([self zoomDirection] == 1) {
+		[redstone.startScreenController returnToHomescreen];
+	}
+	
+	%orig;
+}
+
+%end

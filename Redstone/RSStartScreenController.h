@@ -11,5 +11,6 @@
 
 - (void)moveAffectedTilesForTile:(RSTile*)movedTile;
 - (void)prepareForAppLaunch:(RSTile*)sender;
+- (void)returnToHomescreen;
 
 @end

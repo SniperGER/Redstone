@@ -43,3 +43,7 @@
 @interface SBIcon : NSObject
 - (id)displayName;
 @end
+
+@interface SBUIAnimationZoomApp : NSObject
+- (NSInteger)zoomDirection;
+@end

@@ -8,6 +8,7 @@
 	if (self) {
 		self.size = tileSize;
 		self.icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafId];
+		self->originalCenter = self.center;
 		
 		self->tileLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, frame.size.height-30, frame.size.height-20, 20)];
 		[self->tileLabel setText:[self.icon displayName]];
@@ -72,6 +73,10 @@
 					  self.layer.position.y - (self.bounds.size.height/2),
 					  self.bounds.size.width,
 					  self.bounds.size.height);
+}
+
+- (CGPoint)originalCenter {
+	return self->originalCenter;
 }
 
 @end
