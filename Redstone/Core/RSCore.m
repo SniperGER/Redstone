@@ -4,6 +4,7 @@
 
 static RSCore* sharedInstance;
 static UIImageView* wallpaperView;
+static id currentApplication;
 
 + (id)sharedInstance {
 	return sharedInstance;
@@ -55,9 +56,23 @@ static UIImageView* wallpaperView;
 		
 		self.startScreenController = [RSStartScreenController new];
 		[self.rootScrollView addSubview:self.startScreenController.startScrollView];
+		
+		self.launchScreenController = [RSLaunchScreenController new];
+		[self.rootScrollView addSubview:self.launchScreenController.launchScreen];
 	}
 	
 	return self;
+}
+
+- (void)frontDisplayDidChange:(id)arg1 {
+	currentApplication = arg1;
+	
+	if (arg1) {
+		//[self.rootScrollView setHidden:YES];
+		[self.launchScreenController hide];
+	} else {
+		[self.rootScrollView setHidden:NO];
+	}
 }
 
 @end

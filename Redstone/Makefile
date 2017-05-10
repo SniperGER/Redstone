@@ -30,6 +30,9 @@ Redstone_FILES += Lib/UIView+Easing.m Lib/easing.c Lib/CAKeyframeAnimation+AHEas
 # Start Screen
 Redstone_FILES += Start/RSStartScreenController.m Start/RSStartScrollView.m Start/RSTile.m
 
+# Launch Screen
+Redstone_FILES += Launch/RSLaunchScreenController.m Launch/RSLaunchScreen.m
+
 include /opt/theos/makefiles/tweak.mk
 
 # Copy the compiled dylib to simject's directory

@@ -13,6 +13,9 @@
 #import "Start/RSStartScrollView.h"
 #import "Start/RSTile.h"
 
+#import "Launch/RSLaunchScreenController.h"
+#import "Launch/RSLaunchScreen.h"
+
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
 

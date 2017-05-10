@@ -102,6 +102,7 @@ static RSStartScreenController* sharedInstance;
 
 - (void)prepareForAppLaunch:(RSTile*)sender {
 	[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:NO];
+	[[RSLaunchScreenController sharedInstance] setLaunchScreenForLeafIdentifier:[[sender.icon application] bundleIdentifier]];
 	
 	NSMutableArray* appsInView = [NSMutableArray new];
 	NSMutableArray* appsNotInView = [NSMutableArray new];
@@ -183,7 +184,12 @@ static RSStartScreenController* sharedInstance;
 		for (RSTile* tile in self->pinnedTiles) {
 			[tile.layer setOpacity:0];
 		}
-		[[objc_getClass("SBIconController") sharedInstance] _launchIcon:sender.icon];
+		
+		[[RSLaunchScreenController sharedInstance] show];
+		
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[[objc_getClass("SBIconController") sharedInstance] _launchIcon:sender.icon];
+		});
 	});
 }
 
@@ -212,7 +218,7 @@ static RSStartScreenController* sharedInstance;
 	
 	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
 														  function:CubicEaseOut
-														 fromValue:0.9
+														 fromValue:0.8
 														   toValue:1.0];
 	[scale setDuration:0.4];
 	[scale setRemovedOnCompletion:NO];

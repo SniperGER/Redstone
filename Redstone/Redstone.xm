@@ -1,6 +1,8 @@
 #import "Redstone.h"
 #import "substrate.h"
 
+extern "C" UIImage * _UICreateScreenUIImage();
+
 RSCore* redstone;
 
 %hook SpringBoard
@@ -10,6 +12,12 @@ RSCore* redstone;
 	
 	redstone = [[RSCore alloc] initWithWindow:[[%c(SBUIController) sharedInstance] window]];
 	[RSCore hideAllExcept:nil];
+}
+
+- (void)frontDisplayDidChange:(id)arg1 {
+	%orig(arg1);
+	
+	[redstone frontDisplayDidChange:arg1];
 }
 
 %end
