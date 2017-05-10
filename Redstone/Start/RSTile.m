@@ -23,7 +23,8 @@
 		CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:tileSize];
 		self->tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
 		[self->tileImageView setCenter:CGPointMake(frame.size.width/2, frame.size.height/2)];
-		[self->tileImageView setBackgroundColor:[UIColor magentaColor]];
+		[self->tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
+		[self->tileImageView setTintColor:[UIColor whiteColor]];
 		[self addSubview:self->tileImageView];
 		
 		[self setBackgroundColor:[UIColor colorWithRed:0.0 green:0.47 blue:0.843 alpha:1.0]];
@@ -48,7 +49,7 @@
 	CGPoint touchLocation = [_panGestureRecognizer locationInView:self.superview];
 	
 	if (_panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-		[[[RSCore sharedInstance] startScreenController] setSelectedTile:self];
+		[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		
 		CGPoint relativePosition = [self.superview convertPoint:self.center toView:self.superview];
 		self->centerOffset = CGPointMake(relativePosition.x - touchLocation.x, relativePosition.y - touchLocation.y);
@@ -57,8 +58,8 @@
 		
 		float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 		
-		CGFloat maxPositionX = [[RSCore sharedInstance] startScreenController].startScrollView.contentSize.width - [self positionWithoutTransform].size.width;
-		CGFloat maxPositionY =  [[RSCore sharedInstance] startScreenController].startScrollView.contentSize.height - [self positionWithoutTransform].size.height;
+		CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].contentSize.width - [self positionWithoutTransform].size.width;
+		CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height - [self positionWithoutTransform].size.height;
 		
 		CGRect newTilePosition = CGRectMake(MIN(MAX(step * roundf((self.frame.origin.x / step)), 0), maxPositionX),
 											MIN(MAX(step * roundf((self.frame.origin.y / step)), 0), maxPositionY),
@@ -73,29 +74,29 @@
 			self.originalCenter = self.center;
 		}];
 		
-		[[[RSCore sharedInstance] startScreenController] moveAffectedTilesForTile:self];
+		[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
 	} else {
 		self.center = CGPointMake(touchLocation.x + self->centerOffset.x, touchLocation.y + self->centerOffset.y);
 	}
 }
 
 - (void)tapped:(UITapGestureRecognizer*)_tapGestureRecognizer {
-	if ([[[RSCore sharedInstance] startScreenController] isEditing]) {
-		if ([[[RSCore sharedInstance] startScreenController] selectedTile] == self) {
-			[[[RSCore sharedInstance] startScreenController] setIsEditing:NO];
+	if ([[RSStartScreenController sharedInstance] isEditing]) {
+		if ([[RSStartScreenController sharedInstance] selectedTile] == self) {
+			[[RSStartScreenController sharedInstance] setIsEditing:NO];
 			[self->longPressGestureRecognizer setEnabled:YES];
 		} else {
-			[[[RSCore sharedInstance] startScreenController] setSelectedTile:self];
+			[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		}
 	} else {
-		[[[RSCore sharedInstance] startScreenController] prepareForAppLaunch:self];
+		[[RSStartScreenController sharedInstance] prepareForAppLaunch:self];
 	}
 }
 
 - (void)pressed:(UILongPressGestureRecognizer*)_longPressGestureRecognizer {
-	if (![[[RSCore sharedInstance] startScreenController] isEditing]) {
-		[[[RSCore sharedInstance] startScreenController] setIsEditing:YES];
-		[[[RSCore sharedInstance] startScreenController] setSelectedTile:self];
+	if (![[RSStartScreenController sharedInstance] isEditing]) {
+		[[RSStartScreenController sharedInstance] setIsEditing:YES];
+		[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		[self->longPressGestureRecognizer setEnabled:NO];
 	}
 }
@@ -110,7 +111,7 @@
 }
 
 - (void)setIsSelectedTile:(BOOL)isSelectedTile {
-	if ([[[RSCore sharedInstance] startScreenController] isEditing]) {
+	if ([[RSStartScreenController sharedInstance] isEditing]) {
 		self->_isSelectedTile = isSelectedTile;
 		
 		[self->panGestureRecognizer setEnabled:YES];
@@ -121,7 +122,7 @@
 			[self setAlpha:1.0];
 			[self setTransform:CGAffineTransformIdentity];
 		} else {
-			if ([[[RSCore sharedInstance] startScreenController] isEditing]) {
+			if ([[RSStartScreenController sharedInstance] isEditing]) {
 				[self setAlpha:0.8];
 				[self setTransform:CGAffineTransformMakeScale(0.8320610687, 0.8320610687)];
 				

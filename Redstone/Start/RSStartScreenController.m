@@ -2,10 +2,17 @@
 
 @implementation RSStartScreenController
 
+static RSStartScreenController* sharedInstance;
+
++ (id)sharedInstance {
+	return sharedInstance;
+}
+
 - (id)init {
 	self = [super init];
 	
 	if (self) {
+		sharedInstance = self;
 		self.startScrollView = [[RSStartScrollView alloc] initWithFrame:CGRectMake(4, 0, screenWidth-8, screenHeight)];
 		[self loadTiles];
 	}

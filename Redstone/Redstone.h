@@ -39,6 +39,11 @@
 
 @interface SBLeafIcon : NSObject
 - (id)displayName;
+- (id)application;
+@end
+
+@interface SBApplication : NSObject
+- (id)bundleIdentifier;
 @end
 
 @interface SBIconModel : NSObject

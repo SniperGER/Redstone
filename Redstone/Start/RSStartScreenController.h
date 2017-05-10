@@ -14,6 +14,7 @@
 @property (nonatomic, assign) BOOL isEditing;
 @property (nonatomic, retain) RSTile* selectedTile;
 
++ (id)sharedInstance;
 - (void)moveAffectedTilesForTile:(RSTile*)movedTile;
 - (void)prepareForAppLaunch:(RSTile*)sender;
 - (void)returnToHomescreen;

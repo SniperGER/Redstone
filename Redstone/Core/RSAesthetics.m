@@ -23,8 +23,14 @@ extern CFArrayRef CPBitmapCreateImagesFromData(CFDataRef cpbitmap, void*, int, v
 	}
 }
 
-+ (UIImage*) imageWithColor:(UIColor*)color size:(CGSize)size
-{
++ (UIImage*)getImageForTileWithBundleIdentifier:(NSString*)bundleIdentifier {
+	NSString* imagePath = [NSString stringWithFormat:@"%@/Tiles/%@/tile", RESOURCE_PATH, bundleIdentifier];
+	UIImage* tileImage = [[UIImage imageWithContentsOfFile:imagePath] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	
+	return tileImage;
+}
+
++ (UIImage*) imageWithColor:(UIColor*)color size:(CGSize)size {
 	UIGraphicsBeginImageContext(size);
 	UIBezierPath* rPath = [UIBezierPath bezierPathWithRect:CGRectMake(0., 0., size.width, size.height)];
 	[color setFill];

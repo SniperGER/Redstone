@@ -3,5 +3,6 @@
 @interface RSAesthetics : NSObject
 
 + (UIImage*)getCurrentWallpaper;
++ (UIImage*)getImageForTileWithBundleIdentifier:(NSString*)bundleIdentifier;
 
 @end
