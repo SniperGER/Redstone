@@ -1,13 +1,13 @@
 #import <UIKit/UIKit.h>
 
-@class SBIcon;
+@class SBLeafIcon;
 
 @interface RSTile : UIView <UIGestureRecognizerDelegate> {
 	CGPoint centerOffset;
 	CGPoint _originalCenter;
 	
 	int _size;
-	SBIcon* _icon;
+	SBLeafIcon* _icon;
 	
 	UILabel* tileLabel;
 	UIImageView* tileImageView;
@@ -21,7 +21,7 @@
 
 @property (nonatomic, assign) CGPoint originalCenter;
 @property (nonatomic, assign) int size;
-@property (nonatomic, strong) SBIcon* icon;
+@property (nonatomic, strong) SBLeafIcon* icon;
 @property (nonatomic, assign) BOOL isSelectedTile;
 
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafId size:(int)tileSize;

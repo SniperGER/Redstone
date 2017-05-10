@@ -37,12 +37,12 @@
 - (void)_launchIcon:(id)arg1;
 @end
 
-@interface SBIconModel : NSObject
-- (id)leafIconForIdentifier:(id)arg1;
+@interface SBLeafIcon : NSObject
+- (id)displayName;
 @end
 
-@interface SBIcon : NSObject
-- (id)displayName;
+@interface SBIconModel : NSObject
+- (SBLeafIcon*)leafIconForIdentifier:(id)arg1;
 @end
 
 @interface SBUIAnimationZoomApp : NSObject

@@ -133,8 +133,17 @@
 				8DBD10771EC23BD400A5A037 /* Lib */,
 				8DBD10811EC23BF900A5A037 /* Core */,
 				8DBD10981EC23CD000A5A037 /* Start */,
+				8D82490E1EC2FEA900779648 /* Launch */,
 			);
 			name = Redstone;
+			sourceTree = "<group>";
+		};
+		8D82490E1EC2FEA900779648 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Launch;
+			path = Redstone/Launch;
 			sourceTree = "<group>";
 		};
 		8DBD10771EC23BD400A5A037 /* Lib */ = {

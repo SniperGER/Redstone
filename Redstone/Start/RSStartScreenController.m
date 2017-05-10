@@ -18,7 +18,7 @@
 	NSArray* tileLayout = [NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/3ColumnDefaultLayout.plist", RESOURCE_PATH]];
 	
 	for (int i=0; i<[tileLayout count]; i++) {
-		//if ([[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[tileLayout objectAtIndex:i][@"bundleIdentifier"]]) {
+		if ([[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[tileLayout objectAtIndex:i][@"bundleIdentifier"]]) {
 			
 			CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 			CGSize tileSize = [RSMetrics tileDimensionsForSize:[[tileLayout objectAtIndex:i][@"size"] intValue]];
@@ -32,7 +32,7 @@
 			
 			[self.startScrollView addSubview:tile];
 			[self->pinnedTiles addObject:tile];
-		//}
+		}
 	}
 	
 	[self updateStartContentSize];
