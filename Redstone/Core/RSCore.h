@@ -10,6 +10,7 @@
 	RSLaunchScreenController* _launchScreenController;
 }
 
+@property (nonatomic, retain) UIWindow* window;
 @property (nonatomic, retain) RSRootScrollView* rootScrollView;
 @property (nonatomic, retain) RSStartScreenController* startScreenController;
 @property (nonatomic, retain) RSLaunchScreenController* launchScreenController;
