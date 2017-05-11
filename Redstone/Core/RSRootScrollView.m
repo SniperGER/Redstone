@@ -12,7 +12,8 @@
 		[self setPagingEnabled:YES];
 		[self setBounces:NO];
 		
-		//[self setScrollEnabled:NO];
+		[self setShowsVerticalScrollIndicator:NO];
+		[self setShowsHorizontalScrollIndicator:NO];
 	}
 	
 	return self;
