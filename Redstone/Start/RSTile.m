@@ -119,6 +119,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	if  (_longPressGestureRecognizer.state == UIGestureRecognizerStateChanged) {
 		
 		if (![[RSStartScreenController sharedInstance] isEditing]) {
+			[self->tapGestureRecognizer setEnabled:NO];
+			[self->tapGestureRecognizer setEnabled:YES];
+			
 			[[RSStartScreenController sharedInstance] setIsEditing:YES];
 			[[RSStartScreenController sharedInstance] setSelectedTile:self];
 			
