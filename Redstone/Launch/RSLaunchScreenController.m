@@ -23,6 +23,7 @@ static RSLaunchScreenController* sharedInstance;
 
 - (void)setLaunchScreenForLeafIdentifier:(NSString *)leafIdentifier {
 	[self.launchScreen.launchImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:leafIdentifier]];
+	[self.launchScreen setBackgroundColor:[RSAesthetics accentColorForLaunchScreen:leafIdentifier]];
 }
 
 - (void)show {

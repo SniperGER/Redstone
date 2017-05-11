@@ -25,7 +25,7 @@ Redstone_FILES = Redstone.xm
 Redstone_FILES += Core/RSCore.m Core/RSAesthetics.m Core/RSMetrics.m Core/RSRootScrollView.m
 
 # Lib
-Redstone_FILES += Lib/UIView+Easing.m Lib/easing.c Lib/CAKeyframeAnimation+AHEasing.m
+Redstone_FILES += Lib/UIView+Easing.m Lib/easing.c Lib/CAKeyframeAnimation+AHEasing.m Lib/UIFont+WDCustomLoader.m
 
 # Start Screen
 Redstone_FILES += Start/RSStartScreenController.m Start/RSStartScrollView.m Start/RSTile.m

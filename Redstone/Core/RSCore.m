@@ -47,6 +47,10 @@ static id currentApplication;
 		sharedInstance = self;
 		self->_window = window;
 		
+		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeui.ttf", RESOURCE_PATH]]];
+		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeuil.ttf", RESOURCE_PATH]]];
+		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeuisl.ttf", RESOURCE_PATH]]];
+		
 		wallpaperView = [[UIImageView alloc] initWithImage:[RSAesthetics getCurrentWallpaper]];
 		[wallpaperView setFrame:[[UIScreen mainScreen] bounds]];
 		[self->_window addSubview:wallpaperView];

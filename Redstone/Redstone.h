@@ -3,6 +3,7 @@
 
 #import "Lib/UIView+Easing.h"
 #import "Lib/CAKeyframeAnimation+AHEasing.h"
+#import "Lib/UIFont+WDCustomLoader.h"
 
 #import "Core/RSCore.h"
 #import "Core/RSAesthetics.h"

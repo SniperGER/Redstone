@@ -4,5 +4,8 @@
 
 + (UIImage*)getCurrentWallpaper;
 + (UIImage*)getImageForTileWithBundleIdentifier:(NSString*)bundleIdentifier;
++ (UIColor*)accentColor;
++ (UIColor*)accentColorForTile:(NSString*)bundleIdentifier;
++ (UIColor*)accentColorForLaunchScreen:(NSString*)bundleIdentifier;
 
 @end

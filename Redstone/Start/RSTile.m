@@ -12,7 +12,7 @@
 		
 		self->tileLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, frame.size.height-30, frame.size.height-20, 20)];
 		[self->tileLabel setText:[self.icon displayName]];
-		[self->tileLabel setFont:[UIFont fontWithName:@".SFCompactText-Regular" size:14]];
+		[self->tileLabel setFont:[UIFont fontWithName:@"SegoeUI" size:14]];
 		[self->tileLabel setTextColor:[UIColor whiteColor]];
 		[self addSubview:self->tileLabel];
 		
@@ -27,7 +27,7 @@
 		[self->tileImageView setTintColor:[UIColor whiteColor]];
 		[self addSubview:self->tileImageView];
 		
-		[self setBackgroundColor:[UIColor colorWithRed:0.0 green:0.47 blue:0.843 alpha:1.0]];
+		[self setBackgroundColor:[RSAesthetics accentColorForTile:[[self.icon application] bundleIdentifier]]];
 		
 		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
 		[self addGestureRecognizer:self->longPressGestureRecognizer];
