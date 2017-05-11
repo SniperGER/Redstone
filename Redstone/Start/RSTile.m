@@ -30,10 +30,12 @@
 		[self setBackgroundColor:[RSAesthetics accentColorForTile:[[self.icon application] bundleIdentifier]]];
 		
 		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
+		[self->longPressGestureRecognizer setDelegate:self];
 		[self addGestureRecognizer:self->longPressGestureRecognizer];
 		
 		self->panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGestureRecognizer:)];
-		[self->panGestureRecognizer setEnabled:NO];
+		//[self->panGestureRecognizer setEnabled:NO];
+		[self->panGestureRecognizer setDelegate:self];
 		[self addGestureRecognizer:self->panGestureRecognizer];
 		
 		self->tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
@@ -45,7 +47,22 @@
 	return self;
 }
 
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+	return YES;
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+	if([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && ! shouldAllowPan) {
+		return NO;
+	}
+	return YES;
+}
+
 - (void)moveViewWithGestureRecognizer:(UIPanGestureRecognizer *)_panGestureRecognizer {
+	if (!shouldAllowPan) {
+		return;
+	}
 	CGPoint touchLocation = [_panGestureRecognizer locationInView:self.superview];
 	
 	if (_panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
@@ -94,10 +111,22 @@
 }
 
 - (void)pressed:(UILongPressGestureRecognizer*)_longPressGestureRecognizer {
-	if (![[RSStartScreenController sharedInstance] isEditing]) {
-		[[RSStartScreenController sharedInstance] setIsEditing:YES];
-		[[RSStartScreenController sharedInstance] setSelectedTile:self];
-		[self->longPressGestureRecognizer setEnabled:NO];
+	if (_longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+		shouldAllowPan = NO;
+	}
+	
+	if  (_longPressGestureRecognizer.state == UIGestureRecognizerStateChanged) {
+		
+		if (![[RSStartScreenController sharedInstance] isEditing]) {
+			[[RSStartScreenController sharedInstance] setIsEditing:YES];
+			[[RSStartScreenController sharedInstance] setSelectedTile:self];
+			
+			shouldAllowPan = YES;
+			[self->longPressGestureRecognizer setEnabled:NO];
+			
+			[[[[RSStartScreenController sharedInstance] startScrollView] panGestureRecognizer] setEnabled:NO];
+			[[[[RSStartScreenController sharedInstance] startScrollView] panGestureRecognizer] setEnabled:YES];
+		}
 	}
 }
 
@@ -139,7 +168,7 @@
 		[self setTransform:CGAffineTransformMakeScale(1, 1)];
 		
 		[self->longPressGestureRecognizer setEnabled:YES];
-		[self->panGestureRecognizer setEnabled:NO];
+		//[self->panGestureRecognizer setEnabled:NO];
 	}
 }
 

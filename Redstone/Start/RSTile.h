@@ -17,6 +17,8 @@
 	UITapGestureRecognizer* tapGestureRecognizer;
 	UILongPressGestureRecognizer* longPressGestureRecognizer;
 	UIPanGestureRecognizer* panGestureRecognizer;
+	
+	BOOL shouldAllowPan;
 }
 
 @property (nonatomic, assign) CGPoint originalCenter;
