@@ -10,10 +10,16 @@
 		self.icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafId];
 		self.originalCenter = self.center;
 		
-		self->tileLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, frame.size.height-30, frame.size.height-20, 20)];
+		self->tileLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		[self->tileLabel setText:[self.icon displayName]];
 		[self->tileLabel setFont:[UIFont fontWithName:@"SegoeUI" size:14]];
 		[self->tileLabel setTextColor:[UIColor whiteColor]];
+		
+		[self->tileLabel sizeToFit];
+		[self->tileLabel setFrame:CGRectMake(8,
+											 self.frame.size.height - self->tileLabel.frame.size.height - 8,
+											 self->tileLabel.frame.size.width,
+											 self->tileLabel.frame.size.height)];
 		[self addSubview:self->tileLabel];
 		
 		if (tileSize < 2) {
