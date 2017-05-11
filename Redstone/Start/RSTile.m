@@ -52,17 +52,14 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	return YES;
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+/*- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
 	if([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && ! shouldAllowPan) {
 		return NO;
 	}
 	return YES;
-}
+}*/
 
 - (void)moveViewWithGestureRecognizer:(UIPanGestureRecognizer *)_panGestureRecognizer {
-	if (!shouldAllowPan) {
-		return;
-	}
 	CGPoint touchLocation = [_panGestureRecognizer locationInView:self.superview];
 	
 	if (_panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
@@ -70,7 +67,13 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		
 		CGPoint relativePosition = [self.superview convertPoint:self.center toView:self.superview];
 		self->centerOffset = CGPointMake(relativePosition.x - touchLocation.x, relativePosition.y - touchLocation.y);
-	} else if (_panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
+	}
+	
+	if (_panGestureRecognizer.state == UIGestureRecognizerStateChanged && shouldAllowPan) {
+		self.center = CGPointMake(touchLocation.x + self->centerOffset.x, touchLocation.y + self->centerOffset.y);
+	}
+	
+	if (_panGestureRecognizer.state == UIGestureRecognizerStateEnded && shouldAllowPan) {
 		self->centerOffset = CGPointZero;
 		
 		float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
@@ -92,8 +95,6 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		}];
 		
 		[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
-	} else {
-		self.center = CGPointMake(touchLocation.x + self->centerOffset.x, touchLocation.y + self->centerOffset.y);
 	}
 }
 
@@ -121,11 +122,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[[RSStartScreenController sharedInstance] setIsEditing:YES];
 			[[RSStartScreenController sharedInstance] setSelectedTile:self];
 			
-			shouldAllowPan = YES;
 			[self->longPressGestureRecognizer setEnabled:NO];
-			
-			[[[[RSStartScreenController sharedInstance] startScrollView] panGestureRecognizer] setEnabled:NO];
-			[[[[RSStartScreenController sharedInstance] startScrollView] panGestureRecognizer] setEnabled:YES];
 		}
 	}
 }
@@ -147,10 +144,15 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		[self.layer removeAllAnimations];
 		
 		if (isSelectedTile) {
+			shouldAllowPan = YES;
+			[[[[RSStartScreenController sharedInstance] startScrollView] panGestureRecognizer] setEnabled:NO];
+			[[[[RSStartScreenController sharedInstance] startScrollView] panGestureRecognizer] setEnabled:YES];
+			
 			[self.superview bringSubviewToFront:self];
 			[self setAlpha:1.0];
 			[self setTransform:CGAffineTransformIdentity];
 		} else {
+			shouldAllowPan = NO;
 			if ([[RSStartScreenController sharedInstance] isEditing]) {
 				[self setAlpha:0.8];
 				[self setTransform:CGAffineTransformMakeScale(0.8320610687, 0.8320610687)];
@@ -168,6 +170,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		[self setTransform:CGAffineTransformMakeScale(1, 1)];
 		
 		[self->longPressGestureRecognizer setEnabled:YES];
+		shouldAllowPan = NO;
 		//[self->panGestureRecognizer setEnabled:NO];
 	}
 }
