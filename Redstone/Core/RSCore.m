@@ -73,11 +73,24 @@ static id currentApplication;
 	currentApplication = arg1;
 	
 	if (arg1) {
-		//[self.rootScrollView setHidden:YES];
+		[self.startScreenController resetTileVisibility];
 		[self.launchScreenController hide];
+		[self.rootScrollView setContentOffset:CGPointMake(0,0)];
+		[[self.startScreenController startScrollView] setContentOffset:CGPointMake(0,-24)];
+		
+		if ([[self.startScreenController pinnedTiles] count] > 0) {
+			[self.rootScrollView setScrollEnabled:YES];
+		} else {
+			[self.rootScrollView setScrollEnabled:NO];
+		}
 	} else {
 		[self.rootScrollView setHidden:NO];
+		[wallpaperView setHidden:NO];
 	}
+}
+
+- (UIImageView*)wallpaperView {
+	return wallpaperView;
 }
 
 @end

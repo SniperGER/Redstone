@@ -23,5 +23,9 @@
 
 - (void)pinTileWithId:(NSString*)leafId;
 - (void)unpinTile:(RSTile*)tile;
+- (id)viewIntersectsWithAnotherView:(CGRect)rect;
+- (void)resetTileVisibility;
+- (NSArray*)pinnedTiles;
+- (NSArray*)pinnedLeafIdentifiers;
 
 @end

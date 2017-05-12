@@ -4,8 +4,13 @@
 extern "C" UIImage * _UICreateScreenUIImage();
 
 RSCore* redstone;
+BOOL switcherIsOpen;
 
 void playZoomDownAppAnimation() {
+	for (RSTile* tile in [redstone.startScreenController pinnedTiles]) {
+		[tile.layer setOpacity:0];
+	}
+	
 	UIImage *screenImage = _UICreateScreenUIImage();
 	UIImageView *screenImageView = [[UIImageView alloc] initWithImage:screenImage];
 	[redstone.window addSubview:screenImageView];
@@ -79,6 +84,30 @@ void playZoomDownAppAnimation() {
 
 - (NSInteger)supportedInterfaceOrientations {
 	return 1;
+}
+
+%end
+
+%hook SBDeckSwitcherViewController
+
+- (void)viewDidAppear:(BOOL)arg1 {
+	%orig(arg1);
+	
+	switcherIsOpen = YES;
+	
+	if (redstone) {
+		[redstone.rootScrollView setHidden:NO];
+	}
+}
+
+- (void)viewWillDisappear:(BOOL)arg1 {
+	%orig(arg1);
+	
+	switcherIsOpen = NO;
+	
+	if (redstone) {
+		[redstone.rootScrollView setHidden:YES];
+	}
 }
 
 %end

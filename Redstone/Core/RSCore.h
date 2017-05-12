@@ -22,4 +22,6 @@
 - (id)initWithWindow:(id)window;
 - (void)frontDisplayDidChange:(UIApplication*)arg1;
 
+- (UIImageView*)wallpaperView;
+
 @end

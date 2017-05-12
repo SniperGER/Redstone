@@ -1,7 +1,7 @@
 # MAKEFILE 2
 
 # Configure your device details here
-export THEOS_DEVICE_IP=192.168.178.38
+export THEOS_DEVICE_IP=10.60.20.95
 export THEOS_DEVICE_PORT=22
 
 # Set the package version
@@ -9,7 +9,7 @@ export PACKAGE_VERSION = $(shell date +%y)w$(shell date +%V)a
 
 # Configure the target here
 TARGET = iphone:latest		# Phyiscal devices
-TARGET = simulator:clang	# Simulator
+#TARGET = simulator:clang	# Simulator
 
 
 # DO NOT EDIT ANYTHING BEYOND THIS POINT

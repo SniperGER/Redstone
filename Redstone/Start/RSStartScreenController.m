@@ -195,6 +195,7 @@ static RSStartScreenController* sharedInstance;
 		
 		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			[[objc_getClass("SBIconController") sharedInstance] _launchIcon:sender.icon];
+			[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:YES];
 		});
 	});
 }
@@ -417,13 +418,29 @@ static RSStartScreenController* sharedInstance;
 	}];
 }
 
-- (id)viewIntersectsWithAnotherView:(CGRect)rect{
+- (id)viewIntersectsWithAnotherView:(CGRect)rect {
 	for (RSTile* tile in self->pinnedTiles) {
 		if (CGRectIntersectsRect(tile.frame, rect)) {
 			return tile;
 		}
 	}
 	return nil;
+}
+
+- (void)resetTileVisibility {
+	for (RSTile* tile in self->pinnedTiles) {
+		[tile setHidden:NO];
+		[tile.layer setOpacity:1];
+		[tile.layer removeAllAnimations];
+	}
+}
+
+- (NSArray*)pinnedTiles {
+	return self->pinnedTiles;
+}
+
+- (NSArray*)pinnedLeafIdentifiers {
+	return self->pinnedLeafIdentifiers;
 }
 
 @end
