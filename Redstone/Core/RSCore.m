@@ -52,6 +52,8 @@ static id currentApplication;
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeuisl.ttf", RESOURCE_PATH]]];
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segmdl2.ttf", RESOURCE_PATH]]];
 		
+		self->preferences = [[RSPreferences alloc] init];
+		
 		wallpaperView = [[UIImageView alloc] initWithImage:[RSAesthetics getCurrentWallpaper]];
 		[wallpaperView setFrame:[[UIScreen mainScreen] bounds]];
 		[self->_window addSubview:wallpaperView];

@@ -24,7 +24,7 @@ static RSStartScreenController* sharedInstance;
 	self->pinnedTiles = [NSMutableArray new];
 	self->pinnedLeafIdentifiers = [NSMutableArray new];
 	
-	NSArray* tileLayout = [NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/3ColumnDefaultLayout.plist", RESOURCE_PATH]];
+	NSArray* tileLayout = [[RSPreferences preferences] objectForKey:[NSString stringWithFormat:@"%iColumnLayout", [RSMetrics columns]]];;
 	
 	for (int i=0; i<[tileLayout count]; i++) {
 		if ([[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[tileLayout objectAtIndex:i][@"bundleIdentifier"]]) {
@@ -49,6 +49,23 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	[self updateStartContentSize];
+}
+
+- (void)saveTiles {
+	NSMutableArray* tilesToSave = [NSMutableArray new];
+	
+	for (RSTile* tile in self->pinnedTiles) {
+		NSMutableDictionary* tileInfo = [NSMutableDictionary new];
+		
+		[tileInfo setValue:[NSNumber numberWithInteger:tile.size] forKey:@"size"];
+		[tileInfo setValue:[NSNumber numberWithInteger:tile.tileY] forKey:@"row"];
+		[tileInfo setValue:[NSNumber numberWithInteger:tile.tileX] forKey:@"column"];
+		[tileInfo setValue:[[tile.icon application] bundleIdentifier] forKey:@"bundleIdentifier"];
+		
+		[tilesToSave addObject:tileInfo];
+	}
+	
+	[RSPreferences setValue:tilesToSave forKey:[NSString stringWithFormat:@"%iColumnLayout", [RSMetrics columns]]];
 }
 
 - (void)updateStartContentSize {
@@ -85,14 +102,19 @@ static RSStartScreenController* sharedInstance;
 				[stack addObject:tile];
 				
 				CGFloat moveDistance = (CGRectGetMaxY([current positionWithoutTransform]) - CGRectGetMinY([tile positionWithoutTransform])) + [RSMetrics tileBorderSpacing];
+				CGRect newFrame = CGRectMake(tile.frame.origin.x,
+											 tile.frame.origin.y + moveDistance,
+											 tile.frame.size.width,
+											 tile.frame.size.height);
+				
+				int tileX = newFrame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
+				int tileY = newFrame.origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
+				
+				[tile setTileX:tileX];
+				[tile setTileY:tileY];
 				
 				[UIView animateWithDuration:.3 animations:^{
 					[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-					
-					CGRect newFrame = CGRectMake(tile.frame.origin.x,
-												 tile.frame.origin.y + moveDistance,
-												 tile.frame.size.width,
-												 tile.frame.size.height);
 					[tile setFrame:newFrame];
 				} completion:^(BOOL finished) {
 					[tile removeEasingFunctionForKeyPath:@"frame"];
@@ -103,6 +125,7 @@ static RSStartScreenController* sharedInstance;
 		}
 	}
 	
+	[self saveTiles];
 	[self updateStartContentSize];
 }
 
@@ -398,6 +421,7 @@ static RSStartScreenController* sharedInstance;
 		[self->pinnedLeafIdentifiers addObject:leafId];
 	}
 	
+	[self saveTiles];
 	[self updateStartContentSize];
 }
 
@@ -414,6 +438,8 @@ static RSStartScreenController* sharedInstance;
 	} completion:^(BOOL finished) {
 		[tile removeEasingFunctionForKeyPath:@"frame"];
 		[tile removeFromSuperview];
+		
+		[self saveTiles];
 		[self updateStartContentSize];
 	}];
 }

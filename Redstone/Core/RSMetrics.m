@@ -92,4 +92,8 @@ int columns;
 	return 5.0;
 }
 
++ (int)columns {
+	return columns;
+}
+
 @end

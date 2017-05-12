@@ -9,6 +9,7 @@
 #import "Core/RSAesthetics.h"
 #import "Core/RSMetrics.h"
 #import "Core/RSRootScrollView.h"
+#import "Core/RSPreferences.h"
 
 #import "Start/RSStartScreenController.h"
 #import "Start/RSStartScrollView.h"
@@ -22,9 +23,15 @@
 #define deg2rad(angle) ((angle) / 180.0 * M_PI)
 
 #if TARGET_OS_SIMULATOR
+
 #define RESOURCE_PATH @"/opt/simject/FESTIVAL/Redstone"
+#define PREFERENCES_PATH @"/opt/simject/FESTIVAL/ml.festival.redstone.plist"
+
 #else
+
 #define RESOURCE_PATH @"/var/mobile/Library/FESTIVAL/Redstone"
+#define PREFERENCES_PATH @"/var/mobile/Library/Preferences/ml.festival.redstone.plist"
+
 #endif
 
 @interface SBUIController : NSObject

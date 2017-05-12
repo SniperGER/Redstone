@@ -1,9 +1,11 @@
 #import <UIKit/UIKit.h>
 
-@class RSRootScrollView, RSStartScreenController, RSLaunchScreenController;
+@class RSRootScrollView, RSStartScreenController, RSLaunchScreenController, RSPreferences;
 
 @interface RSCore : NSObject {
 	UIWindow* _window;
+	
+	RSPreferences* preferences;
 	
 	RSRootScrollView* _rootScrollView;
 	RSStartScreenController* _startScreenController;

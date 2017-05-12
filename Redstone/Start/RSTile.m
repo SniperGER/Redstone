@@ -37,6 +37,7 @@
 		
 		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
 		[self->longPressGestureRecognizer setDelegate:self];
+		[self->longPressGestureRecognizer setMinimumPressDuration:1.0];
 		[self addGestureRecognizer:self->longPressGestureRecognizer];
 		
 		self->panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGestureRecognizer:)];
@@ -114,16 +115,23 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].contentSize.width - [self positionWithoutTransform].size.width;
 		CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height - [self positionWithoutTransform].size.height;
 		
-		CGRect newTilePosition = CGRectMake(MIN(MAX(step * roundf((self.frame.origin.x / step)), 0), maxPositionX),
+		CGRect newFrame = CGRectMake(MIN(MAX(step * roundf((self.frame.origin.x / step)), 0), maxPositionX),
 											MIN(MAX(step * roundf((self.frame.origin.y / step)), 0), maxPositionY),
 											[self positionWithoutTransform].size.width,
 											[self positionWithoutTransform].size.height);
 		
+		int tileX = newFrame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
+		int tileY = newFrame.origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
+		
+		[self setTileX:tileX];
+		[self setTileY:tileY];
+		
 		[UIView animateWithDuration:.3 animations:^{
 			[self setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-			[self setFrame:newTilePosition];
+			[self setFrame:newFrame];
 		} completion:^(BOOL finished) {
 			[self removeEasingFunctionForKeyPath:@"frame"];
+			
 			self.originalCenter = self.center;
 		}];
 		
