@@ -12,11 +12,17 @@
 	UILabel* tileLabel;
 	UIImageView* tileImageView;
 	
+	UIView* unpinButton;
+	UIView* scaleButton;
+	
 	BOOL _isSelectedTile;
 	
 	UITapGestureRecognizer* tapGestureRecognizer;
 	UILongPressGestureRecognizer* longPressGestureRecognizer;
 	UIPanGestureRecognizer* panGestureRecognizer;
+	
+	UITapGestureRecognizer* unpinGestureRecognizer;
+	UITapGestureRecognizer* scaleGestureRecognizer;
 	
 	BOOL shouldAllowPan;
 }
@@ -25,6 +31,8 @@
 @property (nonatomic, assign) int size;
 @property (nonatomic, strong) SBLeafIcon* icon;
 @property (nonatomic, assign) BOOL isSelectedTile;
+@property (nonatomic, assign) int tileX;
+@property (nonatomic, assign) int tileY;
 
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafId size:(int)tileSize;
 - (CGRect)positionWithoutTransform;

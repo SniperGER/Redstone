@@ -19,6 +19,7 @@
 
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
+#define deg2rad(angle) ((angle) / 180.0 * M_PI)
 
 #if TARGET_OS_SIMULATOR
 #define RESOURCE_PATH @"/opt/simject/FESTIVAL/Redstone"

@@ -22,6 +22,8 @@ static RSStartScreenController* sharedInstance;
 
 - (void)loadTiles {
 	self->pinnedTiles = [NSMutableArray new];
+	self->pinnedLeafIdentifiers = [NSMutableArray new];
+	
 	NSArray* tileLayout = [NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/3ColumnDefaultLayout.plist", RESOURCE_PATH]];
 	
 	for (int i=0; i<[tileLayout count]; i++) {
@@ -36,9 +38,13 @@ static RSStartScreenController* sharedInstance;
 										   tileSize.height);
 			
 			RSTile* tile = [[RSTile alloc] initWithFrame:tileFrame leafIdentifier:[tileLayout objectAtIndex:i][@"bundleIdentifier"] size:[[tileLayout objectAtIndex:i][@"size"] intValue]];
+			[tile setTileX:[[tileLayout objectAtIndex:i][@"column"] intValue]];
+			[tile setTileY:[[tileLayout objectAtIndex:i][@"row"] intValue]];
 			
 			[self.startScrollView addSubview:tile];
+			
 			[self->pinnedTiles addObject:tile];
+			[self->pinnedLeafIdentifiers addObject:[tileLayout objectAtIndex:i][@"bundleIdentifier"]];
 		}
 	}
 	
@@ -310,6 +316,114 @@ static RSStartScreenController* sharedInstance;
 			[tile setIsSelectedTile:NO];
 		}
 	}
+}
+
+- (void)pinTileWithId:(NSString *)leafId {
+	if ([self->pinnedLeafIdentifiers containsObject:leafId]) {
+		return;
+	}
+	
+	int maxTileX = 0, maxTileY = 0;
+	
+	for (RSTile* tile in self->pinnedTiles) {
+		if (tile.tileY > maxTileY) {
+			maxTileX = 0;
+		}
+		maxTileY = MAX(maxTileY, tile.tileY);
+		maxTileX = MAX(maxTileX, tile.tileX);
+	}
+	
+	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
+	CGSize tileSize = [RSMetrics tileDimensionsForSize:2];
+	BOOL tileHasBeenPinned = NO;
+	
+	for (int i=0; i<6; i++) {
+		CGRect tileFrame = CGRectMake(i * sizeForPosition,
+									  maxTileY * sizeForPosition,
+									  tileSize.width,
+									  tileSize.height);
+		
+		if (![self viewIntersectsWithAnotherView:tileFrame] && (tileFrame.origin.x + tileFrame.size.width) < self.startScrollView.frame.size.width) {
+			RSTile* tile = [[RSTile alloc] initWithFrame:tileFrame leafIdentifier:leafId size:2];
+			[tile setTileX:i];
+			[tile setTileY:maxTileY];
+			
+			[self.startScrollView addSubview:tile];
+			
+			[self->pinnedTiles addObject:tile];
+			[self->pinnedLeafIdentifiers addObject:leafId];
+			
+			tileHasBeenPinned = YES;
+			break;
+		}
+	}
+	
+	if (!tileHasBeenPinned) {
+		for (int i=0; i<6; i++) {
+			CGRect tileFrame = CGRectMake(i * sizeForPosition,
+										  (maxTileY + 2) * sizeForPosition,
+										  tileSize.width,
+										  tileSize.height);
+			
+			if (![self viewIntersectsWithAnotherView:tileFrame] && (tileFrame.origin.x + tileFrame.size.width) < self.startScrollView.frame.size.width) {
+				RSTile* tile = [[RSTile alloc] initWithFrame:tileFrame leafIdentifier:leafId size:2];
+				[tile setTileX:i];
+				[tile setTileY:maxTileY];
+				
+				[self.startScrollView addSubview:tile];
+				
+				[self->pinnedTiles addObject:tile];
+				[self->pinnedLeafIdentifiers addObject:leafId];
+				
+				tileHasBeenPinned = YES;
+				break;
+			}
+		}
+	}
+	
+	if (!tileHasBeenPinned) {
+		CGRect tileFrame = CGRectMake(0,
+									  (maxTileY + 2) * sizeForPosition,
+									  tileSize.width,
+									  tileSize.height);
+
+		RSTile* tile = [[RSTile alloc] initWithFrame:tileFrame leafIdentifier:leafId size:2];
+		[tile setTileX:0];
+		[tile setTileY:maxTileY];
+		
+		[self.startScrollView addSubview:tile];
+		
+		[self->pinnedTiles addObject:tile];
+		[self->pinnedLeafIdentifiers addObject:leafId];
+	}
+	
+	[self updateStartContentSize];
+}
+
+
+- (void)unpinTile:(RSTile *)tile {
+	[self->pinnedTiles removeObject:tile];
+	[self->pinnedLeafIdentifiers removeObject:[[tile.icon application] bundleIdentifier]];
+	
+	[UIView animateWithDuration:.2 animations:^{
+		[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+		
+		[tile setTransform:CGAffineTransformMakeScale(0.5, 0.5)];
+		[tile.layer setOpacity:0.0];
+	} completion:^(BOOL finished) {
+		[tile removeEasingFunctionForKeyPath:@"frame"];
+		[tile removeFromSuperview];
+		[self updateStartContentSize];
+	}];
+}
+
+- (id)viewIntersectsWithAnotherView:(CGRect)rect{
+	for (RSTile* tile in self->pinnedTiles) {
+		if (CGRectIntersectsRect(tile.frame, rect)) {
+			return tile;
+		}
+	}
+	return nil;
 }
 
 @end

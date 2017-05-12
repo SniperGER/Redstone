@@ -4,7 +4,9 @@
 
 @interface RSStartScreenController : NSObject {
 	RSStartScrollView* _startScrollView;
+	
 	NSMutableArray* pinnedTiles;
+	NSMutableArray* pinnedLeafIdentifiers;
 	
 	BOOL _isEditing;
 	RSTile* _selectedTile;
@@ -18,5 +20,8 @@
 - (void)moveAffectedTilesForTile:(RSTile*)movedTile;
 - (void)prepareForAppLaunch:(RSTile*)sender;
 - (void)returnToHomescreen;
+
+- (void)pinTileWithId:(NSString*)leafId;
+- (void)unpinTile:(RSTile*)tile;
 
 @end
