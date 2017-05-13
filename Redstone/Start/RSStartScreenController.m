@@ -357,21 +357,18 @@ static RSStartScreenController* sharedInstance;
 		maxTileX = MAX(maxTileX, tile.tileX);
 	}
 	
-	NSLog(@"[Redstone] x: %d, y: %d", maxTileX, maxTileY);
-	
 	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	CGSize tileSize = [RSMetrics tileDimensionsForSize:2];
 	BOOL tileHasBeenPinned = NO;
+
 	
-	NSLog(@"[Redstone] test a");
 	for (int i=0; i<6; i++) {
 		CGRect tileFrame = CGRectMake(i * sizeForPosition,
 									  maxTileY * sizeForPosition,
 									  tileSize.width,
 									  tileSize.height);
 		
-		NSLog(@"[Redstone] x: %f, y: %f", tileFrame.origin.x, tileFrame.origin.y);
-		
+
 		if (![self viewIntersectsWithAnotherView:tileFrame] && (tileFrame.origin.x + tileFrame.size.width) <= self.startScrollView.frame.size.width) {
 			RSTile* tile = [[RSTile alloc] initWithFrame:tileFrame leafIdentifier:leafId size:2];
 			[tile setTileX:i];
@@ -456,7 +453,6 @@ static RSStartScreenController* sharedInstance;
 - (id)viewIntersectsWithAnotherView:(CGRect)rect {
 	for (RSTile* tile in self->pinnedTiles) {
 		if (CGRectIntersectsRect(tile.frame, rect)) {
-			NSLog(@"[Redstone] tile intersects: %f %f, %f %f (%f %f)", tile.frame.origin.x, tile.frame.origin.y, tile.frame.size.width, tile.frame.size.height, rect.origin.x, rect.origin.y);
 			return tile;
 		}
 	}

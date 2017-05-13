@@ -9,7 +9,7 @@ export PACKAGE_VERSION = $(shell date +%y)w$(shell date +%V)a
 
 # Configure the target here
 TARGET = iphone:latest		# Phyiscal devices
-#TARGET = simulator:clang	# Simulator
+TARGET = simulator:clang	# Simulator
 
 
 # DO NOT EDIT ANYTHING BEYOND THIS POINT

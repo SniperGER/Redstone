@@ -318,6 +318,7 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)showPinMenuForApp:(RSApp *)app {
+	AudioServicesPlaySystemSound(1520);
 	self->showsPinMenu = YES;
 	[self->pinMenu setHandlingApp:app];
 	
@@ -339,6 +340,35 @@ static RSAppListController* sharedInstance;
 	[self.appList setScrollEnabled:NO];
 	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:NO];
 	[[[RSCore sharedInstance] rootScrollView] addSubview:self->pinMenu];
+	
+	CAAnimation *opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
+															function:ExponentialEaseOut
+														   fromValue:0.0
+															 toValue:1.0];
+	opacity.duration = 0.2;
+	opacity.removedOnCompletion = NO;
+	opacity.fillMode = kCAFillModeForwards;
+	
+	CAAnimation *scale;
+	if (isBelowHalfScreen) {
+		scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.translation.y"
+												 function:ExponentialEaseOut
+												fromValue:50
+												  toValue:0.0];
+	} else {
+		
+		scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.translation.y"
+												 function:ExponentialEaseOut
+												fromValue:-50
+												  toValue:0.0];
+	}
+	
+	scale.duration = 0.225;
+	scale.removedOnCompletion = NO;
+	scale.fillMode = kCAFillModeForwards;
+	
+	[self->pinMenu.layer addAnimation:opacity forKey:@"opacity"];
+	[self->pinMenu.layer addAnimation:scale forKey:@"scale"];
 }
 
 - (void)hidePinMenu {
@@ -346,6 +376,7 @@ static RSAppListController* sharedInstance;
 		return;
 	}
 	
+	[self->pinMenu.layer removeAllAnimations];
 	[self->pinMenu setHandlingApp:nil];
 	
 	for (UIView* view in self.appList.subviews) {

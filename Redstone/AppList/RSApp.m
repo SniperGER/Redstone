@@ -39,7 +39,9 @@
 }
 
 - (void)pressed:(UILongPressGestureRecognizer*)gestureRecognizer {
-	[[RSAppListController sharedInstance] showPinMenuForApp:self];
+	if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+		[[RSAppListController sharedInstance] showPinMenuForApp:self];
+	}
 }
 
 @end
