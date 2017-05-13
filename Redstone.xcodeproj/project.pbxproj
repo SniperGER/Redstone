@@ -91,6 +91,7 @@
 		8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E951EC6F195004EF2E6 /* RSApp.m */; };
 		8DE79E991EC6F3BE004EF2E6 /* RSAppListSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E981EC6F3BE004EF2E6 /* RSAppListSection.m */; };
 		8DE79E9C1EC79AA5004EF2E6 /* RSPinMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E9B1EC79AA5004EF2E6 /* RSPinMenu.m */; };
+		8DE79E9F1EC7B6C3004EF2E6 /* RSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E9E1EC7B6C3004EF2E6 /* RSSearchBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -200,6 +201,8 @@
 		8DE79E981EC6F3BE004EF2E6 /* RSAppListSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppListSection.m; sourceTree = "<group>"; };
 		8DE79E9A1EC79AA5004EF2E6 /* RSPinMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPinMenu.h; sourceTree = "<group>"; };
 		8DE79E9B1EC79AA5004EF2E6 /* RSPinMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPinMenu.m; sourceTree = "<group>"; };
+		8DE79E9D1EC7B6C3004EF2E6 /* RSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSearchBar.h; sourceTree = "<group>"; };
+		8DE79E9E1EC7B6C3004EF2E6 /* RSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSearchBar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -582,6 +585,8 @@
 				8DE79E981EC6F3BE004EF2E6 /* RSAppListSection.m */,
 				8DE79E9A1EC79AA5004EF2E6 /* RSPinMenu.h */,
 				8DE79E9B1EC79AA5004EF2E6 /* RSPinMenu.m */,
+				8DE79E9D1EC7B6C3004EF2E6 /* RSSearchBar.h */,
+				8DE79E9E1EC7B6C3004EF2E6 /* RSSearchBar.m */,
 			);
 			name = AppList;
 			path = Redstone/AppList;
@@ -782,6 +787,7 @@
 				8DBD107E1EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				8D58CF391EC3A6AA0021F625 /* RSLaunchScreen.m in Sources */,
 				8DBD10A01EC23CD000A5A037 /* RSStartScrollView.m in Sources */,
+				8DE79E9F1EC7B6C3004EF2E6 /* RSSearchBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

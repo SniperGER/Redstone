@@ -34,7 +34,7 @@ Redstone_FILES += Start/RSStartScreenController.m Start/RSStartScrollView.m Star
 Redstone_FILES += Launch/RSLaunchScreenController.m Launch/RSLaunchScreen.m
 
 # App List
-Redstone_FILES += AppList/RSAppListController.m AppList/RSAppList.m AppList/RSApp.m AppList/RSAppListSection.m AppList/RSPinMenu.m
+Redstone_FILES += AppList/RSAppListController.m AppList/RSAppList.m AppList/RSApp.m AppList/RSAppListSection.m AppList/RSPinMenu.m AppList/RSSearchBar.m
 
 include /opt/theos/makefiles/tweak.mk
 

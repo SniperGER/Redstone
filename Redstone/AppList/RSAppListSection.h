@@ -13,8 +13,5 @@
 @property (nonatomic, assign) int yCoordinate;
 
 - (id)initWithFrame:(CGRect)frame letter:(NSString*)letter;
-- (void)updateBackgroundPosition;
-
-- (void)setOverlayAlpha:(CGFloat)alpha;
 
 @end

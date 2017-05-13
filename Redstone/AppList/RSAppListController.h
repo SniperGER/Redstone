@@ -1,8 +1,11 @@
 #import <UIKit/UIKit.h>
 
-@class RSAppList, RSApp, RSPinMenu;
+@class RSAppList, RSApp, RSPinMenu, RSSearchBar;
 
 @interface RSAppListController : NSObject <UIScrollViewDelegate> {
+	RSSearchBar* _searchBar;
+	BOOL _isSearching;
+	
 	RSAppList* _appList;
 	NSMutableArray* sections;
 	NSMutableDictionary* appsBySection;
@@ -15,6 +18,7 @@
 	BOOL showsPinMenu;
 }
 
+@property (nonatomic, retain) RSSearchBar* searchBar;
 @property (nonatomic, retain) RSAppList* appList;
 
 + (id)sharedInstance;
@@ -25,5 +29,9 @@
 
 - (void)showPinMenuForApp:(RSApp*)app;
 - (void)hidePinMenu;
+
+- (BOOL)isSearching;
+- (void)setIsSearching:(BOOL)isSearching;
+- (void)showAppsFittingQuery:(NSString*)query;
 
 @end

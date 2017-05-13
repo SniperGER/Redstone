@@ -83,6 +83,7 @@ static id currentApplication;
 		[self.rootScrollView setContentOffset:CGPointMake(0, 0)];
 		[[self.startScreenController startScrollView] setContentOffset:CGPointMake(0, -24)];
 		[self.appListController.appList setContentOffset:CGPointMake(0, 0)];
+		[self.appListController setIsSearching:NO];
 		
 		if ([[self.startScreenController pinnedTiles] count] > 0) {
 			[self.rootScrollView setScrollEnabled:YES];
@@ -101,6 +102,12 @@ static id currentApplication;
 		[self.startScreenController saveTiles];
 		
 		return YES;
+	}
+	
+	if ([self.appListController isSearching]) {
+		[self.appListController setIsSearching:NO];
+		
+		return true;
 	}
 	
 	if (self.rootScrollView.contentOffset.x != 0 || self.startScreenController.startScrollView.contentOffset.y != -24) {

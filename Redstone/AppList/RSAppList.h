@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
 
-@interface RSAppList : UIScrollView 
+@interface RSAppList : UIScrollView
 
 @end

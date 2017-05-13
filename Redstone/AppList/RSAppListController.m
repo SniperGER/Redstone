@@ -14,6 +14,9 @@ static RSAppListController* sharedInstance;
 	if (self) {
 		sharedInstance = self;
 		
+		self.searchBar = [[RSSearchBar alloc] initWithFrame:CGRectMake(screenWidth + 5, 24, screenWidth - 10, 40)];
+		[[[RSCore sharedInstance] rootScrollView] addSubview:self.searchBar];
+		
 		self.appList = [[RSAppList alloc] initWithFrame:CGRectMake(screenWidth, 70, screenWidth, screenHeight - 70)];
 		[self.appList setDelegate:self];
 		
@@ -34,6 +37,10 @@ static RSAppListController* sharedInstance;
 	}
 	
 	return self;
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+	[self.searchBar resignFirstResponder];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -137,6 +144,8 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)sortAppsAndLayout:(NSArray*)sections {
+	
+	
 	NSString* alphabet = @"#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
 	
 	int yPos = 0;
@@ -150,7 +159,6 @@ static RSAppListController* sharedInstance;
 			RSAppListSection* section = [self sectionWithLetter:previousSection];
 			[section setFrame:CGRectMake(0, yPos, screenWidth, 60)];
 			[section setYCoordinate:yPos];
-			[section updateBackgroundPosition];
 			
 			yPos += 60;
 			[self.appList addSubview:section];
@@ -170,6 +178,7 @@ static RSAppListController* sharedInstance;
 	}
 	self.appList.contentSize = contentRect.size;
 	
+	[self->sectionBackgroundContainer setFrame:CGRectMake(0, 0, screenWidth, 60)];
 	[self.appList insertSubview:self->sectionBackgroundContainer belowSubview:[self->sections objectAtIndex:0]];
 }
 
@@ -388,6 +397,83 @@ static RSAppListController* sharedInstance;
 	
 	self->showsPinMenu = NO;
 	[self->pinMenu removeFromSuperview];
+}
+
+- (BOOL)isSearching {
+	if (![self.searchBar.text isEqualToString:@""]) {
+		return YES;
+	}
+	
+	return self->_isSearching;
+}
+
+- (void)setIsSearching:(BOOL)isSearching {
+	self->_isSearching = isSearching;
+	
+	if (!isSearching) {
+		[self.searchBar resignFirstResponder];
+			[self.searchBar setText:@""];
+			[self showAppsFittingQuery:nil];
+			//[self showNoResultsLabel:NO forQuery:nil];
+	}
+}
+
+- (void)showAppsFittingQuery:(NSString*)query {
+	NSMutableArray* newSubviews = [NSMutableArray new];
+	
+	for (UIView* view in self.appList.subviews) {
+		if (query != nil && ![query isEqualToString:@""] && [query length] > 0) {
+			if ([view isKindOfClass:[RSApp class]]) {
+				NSArray* displayName = [[[[(RSApp*)view icon] displayName] lowercaseString] componentsSeparatedByString:@" "];
+				
+				for (int i=0; i<[displayName count]; i++) {
+					if ([[displayName objectAtIndex:i] hasPrefix:[query lowercaseString]]) {
+						[newSubviews addObject:view];
+						break;
+					} else {
+						[view setHidden:YES];
+					}
+				}
+			} else {
+				[view setHidden:YES];
+			}
+		} else {
+			[view setHidden:NO];
+		}
+	}
+	
+	if ([newSubviews count] > 0 && (query != nil || ![query isEqualToString:@""])) {
+		for (UIView* view in self.appList.subviews) {
+			[view setHidden:YES];
+		}
+		
+		newSubviews = [[newSubviews sortedArrayUsingComparator:^NSComparisonResult(RSApp* app1, RSApp* app2) {
+			return [[[app1 icon] displayName] caseInsensitiveCompare:[[app2 icon] displayName]];
+		}] mutableCopy];
+		
+		for (int i=0; i<[newSubviews count]; i++) {
+			RSApp* app = [newSubviews objectAtIndex:i];
+			[app setHidden:NO];
+			
+			CGRect frame = app.frame;
+			frame.origin.y = i * frame.size.height;
+			[app setFrame:frame];
+		}
+		
+		CGRect contentRect = CGRectZero;
+		for (UIView *view in self.appList.subviews) {
+			if (!view.hidden) {
+				contentRect = CGRectUnion(contentRect, view.frame);
+			}
+		}
+		
+		self.appList.contentSize = contentRect.size;
+	} else if ([newSubviews count] == 0 && query != nil && ![query isEqualToString:@""]) {
+		//[[RSAppListController sharedInstance] showNoResultsLabel:YES forQuery:query];
+	} else {
+		//[[RSAppListController sharedInstance] showNoResultsLabel:NO forQuery:nil];
+		[self sortAppsAndLayout:self->sections];
+	}
 }
 
 @end
