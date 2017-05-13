@@ -26,6 +26,9 @@
 		
 		self->tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
 		[self addGestureRecognizer:self->tapGestureRecognizer];
+		
+		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
+		[self addGestureRecognizer:self->longPressGestureRecognizer];
 	}
 	
 	return self;
@@ -36,7 +39,7 @@
 }
 
 - (void)pressed:(UILongPressGestureRecognizer*)gestureRecognizer {
-	
+	[[RSAppListController sharedInstance] showPinMenuForApp:self];
 }
 
 @end

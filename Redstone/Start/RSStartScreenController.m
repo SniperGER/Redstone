@@ -209,14 +209,14 @@ static RSStartScreenController* sharedInstance;
 		[tile.layer addAnimation:opacity forKey:@"opacity"];
 	}
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		for (RSTile* tile in self->pinnedTiles) {
 			[tile.layer setOpacity:0];
 		}
 		
 		[[RSLaunchScreenController sharedInstance] show];
 		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			[[objc_getClass("SBIconController") sharedInstance] _launchIcon:sender.icon];
 			[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:YES];
 		});
@@ -302,7 +302,7 @@ static RSStartScreenController* sharedInstance;
 		[tile.layer addAnimation:opacity forKey:@"opacity"];
 	}
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		for (RSTile* tile in self->pinnedTiles) {
 			[tile.layer removeAllAnimations];
 			[tile.layer setOpacity:1];
@@ -357,17 +357,22 @@ static RSStartScreenController* sharedInstance;
 		maxTileX = MAX(maxTileX, tile.tileX);
 	}
 	
+	NSLog(@"[Redstone] x: %d, y: %d", maxTileX, maxTileY);
+	
 	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	CGSize tileSize = [RSMetrics tileDimensionsForSize:2];
 	BOOL tileHasBeenPinned = NO;
 	
+	NSLog(@"[Redstone] test a");
 	for (int i=0; i<6; i++) {
 		CGRect tileFrame = CGRectMake(i * sizeForPosition,
 									  maxTileY * sizeForPosition,
 									  tileSize.width,
 									  tileSize.height);
 		
-		if (![self viewIntersectsWithAnotherView:tileFrame] && (tileFrame.origin.x + tileFrame.size.width) < self.startScrollView.frame.size.width) {
+		NSLog(@"[Redstone] x: %f, y: %f", tileFrame.origin.x, tileFrame.origin.y);
+		
+		if (![self viewIntersectsWithAnotherView:tileFrame] && (tileFrame.origin.x + tileFrame.size.width) <= self.startScrollView.frame.size.width) {
 			RSTile* tile = [[RSTile alloc] initWithFrame:tileFrame leafIdentifier:leafId size:2];
 			[tile setTileX:i];
 			[tile setTileY:maxTileY];
@@ -385,14 +390,14 @@ static RSStartScreenController* sharedInstance;
 	if (!tileHasBeenPinned) {
 		for (int i=0; i<6; i++) {
 			CGRect tileFrame = CGRectMake(i * sizeForPosition,
-										  (maxTileY + 2) * sizeForPosition,
+										  (maxTileY + 1) * sizeForPosition,
 										  tileSize.width,
 										  tileSize.height);
 			
-			if (![self viewIntersectsWithAnotherView:tileFrame] && (tileFrame.origin.x + tileFrame.size.width) < self.startScrollView.frame.size.width) {
+			if (![self viewIntersectsWithAnotherView:tileFrame] && (tileFrame.origin.x + tileFrame.size.width) <= self.startScrollView.frame.size.width) {
 				RSTile* tile = [[RSTile alloc] initWithFrame:tileFrame leafIdentifier:leafId size:2];
 				[tile setTileX:i];
-				[tile setTileY:maxTileY];
+				[tile setTileY:maxTileY+1];
 				
 				[self.startScrollView addSubview:tile];
 				
@@ -413,7 +418,7 @@ static RSStartScreenController* sharedInstance;
 
 		RSTile* tile = [[RSTile alloc] initWithFrame:tileFrame leafIdentifier:leafId size:2];
 		[tile setTileX:0];
-		[tile setTileY:maxTileY];
+		[tile setTileY:maxTileY + 2];
 		
 		[self.startScrollView addSubview:tile];
 		
@@ -423,6 +428,10 @@ static RSStartScreenController* sharedInstance;
 	
 	[self saveTiles];
 	[self updateStartContentSize];
+	
+	[[RSAppListController sharedInstance] hidePinMenu];
+	[[[RSCore sharedInstance] rootScrollView] setContentOffset:CGPointMake(0, 0) animated:YES];
+	[[[RSStartScreenController sharedInstance] startScrollView] setContentOffset:CGPointMake(0, MAX([[RSStartScreenController sharedInstance] startScrollView].contentSize.height - [[RSStartScreenController sharedInstance] startScrollView].bounds.size.height + 64, -24)) animated:YES];
 }
 
 
@@ -447,6 +456,7 @@ static RSStartScreenController* sharedInstance;
 - (id)viewIntersectsWithAnotherView:(CGRect)rect {
 	for (RSTile* tile in self->pinnedTiles) {
 		if (CGRectIntersectsRect(tile.frame, rect)) {
+			NSLog(@"[Redstone] tile intersects: %f %f, %f %f (%f %f)", tile.frame.origin.x, tile.frame.origin.y, tile.frame.size.width, tile.frame.size.height, rect.origin.x, rect.origin.y);
 			return tile;
 		}
 	}

@@ -90,6 +90,7 @@
 		8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E921EC6EE2F004EF2E6 /* RSAppList.m */; };
 		8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E951EC6F195004EF2E6 /* RSApp.m */; };
 		8DE79E991EC6F3BE004EF2E6 /* RSAppListSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E981EC6F3BE004EF2E6 /* RSAppListSection.m */; };
+		8DE79E9C1EC79AA5004EF2E6 /* RSPinMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E9B1EC79AA5004EF2E6 /* RSPinMenu.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -197,6 +198,8 @@
 		8DE79E951EC6F195004EF2E6 /* RSApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSApp.m; sourceTree = "<group>"; };
 		8DE79E971EC6F3BE004EF2E6 /* RSAppListSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppListSection.h; sourceTree = "<group>"; };
 		8DE79E981EC6F3BE004EF2E6 /* RSAppListSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppListSection.m; sourceTree = "<group>"; };
+		8DE79E9A1EC79AA5004EF2E6 /* RSPinMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPinMenu.h; sourceTree = "<group>"; };
+		8DE79E9B1EC79AA5004EF2E6 /* RSPinMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPinMenu.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -577,6 +580,8 @@
 				8DE79E951EC6F195004EF2E6 /* RSApp.m */,
 				8DE79E971EC6F3BE004EF2E6 /* RSAppListSection.h */,
 				8DE79E981EC6F3BE004EF2E6 /* RSAppListSection.m */,
+				8DE79E9A1EC79AA5004EF2E6 /* RSPinMenu.h */,
+				8DE79E9B1EC79AA5004EF2E6 /* RSPinMenu.m */,
 			);
 			name = AppList;
 			path = Redstone/AppList;
@@ -760,6 +765,7 @@
 				8DBD108B1EC23BF900A5A037 /* RSCore.m in Sources */,
 				8D58CFC61EC44AB90021F625 /* UIFont+WDCustomLoader.m in Sources */,
 				8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */,
+				8DE79E9C1EC79AA5004EF2E6 /* RSPinMenu.m in Sources */,
 				8DBD10801EC23BD400A5A037 /* UIView+Easing.m in Sources */,
 				8DE79E991EC6F3BE004EF2E6 /* RSAppListSection.m in Sources */,
 				8DBD108A1EC23BF900A5A037 /* RSAesthetics.m in Sources */,

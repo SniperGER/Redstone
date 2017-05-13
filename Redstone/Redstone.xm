@@ -21,7 +21,7 @@ void playZoomDownAppAnimation() {
 																function:CubicEaseInOut
 															   fromValue:1.0
 																 toValue:0.0];
-		opacity.duration = 0.325;
+		opacity.duration = 0.225;
 		opacity.removedOnCompletion = NO;
 		opacity.fillMode = kCAFillModeForwards;
 		
@@ -29,14 +29,14 @@ void playZoomDownAppAnimation() {
 															  function:CubicEaseInOut
 															 fromValue:1.0
 															   toValue:1.5];
-		scale.duration = 0.35;
+		scale.duration = 0.25;
 		scale.removedOnCompletion = NO;
 		scale.fillMode = kCAFillModeForwards;
 		
 		[screenImageView.layer addAnimation:opacity forKey:@"opacity"];
 		[screenImageView.layer addAnimation:scale forKey:@"scale"];
 		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			[screenImageView removeFromSuperview];
 			
 			[redstone.startScreenController returnToHomescreen];

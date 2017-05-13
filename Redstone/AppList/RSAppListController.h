@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class RSAppList, RSApp;
+@class RSAppList, RSApp, RSPinMenu;
 
 @interface RSAppListController : NSObject <UIScrollViewDelegate> {
 	RSAppList* _appList;
@@ -10,6 +10,9 @@
 	UIView* sectionBackgroundContainer;
 	UIImageView* sectionBackgroundImage;
 	UIView* sectionBackgroundOverlay;
+	
+	RSPinMenu* pinMenu;
+	BOOL showsPinMenu;
 }
 
 @property (nonatomic, retain) RSAppList* appList;
@@ -19,5 +22,8 @@
 
 - (void)updateSectionOverlayPosition;
 - (void)setSectionOverlayAlpha:(CGFloat)alpha;
+
+- (void)showPinMenuForApp:(RSApp*)app;
+- (void)hidePinMenu;
 
 @end

@@ -22,6 +22,7 @@
 #import "AppList/RSAppList.h"
 #import "AppList/RSApp.h"
 #import "AppList/RSAppListSection.h"
+#import "AppList/RSPinMenu.h"
 
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
@@ -57,6 +58,7 @@
 @interface SBLeafIcon : NSObject
 - (id)displayName;
 - (id)application;
+- (BOOL)isUninstallSupported;
 @end
 
 @interface SBApplication : NSObject

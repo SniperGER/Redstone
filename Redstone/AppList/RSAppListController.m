@@ -29,6 +29,8 @@ static RSAppListController* sharedInstance;
 		[self->sectionBackgroundContainer addSubview:self->sectionBackgroundOverlay];
 		
 		[self addAppsAndSections];
+		
+		self->pinMenu = [[RSPinMenu alloc] initWithFrame:CGRectMake(0, 0, 364, 94)];
 	}
 	
 	return self;
@@ -283,14 +285,14 @@ static RSAppListController* sharedInstance;
 		[view.layer addAnimation:opacity forKey:@"opacity"];
 	}
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		for (UIView* view in self.appList.subviews) {
 			[view.layer setOpacity:0];
 		}
 		
 		[[RSLaunchScreenController sharedInstance] show];
 		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			for (UIView* view in self.appList.subviews) {
 				[view setHidden:NO];
 				[view.layer setOpacity:1];
@@ -313,6 +315,48 @@ static RSAppListController* sharedInstance;
 
 - (void)setSectionOverlayAlpha:(CGFloat)alpha {
 	[self->sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:alpha]];
+}
+
+- (void)showPinMenuForApp:(RSApp *)app {
+	self->showsPinMenu = YES;
+	[self->pinMenu setHandlingApp:app];
+	
+	CGRect globalFrame = [self.appList convertRect:app.frame toView:[[RSCore sharedInstance] rootScrollView]];
+	BOOL isBelowHalfScreen = (globalFrame.origin.y + (globalFrame.size.height/2) > screenHeight/2);
+	CGFloat frameHeight = [app.icon isUninstallSupported] ? 160.0 : 94.0;
+	
+	CGRect pinMenuFrame = CGRectMake(
+									 screenWidth + (screenWidth/2 - 364/2),
+									 (isBelowHalfScreen) ? globalFrame.origin.y - frameHeight : globalFrame.origin.y + globalFrame.size.height,
+									 364,
+									 frameHeight);
+	[self->pinMenu setFrame:pinMenuFrame];
+	
+	for (UIView* view in self.appList.subviews) {
+		[view setUserInteractionEnabled:NO];
+	}
+	
+	[self.appList setScrollEnabled:NO];
+	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:NO];
+	[[[RSCore sharedInstance] rootScrollView] addSubview:self->pinMenu];
+}
+
+- (void)hidePinMenu {
+	if (!self->showsPinMenu) {
+		return;
+	}
+	
+	[self->pinMenu setHandlingApp:nil];
+	
+	for (UIView* view in self.appList.subviews) {
+		[view setUserInteractionEnabled:YES];
+	}
+	
+	[self.appList setScrollEnabled:YES];
+	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:YES];
+	
+	self->showsPinMenu = NO;
+	[self->pinMenu removeFromSuperview];
 }
 
 @end
