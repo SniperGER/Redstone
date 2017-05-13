@@ -9,7 +9,7 @@ export PACKAGE_VERSION = $(shell date +%y)w$(shell date +%V)a
 
 # Configure the target here
 TARGET = iphone:latest		# Phyiscal devices
-TARGET = simulator:clang	# Simulator
+#TARGET = simulator:clang	# Simulator
 
 
 # DO NOT EDIT ANYTHING BEYOND THIS POINT
@@ -32,6 +32,9 @@ Redstone_FILES += Start/RSStartScreenController.m Start/RSStartScrollView.m Star
 
 # Launch Screen
 Redstone_FILES += Launch/RSLaunchScreenController.m Launch/RSLaunchScreen.m
+
+# App List
+Redstone_FILES += AppList/RSAppListController.m AppList/RSAppList.m AppList/RSApp.m AppList/RSAppListSection.m
 
 include /opt/theos/makefiles/tweak.mk
 

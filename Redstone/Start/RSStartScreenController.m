@@ -178,7 +178,7 @@ static RSStartScreenController* sharedInstance;
 	
 	float maxDelay = ((maxY - minY) * 0.01) + (maxX * 0.01);
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in appsInView) {
 		[tile.layer setShouldRasterize:YES];
 		[tile.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
 		[tile.layer setContentsScale:[[UIScreen mainScreen] scale]];
@@ -289,7 +289,7 @@ static RSStartScreenController* sharedInstance;
 		CGFloat tileX = tile.frame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
 		CGFloat tileY = tile.frame.origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
 		
-		CGFloat delay = (tileX * 0.01) + (tileY - minY) * 0.01;
+		CGFloat delay = ((maxX - tileX) * 0.01) + ((maxY - tileY) - minY) * 0.01;
 		
 		[tile setCenter:CGPointMake(CGRectGetMidX(self.startScrollView.bounds),
 									CGRectGetMidY(self.startScrollView.bounds))];

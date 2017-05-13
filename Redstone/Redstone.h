@@ -18,6 +18,11 @@
 #import "Launch/RSLaunchScreenController.h"
 #import "Launch/RSLaunchScreen.h"
 
+#import "AppList/RSAppListController.h"
+#import "AppList/RSAppList.h"
+#import "AppList/RSApp.h"
+#import "AppList/RSAppListSection.h"
+
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
 #define deg2rad(angle) ((angle) / 180.0 * M_PI)
@@ -60,6 +65,7 @@
 
 @interface SBIconModel : NSObject
 - (SBLeafIcon*)leafIconForIdentifier:(id)arg1;
+- (id)visibleIconIdentifiers;
 @end
 
 @interface SBUIAnimationZoomApp : NSObject

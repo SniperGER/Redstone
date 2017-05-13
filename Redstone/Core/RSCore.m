@@ -65,7 +65,10 @@ static id currentApplication;
 		[self.rootScrollView addSubview:self.startScreenController.startScrollView];
 		
 		self.launchScreenController = [RSLaunchScreenController new];
-		[self.rootScrollView addSubview:self.launchScreenController.launchScreen];
+		[self.window addSubview:self.launchScreenController.launchScreen];
+		
+		self.appListController = [RSAppListController new];
+		[self.rootScrollView addSubview:self.appListController.appList];
 	}
 	
 	return self;
@@ -77,8 +80,9 @@ static id currentApplication;
 	if (arg1) {
 		[self.startScreenController resetTileVisibility];
 		[self.launchScreenController hide];
-		[self.rootScrollView setContentOffset:CGPointMake(0,0)];
-		[[self.startScreenController startScrollView] setContentOffset:CGPointMake(0,-24)];
+		[self.rootScrollView setContentOffset:CGPointMake(0, 0)];
+		[[self.startScreenController startScrollView] setContentOffset:CGPointMake(0, -24)];
+		[self.appListController.appList setContentOffset:CGPointMake(0, 0)];
 		
 		if ([[self.startScreenController pinnedTiles] count] > 0) {
 			[self.rootScrollView setScrollEnabled:YES];
@@ -103,6 +107,7 @@ static id currentApplication;
 		if ([[self.startScreenController pinnedTiles] count] > 0) {
 			[self.rootScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 			[self.startScreenController.startScrollView setContentOffset:CGPointMake(0, -24) animated:YES];
+			[self.appListController.appList setContentOffset:CGPointMake(0, 0) animated:YES];
 		}
 		
 		return YES;
@@ -113,6 +118,10 @@ static id currentApplication;
 
 - (UIImageView*)wallpaperView {
 	return wallpaperView;
+}
+
+- (id)currentApplication {
+	return currentApplication;
 }
 
 @end

@@ -168,12 +168,6 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 }
 
 - (void)unpin:(UITapGestureRecognizer*)recognizer {
-	if (recognizer.state == UIGestureRecognizerStateBegan) {
-		[self->tapGestureRecognizer setEnabled:NO];
-		[self setBackgroundColor:[UIColor magentaColor]];
-	}
-	
-	
 	[[RSStartScreenController sharedInstance] unpinTile:self];
 }
 
@@ -305,7 +299,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-	if ([[RSStartScreenController sharedInstance] isEditing]) {
+	if (self.isSelectedTile) {
 		if (CGRectContainsPoint(self->unpinButton.frame, point)) {
 			
 			[self->tapGestureRecognizer setEnabled:NO];

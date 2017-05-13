@@ -86,6 +86,10 @@
 		8DC172221EC6EBAA00D45EB1 /* tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DC171E41EC6EBAA00D45EB1 /* tile.png */; };
 		8DC172231EC6EBAA00D45EB1 /* tile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DC171E51EC6EBAA00D45EB1 /* tile@2x.png */; };
 		8DC172241EC6EBAA00D45EB1 /* tile@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DC171E61EC6EBAA00D45EB1 /* tile@3x.png */; };
+		8DE79E901EC6ECFE004EF2E6 /* RSAppListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E8F1EC6ECFE004EF2E6 /* RSAppListController.m */; };
+		8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E921EC6EE2F004EF2E6 /* RSAppList.m */; };
+		8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E951EC6F195004EF2E6 /* RSApp.m */; };
+		8DE79E991EC6F3BE004EF2E6 /* RSAppListSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E981EC6F3BE004EF2E6 /* RSAppListSection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -185,6 +189,14 @@
 		8DC171E41EC6EBAA00D45EB1 /* tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile.png; sourceTree = "<group>"; };
 		8DC171E51EC6EBAA00D45EB1 /* tile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile@2x.png"; sourceTree = "<group>"; };
 		8DC171E61EC6EBAA00D45EB1 /* tile@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile@3x.png"; sourceTree = "<group>"; };
+		8DE79E8E1EC6ECFE004EF2E6 /* RSAppListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppListController.h; sourceTree = "<group>"; };
+		8DE79E8F1EC6ECFE004EF2E6 /* RSAppListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppListController.m; sourceTree = "<group>"; };
+		8DE79E911EC6EE2F004EF2E6 /* RSAppList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppList.h; sourceTree = "<group>"; };
+		8DE79E921EC6EE2F004EF2E6 /* RSAppList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppList.m; sourceTree = "<group>"; };
+		8DE79E941EC6F195004EF2E6 /* RSApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSApp.h; sourceTree = "<group>"; };
+		8DE79E951EC6F195004EF2E6 /* RSApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSApp.m; sourceTree = "<group>"; };
+		8DE79E971EC6F3BE004EF2E6 /* RSAppListSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppListSection.h; sourceTree = "<group>"; };
+		8DE79E981EC6F3BE004EF2E6 /* RSAppListSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppListSection.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +231,7 @@
 				8DBD10811EC23BF900A5A037 /* Core */,
 				8DBD10981EC23CD000A5A037 /* Start */,
 				8D82490E1EC2FEA900779648 /* Launch */,
+				8DE79E8D1EC6EC88004EF2E6 /* AppList */,
 			);
 			name = Redstone;
 			sourceTree = "<group>";
@@ -553,6 +566,22 @@
 			path = eu.heinelt.ifile;
 			sourceTree = "<group>";
 		};
+		8DE79E8D1EC6EC88004EF2E6 /* AppList */ = {
+			isa = PBXGroup;
+			children = (
+				8DE79E8E1EC6ECFE004EF2E6 /* RSAppListController.h */,
+				8DE79E8F1EC6ECFE004EF2E6 /* RSAppListController.m */,
+				8DE79E911EC6EE2F004EF2E6 /* RSAppList.h */,
+				8DE79E921EC6EE2F004EF2E6 /* RSAppList.m */,
+				8DE79E941EC6F195004EF2E6 /* RSApp.h */,
+				8DE79E951EC6F195004EF2E6 /* RSApp.m */,
+				8DE79E971EC6F3BE004EF2E6 /* RSAppListSection.h */,
+				8DE79E981EC6F3BE004EF2E6 /* RSAppListSection.m */,
+			);
+			name = AppList;
+			path = Redstone/AppList;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
@@ -732,12 +761,16 @@
 				8D58CFC61EC44AB90021F625 /* UIFont+WDCustomLoader.m in Sources */,
 				8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */,
 				8DBD10801EC23BD400A5A037 /* UIView+Easing.m in Sources */,
+				8DE79E991EC6F3BE004EF2E6 /* RSAppListSection.m in Sources */,
 				8DBD108A1EC23BF900A5A037 /* RSAesthetics.m in Sources */,
 				8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */,
+				8DE79E901EC6ECFE004EF2E6 /* RSAppListController.m in Sources */,
 				8DC171221EC5E50200D45EB1 /* RSPreferences.m in Sources */,
 				8DBD108D1EC23BF900A5A037 /* RSRootScrollView.m in Sources */,
 				8DBD10A11EC23CD000A5A037 /* RSTile.m in Sources */,
+				8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */,
 				8DBD109F1EC23CD000A5A037 /* RSStartScreenController.m in Sources */,
+				8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */,
 				8DBD108C1EC23BF900A5A037 /* RSMetrics.m in Sources */,
 				8DBD107F1EC23BD400A5A037 /* easing.c in Sources */,
 				8DBD107E1EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m in Sources */,

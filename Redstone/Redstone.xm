@@ -12,34 +12,38 @@ void playZoomDownAppAnimation() {
 		[tile.layer setOpacity:0];
 	}
 	
-	UIImage *screenImage = _UICreateScreenUIImage();
-	UIImageView *screenImageView = [[UIImageView alloc] initWithImage:screenImage];
-	[redstone.window addSubview:screenImageView];
-	
-	CAAnimation *opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
-															function:CubicEaseInOut
-														   fromValue:1.0
-															 toValue:0.0];
-	opacity.duration = 0.325;
-	opacity.removedOnCompletion = NO;
-	opacity.fillMode = kCAFillModeForwards;
-	
-	CAAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
-														  function:CubicEaseInOut
-														 fromValue:1.0
-														   toValue:1.5];
-	scale.duration = 0.35;
-	scale.removedOnCompletion = NO;
-	scale.fillMode = kCAFillModeForwards;
-	
-	[screenImageView.layer addAnimation:opacity forKey:@"opacity"];
-	[screenImageView.layer addAnimation:scale forKey:@"scale"];
-	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		[screenImageView removeFromSuperview];
+	if ([redstone currentApplication] != nil && ![[redstone currentApplication] isKindOfClass:%c(SBDashBoardViewController)]) {
+		UIImage *screenImage = _UICreateScreenUIImage();
+		UIImageView *screenImageView = [[UIImageView alloc] initWithImage:screenImage];
+		[redstone.window addSubview:screenImageView];
 		
+		CAAnimation *opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
+																function:CubicEaseInOut
+															   fromValue:1.0
+																 toValue:0.0];
+		opacity.duration = 0.325;
+		opacity.removedOnCompletion = NO;
+		opacity.fillMode = kCAFillModeForwards;
+		
+		CAAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
+															  function:CubicEaseInOut
+															 fromValue:1.0
+															   toValue:1.5];
+		scale.duration = 0.35;
+		scale.removedOnCompletion = NO;
+		scale.fillMode = kCAFillModeForwards;
+		
+		[screenImageView.layer addAnimation:opacity forKey:@"opacity"];
+		[screenImageView.layer addAnimation:scale forKey:@"scale"];
+		
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[screenImageView removeFromSuperview];
+			
+			[redstone.startScreenController returnToHomescreen];
+		});
+	} else {
 		[redstone.startScreenController returnToHomescreen];
-	});
+	}
 }
 
 %hook SpringBoard

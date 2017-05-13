@@ -20,7 +20,11 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	[self setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:MIN(scrollView.contentOffset.x / scrollView.frame.size.width, 0.75)]];
+	CGFloat progress = MIN(scrollView.contentOffset.x / scrollView.frame.size.width, 0.75);
+	
+	[self setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:progress]];
+	[[RSAppListController sharedInstance] updateSectionOverlayPosition];
+	[[RSAppListController sharedInstance] setSectionOverlayAlpha:progress];
 }
 
 @end
