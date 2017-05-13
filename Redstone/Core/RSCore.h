@@ -23,6 +23,7 @@
 
 - (id)initWithWindow:(id)window;
 - (void)frontDisplayDidChange:(UIApplication*)arg1;
+- (BOOL)handleMenuButtonEvent;
 
 - (UIImageView*)wallpaperView;
 

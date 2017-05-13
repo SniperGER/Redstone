@@ -36,12 +36,10 @@
 		[self setBackgroundColor:[RSAesthetics accentColorForTile:[[self.icon application] bundleIdentifier]]];
 		
 		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
-		[self->longPressGestureRecognizer setDelegate:self];
-		[self->longPressGestureRecognizer setMinimumPressDuration:1.0];
+		[self->longPressGestureRecognizer setMinimumPressDuration:0.5];
 		[self addGestureRecognizer:self->longPressGestureRecognizer];
 		
 		self->panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGestureRecognizer:)];
-		//[self->panGestureRecognizer setEnabled:NO];
 		[self->panGestureRecognizer setDelegate:self];
 		[self addGestureRecognizer:self->panGestureRecognizer];
 		
@@ -153,11 +151,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 }
 
 - (void)pressed:(UILongPressGestureRecognizer*)_longPressGestureRecognizer {
-	if (_longPressGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-		shouldAllowPan = NO;
-	}
 	
-	if  (_longPressGestureRecognizer.state == UIGestureRecognizerStateChanged) {
+		shouldAllowPan = NO;
+
 		
 		if (![[RSStartScreenController sharedInstance] isEditing]) {
 			[self->tapGestureRecognizer setEnabled:NO];
@@ -168,7 +164,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			
 			[self->longPressGestureRecognizer setEnabled:NO];
 		}
-	}
+	
 }
 
 - (void)unpin:(UITapGestureRecognizer*)recognizer {

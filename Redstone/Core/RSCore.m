@@ -91,6 +91,26 @@ static id currentApplication;
 	}
 }
 
+- (BOOL)handleMenuButtonEvent {
+	if ([self.startScreenController isEditing]) {
+		[self.startScreenController setIsEditing:NO];
+		[self.startScreenController saveTiles];
+		
+		return YES;
+	}
+	
+	if (self.rootScrollView.contentOffset.x != 0 || self.startScreenController.startScrollView.contentOffset.y != -24) {
+		if ([[self.startScreenController pinnedTiles] count] > 0) {
+			[self.rootScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+			[self.startScreenController.startScrollView setContentOffset:CGPointMake(0, -24) animated:YES];
+		}
+		
+		return YES;
+	}
+	
+	return NO;
+}
+
 - (UIImageView*)wallpaperView {
 	return wallpaperView;
 }

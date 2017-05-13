@@ -7,6 +7,7 @@ RSCore* redstone;
 BOOL switcherIsOpen;
 
 void playZoomDownAppAnimation() {
+	[redstone.rootScrollView setHidden:NO];
 	for (RSTile* tile in [redstone.startScreenController pinnedTiles]) {
 		[tile.layer setOpacity:0];
 	}
@@ -56,6 +57,18 @@ void playZoomDownAppAnimation() {
 	[redstone frontDisplayDidChange:arg1];
 }
 
+%end
+
+%hook SBHomeHardwareButton
+- (void)singlePressUp:(id)arg1 {
+	if (redstone && !switcherIsOpen) {
+		if (![redstone handleMenuButtonEvent]) {
+			%orig;
+		}
+	} else {
+		%orig(arg1);
+	}
+}
 %end
 
 %hook SBUIAnimationZoomApp
