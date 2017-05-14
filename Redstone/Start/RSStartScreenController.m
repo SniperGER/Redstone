@@ -428,7 +428,7 @@ static RSStartScreenController* sharedInstance;
 	
 	[[RSAppListController sharedInstance] hidePinMenu];
 	[[[RSCore sharedInstance] rootScrollView] setContentOffset:CGPointMake(0, 0) animated:YES];
-	[[[RSStartScreenController sharedInstance] startScrollView] setContentOffset:CGPointMake(0, MAX([[RSStartScreenController sharedInstance] startScrollView].contentSize.height - [[RSStartScreenController sharedInstance] startScrollView].bounds.size.height + 64, -24)) animated:YES];
+	[self.startScrollView setContentOffset:CGPointMake(0, MAX([[RSStartScreenController sharedInstance] startScrollView].contentSize.height - [[RSStartScreenController sharedInstance] startScrollView].bounds.size.height + 64, -24)) animated:YES];
 }
 
 

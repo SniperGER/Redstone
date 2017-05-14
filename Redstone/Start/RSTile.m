@@ -189,8 +189,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	
 	float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
-	CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].contentSize.width - [self positionWithoutTransform].size.width;
-	CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height - [self positionWithoutTransform].size.height;
+	CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].contentSize.width - newTileSize.width;
+	CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height + newTileSize.height;
 	
 	CGRect newTilePosition = CGRectMake(MIN(MAX(step * roundf((self.frame.origin.x / step)), 0), maxPositionX),
 										MIN(MAX(step * roundf((self.frame.origin.y / step)), 0), maxPositionY),
@@ -220,6 +220,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	
 	[self->scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
 	
+	[[RSStartScreenController sharedInstance] updateStartContentSize];
 	[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
 }
 

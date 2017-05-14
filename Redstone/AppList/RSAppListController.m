@@ -224,12 +224,13 @@ static RSAppListController* sharedInstance;
 - (void)prepareForAppLaunch:(RSApp *)sender {
 	[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:NO];
 	[[RSLaunchScreenController sharedInstance] setLaunchScreenForLeafIdentifier:[[sender.icon application] bundleIdentifier]];
+	[self.searchBar resignFirstResponder];
 	
 	NSMutableArray* viewsInView = [NSMutableArray new];
 	NSMutableArray* viewsNotInView = [NSMutableArray new];
 	
 	for (UIView* view in self.appList.subviews) {
-		if (view != self->sectionBackgroundContainer) {
+		if (view != self->sectionBackgroundContainer && !view.hidden) {
 			if ( CGRectIntersectsRect(self.appList.bounds, view.frame)) {
 				[viewsInView addObject:view];
 			} else {
@@ -299,6 +300,7 @@ static RSAppListController* sharedInstance;
 			[view.layer setOpacity:0];
 		}
 		
+		
 		[[RSLaunchScreenController sharedInstance] show];
 		
 		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -307,6 +309,7 @@ static RSAppListController* sharedInstance;
 				[view.layer setOpacity:1];
 				[view.layer removeAllAnimations];
 			}
+			[self setIsSearching:NO];
 			
 			[[objc_getClass("SBIconController") sharedInstance] _launchIcon:sender.icon];
 			[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:YES];
@@ -328,7 +331,7 @@ static RSAppListController* sharedInstance;
 
 - (void)showPinMenuForApp:(RSApp *)app {
 	AudioServicesPlaySystemSound(1520);
-	self->showsPinMenu = YES;
+	self.showsPinMenu = YES;
 	[self->pinMenu setHandlingApp:app];
 	
 	CGRect globalFrame = [self.appList convertRect:app.frame toView:[[RSCore sharedInstance] rootScrollView]];
@@ -381,7 +384,7 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)hidePinMenu {
-	if (!self->showsPinMenu) {
+	if (!self.showsPinMenu) {
 		return;
 	}
 	
@@ -395,7 +398,7 @@ static RSAppListController* sharedInstance;
 	[self.appList setScrollEnabled:YES];
 	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:YES];
 	
-	self->showsPinMenu = NO;
+	self.showsPinMenu = NO;
 	[self->pinMenu removeFromSuperview];
 }
 
@@ -412,9 +415,9 @@ static RSAppListController* sharedInstance;
 	
 	if (!isSearching) {
 		[self.searchBar resignFirstResponder];
-			[self.searchBar setText:@""];
-			[self showAppsFittingQuery:nil];
-			//[self showNoResultsLabel:NO forQuery:nil];
+		[self.searchBar setText:@""];
+		[self showAppsFittingQuery:nil];
+		//[self showNoResultsLabel:NO forQuery:nil];
 	}
 }
 

@@ -21,6 +21,7 @@
 - (void)loadTiles;
 - (void)saveTiles;
 
+- (void)updateStartContentSize;
 - (void)moveAffectedTilesForTile:(RSTile*)movedTile;
 - (void)prepareForAppLaunch:(RSTile*)sender;
 - (void)returnToHomescreen;

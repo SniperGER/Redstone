@@ -15,11 +15,12 @@
 	UIView* sectionBackgroundOverlay;
 	
 	RSPinMenu* pinMenu;
-	BOOL showsPinMenu;
+	BOOL _showsPinMenu;
 }
 
 @property (nonatomic, retain) RSSearchBar* searchBar;
 @property (nonatomic, retain) RSAppList* appList;
+@property (nonatomic, assign) BOOL showsPinMenu;
 
 + (id)sharedInstance;
 - (void)prepareForAppLaunch:(RSApp*)sender;

@@ -104,6 +104,12 @@ static id currentApplication;
 		return YES;
 	}
 	
+	if (self.appListController.showsPinMenu) {
+		[self.appListController hidePinMenu];
+		
+		return YES;
+	}
+	
 	if ([self.appListController isSearching]) {
 		[self.appListController setIsSearching:NO];
 		
