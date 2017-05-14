@@ -19,6 +19,10 @@
 	return self;
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+	[[[RSAppListController sharedInstance] searchBar] resignFirstResponder];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	CGFloat progress = MIN(scrollView.contentOffset.x / scrollView.frame.size.width, 0.75);
 	

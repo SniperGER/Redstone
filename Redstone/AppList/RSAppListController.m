@@ -31,6 +31,12 @@ static RSAppListController* sharedInstance;
 		[self->sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.75]];
 		[self->sectionBackgroundContainer addSubview:self->sectionBackgroundOverlay];
 		
+		self->noResultsLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, self.appList.frame.size.width-10, 30)];
+		[self->noResultsLabel setTextColor:[UIColor colorWithWhite:0.5 alpha:1.0]];
+		[self->noResultsLabel setFont:[UIFont fontWithName:@"SegoeUI" size:17]];
+		[self->noResultsLabel setHidden:YES];
+		[self.appList addSubview:self->noResultsLabel];
+		
 		[self addAppsAndSections];
 		
 		self->pinMenu = [[RSPinMenu alloc] initWithFrame:CGRectMake(0, 0, 364, 94)];
@@ -263,6 +269,8 @@ static RSAppListController* sharedInstance;
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
 	
+	[self.searchBar.layer addAnimation:opacity forKey:@"opacity"];
+	
 	float maxDelay = [viewsInView count] * 0.01;
 	
 	for (UIView* view in viewsInView) {
@@ -309,6 +317,7 @@ static RSAppListController* sharedInstance;
 				[view.layer setOpacity:1];
 				[view.layer removeAllAnimations];
 			}
+			[self.searchBar.layer removeAllAnimations];
 			[self setIsSearching:NO];
 			
 			[[objc_getClass("SBIconController") sharedInstance] _launchIcon:sender.icon];
@@ -318,10 +327,11 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)updateSectionOverlayPosition {
-	[self->sectionBackgroundImage setFrame:CGRectMake(-screenWidth + [[RSCore sharedInstance] rootScrollView].contentOffset.x,
+	/*[self->sectionBackgroundImage setFrame:CGRectMake(-screenWidth + [[RSCore sharedInstance] rootScrollView].contentOffset.x,
 													  self->sectionBackgroundImage.frame.origin.y,
 													  screenWidth,
-													  screenHeight)];
+													  screenHeight)];*/
+	[self updateSectionsWithOffset:self.appList.contentOffset.y];
 }
 
 
@@ -472,10 +482,22 @@ static RSAppListController* sharedInstance;
 		
 		self.appList.contentSize = contentRect.size;
 	} else if ([newSubviews count] == 0 && query != nil && ![query isEqualToString:@""]) {
-		//[[RSAppListController sharedInstance] showNoResultsLabel:YES forQuery:query];
+		[self showNoResultsLabel:YES forQuery:query];
 	} else {
-		//[[RSAppListController sharedInstance] showNoResultsLabel:NO forQuery:nil];
+		[self showNoResultsLabel:NO forQuery:nil];
 		[self sortAppsAndLayout:self->sections];
+	}
+}
+
+- (void)showNoResultsLabel:(BOOL)visible forQuery:(NSString*)query {
+	[self->noResultsLabel setHidden:!visible];
+	
+	if (query != nil && ![query isEqualToString:@""]) {
+		NSString* baseString = [NSString stringWithFormat:@"No results for %@", query];
+		NSRange range = [baseString rangeOfString:query];
+		NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:baseString];
+		[string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:range];
+		[self->noResultsLabel setAttributedText:string];
 	}
 }
 

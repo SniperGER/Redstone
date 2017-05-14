@@ -14,6 +14,8 @@
 	UIImageView* sectionBackgroundImage;
 	UIView* sectionBackgroundOverlay;
 	
+	UILabel* noResultsLabel;
+	
 	RSPinMenu* pinMenu;
 	BOOL _showsPinMenu;
 }
@@ -34,5 +36,6 @@
 - (BOOL)isSearching;
 - (void)setIsSearching:(BOOL)isSearching;
 - (void)showAppsFittingQuery:(NSString*)query;
+- (void)showNoResultsLabel:(BOOL)visible forQuery:(NSString*)query;
 
 @end
