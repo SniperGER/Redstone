@@ -24,6 +24,7 @@
 #import "AppList/RSAppListSection.h"
 #import "AppList/RSPinMenu.h"
 #import "AppList/RSSearchBar.h"
+#import "AppList/RSJumpList.h"
 
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)

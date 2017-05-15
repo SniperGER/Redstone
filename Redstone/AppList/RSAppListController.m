@@ -40,6 +40,7 @@ static RSAppListController* sharedInstance;
 		[self addAppsAndSections];
 		
 		self->pinMenu = [[RSPinMenu alloc] initWithFrame:CGRectMake(0, 0, 364, 94)];
+		self.jumpList = [[RSJumpList alloc] initWithFrame:CGRectMake(screenWidth, 0, screenWidth, screenHeight)];
 	}
 	
 	return self;
@@ -202,7 +203,10 @@ static RSAppListController* sharedInstance;
 																	  offset,
 																	  self.appList.frame.size.width,
 																	  60)];
-				[self->sectionBackgroundImage setFrame:CGRectMake(0, -70, screenWidth, screenHeight)];
+				[self->sectionBackgroundImage setFrame:CGRectMake(-screenWidth + [[RSCore sharedInstance] rootScrollView].contentOffset.x,
+																  -70,
+																  screenWidth,
+																  screenHeight)];
 			} else {
 				[section setFrame:CGRectMake(0,
 											 [[self->sections objectAtIndex:i+1] yCoordinate] - 60,
@@ -212,7 +216,10 @@ static RSAppListController* sharedInstance;
 																	  [[self->sections objectAtIndex:i+1] yCoordinate] - 60,
 																	  self.appList.frame.size.width,
 																	  60)];
-				[self->sectionBackgroundImage setFrame:CGRectMake(0, (offset - [[self->sections objectAtIndex:i+1] yCoordinate] - 10), screenWidth, screenHeight)];
+				[self->sectionBackgroundImage setFrame:CGRectMake(-screenWidth + [[RSCore sharedInstance] rootScrollView].contentOffset.x,
+																  (offset - [[self->sections objectAtIndex:i+1] yCoordinate] - 10),
+																  screenWidth,
+																  screenHeight)];
 				
 			}
 		} else {
@@ -499,6 +506,27 @@ static RSAppListController* sharedInstance;
 		[string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:range];
 		[self->noResultsLabel setAttributedText:string];
 	}
+}
+
+- (void)jumpToSectionWithLetter:(NSString*)letter {
+	if ([self sectionWithLetter:letter]) {
+		for (RSAppListSection* section in self->sections) {
+			if ([section.displayName isEqualToString:letter]) {
+				int sectionOffset = section.yCoordinate;
+				int maxOffsetByScreen = self.appList.contentSize.height - self.appList.bounds.size.height + 80;
+				
+				[self.appList setContentOffset:CGPointMake(0, MIN(sectionOffset, maxOffsetByScreen))];
+			}
+		}
+	}
+}
+
+- (void)showJumpList {
+	[self.searchBar resignFirstResponder];
+	[self.jumpList animateIn];
+}
+- (void)hideJumpList {
+	[self.jumpList animateOut];
 }
 
 @end

@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class RSAppList, RSApp, RSPinMenu, RSSearchBar;
+@class RSAppList, RSApp, RSAppListSection, RSPinMenu, RSSearchBar, RSJumpList;
 
 @interface RSAppListController : NSObject <UIScrollViewDelegate> {
 	RSSearchBar* _searchBar;
@@ -18,13 +18,19 @@
 	
 	RSPinMenu* pinMenu;
 	BOOL _showsPinMenu;
+	
+	RSJumpList* _jumpList;
 }
 
 @property (nonatomic, retain) RSSearchBar* searchBar;
 @property (nonatomic, retain) RSAppList* appList;
 @property (nonatomic, assign) BOOL showsPinMenu;
+@property (nonatomic, retain) RSJumpList* jumpList;
 
 + (id)sharedInstance;
+
+- (RSAppListSection*)sectionWithLetter:(NSString*)letter;
+
 - (void)prepareForAppLaunch:(RSApp*)sender;
 
 - (void)updateSectionOverlayPosition;
@@ -37,5 +43,9 @@
 - (void)setIsSearching:(BOOL)isSearching;
 - (void)showAppsFittingQuery:(NSString*)query;
 - (void)showNoResultsLabel:(BOOL)visible forQuery:(NSString*)query;
+
+- (void)jumpToSectionWithLetter:(NSString*)letter;
+- (void)showJumpList;
+- (void)hideJumpList;
 
 @end

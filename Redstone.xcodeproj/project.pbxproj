@@ -12,6 +12,7 @@
 		8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 8D1D34101EB7DCBA00BA9956 /* Makefile */; };
 		8D58CF391EC3A6AA0021F625 /* RSLaunchScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D58CF381EC3A6AA0021F625 /* RSLaunchScreen.m */; };
 		8D58CFC61EC44AB90021F625 /* UIFont+WDCustomLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D58CFC51EC44AB90021F625 /* UIFont+WDCustomLoader.m */; };
+		8D5F260C1EC9776600DB95C6 /* RSJumpList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5F260B1EC9776600DB95C6 /* RSJumpList.m */; };
 		8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8249101EC2FEF300779648 /* RSLaunchScreenController.m */; };
 		8DBD107E1EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD10791EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m */; };
 		8DBD107F1EC23BD400A5A037 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD107A1EC23BD400A5A037 /* easing.c */; };
@@ -105,6 +106,8 @@
 		8D58CF381EC3A6AA0021F625 /* RSLaunchScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLaunchScreen.m; sourceTree = "<group>"; };
 		8D58CFC41EC44AB90021F625 /* UIFont+WDCustomLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+WDCustomLoader.h"; sourceTree = "<group>"; };
 		8D58CFC51EC44AB90021F625 /* UIFont+WDCustomLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+WDCustomLoader.m"; sourceTree = "<group>"; };
+		8D5F260A1EC9776600DB95C6 /* RSJumpList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSJumpList.h; sourceTree = "<group>"; };
+		8D5F260B1EC9776600DB95C6 /* RSJumpList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSJumpList.m; sourceTree = "<group>"; };
 		8D82490F1EC2FEF300779648 /* RSLaunchScreenController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLaunchScreenController.h; sourceTree = "<group>"; };
 		8D8249101EC2FEF300779648 /* RSLaunchScreenController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLaunchScreenController.m; sourceTree = "<group>"; };
 		8DBD10781EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAKeyframeAnimation+AHEasing.h"; sourceTree = "<group>"; };
@@ -587,6 +590,8 @@
 				8DE79E9B1EC79AA5004EF2E6 /* RSPinMenu.m */,
 				8DE79E9D1EC7B6C3004EF2E6 /* RSSearchBar.h */,
 				8DE79E9E1EC7B6C3004EF2E6 /* RSSearchBar.m */,
+				8D5F260A1EC9776600DB95C6 /* RSJumpList.h */,
+				8D5F260B1EC9776600DB95C6 /* RSJumpList.m */,
 			);
 			name = AppList;
 			path = Redstone/AppList;
@@ -778,6 +783,7 @@
 				8DE79E901EC6ECFE004EF2E6 /* RSAppListController.m in Sources */,
 				8DC171221EC5E50200D45EB1 /* RSPreferences.m in Sources */,
 				8DBD108D1EC23BF900A5A037 /* RSRootScrollView.m in Sources */,
+				8D5F260C1EC9776600DB95C6 /* RSJumpList.m in Sources */,
 				8DBD10A11EC23CD000A5A037 /* RSTile.m in Sources */,
 				8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */,
 				8DBD109F1EC23CD000A5A037 /* RSStartScreenController.m in Sources */,

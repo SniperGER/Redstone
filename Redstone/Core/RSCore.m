@@ -69,6 +69,7 @@ static id currentApplication;
 		
 		self.appListController = [RSAppListController new];
 		[self.rootScrollView addSubview:self.appListController.appList];
+		[self.rootScrollView addSubview:self.appListController.jumpList];
 	}
 	
 	return self;
@@ -106,6 +107,11 @@ static id currentApplication;
 	
 	if (self.appListController.showsPinMenu) {
 		[self.appListController hidePinMenu];
+		
+		return YES;
+	}
+	if (self.appListController.jumpList.isOpen) {
+		[self.appListController hideJumpList];
 		
 		return YES;
 	}
