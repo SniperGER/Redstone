@@ -529,4 +529,12 @@ static RSAppListController* sharedInstance;
 	[self.jumpList animateOut];
 }
 
+- (void)uninstallApplication:(SBLeafIcon*)icon {
+	if ([[icon application] isUninstallSupported]) {
+		[icon setUninstalled];
+		[icon completeUninstall];
+		[[objc_getClass("SBApplicationController") sharedInstance] uninstallApplication:[icon application]];
+	}
+}
+
 @end

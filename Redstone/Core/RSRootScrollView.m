@@ -31,4 +31,14 @@
 	[[RSAppListController sharedInstance] setSectionOverlayAlpha:progress];
 }
 
+- (UIView *)hitTest:(CGPoint) point withEvent:(UIEvent *)event {
+	UIView* view = [super hitTest:point withEvent:event];
+	
+	if (view == self) {
+		return [[[RSStartScreenController sharedInstance] selectedTile] hitTest:point withEvent:event];
+	}
+	
+	return view;
+}
+
 @end

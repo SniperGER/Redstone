@@ -110,29 +110,32 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		
 		float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 		
-		CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].contentSize.width - [self positionWithoutTransform].size.width;
-		CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height - [self positionWithoutTransform].size.height;
+		CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].bounds.size.width - [self positionWithoutTransform].size.width;
+		CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].bounds.size.height - [self positionWithoutTransform].size.height;
 		
-		CGRect newFrame = CGRectMake(MIN(MAX(step * roundf((self.frame.origin.x / step)), 0), maxPositionX),
-											MIN(MAX(step * roundf((self.frame.origin.y / step)), 0), maxPositionY),
-											[self positionWithoutTransform].size.width,
-											[self positionWithoutTransform].size.height);
+		/*CGRect newFrame = CGRectMake(MIN(MAX(step * roundf(([self positionWithoutTransform].origin.x / step)), 0), maxPositionX),
+									 MIN(MAX(step * roundf(([self positionWithoutTransform].origin.y / step)), 0), maxPositionY),
+									 self.frame.size.width,
+									 self.frame.size.height);*/
+		CGPoint newCenter = CGPointMake(MIN(MAX(step * roundf(([self positionWithoutTransform].origin.x / step)), 0), maxPositionX) + [self positionWithoutTransform].size.width/2,
+										MIN(MAX(step * roundf(([self positionWithoutTransform].origin.y / step)), 0), maxPositionY) + [self positionWithoutTransform].size.height/2);
 		
-		int tileX = newFrame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
+		/*int tileX = newFrame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
 		int tileY = newFrame.origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
 		
 		[self setTileX:tileX];
-		[self setTileY:tileY];
+		[self setTileY:tileY];*/
 		
 		[UIView animateWithDuration:.3 animations:^{
 			[self setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-			[self setFrame:newFrame];
+			[self setCenter:newCenter];
 		} completion:^(BOOL finished) {
 			[self removeEasingFunctionForKeyPath:@"frame"];
 			
 			self.originalCenter = self.center;
 		}];
 		
+		[[RSStartScreenController sharedInstance] updateStartContentSize];
 		[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
 	}
 }
@@ -190,7 +193,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
 	CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].contentSize.width - newTileSize.width;
-	CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height + newTileSize.height;
+	CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height - newTileSize.height;
+	
+	[self setTransform:CGAffineTransformIdentity];
 	
 	CGRect newTilePosition = CGRectMake(MIN(MAX(step * roundf((self.frame.origin.x / step)), 0), maxPositionX),
 										MIN(MAX(step * roundf((self.frame.origin.y / step)), 0), maxPositionY),
@@ -219,9 +224,10 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	[self->scaleButton setCenter:CGPointMake(self.frame.size.width, self.frame.size.height)];
 	
 	[self->scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
+	[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
 	
-	[[RSStartScreenController sharedInstance] updateStartContentSize];
-	[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
+	//[[RSStartScreenController sharedInstance] updateStartContentSize];
+	//[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
 }
 
 - (CGFloat)scaleButtonRotationForCurrentSize {
@@ -242,13 +248,11 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	}
 }
 
-- (CGRect)positionWithoutTransform {
-	CGSize originalSize = [RSMetrics tileDimensionsForSize:self.size];
-	
+- (CGRect)positionWithoutTransform {	
 	return CGRectMake(self.layer.position.x - (self.bounds.size.width/2),
 					  self.layer.position.y - (self.bounds.size.height/2),
-					  originalSize.width,
-					  originalSize.height);
+					  self.bounds.size.width,
+					  self.bounds.size.height);
 }
 
 - (void)setIsSelectedTile:(BOOL)isSelectedTile {
@@ -265,7 +269,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			
 			[self.superview bringSubviewToFront:self];
 			[self setAlpha:1.0];
-			[self setTransform:CGAffineTransformIdentity];
+			[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
 			
 			[self->unpinButton setHidden:NO];
 			[self->scaleButton setHidden:NO];
@@ -276,7 +280,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			
 			if ([[RSStartScreenController sharedInstance] isEditing]) {
 				[self setAlpha:0.8];
-				[self setTransform:CGAffineTransformMakeScale(0.8320610687, 0.8320610687)];
+				[self setTransform:CGAffineTransformMakeScale(0.85, 0.85)];
 				
 			} else {
 				[self.layer removeAllAnimations];

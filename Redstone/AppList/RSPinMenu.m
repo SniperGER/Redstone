@@ -21,12 +21,15 @@
 		[self->uninstallLabel setText:@"UNINSTALL"];
 		[self->uninstallLabel setFont:[UIFont fontWithName:@"SegoeUI" size:18]];
 		[self->uninstallLabel setTextColor:[UIColor whiteColor]];
-		[self->uninstallLabel setUserInteractionEnabled:NO];
-		[self->uninstallLabel setAlpha:0.4];
+		[self->uninstallLabel setUserInteractionEnabled:YES];
+		//[self->uninstallLabel setAlpha:0.4];
 		[self addSubview:self->uninstallLabel];
 		
 		UITapGestureRecognizer* pinGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pin)];
 		[self->pinLabel addGestureRecognizer:pinGestureRecognizer];
+		
+		UITapGestureRecognizer* uninstallGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(uninstall)];
+		[self->uninstallLabel addGestureRecognizer:uninstallGestureRecognizer];
 	}
 	
 	return self;
@@ -53,4 +56,17 @@
 	}
 }
 
+- (void)uninstall {
+	RSModalAlert* alert = [[RSModalAlert alloc] modalAlertWithTitle:[[self.handlingApp icon] uninstallAlertTitle] message:[[self.handlingApp icon] uninstallAlertBody]];
+	[alert addActionWithTitle:[[self.handlingApp icon] uninstallAlertConfirmTitle] handler:^{
+		[alert hide];
+		[[RSAppListController sharedInstance] uninstallApplication:[self.handlingApp icon]];
+		[[RSAppListController sharedInstance] hidePinMenu];
+	}];
+	[alert addActionWithTitle:[[self.handlingApp icon] uninstallAlertCancelTitle] handler:^{
+		[alert hide];
+		[[RSAppListController sharedInstance] hidePinMenu];
+	}];
+	[alert show];
+}
 @end

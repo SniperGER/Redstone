@@ -10,6 +10,7 @@
 #import "Core/RSMetrics.h"
 #import "Core/RSRootScrollView.h"
 #import "Core/RSPreferences.h"
+#import "Core/RSModalAlert.h"
 
 #import "Start/RSStartScreenController.h"
 #import "Start/RSStartScrollView.h"
@@ -61,10 +62,22 @@
 - (id)displayName;
 - (id)application;
 - (BOOL)isUninstallSupported;
+- (id)uninstallAlertTitle;
+- (id)uninstallAlertBody;
+- (id)uninstallAlertConfirmTitle;
+- (id)uninstallAlertCancelTitle;
+- (void)setUninstalled;
+- (void)completeUninstall;
 @end
 
 @interface SBApplication : NSObject
 - (id)bundleIdentifier;
+- (BOOL)isUninstallSupported;
+@end
+
+@interface SBApplicationController : NSObject
++ (id)sharedInstance;
+- (void)uninstallApplication:(SBApplication*)application;
 @end
 
 @interface SBIconModel : NSObject

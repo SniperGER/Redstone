@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class RSAppList, RSApp, RSAppListSection, RSPinMenu, RSSearchBar, RSJumpList;
+@class RSAppList, RSApp, RSAppListSection, RSPinMenu, RSSearchBar, RSJumpList, SBApplication;
 
 @interface RSAppListController : NSObject <UIScrollViewDelegate> {
 	RSSearchBar* _searchBar;
@@ -47,5 +47,7 @@
 - (void)jumpToSectionWithLetter:(NSString*)letter;
 - (void)showJumpList;
 - (void)hideJumpList;
+
+- (void)uninstallApplication:(SBLeafIcon*)application;
 
 @end

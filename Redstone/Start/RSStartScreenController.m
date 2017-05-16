@@ -327,6 +327,9 @@ static RSStartScreenController* sharedInstance;
 	
 	if (!isEditing) {
 		[self setSelectedTile:nil];
+		[self.startScrollView setTransform:CGAffineTransformIdentity];
+	} else {
+		[self.startScrollView setTransform:CGAffineTransformMakeScale(0.9, 0.9)];
 	}
 }
 
