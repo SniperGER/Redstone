@@ -57,6 +57,12 @@ static RSStartScreenController* sharedInstance;
 	for (RSTile* tile in self->pinnedTiles) {
 		NSMutableDictionary* tileInfo = [NSMutableDictionary new];
 		
+		int tileX = [tile positionWithoutTransform].origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
+		int tileY = [tile positionWithoutTransform].origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
+		
+		[tile setTileX:tileX];
+		[tile setTileY:tileY];
+		
 		[tileInfo setValue:[NSNumber numberWithInteger:tile.size] forKey:@"size"];
 		[tileInfo setValue:[NSNumber numberWithInteger:tile.tileY] forKey:@"row"];
 		[tileInfo setValue:[NSNumber numberWithInteger:tile.tileX] forKey:@"column"];
@@ -107,18 +113,18 @@ static RSStartScreenController* sharedInstance;
 											 tile.frame.size.width,
 											 tile.frame.size.height);
 				
-				int tileX = newFrame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
-				int tileY = newFrame.origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
-				
-				[tile setTileX:tileX];
-				[tile setTileY:tileY];
-				
 				[UIView animateWithDuration:.3 animations:^{
 					[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
 					[tile setFrame:newFrame];
 				} completion:^(BOOL finished) {
 					[tile removeEasingFunctionForKeyPath:@"frame"];
 					[tile setOriginalCenter:tile.center];
+					
+					int tileX = [tile positionWithoutTransform].origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
+					int tileY = [tile positionWithoutTransform].origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
+					
+					[tile setTileX:tileX];
+					[tile setTileY:tileY];
 				}];
 				
 			}
@@ -327,9 +333,23 @@ static RSStartScreenController* sharedInstance;
 	
 	if (!isEditing) {
 		[self setSelectedTile:nil];
-		[self.startScrollView setTransform:CGAffineTransformIdentity];
+		[UIView animateWithDuration:.2 animations:^{
+			[self.startScrollView setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+			
+			[self.startScrollView setTransform:CGAffineTransformIdentity];
+		} completion:^(BOOL finished) {
+			[self.startScrollView removeEasingFunctionForKeyPath:@"frame"];
+		}];
+		
+		[self saveTiles];
 	} else {
-		[self.startScrollView setTransform:CGAffineTransformMakeScale(0.9, 0.9)];
+		[UIView animateWithDuration:.2 animations:^{
+			[self.startScrollView setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+			
+			[self.startScrollView setTransform:CGAffineTransformMakeScale(0.9, 0.9)];
+		} completion:^(BOOL finished) {
+			[self.startScrollView removeEasingFunctionForKeyPath:@"frame"];
+		}];
 	}
 }
 

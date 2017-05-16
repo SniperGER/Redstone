@@ -113,18 +113,14 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].bounds.size.width - [self positionWithoutTransform].size.width;
 		CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].bounds.size.height - [self positionWithoutTransform].size.height;
 		
-		/*CGRect newFrame = CGRectMake(MIN(MAX(step * roundf(([self positionWithoutTransform].origin.x / step)), 0), maxPositionX),
-									 MIN(MAX(step * roundf(([self positionWithoutTransform].origin.y / step)), 0), maxPositionY),
-									 self.frame.size.width,
-									 self.frame.size.height);*/
 		CGPoint newCenter = CGPointMake(MIN(MAX(step * roundf(([self positionWithoutTransform].origin.x / step)), 0), maxPositionX) + [self positionWithoutTransform].size.width/2,
 										MIN(MAX(step * roundf(([self positionWithoutTransform].origin.y / step)), 0), maxPositionY) + [self positionWithoutTransform].size.height/2);
 		
-		/*int tileX = newFrame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
-		int tileY = newFrame.origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
+		int tileX = [self positionWithoutTransform].origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
+		int tileY = [self positionWithoutTransform].origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
 		
 		[self setTileX:tileX];
-		[self setTileY:tileY];*/
+		[self setTileY:tileY];
 		
 		[UIView animateWithDuration:.3 animations:^{
 			[self setEasingFunction:easeOutQuint forKeyPath:@"frame"];
@@ -192,8 +188,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	
 	float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
-	CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].contentSize.width - newTileSize.width;
-	CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height - newTileSize.height;
+	CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].bounds.size.width - newTileSize.width;
+	CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].bounds.size.height - newTileSize.height;
 	
 	[self setTransform:CGAffineTransformIdentity];
 	
@@ -268,8 +264,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[[[[RSStartScreenController sharedInstance] startScrollView] panGestureRecognizer] setEnabled:YES];
 			
 			[self.superview bringSubviewToFront:self];
-			[self setAlpha:1.0];
-			[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
+				[self setAlpha:1.0];
+				[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
 			
 			[self->unpinButton setHidden:NO];
 			[self->scaleButton setHidden:NO];
@@ -278,21 +274,28 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[self->unpinButton setHidden:YES];
 			[self->scaleButton setHidden:YES];
 			
-			if ([[RSStartScreenController sharedInstance] isEditing]) {
+			[UIView animateWithDuration:.2 animations:^{
+				[self setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+				
 				[self setAlpha:0.8];
 				[self setTransform:CGAffineTransformMakeScale(0.85, 0.85)];
-				
-			} else {
-				[self.layer removeAllAnimations];
-				[self setAlpha:1.0];
-				[self setTransform:CGAffineTransformIdentity];
-			}
+			} completion:^(BOOL finished) {
+				[self removeEasingFunctionForKeyPath:@"frame"];
+			}];
+			
 		}
 	} else {
 		self->_isSelectedTile = NO;
 		[self.layer removeAllAnimations];
-		[self setAlpha:1.0];
-		[self setTransform:CGAffineTransformMakeScale(1, 1)];
+		
+		[UIView animateWithDuration:.2 animations:^{
+			[self setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+			
+			[self setAlpha:1.0];
+			[self setTransform:CGAffineTransformIdentity];
+		} completion:^(BOOL finished) {
+			[self removeEasingFunctionForKeyPath:@"frame"];
+		}];
 		
 		[self->longPressGestureRecognizer setEnabled:YES];
 		shouldAllowPan = NO;
