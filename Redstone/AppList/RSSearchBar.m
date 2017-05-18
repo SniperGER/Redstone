@@ -12,7 +12,7 @@
 		[self setTextColor:[UIColor whiteColor]];
 		[self setReturnKeyType:UIReturnKeySearch];
 		//[self setPlaceholder:@"Search"];
-		[self setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Search" attributes:@{ NSForegroundColorAttributeName:[UIColor colorWithWhite:0.6 alpha:1.0] }]];
+		[self setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[RSAesthetics localizedStringForKey:@"SEARCH"] attributes:@{ NSForegroundColorAttributeName:[UIColor colorWithWhite:0.6 alpha:1.0] }]];
 		
 		[self.layer setBorderWidth:3.0];
 		[self.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:0.4].CGColor];

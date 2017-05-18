@@ -11,14 +11,14 @@
 		[self.layer setBorderWidth:2.0];
 		
 		self->pinLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 14, self.frame.size.width-24, 66)];
-		[self->pinLabel setText:@"PIN_TO_START"];
+		[self->pinLabel setText:[RSAesthetics localizedStringForKey:@"PIN_TO_START"]];
 		[self->pinLabel setFont:[UIFont fontWithName:@"SegoeUI" size:18]];
 		[self->pinLabel setTextColor:[UIColor whiteColor]];
 		[self->pinLabel setUserInteractionEnabled:YES];
 		[self addSubview:self->pinLabel];
 		
 		self->uninstallLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 80, self.frame.size.width-24, 66)];
-		[self->uninstallLabel setText:@"UNINSTALL"];
+		[self->uninstallLabel setText:[RSAesthetics localizedStringForKey:@"UNINSTALL"]];
 		[self->uninstallLabel setFont:[UIFont fontWithName:@"SegoeUI" size:18]];
 		[self->uninstallLabel setTextColor:[UIColor whiteColor]];
 		[self->uninstallLabel setUserInteractionEnabled:YES];

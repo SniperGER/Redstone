@@ -111,7 +111,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 		
 		CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].bounds.size.width - [self positionWithoutTransform].size.width;
-		CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].bounds.size.height - [self positionWithoutTransform].size.height;
+		CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].bounds.size.height;
 		
 		CGPoint newCenter = CGPointMake(MIN(MAX(step * roundf(([self positionWithoutTransform].origin.x / step)), 0), maxPositionX) + [self positionWithoutTransform].size.width/2,
 										MIN(MAX(step * roundf(([self positionWithoutTransform].origin.y / step)), 0), maxPositionY) + [self positionWithoutTransform].size.height/2);

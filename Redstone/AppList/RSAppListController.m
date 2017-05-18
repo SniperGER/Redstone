@@ -500,8 +500,8 @@ static RSAppListController* sharedInstance;
 	[self->noResultsLabel setHidden:!visible];
 	
 	if (query != nil && ![query isEqualToString:@""]) {
-		NSString* baseString = [NSString stringWithFormat:@"No results for %@", query];
-		NSRange range = [baseString rangeOfString:query];
+		NSString* baseString = [NSString stringWithFormat:[RSAesthetics localizedStringForKey:@"NO_RESULTS_FOUND"], query];
+		NSRange range = [baseString rangeOfString:query options:NSBackwardsSearch];
 		NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:baseString];
 		[string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:range];
 		[self->noResultsLabel setAttributedText:string];

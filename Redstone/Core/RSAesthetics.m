@@ -1,6 +1,7 @@
 #import "../Redstone.h"
 
 extern CFArrayRef CPBitmapCreateImagesFromData(CFDataRef cpbitmap, void*, int, void*);
+NSBundle* redstoneBundle;
 
 @implementation RSAesthetics
 
@@ -87,6 +88,14 @@ extern CFArrayRef CPBitmapCreateImagesFromData(CFDataRef cpbitmap, void*, int, v
 	float alpha = ((baseValue >> 0) & 0xFF)/255.0f;
 	
 	return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
+
++ (NSString*)localizedStringForKey:(NSString*)key {
+	if (!redstoneBundle) {
+		redstoneBundle = [NSBundle bundleWithPath:RESOURCE_PATH];
+	}
+	
+	return [redstoneBundle localizedStringForKey:key value:nil table:nil];
 }
 
 @end

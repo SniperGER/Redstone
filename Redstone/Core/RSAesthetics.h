@@ -7,5 +7,6 @@
 + (UIColor*)accentColor;
 + (UIColor*)accentColorForTile:(NSString*)bundleIdentifier;
 + (UIColor*)accentColorForLaunchScreen:(NSString*)bundleIdentifier;
++ (NSString*)localizedStringForKey:(NSString*)key;
 
 @end

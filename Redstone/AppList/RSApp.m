@@ -29,6 +29,8 @@
 		
 		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
 		[self addGestureRecognizer:self->longPressGestureRecognizer];
+		
+		[self->tapGestureRecognizer requireGestureRecognizerToFail:self->longPressGestureRecognizer];
 	}
 	
 	return self;

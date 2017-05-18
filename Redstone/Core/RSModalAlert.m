@@ -88,9 +88,9 @@
 	
 	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
 														  function:CubicEaseOut
-														 fromValue:1.2
+														 fromValue:1.35
 														   toValue:1.0];
-	[scale setDuration:0.4];
+	[scale setDuration:0.25];
 	[scale setRemovedOnCompletion:NO];
 	[scale setFillMode:kCAFillModeForwards];
 	
@@ -98,12 +98,12 @@
 															function:CubicEaseOut
 														   fromValue:0.0
 															 toValue:1.0];
-	[opacity setDuration:0.35];
+	[opacity setDuration:0.2];
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
 	
 	[self->alertView.layer addAnimation:scale forKey:@"scale"];
-	[self.layer addAnimation:opacity forKey:@"opacity"];
+	[self->alertView.layer addAnimation:opacity forKey:@"opacity"];
 }
 
 - (void)hide {
@@ -113,8 +113,8 @@
 	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
 														  function:CubicEaseOut
 														 fromValue:1.0
-														   toValue:0.8];
-	[scale setDuration:0.4];
+														   toValue:1.35];
+	[scale setDuration:0.1];
 	[scale setRemovedOnCompletion:NO];
 	[scale setFillMode:kCAFillModeForwards];
 	
@@ -122,15 +122,14 @@
 															function:CubicEaseOut
 														   fromValue:1.0
 															 toValue:0.0];
-	[opacity setDuration:0.35];
-	[opacity setBeginTime:CACurrentMediaTime() + 0.05];
+	[opacity setDuration:0.08];
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
 	
 	[self->alertView.layer addAnimation:scale forKey:@"scale"];
-	[self.layer addAnimation:opacity forKey:@"opacity"];
+	[self->alertView.layer addAnimation:opacity forKey:@"opacity"];
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[self setHidden:YES];
 		[self removeFromSuperview];
 	});
