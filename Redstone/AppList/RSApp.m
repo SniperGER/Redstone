@@ -25,15 +25,24 @@
 		[self addSubview:self->appLabel];
 		
 		self->tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+		[self->tapGestureRecognizer setCancelsTouchesInView:NO];
+		[self->tapGestureRecognizer setDelegate:self];
 		[self addGestureRecognizer:self->tapGestureRecognizer];
 		
 		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
+		[self->longPressGestureRecognizer setMinimumPressDuration:0.5];
+		[self->longPressGestureRecognizer setCancelsTouchesInView:NO];
+		[self->longPressGestureRecognizer setDelegate:self];
 		[self addGestureRecognizer:self->longPressGestureRecognizer];
 		
 		[self->tapGestureRecognizer requireGestureRecognizerToFail:self->longPressGestureRecognizer];
 	}
 	
 	return self;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+	return YES;
 }
 
 - (void)tapped:(UITapGestureRecognizer*)gestureRecognizer {

@@ -17,10 +17,16 @@
 		[self addSubview:self->sectionLabel];
 		
 		UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+		[tapGestureRecognizer setCancelsTouchesInView:NO];
+		[tapGestureRecognizer setDelegate:self];
 		[self addGestureRecognizer:tapGestureRecognizer];
 	}
 	
 	return self;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+	return YES;
 }
 
 - (void)tapped:(id)sender {
