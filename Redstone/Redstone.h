@@ -43,6 +43,11 @@
 
 #endif
 
+@interface SpringBoard : NSObject
+- (void)cancelMenuButtonRequests;
+- (void)clearMenuButtonTimer;
+@end
+
 @interface SBUIController : NSObject
 + (id)sharedInstance;
 - (id)window;

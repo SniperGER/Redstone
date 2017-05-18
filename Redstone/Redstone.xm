@@ -61,6 +61,19 @@ void playZoomDownAppAnimation() {
 	[redstone frontDisplayDidChange:arg1];
 }
 
+- (void)_handleMenuButtonEvent {
+	if (redstone && !switcherIsOpen) {
+		if (![redstone handleMenuButtonEvent]) {
+			%orig;
+		} else {
+			[self clearMenuButtonTimer];
+			[self cancelMenuButtonRequests];
+		}
+	} else {
+		%orig;
+	}
+}
+
 %end
 
 %hook SBHomeHardwareButton

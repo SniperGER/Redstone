@@ -55,7 +55,10 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)addAppsAndSections {
-	[[self.appList subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+	[self->sections makeObjectsPerformSelector:@selector(removeFromSuperview)];
+	for (NSArray* array in self->appsBySection) {
+		[array makeObjectsPerformSelector:@selector(removeFromSuperview)];
+	}
 	
 	self->sections = [NSMutableArray new];
 	self->appsBySection = [NSMutableDictionary new];
