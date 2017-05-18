@@ -131,10 +131,10 @@ void playZoomDownAppAnimation() {
 
 %hook SBIconModel
 
-- (void)removeIconForIdentifier:(id)arg1 {
-	%log;
-	HBLogDebug(@"arg1 = %@", arg1);
+- (void)addIcon:(id)arg1 {
 	%orig;
+	
+	[redstone.appListController addAppsAndSections];
 }
 
 %end

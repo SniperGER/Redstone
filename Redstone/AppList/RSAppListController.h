@@ -29,6 +29,7 @@
 
 + (id)sharedInstance;
 
+- (void)addAppsAndSections;
 - (RSAppListSection*)sectionWithLetter:(NSString*)letter;
 
 - (void)prepareForAppLaunch:(RSApp*)sender;
