@@ -30,7 +30,7 @@ static id currentApplication;
 	}
 	
 	for (UIView* view in [[[objc_getClass("SBUIController") sharedInstance] window] subviews]) {
-		if ([view isKindOfClass:[RSRootScrollView class]] || view == wallpaperView) {
+		if ([view isKindOfClass:[RSRootScrollView class]] || [view isKindOfClass:[RSLaunchScreen class]] || view == wallpaperView) {
 			[view setHidden:YES];
 		} else if (view != objectToHide) {
 			[view setHidden:NO];

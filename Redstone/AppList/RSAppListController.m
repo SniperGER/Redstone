@@ -55,6 +55,8 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)addAppsAndSections {
+	[[self.appList subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+	
 	self->sections = [NSMutableArray new];
 	self->appsBySection = [NSMutableDictionary new];
 	
@@ -529,11 +531,29 @@ static RSAppListController* sharedInstance;
 	[self.jumpList animateOut];
 }
 
-- (void)uninstallApplication:(SBLeafIcon*)icon {
-	if ([[icon application] isUninstallSupported]) {
-		[icon setUninstalled];
-		[icon completeUninstall];
-		[[objc_getClass("SBApplicationController") sharedInstance] uninstallApplication:[icon application]];
+- (void)uninstallApplication:(RSApp*)app {
+	if ([[app.icon application] isUninstallSupported]) {
+		[app.icon setUninstalled];
+		[app.icon completeUninstall];
+		[[objc_getClass("SBApplicationController") sharedInstance] uninstallApplication:[app.icon application]];
+		[[[objc_getClass("SBIconController") sharedInstance] model] removeIconForIdentifier:[[app.icon application] bundleIdentifier]];
+		
+		if ([[[RSStartScreenController sharedInstance] pinnedLeafIdentifiers] containsObject:[[app.icon application] bundleIdentifier]]) {
+			RSTile* tileToUnpin = [[[RSStartScreenController sharedInstance] pinnedTiles] objectAtIndex:[[[RSStartScreenController sharedInstance] pinnedLeafIdentifiers] indexOfObject:[[app.icon application] bundleIdentifier]]];
+			[[RSStartScreenController sharedInstance] unpinTile:tileToUnpin];
+		}
+		
+		[UIView animateWithDuration:.2 animations:^{
+			[app setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+			
+			[app setTransform:CGAffineTransformMakeScale(0.5, 0.5)];
+			[app.layer setOpacity:0.0];
+		} completion:^(BOOL finished) {
+			[app removeEasingFunctionForKeyPath:@"frame"];
+			[app removeFromSuperview];
+			
+			[self addAppsAndSections];
+		}];
 	}
 }
 

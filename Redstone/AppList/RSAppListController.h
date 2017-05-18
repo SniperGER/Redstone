@@ -48,6 +48,6 @@
 - (void)showJumpList;
 - (void)hideJumpList;
 
-- (void)uninstallApplication:(SBLeafIcon*)application;
+- (void)uninstallApplication:(RSApp*)app;
 
 @end

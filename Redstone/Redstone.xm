@@ -128,3 +128,13 @@ void playZoomDownAppAnimation() {
 }
 
 %end
+
+%hook SBIconModel
+
+- (void)removeIconForIdentifier:(id)arg1 {
+	%log;
+	HBLogDebug(@"arg1 = %@", arg1);
+	%orig;
+}
+
+%end
