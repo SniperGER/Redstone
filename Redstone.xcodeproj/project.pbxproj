@@ -10,6 +10,7 @@
 		8D1D34111EB7DCBA00BA9956 /* Redstone.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */; };
 		8D1D34121EB7DCBA00BA9956 /* Redstone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */; };
 		8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 8D1D34101EB7DCBA00BA9956 /* Makefile */; };
+		8D36C4DC1ECE4C5D00327349 /* RSTiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D36C4DB1ECE4C5D00327349 /* RSTiltView.m */; };
 		8D58CF391EC3A6AA0021F625 /* RSLaunchScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D58CF381EC3A6AA0021F625 /* RSLaunchScreen.m */; };
 		8D58CFC61EC44AB90021F625 /* UIFont+WDCustomLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D58CFC51EC44AB90021F625 /* UIFont+WDCustomLoader.m */; };
 		8D5F260C1EC9776600DB95C6 /* RSJumpList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5F260B1EC9776600DB95C6 /* RSJumpList.m */; };
@@ -122,6 +123,8 @@
 		8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Redstone.plist; path = Redstone/Redstone.plist; sourceTree = "<group>"; };
 		8D1D34101EB7DCBA00BA9956 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = Redstone/Makefile; sourceTree = "<group>"; };
 		8D1D341B1EB7E34700BA9956 /* Redstone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Redstone.h; path = Redstone/Redstone.h; sourceTree = "<group>"; };
+		8D36C4DA1ECE4C5D00327349 /* RSTiltView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTiltView.h; sourceTree = "<group>"; };
+		8D36C4DB1ECE4C5D00327349 /* RSTiltView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTiltView.m; sourceTree = "<group>"; };
 		8D4739701EB93A47007EA214 /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = control; path = Redstone/control; sourceTree = "<group>"; };
 		8D58CF371EC3A6AA0021F625 /* RSLaunchScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLaunchScreen.h; sourceTree = "<group>"; };
 		8D58CF381EC3A6AA0021F625 /* RSLaunchScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLaunchScreen.m; sourceTree = "<group>"; };
@@ -670,6 +673,8 @@
 				8DC171211EC5E50200D45EB1 /* RSPreferences.m */,
 				8D5F260F1ECA40AD00DB95C6 /* RSModalAlert.h */,
 				8D5F26101ECA40AD00DB95C6 /* RSModalAlert.m */,
+				8D36C4DA1ECE4C5D00327349 /* RSTiltView.h */,
+				8D36C4DB1ECE4C5D00327349 /* RSTiltView.m */,
 			);
 			name = Core;
 			path = Redstone/Core;
@@ -911,6 +916,7 @@
 				8D58CFC61EC44AB90021F625 /* UIFont+WDCustomLoader.m in Sources */,
 				8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */,
 				8DE79E9C1EC79AA5004EF2E6 /* RSPinMenu.m in Sources */,
+				8D36C4DC1ECE4C5D00327349 /* RSTiltView.m in Sources */,
 				8DBD10801EC23BD400A5A037 /* UIView+Easing.m in Sources */,
 				8DE79E991EC6F3BE004EF2E6 /* RSAppListSection.m in Sources */,
 				8DBD108A1EC23BF900A5A037 /* RSAesthetics.m in Sources */,

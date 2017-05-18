@@ -6,6 +6,7 @@
 	self = [super initWithFrame:frame];
 	
 	if (self) {
+		[self setHighlightEnabled:YES];
 		self.icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafId];
 		
 		UIView* tileBackground = [[UIView alloc] initWithFrame:CGRectMake(5, 2, 50, 50)];
@@ -46,11 +47,13 @@
 }
 
 - (void)tapped:(UITapGestureRecognizer*)gestureRecognizer {
+	[self untilt];
 	[[RSAppListController sharedInstance] prepareForAppLaunch:self];
 }
 
 - (void)pressed:(UILongPressGestureRecognizer*)gestureRecognizer {
 	if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+		[self untilt];
 		[[RSAppListController sharedInstance] showPinMenuForApp:self];
 	}
 }

@@ -7,6 +7,7 @@
 	
 	if (self) {
 		[self setClipsToBounds:YES];
+		[self setHighlightEnabled:YES];
 		
 		self.displayName = letter;
 	
@@ -30,6 +31,7 @@
 }
 
 - (void)tapped:(id)sender {
+	[self untilt];
 	[[RSAppListController sharedInstance] showJumpList];
 }
 

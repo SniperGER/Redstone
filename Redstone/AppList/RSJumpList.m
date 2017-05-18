@@ -21,7 +21,8 @@
 				int index = ((i * 4) + (j + 1)) - 1;
 				NSString* letter = [[alphabet substringWithRange:NSMakeRange(index, 1)] uppercaseString];
 				
-				UIView* jumpListLetter = [[UIView alloc] initWithFrame:CGRectMake(j*80, i*80, 80, 80)];
+				RSTiltView* jumpListLetter = [[RSTiltView alloc] initWithFrame:CGRectMake(j*80, i*80, 80, 80)];
+				[jumpListLetter setHighlightEnabled:YES];
 				[self->alphabetScrollView addSubview:jumpListLetter];
 				
 				UILabel* jumpListLetterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];

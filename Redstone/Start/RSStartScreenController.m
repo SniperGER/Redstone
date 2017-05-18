@@ -357,6 +357,8 @@ static RSStartScreenController* sharedInstance;
 	self->_selectedTile = selectedTile;
 	
 	for (RSTile* tile in self->pinnedTiles) {
+		[tile setTiltEnabled:!self.isEditing];
+		
 		if (tile == selectedTile) {
 			[tile setIsSelectedTile:YES];
 		} else {

@@ -11,6 +11,7 @@
 #import "Core/RSRootScrollView.h"
 #import "Core/RSPreferences.h"
 #import "Core/RSModalAlert.h"
+#import "Core/RSTiltView.h"
 
 #import "Start/RSStartScreenController.h"
 #import "Start/RSStartScrollView.h"

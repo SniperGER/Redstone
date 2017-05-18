@@ -10,26 +10,29 @@
 		[self.layer setBorderColor:[UIColor colorWithWhite:0.46 alpha:1.0].CGColor];
 		[self.layer setBorderWidth:2.0];
 		
-		self->pinLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 14, self.frame.size.width-24, 66)];
-		[self->pinLabel setText:[RSAesthetics localizedStringForKey:@"PIN_TO_START"]];
-		[self->pinLabel setFont:[UIFont fontWithName:@"SegoeUI" size:18]];
-		[self->pinLabel setTextColor:[UIColor whiteColor]];
-		[self->pinLabel setUserInteractionEnabled:YES];
-		[self addSubview:self->pinLabel];
+		self->pinButton = [[RSTiltView alloc] initWithFrame:CGRectMake(0, 14, self.frame.size.width, 66)];
+		[self->pinButton setHighlightEnabled:YES];
+		UILabel* pinLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, self.frame.size.width - 24, 66)];
+		[pinLabel setText:[RSAesthetics localizedStringForKey:@"PIN_TO_START"]];
+		[pinLabel setFont:[UIFont fontWithName:@"SegoeUI" size:18]];
+		[pinLabel setTextColor:[UIColor whiteColor]];
+		[self->pinButton addSubview:pinLabel];
+		[self addSubview:self->pinButton];
 		
-		self->uninstallLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 80, self.frame.size.width-24, 66)];
-		[self->uninstallLabel setText:[RSAesthetics localizedStringForKey:@"UNINSTALL"]];
-		[self->uninstallLabel setFont:[UIFont fontWithName:@"SegoeUI" size:18]];
-		[self->uninstallLabel setTextColor:[UIColor whiteColor]];
-		[self->uninstallLabel setUserInteractionEnabled:YES];
-		//[self->uninstallLabel setAlpha:0.4];
-		[self addSubview:self->uninstallLabel];
+		self->uninstallButton = [[RSTiltView alloc] initWithFrame:CGRectMake(0, 80, self.frame.size.width, 66)];
+		[self->uninstallButton setHighlightEnabled:YES];
+		UILabel* uninstallLabel = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, self.frame.size.width - 24, 66)];
+		[uninstallLabel setText:[RSAesthetics localizedStringForKey:@"UNINSTALL"]];
+		[uninstallLabel setFont:[UIFont fontWithName:@"SegoeUI" size:18]];
+		[uninstallLabel setTextColor:[UIColor whiteColor]];
+		[self->uninstallButton addSubview:uninstallLabel];
+		[self addSubview:self->uninstallButton];
 		
 		UITapGestureRecognizer* pinGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pin)];
-		[self->pinLabel addGestureRecognizer:pinGestureRecognizer];
+		[self->pinButton addGestureRecognizer:pinGestureRecognizer];
 		
 		UITapGestureRecognizer* uninstallGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(uninstall)];
-		[self->uninstallLabel addGestureRecognizer:uninstallGestureRecognizer];
+		[self->uninstallButton addGestureRecognizer:uninstallGestureRecognizer];
 	}
 	
 	return self;
@@ -39,14 +42,14 @@
 	self->_handlingApp = handlingApp;
 	
 	if ([[[RSStartScreenController sharedInstance] pinnedLeafIdentifiers] containsObject:[[[handlingApp icon] application] bundleIdentifier]]) {
-		[self->pinLabel setAlpha:0.4];
-		[self->pinLabel setUserInteractionEnabled:NO];
+		[self->pinButton setAlpha:0.4];
+		[self->pinButton setUserInteractionEnabled:NO];
 	} else {
-		[self->pinLabel setAlpha:1.0];
-		[self->pinLabel setUserInteractionEnabled:YES];
+		[self->pinButton setAlpha:1.0];
+		[self->pinButton setUserInteractionEnabled:YES];
 	}
 	
-	[self->uninstallLabel setHidden:![[handlingApp icon] isUninstallSupported]];
+	[self->uninstallButton setHidden:![[handlingApp icon] isUninstallSupported]];
 
 }
 

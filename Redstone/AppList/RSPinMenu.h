@@ -1,10 +1,10 @@
 #import <UIKit/UIKit.h>
 
-@class RSApp;
+@class RSApp, RSTiltView;
 
 @interface RSPinMenu : UIView {
-	UILabel* pinLabel;
-	UILabel* uninstallLabel;
+	RSTiltView* pinButton;
+	RSTiltView* uninstallButton;
 }
 
 @property (nonatomic, retain) RSApp* handlingApp;

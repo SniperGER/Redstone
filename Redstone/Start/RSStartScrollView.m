@@ -10,6 +10,7 @@
 		[self setClipsToBounds:NO];
 		[self setShowsVerticalScrollIndicator:NO];
 		[self setShowsHorizontalScrollIndicator:NO];
+		[self setDelaysContentTouches:NO];
 	}
 	
 	return self;

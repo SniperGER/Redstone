@@ -43,13 +43,19 @@
 		
 		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
 		[self->longPressGestureRecognizer setMinimumPressDuration:0.5];
+		[self->longPressGestureRecognizer setCancelsTouchesInView:NO];
+		[self->longPressGestureRecognizer setDelaysTouchesBegan:NO];
 		[self addGestureRecognizer:self->longPressGestureRecognizer];
 		
 		self->panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGestureRecognizer:)];
 		[self->panGestureRecognizer setDelegate:self];
+		[self->panGestureRecognizer setCancelsTouchesInView:NO];
+		[self->panGestureRecognizer setDelaysTouchesBegan:NO];
 		[self addGestureRecognizer:self->panGestureRecognizer];
 		
 		self->tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+		[self->tapGestureRecognizer setCancelsTouchesInView:NO];
+		[self->tapGestureRecognizer setDelaysTouchesBegan:NO];
 		[self->tapGestureRecognizer requireGestureRecognizerToFail:self->panGestureRecognizer];
 		[self->tapGestureRecognizer requireGestureRecognizerToFail:self->longPressGestureRecognizer];
 		[self addGestureRecognizer:self->tapGestureRecognizer];
@@ -155,6 +161,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		}
 	} else {
+		[self untilt];
 		[[RSStartScreenController sharedInstance] prepareForAppLaunch:self];
 	}
 }
@@ -233,7 +240,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
 	
 	//[[RSStartScreenController sharedInstance] updateStartContentSize];
-	//[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
+	[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
 }
 
 - (CGFloat)scaleButtonRotationForCurrentSize {

@@ -42,7 +42,7 @@
 }
 
 - (void)addActionWithTitle:(NSString *)title handler:(void (^)(void))callback {
-	UIView* button = [[UIView alloc] initWithFrame:CGRectMake(38, 0, ((screenWidth-76)-6) / 2, 38)];
+	RSTiltView* button = [[RSTiltView alloc] initWithFrame:CGRectMake(38, 0, ((screenWidth-76)-6) / 2, 38)];
 	[button setBackgroundColor:[UIColor colorWithWhite:0.38 alpha:1.0]];
 	
 	if ([self->actionButtons count] % 2 == 0) {

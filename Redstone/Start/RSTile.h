@@ -1,8 +1,8 @@
 #import <UIKit/UIKit.h>
 
-@class SBLeafIcon;
+@class SBLeafIcon, RSTiltView;
 
-@interface RSTile : UIView <UIGestureRecognizerDelegate> {
+@interface RSTile : RSTiltView <UIGestureRecognizerDelegate> {
 	CGPoint centerOffset;
 	CGPoint _originalCenter;
 	

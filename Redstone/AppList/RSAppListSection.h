@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@interface RSAppListSection : UIView <UIGestureRecognizerDelegate> {
+@interface RSAppListSection : RSTiltView <UIGestureRecognizerDelegate> {
 	NSString* _displayName;
 	UILabel* sectionLabel;
 	int _yCoordinate;

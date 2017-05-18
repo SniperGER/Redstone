@@ -11,6 +11,7 @@
 		[self setContentSize:CGSizeMake(screenWidth*2, screenHeight)];
 		[self setPagingEnabled:YES];
 		[self setBounces:NO];
+		[self setDelaysContentTouches:NO];
 		
 		[self setShowsVerticalScrollIndicator:NO];
 		[self setShowsHorizontalScrollIndicator:NO];
