@@ -138,3 +138,15 @@ void playZoomDownAppAnimation() {
 }
 
 %end
+
+%hook SBApplication
+
+- (void)setBadge:(id)arg1 {
+	%orig(arg1);
+	
+	if ([redstone.startScreenController tileForLeafIdentifier:[self bundleIdentifier]]) {
+		[[redstone.startScreenController tileForLeafIdentifier:[self bundleIdentifier]] setBadge:arg1];
+	}
+}
+
+%end

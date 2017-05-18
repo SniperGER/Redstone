@@ -28,6 +28,11 @@ NSBundle* redstoneBundle;
 	NSString* imagePath = [NSString stringWithFormat:@"%@/Tiles/%@/tile", RESOURCE_PATH, bundleIdentifier];
 	UIImage* tileImage = [[UIImage imageWithContentsOfFile:imagePath] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	
+	if (!tileImage) {
+		imagePath = [NSString stringWithFormat:@"%@/Tiles/%@", RESOURCE_PATH, @"default_icon"];
+		tileImage = [[UIImage imageWithContentsOfFile:imagePath] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	}
+	
 	return tileImage;
 }
 

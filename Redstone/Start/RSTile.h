@@ -11,6 +11,7 @@
 	
 	UILabel* tileLabel;
 	UIImageView* tileImageView;
+	UILabel* badgeLabel;
 	
 	UIView* unpinButton;
 	UIView* scaleButton;
@@ -37,5 +38,6 @@
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafId size:(int)tileSize;
 - (CGRect)positionWithoutTransform;
 - (CGPoint)originalCenter;
+- (void)setBadge:(NSNumber*)badgeCount;
 
 @end

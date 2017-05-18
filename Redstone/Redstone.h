@@ -58,6 +58,10 @@
 - (void)_launchIcon:(id)arg1;
 @end
 
+@interface SBIcon : NSObject
+- (id)applicationBundleID;
+@end
+
 @interface SBLeafIcon : NSObject
 - (id)displayName;
 - (id)application;
@@ -73,6 +77,7 @@
 @interface SBApplication : NSObject
 - (id)bundleIdentifier;
 - (BOOL)isUninstallSupported;
+- (id)badgeNumberOrString;
 @end
 
 @interface SBApplicationController : NSObject

@@ -33,6 +33,12 @@
 		[self->tileImageView setTintColor:[UIColor whiteColor]];
 		[self addSubview:self->tileImageView];
 		
+		self->badgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
+		[self->badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
+		[self->badgeLabel setTextColor:[UIColor whiteColor]];
+		[self->badgeLabel setTextAlignment:NSTextAlignmentCenter];
+		[self addSubview:self->badgeLabel];
+		
 		[self setBackgroundColor:[RSAesthetics accentColorForTile:[[self.icon application] bundleIdentifier]]];
 		
 		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
@@ -81,6 +87,10 @@
 		
 		self->scaleGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setNextSize)];
 		[self->scaleButton addGestureRecognizer:self->scaleGestureRecognizer];
+		
+		if ([[self.icon application] badgeNumberOrString] != nil) {
+			[self setBadge:[[self.icon application] badgeNumberOrString]];
+		}
 	}
 	
 	return self;
@@ -131,7 +141,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			self.originalCenter = self.center;
 		}];
 		
-		[[RSStartScreenController sharedInstance] updateStartContentSize];
+		//[[RSStartScreenController sharedInstance] updateStartContentSize];
 		[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
 	}
 }
@@ -325,6 +335,25 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	[self->panGestureRecognizer setEnabled:YES];
 
 	return [super hitTest:point withEvent:event];
+}
+
+- (void)setBadge:(NSNumber*)badgeCount {
+	CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
+	if (!badgeCount || badgeCount == 0 || [badgeCount intValue] == 0) {
+		[self->badgeLabel setText:nil];
+		[self->badgeLabel setHidden:YES];
+		[self->tileImageView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
+	} else {
+		[self->badgeLabel setText:[NSString stringWithFormat:@"%@", badgeCount]];
+		[self->badgeLabel sizeToFit];
+		
+		CGSize combinedSize = CGSizeMake(tileImageSize.width + self->badgeLabel.frame.size.width + 5, tileImageSize.height);
+		
+		[self->tileImageView setCenter:CGPointMake(self.bounds.size.width/2 - (combinedSize.width - self->tileImageView.frame.size.width)/2, self.bounds.size.height/2)];
+		[self->badgeLabel setCenter:CGPointMake(self.bounds.size.width/2 + (combinedSize.width - self->badgeLabel.frame.size.width)/2, self.bounds.size.height/2)];
+		
+		[self->badgeLabel setHidden:NO];
+	}
 }
 
 @end

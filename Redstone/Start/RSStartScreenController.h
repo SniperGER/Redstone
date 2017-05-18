@@ -30,7 +30,9 @@
 - (void)unpinTile:(RSTile*)tile;
 - (id)viewIntersectsWithAnotherView:(CGRect)rect;
 - (void)resetTileVisibility;
+
 - (NSArray*)pinnedTiles;
 - (NSArray*)pinnedLeafIdentifiers;
+- (RSTile*)tileForLeafIdentifier:(NSString*)leafId;
 
 @end

@@ -498,4 +498,15 @@ static RSStartScreenController* sharedInstance;
 	return self->pinnedLeafIdentifiers;
 }
 
+- (RSTile*)tileForLeafIdentifier:(NSString*)leafId {
+	for (RSTile* tile in self->pinnedTiles) {
+		if ([[[tile.icon application] bundleIdentifier] isEqualToString:leafId]) {
+			return tile;
+			break;
+		}
+	}
+	
+	return nil;
+}
+
 @end
