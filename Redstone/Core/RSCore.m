@@ -98,6 +98,20 @@ static id currentApplication;
 }
 
 - (BOOL)handleMenuButtonEvent {
+	if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")]) {
+		[self.startScreenController setIsEditing:NO];
+		[self.startScreenController saveTiles];
+		[self.appListController hidePinMenu];
+		[self.appListController hideJumpList];
+		[self.appListController setIsSearching:NO];
+		
+		[self.rootScrollView setContentOffset:CGPointMake(0, 0)];
+		[self.startScreenController.startScrollView setContentOffset:CGPointMake(0, -24)];
+		[self.appListController.appList setContentOffset:CGPointMake(0, 0)];
+		
+		return NO;
+	}
+	
 	if ([self.startScreenController isEditing]) {
 		[self.startScreenController setIsEditing:NO];
 		[self.startScreenController saveTiles];
@@ -119,7 +133,7 @@ static id currentApplication;
 	if ([self.appListController isSearching]) {
 		[self.appListController setIsSearching:NO];
 		
-		return true;
+		return YES;
 	}
 	
 	if (self.rootScrollView.contentOffset.x != 0 || self.startScreenController.startScrollView.contentOffset.y != -24) {
