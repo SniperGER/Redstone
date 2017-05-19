@@ -37,6 +37,7 @@
 		[self->badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
 		[self->badgeLabel setTextColor:[UIColor whiteColor]];
 		[self->badgeLabel setTextAlignment:NSTextAlignmentCenter];
+		[self->badgeLabel setHidden:YES];
 		[self addSubview:self->badgeLabel];
 		
 		[self setBackgroundColor:[RSAesthetics accentColorForTile:[[self.icon application] bundleIdentifier]]];
@@ -95,7 +96,7 @@
 		[self->scaleButton addGestureRecognizer:self->scaleGestureRecognizer];
 		
 		if ([[self.icon application] badgeNumberOrString] != nil) {
-			[self setBadge:[[self.icon application] badgeNumberOrString]];
+			[self setBadge:[[[self.icon application] badgeNumberOrString] intValue]];
 		}
 	}
 	
@@ -239,6 +240,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	[self->scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
 	[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
 	
+	[self setBadge:self->badgeValue];
+	
 	//[[RSStartScreenController sharedInstance] updateStartContentSize];
 	[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
 }
@@ -344,14 +347,23 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	return [super hitTest:point withEvent:event];
 }
 
-- (void)setBadge:(NSNumber*)badgeCount {
+- (void)setBadge:(int)badgeCount {
+	self->badgeValue = badgeCount;
+	
 	CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
-	if (!badgeCount || badgeCount == 0 || [badgeCount intValue] == 0) {
+	
+	if (!badgeCount || badgeCount == 0) {
 		[self->badgeLabel setText:nil];
 		[self->badgeLabel setHidden:YES];
 		[self->tileImageView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
 	} else {
-		[self->badgeLabel setText:[NSString stringWithFormat:@"%@", badgeCount]];
+		if (self.size < 2) {
+			[self->badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:24]];
+		} else {
+			[self->badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
+		}
+
+		[self->badgeLabel setText:[NSString stringWithFormat:@"%d", badgeCount]];
 		[self->badgeLabel sizeToFit];
 		
 		CGSize combinedSize = CGSizeMake(tileImageSize.width + self->badgeLabel.frame.size.width + 5, tileImageSize.height);

@@ -31,7 +31,6 @@
 		[self addGestureRecognizer:self->tapGestureRecognizer];
 		
 		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
-		[self->longPressGestureRecognizer setMinimumPressDuration:0.5];
 		[self->longPressGestureRecognizer setCancelsTouchesInView:NO];
 		[self->longPressGestureRecognizer setDelegate:self];
 		[self addGestureRecognizer:self->longPressGestureRecognizer];

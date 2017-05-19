@@ -118,12 +118,6 @@
 	[self untilt];
 }
 
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-	[super touchesMoved:touches withEvent:event];
-	
-	[self untilt];
-}
-
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 	[super touchesCancelled:touches withEvent:event];
 	
