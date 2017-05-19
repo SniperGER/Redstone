@@ -30,9 +30,11 @@
 	return YES;
 }
 
-- (void)tapped:(id)sender {
-	[self untilt];
-	[[RSAppListController sharedInstance] showJumpList];
+- (void)tapped:(UITapGestureRecognizer*)gestureRecognizer {
+	if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+		[self untilt];
+		[[RSAppListController sharedInstance] showJumpList];
+	}
 }
 
 @end

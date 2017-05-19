@@ -46,8 +46,10 @@
 }
 
 - (void)tapped:(UITapGestureRecognizer*)gestureRecognizer {
-	[self untilt];
-	[[RSAppListController sharedInstance] prepareForAppLaunch:self];
+	if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+		[self untilt];
+		[[RSAppListController sharedInstance] prepareForAppLaunch:self];
+	}
 }
 
 - (void)pressed:(UILongPressGestureRecognizer*)gestureRecognizer {
