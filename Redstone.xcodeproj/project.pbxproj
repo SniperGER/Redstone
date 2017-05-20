@@ -984,6 +984,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				SDKROOT = iphoneos10.2;
+				THEOS = /opt/theos;
 			};
 			name = Debug;
 		};
@@ -992,6 +993,7 @@
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				SDKROOT = iphoneos10.2;
+				THEOS = /opt/theos;
 			};
 			name = Release;
 		};
@@ -1101,6 +1103,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i386,
+					x86_64,
+				);
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1144,7 +1150,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
+				TARGET = "simulator:clang";
 			};
 			name = Debug;
 		};
@@ -1152,6 +1158,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					i386,
+					x86_64,
+				);
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1186,7 +1196,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
+				TARGET = "simulator:clang";
 			};
 			name = Release;
 		};
@@ -1233,10 +1243,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKVERSION = 10.1;
+				SYSROOT = "$(THEOS)/sdks/iPhoneOS10.1.sdk";
+				TARGET = "iphone:latest";
+				arch = arm64;
 			};
 			name = Debug;
 		};
@@ -1278,6 +1292,10 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKVERSION = 10.1;
+				SYSROOT = "$(THEOS)/sdks/iPhoneOS10.1.sdk";
+				TARGET = "iphone:latest";
+				arch = arm64;
 			};
 			name = Release;
 		};

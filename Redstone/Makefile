@@ -7,11 +7,6 @@ export THEOS_DEVICE_PORT=22
 # Set the package version
 export PACKAGE_VERSION = $(shell date +%y)w$(shell date +%V)b
 
-# Configure the target here
-TARGET = iphone:latest		# Phyiscal devices
-#TARGET = simulator:clang	# Simulator
-
-
 # DO NOT EDIT ANYTHING BEYOND THIS POINT
 export GO_EASY_ON_ME = 1
 

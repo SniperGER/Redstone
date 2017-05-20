@@ -52,29 +52,6 @@ static RSAppListController* sharedInstance;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	[self updateSectionsWithOffset:self.appList.contentOffset.y];
-	
-	CGRect scrollRect = CGRectMake(0, self.appList.contentOffset.y, self.appList.frame.size.width, self.appList.frame.size.height);
-	for (RSAppListSection* section in self->sections) {
-		if (CGRectIntersectsRect(section.frame, scrollRect)) {
-			[section setHidden:NO];
-			[section setUserInteractionEnabled:YES];
-		} else {
-			[section setHidden:YES];
-			[section setUserInteractionEnabled:NO];
-		}
-	}
-	
-	for (id key in self->appsBySection) {
-		for (RSApp* app in [self->appsBySection objectForKey:key]) {
-			if (CGRectIntersectsRect(app.frame, scrollRect)) {
-				[app setHidden:NO];
-				[app setUserInteractionEnabled:YES];
-			} else {
-				[app setHidden:YES];
-				[app setUserInteractionEnabled:NO];
-			}
-		}
-	}
 }
 
 - (void)addAppsAndSections {
