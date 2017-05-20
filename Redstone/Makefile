@@ -15,7 +15,7 @@ TARGET = iphone:latest		# Phyiscal devices
 # DO NOT EDIT ANYTHING BEYOND THIS POINT
 export GO_EASY_ON_ME = 1
 
-include /opt/theos/makefiles/common.mk
+include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = Redstone
 Redstone_PRIVATE_FRAMEWORKS = AppSupport
@@ -39,7 +39,7 @@ Redstone_FILES += AppList/RSAppListController.m AppList/RSAppList.m AppList/RSAp
 # Lock Screen
 Redstone_FILES += Redstone_LockScreen.xm LockScreen/RSLockScreenController.m LockScreen/RSLockScreen.m
 
-include /opt/theos/makefiles/tweak.mk
+include $(THEOS)/makefiles/tweak.mk
 
 # Copy the compiled dylib to simject's directory
 # You don't need to comment this when building for a device,

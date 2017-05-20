@@ -13,8 +13,8 @@ before_install:
   - brew update
   - brew install dpkg ldid
 
-  - git clone --recursive git://github.com/theos/theos.git /opt/theos
-  - git clone --recursive git://github.com/theos/sdks.git /opt/theos/sdks
+  - git clone --recursive git://github.com/theos/theos.git ~/theos
+  - git clone --recursive git://github.com/theos/sdks.git ~/theos/sdks
 
 script:
   - cd Redstone
