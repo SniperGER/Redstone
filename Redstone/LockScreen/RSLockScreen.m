@@ -9,6 +9,8 @@
 		[self setContentSize:CGSizeMake(screenWidth, screenHeight*2)];
 		[self setPagingEnabled:YES];
 		[self setBounces:NO];
+		[self setShowsVerticalScrollIndicator:NO];
+		[self setShowsHorizontalScrollIndicator:NO];
 		
 		self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth-48, screenHeight)];
 		[self.timeLabel setFont:[UIFont fontWithName:@"SegoeUI-Light" size:114]];

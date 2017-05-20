@@ -36,23 +36,17 @@ static RSLockScreenController* sharedInstance;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-	self.isScrolling = NO;
 	if (scrollView.contentOffset.y >= (scrollView.contentSize.height/2)) {
 		UIView* dashBoardView = [[[objc_getClass("SBLockScreenManager") sharedInstance] lockScreenViewController] view];
 		
-		[UIView animateWithDuration:.3 animations:^{
-			[dashBoardView setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-			
-			[dashBoardView setAlpha:0];
-		} completion:^(BOOL finished) {
-			[dashBoardView removeEasingFunctionForKeyPath:@"frame"];
-			
-			[[objc_getClass("SBLockScreenManager") sharedInstance] attemptUnlockWithPasscode:nil];
-			[self.lockScreen setContentOffset:CGPointZero];
-			[self.lockScreen setHidden:YES];
-			[dashBoardView setAlpha:1];
-		}];
+		[[objc_getClass("SBLockScreenManager") sharedInstance] attemptUnlockWithPasscode:nil];
+		[self.lockScreen setContentOffset:CGPointZero];
+		[self.lockScreen setHidden:YES];
+		[dashBoardView setAlpha:1];
+		self.isScrolling = NO;
 		
+	} else {
+		self.isScrolling = NO;
 	}
 }
 

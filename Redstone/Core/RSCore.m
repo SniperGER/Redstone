@@ -58,8 +58,6 @@ static id currentApplication;
 		[wallpaperView setFrame:[[UIScreen mainScreen] bounds]];
 		[self->_window addSubview:wallpaperView];
 		
-		self.lockScreenController = [RSLockScreenController new];
-		
 		self.rootScrollView = [[RSRootScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[self->_window addSubview:self.rootScrollView];
 		
@@ -72,6 +70,10 @@ static id currentApplication;
 		self.appListController = [RSAppListController new];
 		[self.rootScrollView addSubview:self.appListController.appList];
 		[self.rootScrollView addSubview:self.appListController.jumpList];
+		
+		if ([[[RSPreferences preferences] objectForKey:@"lockScreenEnabled"] boolValue]) {
+			self.lockScreenController = [RSLockScreenController new];
+		}
 	}
 	
 	return self;
@@ -101,17 +103,19 @@ static id currentApplication;
 
 - (BOOL)handleMenuButtonEvent {
 	if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")]) {
-		/*[self.startScreenController setIsEditing:NO];
-		[self.startScreenController saveTiles];
-		[self.appListController hidePinMenu];
-		[self.appListController hideJumpList];
-		[self.appListController setIsSearching:NO];
-		
-		[self.rootScrollView setContentOffset:CGPointMake(0, 0)];
-		[self.startScreenController.startScrollView setContentOffset:CGPointMake(0, -24)];
-		[self.appListController.appList setContentOffset:CGPointMake(0, 0)];*/
-		
-		return YES;
+		if ([[[RSPreferences preferences] objectForKey:@"lockScreenEnabled"] boolValue]) {
+			return YES;
+		} else {
+			[self.startScreenController setIsEditing:NO];
+			[self.startScreenController saveTiles];
+			[self.appListController hidePinMenu];
+			[self.appListController hideJumpList];
+			[self.appListController setIsSearching:NO];
+			
+			[self.rootScrollView setContentOffset:CGPointMake(0, 0)];
+			[self.startScreenController.startScrollView setContentOffset:CGPointMake(0, -24)];
+			[self.appListController.appList setContentOffset:CGPointMake(0, 0)];
+		}
 	}
 	
 	if ([self.startScreenController isEditing]) {

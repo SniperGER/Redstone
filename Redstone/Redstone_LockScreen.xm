@@ -1,19 +1,9 @@
 #import "Redstone.h"
 #import "substrate.h"
 
-UIScrollView* testView;
+%group lockscreen
 
 %hook SBDashBoardView
-
-/*- (id)initWithFrame:(id)arg1 {
-	self = %orig(arg1);
-	
-	[testView = [UIScrollView alloc] initWithFrame:CGRectMake(0,0,screenWidth,screenHeight)];
-	[testView setBackgroundColor:[UIColor magentaColor]];
-	[self addSubview:testView];
-	
-	return self;
-}*/
 
 - (void)layoutSubviews {
 	[MSHookIvar<UIView *>(self,"_pageControl") removeFromSuperview];
@@ -57,3 +47,13 @@ UIScrollView* testView;
 }
 
 %end
+
+%end
+
+%ctor {
+	NSDictionary* settings = [NSDictionary dictionaryWithContentsOfFile:PREFERENCES_PATH];
+	
+	if ([[settings objectForKey:@"lockScreenEnabled"] boolValue]) {
+		%init(lockscreen);
+	}
+}

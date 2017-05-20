@@ -30,6 +30,10 @@ static RSPreferences* sharedInstance;
 			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:@"startScreenEnabled"];
 		}
 		
+		if (![self.preferences objectForKey:@"lockScreenEnabled"]) {
+			[self.preferences setValue:[NSNumber numberWithBool:NO] forKey:@"lockScreenEnabled"];
+		}
+		
 		if (![self.preferences objectForKey:@"accentColor"]) {
 			[self.preferences setValue:@"#0078D7" forKey:@"accentColor"];
 		}
