@@ -10,10 +10,10 @@ env:
     - SYSROOT = /opt/theos/sdks/iPhoneOS10.1.sdk
 
 before_install:
-  - brew update
-  - brew install dpkg ldid
+  - HOMEBREW_NO_AUTO_UPDATE=1 brew install dpkg ldid
 
   - git clone --recursive git://github.com/theos/theos.git ~/theos
+  - rm -rf ~/theos/sdks
   - git clone --recursive git://github.com/theos/sdks.git ~/theos/sdks
 
 script:
