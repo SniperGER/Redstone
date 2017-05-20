@@ -85,7 +85,7 @@
 - (id)uninstallAlertCancelTitle;
 - (void)setUninstalled;
 - (void)completeUninstall;
-- (void)getUnmaskedIconImage:(int)arg1;
+- (id)getUnmaskedIconImage:(int)arg1;
 @end
 
 @interface SBApplication : NSObject
