@@ -163,3 +163,27 @@ void playZoomDownAppAnimation() {
 }
 
 %end
+
+%hook SBWallpaperController
+
+- (void)_handleWallpaperChangedForVariant:(int)arg1 {
+	%orig(arg1);
+	
+	[[[RSCore sharedInstance] wallpaperView] setImage:[RSAesthetics homeScreenWallpaper]];
+	[[[RSLockScreenController sharedInstance] wallpaperView] setImage:[RSAesthetics lockScreenWallpaper]];
+}
+
+%end
+
+%hook SBBacklightController
+
+- (void)_startFadeOutAnimationFromLockSource:(int)arg1 {
+	if ([[RSLockScreenController sharedInstance] isScrolling]) {
+		[self resetIdleTimer];
+		return;
+	}
+	
+	%orig(arg1);
+}
+
+%end

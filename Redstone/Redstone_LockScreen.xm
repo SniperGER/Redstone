@@ -19,13 +19,13 @@ UIScrollView* testView;
 	[MSHookIvar<UIView *>(self,"_pageControl") removeFromSuperview];
 	%orig;
 	
-	if (![self.subviews containsObject:[[RSCore sharedInstance] lockScreenController].containerView]) {
-		[self addSubview:[[RSCore sharedInstance] lockScreenController].containerView];
+	if (![self.subviews containsObject:[[RSLockScreenController sharedInstance] containerView]]) {
+		[self addSubview:[[RSLockScreenController sharedInstance] containerView]];
 	}
 	
 	if ([RSCore sharedInstance]) {
-		[[[RSCore sharedInstance] lockScreenController].lockScreen setHidden:NO];
-		[self bringSubviewToFront:[[RSCore sharedInstance] lockScreenController].containerView];
+		[[[RSLockScreenController sharedInstance] lockScreen] setHidden:NO];
+		[self bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
 	}
 }
 
@@ -39,9 +39,9 @@ UIScrollView* testView;
 	[MSHookIvar<UILabel *>(self,"_customSubtitleView") removeFromSuperview];
 	
 	if ([RSCore sharedInstance]) {
-		[[[RSCore sharedInstance] lockScreenController] setTime:[MSHookIvar<SBUILegibilityLabel *>(self,"_timeLabel") string]];
-		[[[RSCore sharedInstance] lockScreenController] setDate:[MSHookIvar<SBUILegibilityLabel *>(self,"_dateSubtitleView") string]];
-		[self bringSubviewToFront:[[RSCore sharedInstance] lockScreenController].containerView];
+		[[RSLockScreenController sharedInstance] setTime:[MSHookIvar<SBUILegibilityLabel *>(self,"_timeLabel") string]];
+		[[RSLockScreenController sharedInstance] setDate:[MSHookIvar<SBUILegibilityLabel *>(self,"_dateSubtitleView") string]];
+		[self bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
 	}
 	
 	%orig;

@@ -10,7 +10,7 @@
 		self.icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafId];
 		
 		UIView* tileBackground = [[UIView alloc] initWithFrame:CGRectMake(5, 2, 50, 50)];
-		[tileBackground setBackgroundColor:[RSAesthetics accentColorForTile:leafId]];
+		[tileBackground setBackgroundColor:[[RSAesthetics accentColorForTile:leafId] colorWithAlphaComponent:1.0]];
 		[self addSubview:tileBackground];
 		
 		self->appImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 37.5, 37.5)];

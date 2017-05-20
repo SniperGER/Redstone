@@ -35,7 +35,7 @@ static RSPreferences* sharedInstance;
 		}
 		
 		if (![self.preferences objectForKey:@"tileOpacity"]) {
-			[self.preferences setValue:[NSNumber numberWithFloat:0.6] forKey:@"tileOpacity"];
+			[self.preferences setValue:[NSNumber numberWithFloat:0.8] forKey:@"tileOpacity"];
 		}
 		
 		/*if (![sharedPreferences objectForKey:@"themeColor"]) {

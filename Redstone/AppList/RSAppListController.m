@@ -23,7 +23,7 @@ static RSAppListController* sharedInstance;
 		self->sectionBackgroundContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
 		[self->sectionBackgroundContainer setClipsToBounds:YES];
 		
-		self->sectionBackgroundImage = [[UIImageView alloc] initWithImage:[RSAesthetics getCurrentWallpaper]];
+		self->sectionBackgroundImage = [[UIImageView alloc] initWithImage:[RSAesthetics homeScreenWallpaper]];
 		[self->sectionBackgroundImage setFrame:CGRectMake(0, -70, screenWidth, screenHeight)];
 		[self->sectionBackgroundContainer addSubview:self->sectionBackgroundImage];
 		
@@ -426,6 +426,8 @@ static RSAppListController* sharedInstance;
 	
 	[self->pinMenu.layer addAnimation:opacity forKey:@"opacity"];
 	[self->pinMenu.layer addAnimation:scale forKey:@"scale"];
+	
+	[self.appList.tapGestureRecognizer setEnabled:YES];
 }
 
 - (void)hidePinMenu {
@@ -441,6 +443,7 @@ static RSAppListController* sharedInstance;
 	}
 	
 	[self.appList setScrollEnabled:YES];
+	[self.appList.tapGestureRecognizer setEnabled:NO];
 	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:YES];
 	
 	self.showsPinMenu = NO;

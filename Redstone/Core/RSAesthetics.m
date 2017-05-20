@@ -5,23 +5,35 @@ NSBundle* redstoneBundle;
 
 @implementation RSAesthetics
 
-+ (UIImage*)getCurrentWallpaper {
-	NSData* homescreenWallpaper = [NSData dataWithContentsOfFile:@"/var/mobile/Library/SpringBoard/HomeBackground.cpbitmap"];
++ (UIImage*)lockScreenWallpaper {
+	NSData* lockscreenWallpaper = [NSData dataWithContentsOfFile:LOCK_WALLPAPER_PATH];
+	
+	if (lockscreenWallpaper) {
+		CFDataRef lockWallpaperDataRef = (__bridge CFDataRef)lockscreenWallpaper;
+		NSArray* imageArray = (__bridge NSArray*)CPBitmapCreateImagesFromData(lockWallpaperDataRef, NULL, 1, NULL);
+		UIImage* lockWallpaper = [UIImage imageWithCGImage:(CGImageRef)imageArray[0]];
+		
+		return lockWallpaper;
+	} else {
+		UIImage* baseImage = [self imageWithColor:[UIColor blackColor] size:[UIScreen mainScreen].bounds.size];
+		return baseImage;
+	}
+}
+
++ (UIImage*)homeScreenWallpaper {
+	NSData* homescreenWallpaper = [NSData dataWithContentsOfFile:HOME_WALLPAPER_PATH];
 	
 	if (!homescreenWallpaper) {
-		homescreenWallpaper = [NSData dataWithContentsOfFile:@"/var/mobile/Library/SpringBoard/LockBackground.cpbitmap"];
-	}
-	
-	if (homescreenWallpaper) {
+		return [self lockScreenWallpaper];
+	} else {
 		CFDataRef homeWallpaperDataRef = (__bridge CFDataRef)homescreenWallpaper;
 		NSArray* imageArray = (__bridge NSArray*)CPBitmapCreateImagesFromData(homeWallpaperDataRef, NULL, 1, NULL);
 		UIImage* homeWallpaper = [UIImage imageWithCGImage:(CGImageRef)imageArray[0]];
 		
 		return homeWallpaper;
-	} else {
-		UIImage* baseImage = [self imageWithColor:[UIColor blackColor] size:[UIScreen mainScreen].bounds.size];
-		return baseImage;
 	}
+	
+	//return [[[objc_getClass("SBWallpaperController") sharedInstance] homescreenWallpaperView] image];
 }
 
 + (UIImage*)getImageForTileWithBundleIdentifier:(NSString*)bundleIdentifier {

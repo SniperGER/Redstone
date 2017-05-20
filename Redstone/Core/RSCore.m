@@ -54,7 +54,7 @@ static id currentApplication;
 		
 		self->preferences = [[RSPreferences alloc] init];
 		
-		wallpaperView = [[UIImageView alloc] initWithImage:[RSAesthetics getCurrentWallpaper]];
+		wallpaperView = [[UIImageView alloc] initWithImage:[RSAesthetics homeScreenWallpaper]];
 		[wallpaperView setFrame:[[UIScreen mainScreen] bounds]];
 		[self->_window addSubview:wallpaperView];
 		

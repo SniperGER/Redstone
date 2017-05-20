@@ -2,7 +2,8 @@
 
 @interface RSAesthetics : NSObject
 
-+ (UIImage*)getCurrentWallpaper;
++ (UIImage*)lockScreenWallpaper;
++ (UIImage*)homeScreenWallpaper;
 + (UIImage*)getImageForTileWithBundleIdentifier:(NSString*)bundleIdentifier;
 + (UIColor*)accentColor;
 + (UIColor*)accentColorForTile:(NSString*)bundleIdentifier;

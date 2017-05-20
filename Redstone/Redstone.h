@@ -39,11 +39,15 @@
 
 #define RESOURCE_PATH @"/opt/simject/FESTIVAL/Redstone"
 #define PREFERENCES_PATH @"/opt/simject/FESTIVAL/ml.festival.redstone.plist"
+#define LOCK_WALLPAPER_PATH [NSString stringWithFormat:@"%@/Library/SpringBoard/LockBackground.cpbitmap", NSHomeDirectory()]
+#define HOME_WALLPAPER_PATH [NSString stringWithFormat:@"%@/Library/SpringBoard/HomeBackground.cpbitmap", NSHomeDirectory()]
 
 #else
 
 #define RESOURCE_PATH @"/var/mobile/Library/FESTIVAL/Redstone"
 #define PREFERENCES_PATH @"/var/mobile/Library/Preferences/ml.festival.redstone.plist"
+#define LOCK_WALLPAPER_PATH @"/var/mobile/Library/SpringBoard/LockBackground.cpbitmap"
+#define HOME_WALLPAPER_PATH @"/var/mobile/Library/SpringBoard/HomeBackground.cpbitmap"
 
 #endif
 
@@ -118,4 +122,13 @@
 
 @interface SBUILegibilityLabel : UIView
 - (id)string;
+@end
+
+@interface SBWallpaperController : NSObject
++ (id)sharedInstance;
+- (UIImageView*)homescreenWallpaperView;
+@end
+
+@interface SBBacklightController : NSObject
+- (void)resetIdleTimer;
 @end

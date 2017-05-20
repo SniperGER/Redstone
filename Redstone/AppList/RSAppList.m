@@ -12,8 +12,9 @@
 		[self setClipsToBounds:YES];
 		[self setContentInset:UIEdgeInsetsMake(0, 0, 80, 0)];
 		
-		UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
-		[self addGestureRecognizer:tapGestureRecognizer];
+		self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
+		[self.tapGestureRecognizer setEnabled:NO];
+		[self addGestureRecognizer:self.tapGestureRecognizer];
 	}
 	
 	return self;
