@@ -29,7 +29,7 @@ static RSLockScreenController* sharedInstance;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	self.isScrolling = YES;
-	CGFloat alpha = 1 - (scrollView.contentOffset.y / (scrollView.contentSize.height / 2));
+	CGFloat alpha = 1 - (scrollView.contentOffset.y / (scrollView.bounds.size.height * 0.6));
 	
 	[self.lockScreen.timeLabel setAlpha:alpha];
 	[self.lockScreen.dateLabel setAlpha:alpha];
