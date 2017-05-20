@@ -103,7 +103,7 @@
 - (SBLeafIcon*)leafIconForIdentifier:(id)arg1;
 - (id)visibleIconIdentifiers;
 - (void)removeIconForIdentifier:(id)arg1;
-- (void)applicationIconForBundleIdentifier:(id)arg1;
+- (id)applicationIconForBundleIdentifier:(id)arg1;
 @end
 
 @interface SBUIAnimationZoomApp : NSObject
