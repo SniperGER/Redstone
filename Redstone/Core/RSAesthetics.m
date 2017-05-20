@@ -41,8 +41,10 @@ NSBundle* redstoneBundle;
 	UIImage* tileImage = [[UIImage imageWithContentsOfFile:imagePath] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	
 	if (!tileImage) {
-		imagePath = [NSString stringWithFormat:@"%@/Tiles/%@", RESOURCE_PATH, @"default_icon"];
-		tileImage = [[UIImage imageWithContentsOfFile:imagePath] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+		//imagePath = [NSString stringWithFormat:@"%@/Tiles/%@", RESOURCE_PATH, @"default_icon"];
+		//tileImage = [[UIImage imageWithContentsOfFile:imagePath] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+		
+		return [[[[objc_getClass("SBIconController") sharedInstance] model] applicationIconForBundleIdentifier:bundleIdentifier] getUnmaskedIconImage:2];
 	}
 	
 	return tileImage;

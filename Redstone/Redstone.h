@@ -85,6 +85,7 @@
 - (id)uninstallAlertCancelTitle;
 - (void)setUninstalled;
 - (void)completeUninstall;
+- (void)getUnmaskedIconImage:(int)arg1;
 @end
 
 @interface SBApplication : NSObject
@@ -102,6 +103,7 @@
 - (SBLeafIcon*)leafIconForIdentifier:(id)arg1;
 - (id)visibleIconIdentifiers;
 - (void)removeIconForIdentifier:(id)arg1;
+- (void)applicationIconForBundleIdentifier:(id)arg1;
 @end
 
 @interface SBUIAnimationZoomApp : NSObject
