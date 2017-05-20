@@ -131,7 +131,6 @@
 		8D2D8C321ED0161500D220E0 /* Redstone_LockScreen.xm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Redstone_LockScreen.xm; path = Redstone/Redstone_LockScreen.xm; sourceTree = "<group>"; };
 		8D2D8C341ED0163900D220E0 /* RSLockScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLockScreen.h; sourceTree = "<group>"; };
 		8D2D8C351ED0163900D220E0 /* RSLockScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLockScreen.m; sourceTree = "<group>"; };
-		8D2D8C7D1ED0E57800D220E0 /* travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = travis.yml; sourceTree = "<group>"; };
 		8D36C4DA1ECE4C5D00327349 /* RSTiltView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTiltView.h; sourceTree = "<group>"; };
 		8D36C4DB1ECE4C5D00327349 /* RSTiltView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTiltView.m; sourceTree = "<group>"; };
 		8D4739701EB93A47007EA214 /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = control; path = Redstone/control; sourceTree = "<group>"; };
@@ -278,7 +277,6 @@
 		8D1D33E81EB7DC3D00BA9956 = {
 			isa = PBXGroup;
 			children = (
-				8D2D8C7D1ED0E57800D220E0 /* travis.yml */,
 				8D1D340B1EB7DC7B00BA9956 /* Redstone */,
 				8D0CB4E31EB9DBC600E39A02 /* hiddenapp.app */,
 			);
