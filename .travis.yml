@@ -5,9 +5,9 @@ sudo: false
 
 env:
   global:
-    - THEOS = /opt/theos
-    - SDKVERSION = 10.1
-    - SYSROOT = /opt/theos/sdks/iPhoneOS10.1.sdk
+    - THEOS=~/theos
+    - SDKVERSION=10.1
+    - SYSROOT=~/theos/sdks/iPhoneOS10.1.sdk
 
 before_install:
   - HOMEBREW_NO_AUTO_UPDATE=1 brew install dpkg ldid
