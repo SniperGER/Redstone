@@ -1,5 +1,21 @@
-#.travis.yml
+os: osx
+osx_image: xcode8.2
 language: objective-c
+sudo: false
+
+env:
+  global:
+    - THEOS = /opt/theos
+    - SDKVERSION = 10.1
+    - SYSROOT = /opt/theos/sdks/iPhoneOS10.1.sdk
+
 before_install:
- - cd Redstone/
-script: make
+  - brew update
+  - brew install dpkg ldid
+
+  - git clone --recursive git://github.com/theos/theos.git /opt/theos
+  - git clone --recursive git://github.com/theos/sdks.git /opt/theos/sdks
+
+script:
+  - cd Redstone
+  - make package
