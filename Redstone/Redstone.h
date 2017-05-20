@@ -28,6 +28,9 @@
 #import "AppList/RSSearchBar.h"
 #import "AppList/RSJumpList.h"
 
+#import "LockScreen/RSLockScreenController.h"
+#import "LockScreen/RSLockScreen.h"
+
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
 #define deg2rad(angle) ((angle) / 180.0 * M_PI)
@@ -99,4 +102,20 @@
 
 @interface SBUIAnimationZoomApp : NSObject
 - (NSInteger)zoomDirection;
+@end
+
+@interface SBLockScreenManager : NSObject
++ (id)sharedInstance;
+- (id)lockScreenViewController;
+- (void)attemptUnlockWithPasscode:(id)arg1;
+@end
+
+@interface SBDashBoardViewController : UIViewController
+@end
+
+@interface SBDashBoardView : UIView
+@end
+
+@interface SBUILegibilityLabel : UIView
+- (id)string;
 @end

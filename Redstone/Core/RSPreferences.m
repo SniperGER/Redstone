@@ -30,6 +30,14 @@ static RSPreferences* sharedInstance;
 			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:@"startScreenEnabled"];
 		}
 		
+		if (![self.preferences objectForKey:@"accentColor"]) {
+			[self.preferences setValue:@"#0078D7" forKey:@"accentColor"];
+		}
+		
+		if (![self.preferences objectForKey:@"tileOpacity"]) {
+			[self.preferences setValue:[NSNumber numberWithFloat:0.6] forKey:@"tileOpacity"];
+		}
+		
 		/*if (![sharedPreferences objectForKey:@"themeColor"]) {
 			[sharedPreferences setValue:@"dark" forKey:@"themeColor"];
 		}

@@ -284,8 +284,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[[[[RSStartScreenController sharedInstance] startScrollView] panGestureRecognizer] setEnabled:YES];
 			
 			[self.superview bringSubviewToFront:self];
-				[self setAlpha:1.0];
-				[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
+			[self setAlpha:1.0];
+			[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
 			
 			[self->unpinButton setHidden:NO];
 			[self->scaleButton setHidden:NO];

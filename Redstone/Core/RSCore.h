@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class RSRootScrollView, RSStartScreenController, RSLaunchScreenController, RSPreferences, RSAppListController;
+@class RSLockScreenController, RSRootScrollView, RSStartScreenController, RSLaunchScreenController, RSPreferences, RSAppListController;
 
 @interface RSCore : NSObject {
 	UIWindow* _window;
@@ -14,6 +14,7 @@
 }
 
 @property (nonatomic, retain) UIWindow* window;
+@property (nonatomic, retain) RSLockScreenController* lockScreenController;
 @property (nonatomic, retain) RSRootScrollView* rootScrollView;
 @property (nonatomic, retain) RSStartScreenController* startScreenController;
 @property (nonatomic, retain) RSLaunchScreenController* launchScreenController;

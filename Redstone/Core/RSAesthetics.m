@@ -37,7 +37,7 @@ NSBundle* redstoneBundle;
 }
 
 + (UIColor*)accentColor {
-	return [UIColor colorWithRed:0.0 green:0.47 blue:0.843 alpha:1.0];
+	return [self colorFromHexString:[[RSPreferences preferences] objectForKey:@"accentColor"]];
 }
 
 + (UIColor*)accentColorForTile:(NSString *)bundleIdentifier {
@@ -46,7 +46,7 @@ NSBundle* redstoneBundle;
 	if ([tileInfo objectForKey:@"AccentColor"]) {
 		return [self colorFromHexString:[tileInfo objectForKey:@"AccentColor"]];
 	} else {
-		return [self accentColor];
+		return [[self accentColor] colorWithAlphaComponent:[self tileOpacity]];
 	}
 }
 
@@ -56,8 +56,12 @@ NSBundle* redstoneBundle;
 	if ([tileInfo objectForKey:@"LaunchScreenAccentColor"]) {
 		return [self colorFromHexString:[tileInfo objectForKey:@"LaunchScreenAccentColor"]];
 	} else {
-		return [self accentColorForTile:bundleIdentifier];
+		return [[self accentColorForTile:bundleIdentifier] colorWithAlphaComponent:1.0];
 	}
+}
+
++ (CGFloat)tileOpacity {
+	return [[[RSPreferences preferences] objectForKey:@"tileOpacity"] floatValue];
 }
 
 + (UIImage*) imageWithColor:(UIColor*)color size:(CGSize)size {

@@ -58,6 +58,8 @@ static id currentApplication;
 		[wallpaperView setFrame:[[UIScreen mainScreen] bounds]];
 		[self->_window addSubview:wallpaperView];
 		
+		self.lockScreenController = [RSLockScreenController new];
+		
 		self.rootScrollView = [[RSRootScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[self->_window addSubview:self.rootScrollView];
 		
@@ -99,7 +101,7 @@ static id currentApplication;
 
 - (BOOL)handleMenuButtonEvent {
 	if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")]) {
-		[self.startScreenController setIsEditing:NO];
+		/*[self.startScreenController setIsEditing:NO];
 		[self.startScreenController saveTiles];
 		[self.appListController hidePinMenu];
 		[self.appListController hideJumpList];
@@ -107,14 +109,13 @@ static id currentApplication;
 		
 		[self.rootScrollView setContentOffset:CGPointMake(0, 0)];
 		[self.startScreenController.startScrollView setContentOffset:CGPointMake(0, -24)];
-		[self.appListController.appList setContentOffset:CGPointMake(0, 0)];
+		[self.appListController.appList setContentOffset:CGPointMake(0, 0)];*/
 		
-		return NO;
+		return YES;
 	}
 	
 	if ([self.startScreenController isEditing]) {
 		[self.startScreenController setIsEditing:NO];
-		[self.startScreenController saveTiles];
 		
 		return YES;
 	}

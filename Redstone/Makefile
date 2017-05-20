@@ -36,6 +36,9 @@ Redstone_FILES += Launch/RSLaunchScreenController.m Launch/RSLaunchScreen.m
 # App List
 Redstone_FILES += AppList/RSAppListController.m AppList/RSAppList.m AppList/RSApp.m AppList/RSAppListSection.m AppList/RSPinMenu.m AppList/RSSearchBar.m AppList/RSJumpList.m
 
+# Lock Screen
+Redstone_FILES += Redstone_LockScreen.xm LockScreen/RSLockScreenController.m LockScreen/RSLockScreen.m
+
 include /opt/theos/makefiles/tweak.mk
 
 # Copy the compiled dylib to simject's directory
