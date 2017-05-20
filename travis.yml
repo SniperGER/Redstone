@@ -1,0 +1,3 @@
+#.travis.yml
+language: objective-c
+script: make
