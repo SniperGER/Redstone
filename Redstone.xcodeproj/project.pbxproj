@@ -140,6 +140,7 @@
 		8D5F260C1EC9776600DB95C6 /* RSJumpList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5F260B1EC9776600DB95C6 /* RSJumpList.m */; };
 		8D5F26111ECA40AD00DB95C6 /* RSModalAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5F26101ECA40AD00DB95C6 /* RSModalAlert.m */; };
 		8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8249101EC2FEF300779648 /* RSLaunchScreenController.m */; };
+		8D8A10F21ED21BF6004A7811 /* RSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8A10F11ED21BF6004A7811 /* RSTile.m */; };
 		8DBD107E1EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD10791EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m */; };
 		8DBD107F1EC23BD400A5A037 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD107A1EC23BD400A5A037 /* easing.c */; };
 		8DBD10801EC23BD400A5A037 /* UIView+Easing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD107D1EC23BD400A5A037 /* UIView+Easing.m */; };
@@ -149,7 +150,6 @@
 		8DBD108D1EC23BF900A5A037 /* RSRootScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD10891EC23BF900A5A037 /* RSRootScrollView.m */; };
 		8DBD109F1EC23CD000A5A037 /* RSStartScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD109A1EC23CD000A5A037 /* RSStartScreenController.m */; };
 		8DBD10A01EC23CD000A5A037 /* RSStartScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD109C1EC23CD000A5A037 /* RSStartScrollView.m */; };
-		8DBD10A11EC23CD000A5A037 /* RSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD109E1EC23CD000A5A037 /* RSTile.m */; };
 		8DC171221EC5E50200D45EB1 /* RSPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC171211EC5E50200D45EB1 /* RSPreferences.m */; };
 		8DE79E901EC6ECFE004EF2E6 /* RSAppListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E8F1EC6ECFE004EF2E6 /* RSAppListController.m */; };
 		8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E921EC6EE2F004EF2E6 /* RSAppList.m */; };
@@ -305,6 +305,7 @@
 		8D5F26101ECA40AD00DB95C6 /* RSModalAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSModalAlert.m; sourceTree = "<group>"; };
 		8D82490F1EC2FEF300779648 /* RSLaunchScreenController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLaunchScreenController.h; sourceTree = "<group>"; };
 		8D8249101EC2FEF300779648 /* RSLaunchScreenController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLaunchScreenController.m; sourceTree = "<group>"; };
+		8D8A10F11ED21BF6004A7811 /* RSTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTile.m; sourceTree = "<group>"; };
 		8DBD10781EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAKeyframeAnimation+AHEasing.h"; sourceTree = "<group>"; };
 		8DBD10791EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAKeyframeAnimation+AHEasing.m"; sourceTree = "<group>"; };
 		8DBD107A1EC23BD400A5A037 /* easing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = easing.c; sourceTree = "<group>"; };
@@ -324,7 +325,6 @@
 		8DBD109B1EC23CD000A5A037 /* RSStartScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSStartScrollView.h; sourceTree = "<group>"; };
 		8DBD109C1EC23CD000A5A037 /* RSStartScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSStartScrollView.m; sourceTree = "<group>"; };
 		8DBD109D1EC23CD000A5A037 /* RSTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTile.h; sourceTree = "<group>"; };
-		8DBD109E1EC23CD000A5A037 /* RSTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTile.m; sourceTree = "<group>"; };
 		8DC171201EC5E50200D45EB1 /* RSPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPreferences.h; sourceTree = "<group>"; };
 		8DC171211EC5E50200D45EB1 /* RSPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPreferences.m; sourceTree = "<group>"; };
 		8DE79E8E1EC6ECFE004EF2E6 /* RSAppListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppListController.h; sourceTree = "<group>"; };
@@ -891,7 +891,7 @@
 				8DBD109B1EC23CD000A5A037 /* RSStartScrollView.h */,
 				8DBD109C1EC23CD000A5A037 /* RSStartScrollView.m */,
 				8DBD109D1EC23CD000A5A037 /* RSTile.h */,
-				8DBD109E1EC23CD000A5A037 /* RSTile.m */,
+				8D8A10F11ED21BF6004A7811 /* RSTile.m */,
 			);
 			name = Start;
 			path = Redstone/Start;
@@ -1170,10 +1170,10 @@
 				8DC171221EC5E50200D45EB1 /* RSPreferences.m in Sources */,
 				8DBD108D1EC23BF900A5A037 /* RSRootScrollView.m in Sources */,
 				8D5F260C1EC9776600DB95C6 /* RSJumpList.m in Sources */,
-				8DBD10A11EC23CD000A5A037 /* RSTile.m in Sources */,
 				8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */,
 				8DBD109F1EC23CD000A5A037 /* RSStartScreenController.m in Sources */,
 				8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */,
+				8D8A10F21ED21BF6004A7811 /* RSTile.m in Sources */,
 				8DBD108C1EC23BF900A5A037 /* RSMetrics.m in Sources */,
 				8DBD107F1EC23BD400A5A037 /* easing.c in Sources */,
 				8D2D8C361ED0163900D220E0 /* RSLockScreen.m in Sources */,

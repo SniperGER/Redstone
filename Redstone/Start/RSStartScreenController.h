@@ -22,7 +22,10 @@
 - (void)saveTiles;
 
 - (void)updateStartContentSize;
+- (void)snapTile:(RSTile*)tile withTouchPosition:(CGPoint)position;
 - (void)moveAffectedTilesForTile:(RSTile*)movedTile;
+- (void)eliminateEmptyRowsForSelectedTileFrame:(CGRect)tileFrame;
+
 - (void)prepareForAppLaunch:(RSTile*)sender;
 - (void)returnToHomescreen;
 

@@ -93,7 +93,33 @@ static RSStartScreenController* sharedInstance;
 
 	CGSize contentSize = CGSizeMake(self.startScrollView.frame.size.width,
 									[lastTile positionWithoutTransform].origin.y + [lastTile positionWithoutTransform].size.height);
-	[self.startScrollView setContentSize:contentSize];
+	
+	[UIView animateWithDuration:.1 animations:^{
+		[self.startScrollView setContentSize:contentSize];
+	} completion:nil];
+}
+
+- (void)snapTile:(RSTile*)tile withTouchPosition:(CGPoint)position {
+	CGFloat step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
+	CGFloat maxPositionX = self.startScrollView.bounds.size.width - tile.bounds.size.width;
+	CGFloat maxPositionY = self.startScrollView.contentSize.height + [RSMetrics tileBorderSpacing];
+	
+	CGPoint newCenter = CGPointMake(MIN(MAX(step * roundf(tile.basePosition.origin.x / step), 0), maxPositionX) + tile.basePosition.size.width/2,
+									MIN(MAX(step * roundf(tile.basePosition.origin.y / step), 0), maxPositionY) + tile.basePosition.size.height/2);
+	[UIView animateWithDuration:.3 animations:^{
+		[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+		[tile setCenter:newCenter];
+	} completion:^(BOOL finished) {
+		[tile removeEasingFunctionForKeyPath:@"frame"];
+		
+		int tileX = tile.basePosition.origin.x / step;
+		int tileY = tile.basePosition.origin.y / step;
+		
+		[tile setTileX:tileX];
+		[tile setTileY:tileY];
+	}];
+	
+	[self moveAffectedTilesForTile:tile];
 }
 
 - (void)moveAffectedTilesForTile:(RSTile*)movedTile {
@@ -101,6 +127,7 @@ static RSStartScreenController* sharedInstance;
 	// http://stackoverflow.com/questions/43825803/get-all-uiviews-affected-by-moving-another-uiview-above-them/
 	
 	NSMutableArray* stack = [NSMutableArray new];
+	CGFloat step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
 	[stack addObject:movedTile];
 	
@@ -109,10 +136,10 @@ static RSStartScreenController* sharedInstance;
 		[stack removeObject:current];
 		
 		for (RSTile* tile in self->pinnedTiles) {
-			if (tile != current && CGRectIntersectsRect([current positionWithoutTransform], [tile positionWithoutTransform])) {
+			if (tile != current && CGRectIntersectsRect(current.basePosition, tile.basePosition)) {
 				[stack addObject:tile];
 				
-				CGFloat moveDistance = (CGRectGetMaxY([current positionWithoutTransform]) - CGRectGetMinY([tile positionWithoutTransform])) + [RSMetrics tileBorderSpacing];
+				CGFloat moveDistance = (CGRectGetMaxY(current.basePosition) - CGRectGetMinY(tile.basePosition)) + [RSMetrics tileBorderSpacing];
 				CGRect newFrame = CGRectMake(tile.frame.origin.x,
 											 tile.frame.origin.y + moveDistance,
 											 tile.frame.size.width,
@@ -125,8 +152,8 @@ static RSStartScreenController* sharedInstance;
 					[tile removeEasingFunctionForKeyPath:@"frame"];
 					[tile setOriginalCenter:tile.center];
 					
-					int tileX = [tile positionWithoutTransform].origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
-					int tileY = [tile positionWithoutTransform].origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
+					int tileX = tile.basePosition.origin.x / step;
+					int tileY = tile.basePosition.origin.y / step;
 					
 					[tile setTileX:tileX];
 					[tile setTileY:tileY];
@@ -136,8 +163,12 @@ static RSStartScreenController* sharedInstance;
 		}
 	}
 	
-	[self saveTiles];
+	//[self saveTiles];
 	[self updateStartContentSize];
+}
+
+- (void)eliminateEmptyRowsForSelectedTileFrame:(CGRect)tileFrame {
+	NSMutableArray* stack = [NSMutableArray new];
 }
 
 - (void)prepareForAppLaunch:(RSTile*)sender {

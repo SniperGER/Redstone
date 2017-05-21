@@ -34,5 +34,5 @@ deploy:
   on:
     repo: SniperGER/Redstone
     all_branches: true
-  notifications:
+notifications:
     email: false

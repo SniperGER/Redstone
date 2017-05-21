@@ -130,31 +130,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	if (_panGestureRecognizer.state == UIGestureRecognizerStateEnded && shouldAllowPan) {
 		self->centerOffset = CGPointZero;
 		
-		float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
-		
-		CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].bounds.size.width - [self positionWithoutTransform].size.width;
-		CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height + [RSMetrics tileBorderSpacing];
-		
-		CGPoint newCenter = CGPointMake(MIN(MAX(step * roundf(([self positionWithoutTransform].origin.x / step)), 0), maxPositionX) + [self positionWithoutTransform].size.width/2,
-										MIN(MAX(step * roundf(([self positionWithoutTransform].origin.y / step)), 0), maxPositionY) + [self positionWithoutTransform].size.height/2);
-		
-		int tileX = [self positionWithoutTransform].origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
-		int tileY = [self positionWithoutTransform].origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
-		
-		[self setTileX:tileX];
-		[self setTileY:tileY];
-		
-		[UIView animateWithDuration:.3 animations:^{
-			[self setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-			[self setCenter:newCenter];
-		} completion:^(BOOL finished) {
-			[self removeEasingFunctionForKeyPath:@"frame"];
-			
-			self.originalCenter = self.center;
-		}];
-		
-		//[[RSStartScreenController sharedInstance] updateStartContentSize];
-		[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
+		[[RSStartScreenController sharedInstance] snapTile:self withTouchPosition:self.center];
 	}
 }
 
@@ -173,20 +149,17 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 }
 
 - (void)pressed:(UILongPressGestureRecognizer*)_longPressGestureRecognizer {
+	shouldAllowPan = NO;
 	
-		shouldAllowPan = NO;
-
+	if (![[RSStartScreenController sharedInstance] isEditing]) {
+		[self->tapGestureRecognizer setEnabled:NO];
+		[self->tapGestureRecognizer setEnabled:YES];
 		
-		if (![[RSStartScreenController sharedInstance] isEditing]) {
-			[self->tapGestureRecognizer setEnabled:NO];
-			[self->tapGestureRecognizer setEnabled:YES];
-			
-			[[RSStartScreenController sharedInstance] setIsEditing:YES];
-			[[RSStartScreenController sharedInstance] setSelectedTile:self];
-			
-			[self->longPressGestureRecognizer setEnabled:NO];
-		}
-	
+		[[RSStartScreenController sharedInstance] setIsEditing:YES];
+		[[RSStartScreenController sharedInstance] setSelectedTile:self];
+		
+		[self->longPressGestureRecognizer setEnabled:NO];
+	}
 }
 
 - (void)unpin:(UITapGestureRecognizer*)recognizer {
@@ -276,6 +249,13 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 }
 
 - (CGRect)positionWithoutTransform {	
+	return CGRectMake(self.layer.position.x - (self.bounds.size.width/2),
+					  self.layer.position.y - (self.bounds.size.height/2),
+					  self.bounds.size.width,
+					  self.bounds.size.height);
+}
+
+- (CGRect)basePosition {
 	return CGRectMake(self.layer.position.x - (self.bounds.size.width/2),
 					  self.layer.position.y - (self.bounds.size.height/2),
 					  self.bounds.size.width,

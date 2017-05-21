@@ -36,6 +36,7 @@
 @property (nonatomic, assign) BOOL isSelectedTile;
 @property (nonatomic, assign) int tileX;
 @property (nonatomic, assign) int tileY;
+@property (nonatomic, assign, readonly) CGRect basePosition;
 
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafId size:(int)tileSize;
 - (CGRect)positionWithoutTransform;

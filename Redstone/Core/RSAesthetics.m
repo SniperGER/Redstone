@@ -41,9 +41,6 @@ NSBundle* redstoneBundle;
 	UIImage* tileImage = [[UIImage imageWithContentsOfFile:imagePath] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	
 	if (!tileImage) {
-		//imagePath = [NSString stringWithFormat:@"%@/Tiles/%@", RESOURCE_PATH, @"default_icon"];
-		//tileImage = [[UIImage imageWithContentsOfFile:imagePath] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-		
 		return [[[[objc_getClass("SBIconController") sharedInstance] model] applicationIconForBundleIdentifier:bundleIdentifier] getUnmaskedIconImage:2];
 	}
 	
@@ -69,6 +66,8 @@ NSBundle* redstoneBundle;
 		case 5:
 			iconFileName = @"tile-AppList";
 			break;
+		case 6:
+			iconFileName = @"splash";
 			
 		default:
 			break;
