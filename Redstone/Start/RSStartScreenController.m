@@ -235,6 +235,11 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)returnToHomescreen {
+	if ([self->pinnedTiles count] <= 0) {
+		[[RSAppListController sharedInstance] returnToHomescreen];
+		return;
+	}
+	
 	[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:NO];
 	[self.startScrollView setContentOffset:CGPointMake(0, -24)];
 	

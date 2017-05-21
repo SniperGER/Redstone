@@ -89,15 +89,16 @@ static id currentApplication;
 	if (arg1) {
 		[self.startScreenController resetTileVisibility];
 		[self.launchScreenController hide];
-		[self.rootScrollView setContentOffset:CGPointMake(0, 0)];
 		[[self.startScreenController startScrollView] setContentOffset:CGPointMake(0, -24)];
 		[self.appListController.appList setContentOffset:CGPointMake(0, 0)];
 		[self.appListController setIsSearching:NO];
 		
 		if ([[self.startScreenController pinnedTiles] count] > 0) {
 			[self.rootScrollView setScrollEnabled:YES];
+			[self.rootScrollView setContentOffset:CGPointMake(0, 0)];
 		} else {
 			[self.rootScrollView setScrollEnabled:NO];
+			[self.rootScrollView setContentOffset:CGPointMake(screenWidth, 0)];
 		}
 	} else {
 		[self.rootScrollView setHidden:NO];
@@ -116,43 +117,51 @@ static id currentApplication;
 			[self.appListController hideJumpList];
 			[self.appListController setIsSearching:NO];
 			
-			[self.rootScrollView setContentOffset:CGPointMake(0, 0)];
-			[self.startScreenController.startScrollView setContentOffset:CGPointMake(0, -24)];
-			[self.appListController.appList setContentOffset:CGPointMake(0, 0)];
+			if ([[self.startScreenController pinnedTiles] count] > 0) {
+				[self.rootScrollView setContentOffset:CGPointMake(0, 0)];
+				[self.startScreenController.startScrollView setContentOffset:CGPointMake(0, -24)];
+				[self.appListController.appList setContentOffset:CGPointMake(0, 0)];
+			} else {
+				[self.rootScrollView setContentOffset:CGPointMake(screenWidth, 0)];
+			}
+			
+			return NO;
 		}
 	}
 	
-	if ([self.startScreenController isEditing]) {
-		[self.startScreenController setIsEditing:NO];
+	if (currentApplication == nil) {
+		if ([self.startScreenController isEditing]) {
+			[self.startScreenController setIsEditing:NO];
+			
+			return YES;
+		}
 		
-		return YES;
-	}
-	
-	if (self.appListController.showsPinMenu) {
-		[self.appListController hidePinMenu];
+		if (self.appListController.showsPinMenu) {
+			[self.appListController hidePinMenu];
+			
+			return YES;
+		}
+		if (self.appListController.jumpList.isOpen) {
+			[self.appListController hideJumpList];
+			
+			return YES;
+		}
 		
-		return YES;
-	}
-	if (self.appListController.jumpList.isOpen) {
-		[self.appListController hideJumpList];
+		if ([self.appListController isSearching]) {
+			[self.appListController setIsSearching:NO];
+			
+			return YES;
+		}
 		
-		return YES;
-	}
-	
-	if ([self.appListController isSearching]) {
-		[self.appListController setIsSearching:NO];
-		
-		return YES;
-	}
-	
-	if (self.rootScrollView.contentOffset.x != 0 || self.startScreenController.startScrollView.contentOffset.y != -24) {
 		if ([[self.startScreenController pinnedTiles] count] > 0) {
-			[self.rootScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-			[self.startScreenController.startScrollView setContentOffset:CGPointMake(0, -24) animated:YES];
-			[self.appListController.appList setContentOffset:CGPointMake(0, 0) animated:YES];
+			if (self.rootScrollView.contentOffset.x != 0 || self.startScreenController.startScrollView.contentOffset.y != -24) {
+				[self.rootScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+				[self.startScreenController.startScrollView setContentOffset:CGPointMake(0, -24) animated:YES];
+				[self.appListController.appList setContentOffset:CGPointMake(0, 0) animated:YES];
+				
+				return YES;
+			}
 		}
-		
-		return YES;
 	}
 	
 	return NO;

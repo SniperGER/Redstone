@@ -33,6 +33,7 @@
 - (RSAppListSection*)sectionWithLetter:(NSString*)letter;
 
 - (void)prepareForAppLaunch:(RSApp*)sender;
+- (void)returnToHomescreen;
 
 - (void)updateSectionOverlayPosition;
 - (void)setSectionOverlayAlpha:(CGFloat)alpha;

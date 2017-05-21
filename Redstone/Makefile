@@ -5,7 +5,7 @@ export THEOS_DEVICE_IP=192.168.178.38
 export THEOS_DEVICE_PORT=22
 
 # Set the package version
-export PACKAGE_VERSION = $(shell date +%y)w$(shell date +%V)b
+export PACKAGE_VERSION = $(shell date +%y)w$(shell date +%V)c
 
 # DO NOT EDIT ANYTHING BEYOND THIS POINT
 export GO_EASY_ON_ME = 1

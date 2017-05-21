@@ -53,6 +53,7 @@
 			}
 		}
 		
+		[self->alphabetScrollView setUserInteractionEnabled:NO];
 		[self setHidden:YES];
 	}
 	
@@ -82,10 +83,16 @@
 	
 	[self.layer addAnimation:scale forKey:@"scale"];
 	[self.layer addAnimation:opacity forKey:@"opacity"];
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[self->alphabetScrollView setUserInteractionEnabled:YES];
+	});
 }
 
 - (void)animateOut {
 	self.isOpen = NO;
+	[self->alphabetScrollView setUserInteractionEnabled:NO];
+	
 	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
 														  function:CubicEaseOut
 														 fromValue:1.0

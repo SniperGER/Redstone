@@ -338,11 +338,11 @@ static RSAppListController* sharedInstance;
 	});
 }
 
+- (void)returnToHomescreen {
+	
+}
+
 - (void)updateSectionOverlayPosition {
-	/*[self->sectionBackgroundImage setFrame:CGRectMake(-screenWidth + [[RSCore sharedInstance] rootScrollView].contentOffset.x,
-													  self->sectionBackgroundImage.frame.origin.y,
-													  screenWidth,
-													  screenHeight)];*/
 	[self updateSectionsWithOffset:self.appList.contentOffset.y];
 }
 
