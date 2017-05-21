@@ -32,5 +32,6 @@ deploy:
   file: Redstone-Nightly_$(date +%y)w$(date +%V)b-$TRAVIS_BUILD_NUMBER.zip
   on:
     repo: SniperGER/Redstone
+    all_branches: true
   notifications:
     email: false
