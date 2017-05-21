@@ -42,4 +42,13 @@
 	return view;
 }
 
+- (void)setScrollEnabled:(BOOL)scrollEnabled {
+	if ([[[RSStartScreenController sharedInstance] pinnedTiles] count] <= 0) {
+		[super setScrollEnabled:NO];
+		return;
+	}
+	
+	[super setScrollEnabled:scrollEnabled];
+}
+
 @end

@@ -75,6 +75,11 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)updateStartContentSize {
+	if ([self->pinnedTiles count] <= 0) {
+		[self.startScrollView setContentSize:CGSizeMake(self.startScrollView.bounds.size.width, 0)];
+		return;
+	}
+	
 	RSTile* lastTile = [self->pinnedTiles objectAtIndex:0];
 	
 	for (RSTile* tile in self->pinnedTiles) {
@@ -372,6 +377,10 @@ static RSStartScreenController* sharedInstance;
 		return;
 	}
 	
+	if ([self->pinnedTiles count] <= 0) {
+		[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:YES];
+	}
+	
 	int maxTileX = 0, maxTileY = 0;
 	
 	for (RSTile* tile in self->pinnedTiles) {
@@ -472,6 +481,12 @@ static RSStartScreenController* sharedInstance;
 		
 		[self saveTiles];
 		[self updateStartContentSize];
+		
+		if ([self->pinnedTiles count] <= 0) {
+			[self setIsEditing:NO];
+			[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:NO];
+			[[[RSCore sharedInstance] rootScrollView] setContentOffset:CGPointMake(screenWidth, 0) animated:YES];
+		}
 	}];
 }
 

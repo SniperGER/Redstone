@@ -63,6 +63,10 @@ static id currentApplication;
 		
 		self.startScreenController = [RSStartScreenController new];
 		[self.rootScrollView addSubview:self.startScreenController.startScrollView];
+		if ([[self.startScreenController pinnedTiles] count] <= 0) {
+			[self.rootScrollView setContentOffset:CGPointMake(screenWidth, 0)];
+			[self.rootScrollView setScrollEnabled:NO];
+		}
 		
 		self.launchScreenController = [RSLaunchScreenController new];
 		[self.window addSubview:self.launchScreenController.launchScreen];
