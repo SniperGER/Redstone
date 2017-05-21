@@ -13,10 +13,15 @@
 		[tileBackground setBackgroundColor:[[RSAesthetics accentColorForTile:leafId] colorWithAlphaComponent:1.0]];
 		[self addSubview:tileBackground];
 		
-		self->appImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 37.5, 37.5)];
-		[self->appImageView setCenter:CGPointMake(25, 25)];
-		[self->appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
-		[self->appImageView setTintColor:[UIColor whiteColor]];
+		if ([[self getTileInfo] objectForKey:@"FullBleedArtwork"] && [[[self getTileInfo] objectForKey:@"FullBleedArtwork"] boolValue]) {
+			self->appImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+			[self->appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:5]];
+		} else {
+			self->appImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 37.5, 37.5)];
+			[self->appImageView setCenter:CGPointMake(25, 25)];
+			[self->appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
+			[self->appImageView setTintColor:[UIColor whiteColor]];
+		}
 		[tileBackground addSubview:self->appImageView];
 		
 		self->appLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, frame.size.width-70, 54)];
@@ -57,6 +62,16 @@
 		[self untilt];
 		[[RSAppListController sharedInstance] showPinMenuForApp:self];
 	}
+}
+
+- (NSDictionary*)getTileInfo {
+	NSDictionary* tileInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/%@/tile.plist", RESOURCE_PATH, [[self.icon application] bundleIdentifier]]];
+	
+	if (!tileInfo) {
+		return [NSDictionary new];
+	}
+	
+	return tileInfo;
 }
 
 @end

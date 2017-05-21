@@ -26,11 +26,16 @@
 			[self->tileLabel setHidden:YES];
 		}
 		
-		CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:tileSize];
-		self->tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
-		[self->tileImageView setCenter:CGPointMake(frame.size.width/2, frame.size.height/2)];
-		[self->tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
-		[self->tileImageView setTintColor:[UIColor whiteColor]];
+		if ([[self getTileInfo] objectForKey:@"FullBleedArtwork"] && [[[self getTileInfo] objectForKey:@"FullBleedArtwork"] boolValue]) {
+			self->tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+			[self->tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size]];
+		} else {
+			CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:tileSize];
+			self->tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
+			[self->tileImageView setCenter:CGPointMake(frame.size.width/2, frame.size.height/2)];
+			[self->tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
+			[self->tileImageView setTintColor:[UIColor whiteColor]];
+		}
 		[self addSubview:self->tileImageView];
 		
 		self->badgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
@@ -230,9 +235,15 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		[self->tileLabel setHidden:NO];
 	}
 	
-	CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
-	[self->tileImageView setFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
-	[self->tileImageView setCenter:CGPointMake(self.frame.size.width/2, self.frame.size.height/2)];
+	if ([[self getTileInfo] objectForKey:@"FullBleedArtwork"] && [[[self getTileInfo] objectForKey:@"FullBleedArtwork"] boolValue]) {
+		[self->tileImageView setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+		[self->tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size]];
+	} else {
+		CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
+		[self->tileImageView setFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
+		[self->tileImageView setCenter:CGPointMake(self.frame.size.width/2, self.frame.size.height/2)];
+	}
+	
 	
 	[self->unpinButton setCenter:CGPointMake(self.frame.size.width, 0)];
 	[self->scaleButton setCenter:CGPointMake(self.frame.size.width, self.frame.size.height)];
@@ -373,6 +384,16 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		
 		[self->badgeLabel setHidden:NO];
 	}
+}
+
+- (NSDictionary*)getTileInfo {
+	NSDictionary* tileInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/%@/tile.plist", RESOURCE_PATH, [[self.icon application] bundleIdentifier]]];
+	
+	if (!tileInfo) {
+		return [NSDictionary new];
+	}
+	
+	return tileInfo;
 }
 
 @end

@@ -50,6 +50,40 @@ NSBundle* redstoneBundle;
 	return tileImage;
 }
 
++ (UIImage*)getImageForTileWithBundleIdentifier:(NSString*)bundleIdentifier size:(int)size {
+	NSString* iconFileName = @"";
+	
+	switch (size) {
+		case 1:
+			iconFileName = @"tile-70x70";
+			break;
+		case 2:
+			iconFileName = @"tile-132x132";
+			break;
+		case 3:
+			iconFileName = @"tile-269x132";
+			break;
+		case 4:
+			iconFileName = @"tile-269x269";
+			break;
+		case 5:
+			iconFileName = @"tile-AppList";
+			break;
+			
+		default:
+			break;
+	}
+	
+	NSString* imagePath = [NSString stringWithFormat:@"%@/Tiles/%@/%@", RESOURCE_PATH, bundleIdentifier, iconFileName];
+	UIImage* tileImage = [UIImage imageWithContentsOfFile:imagePath];
+	
+	if (!tileImage) {
+		return [[[[objc_getClass("SBIconController") sharedInstance] model] applicationIconForBundleIdentifier:bundleIdentifier] getUnmaskedIconImage:2];
+	}
+	
+	return tileImage;
+}
+
 + (UIColor*)accentColor {
 	return [self colorFromHexString:[[RSPreferences preferences] objectForKey:@"accentColor"]];
 }
