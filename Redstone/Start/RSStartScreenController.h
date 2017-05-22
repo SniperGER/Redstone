@@ -18,24 +18,26 @@
 
 + (id)sharedInstance;
 
-- (void)loadTiles;
-- (void)saveTiles;
-
-- (void)updateStartContentSize;
-- (void)snapTile:(RSTile*)tile withTouchPosition:(CGPoint)position;
-- (void)moveAffectedTilesForTile:(RSTile*)movedTile;
-- (void)eliminateEmptyRowsForSelectedTileFrame:(CGRect)tileFrame;
-
-- (void)prepareForAppLaunch:(RSTile*)sender;
-- (void)returnToHomescreen;
-
-- (void)pinTileWithId:(NSString*)leafId;
-- (void)unpinTile:(RSTile*)tile;
 - (id)viewIntersectsWithAnotherView:(CGRect)rect;
 - (void)resetTileVisibility;
 
+- (void)loadTiles;
+- (void)saveTiles;
 - (NSArray*)pinnedTiles;
 - (NSArray*)pinnedLeafIdentifiers;
 - (RSTile*)tileForLeafIdentifier:(NSString*)leafId;
+
+- (void)setIsEditing:(BOOL)isEditing;
+- (void)setSelectedTile:(RSTile *)selectedTile;
+- (void)pinTileWithId:(NSString *)leafId;
+- (void)unpinTile:(RSTile *)tile;
+
+- (void)snapTile:(RSTile *)tile withTouchPosition:(CGPoint)position;
+- (void)moveAffectedTilesForTile:(RSTile *)movedTile;
+- (void)eliminateEmptyRows;
+- (void)updateStartContentSize;
+
+- (void)prepareForAppLaunch:(RSTile *)sender;
+- (void)returnToHomescreen;
 
 @end

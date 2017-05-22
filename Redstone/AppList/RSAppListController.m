@@ -339,7 +339,88 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)returnToHomescreen {
+	[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:NO];
 	
+	NSMutableArray* viewsInView = [NSMutableArray new];
+	NSMutableArray* viewsNotInView = [NSMutableArray new];
+	
+	for (UIView* view in self.appList.subviews) {
+		if (view != self->sectionBackgroundContainer && !view.hidden) {
+			[view.layer removeAllAnimations];
+			if ( CGRectIntersectsRect(self.appList.bounds, view.frame)) {
+				[viewsInView addObject:view];
+				
+				[view.layer setOpacity:0];
+				[view setHidden:NO];
+			} else {
+				[viewsNotInView addObject:view];
+			}
+		}
+	}
+	
+	viewsInView = [[viewsInView sortedArrayUsingComparator:^NSComparisonResult(UIView* view1, UIView* view2) {
+		return [[NSNumber numberWithFloat:view1.frame.origin.y] compare:[NSNumber numberWithFloat:view2.frame.origin.y]];
+	}] mutableCopy];
+	
+	for (UIView* view in viewsNotInView) {
+		[view setHidden:YES];
+	}
+	
+	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
+														  function:CubicEaseOut
+														 fromValue:0.8
+														   toValue:1.0];
+	[scale setDuration:0.4];
+	[scale setRemovedOnCompletion:NO];
+	[scale setFillMode:kCAFillModeForwards];
+	
+	CAAnimation* opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
+															function:CubicEaseIn
+														   fromValue:0.0
+															 toValue:1.0];
+	[opacity setDuration:0.3];
+	[opacity setRemovedOnCompletion:NO];
+	[opacity setFillMode:kCAFillModeForwards];
+	
+	[self.searchBar.layer addAnimation:opacity forKey:@"opacity"];
+	
+	float maxDelay = [viewsInView count] * 0.01;
+	
+	for (UIView* view in viewsInView) {
+		[view.layer setShouldRasterize:YES];
+		[view.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
+		[view.layer setContentsScale:[[UIScreen mainScreen] scale]];
+		
+		CGPoint basePoint = [view convertPoint:view.bounds.origin toView:self.appList];
+		
+		CGFloat layerX = -(basePoint.x - CGRectGetMidX(self.appList.bounds))/view.frame.size.width;
+		CGFloat layerY = -(basePoint.y - CGRectGetMidY(self.appList.bounds))/view.frame.size.height;
+		
+		CGFloat delay = [viewsInView indexOfObject:view] * 0.01;
+		
+		[view setCenter:CGPointMake(CGRectGetMidX(self.appList.bounds),
+									CGRectGetMidY(self.appList.bounds))];
+		[view.layer setAnchorPoint:CGPointMake(layerX, layerY)];
+		
+		[scale setBeginTime:CACurrentMediaTime() + delay];
+		[opacity setBeginTime:CACurrentMediaTime() + delay];
+		
+		[view.layer addAnimation:scale forKey:@"scale"];
+		[view.layer addAnimation:opacity forKey:@"opacity"];
+	}
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		for (UIView* subview in self.appList.subviews) {
+			[subview.layer removeAllAnimations];
+			[subview.layer setOpacity:1];
+			[subview setAlpha:1.0];
+			[subview setHidden:NO];
+			//[subview.layer setAnchorPoint:CGPointMake(0.5,0.5)];
+			//[tile setCenter:[tile originalCenter]];
+		}
+		
+		[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:YES];
+	});
 }
 
 - (void)updateSectionOverlayPosition {

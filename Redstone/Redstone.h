@@ -116,7 +116,12 @@
 - (void)attemptUnlockWithPasscode:(id)arg1;
 @end
 
+@interface SBDashBoardMainPageViewController : UIViewController
+- (UIViewController*)isolatingViewController;
+@end
+
 @interface SBDashBoardViewController : UIViewController
+- (SBDashBoardMainPageViewController*)mainPageViewController;
 @end
 
 @interface SBDashBoardView : UIView

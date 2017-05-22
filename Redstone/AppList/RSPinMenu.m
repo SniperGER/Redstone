@@ -9,6 +9,7 @@
 		[self setBackgroundColor:[UIColor colorWithWhite:0.18 alpha:1.0]];
 		[self.layer setBorderColor:[UIColor colorWithWhite:0.46 alpha:1.0].CGColor];
 		[self.layer setBorderWidth:2.0];
+		[self setClipsToBounds:YES];
 		
 		self->pinButton = [[RSTiltView alloc] initWithFrame:CGRectMake(0, 14, self.frame.size.width, 66)];
 		[self->pinButton setHighlightEnabled:YES];

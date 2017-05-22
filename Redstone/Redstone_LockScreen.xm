@@ -48,6 +48,25 @@
 
 %end
 
+%hook SBDashBoardNotificationListViewController
+
+-(void)_setListHasContent:(BOOL)arg1 {
+	%orig(NO);
+}
+
+%end
+
+/*%hook SBDashBoardMediaArtworkViewController
+
+-(void)willTransitionToPresented:(BOOL)arg1 {
+	%orig(arg1);
+	
+	mediaControlsVisible = arg1;
+	setLockWatchVisibility();
+}
+
+%end*/
+
 %end
 
 %ctor {
