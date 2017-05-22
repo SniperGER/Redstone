@@ -20,26 +20,26 @@ static RSAppListController* sharedInstance;
 		self.appList = [[RSAppList alloc] initWithFrame:CGRectMake(screenWidth, 70, screenWidth, screenHeight - 70)];
 		[self.appList setDelegate:self];
 		
-		self->sectionBackgroundContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
-		[self->sectionBackgroundContainer setClipsToBounds:YES];
+		sectionBackgroundContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
+		[sectionBackgroundContainer setClipsToBounds:YES];
 		
-		self->sectionBackgroundImage = [[UIImageView alloc] initWithImage:[RSAesthetics homeScreenWallpaper]];
-		[self->sectionBackgroundImage setFrame:CGRectMake(0, -70, screenWidth, screenHeight)];
-		[self->sectionBackgroundContainer addSubview:self->sectionBackgroundImage];
+		sectionBackgroundImage = [[UIImageView alloc] initWithImage:[RSAesthetics homeScreenWallpaper]];
+		[sectionBackgroundImage setFrame:CGRectMake(0, -70, screenWidth, screenHeight)];
+		[sectionBackgroundContainer addSubview:sectionBackgroundImage];
 		
-		self->sectionBackgroundOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
-		[self->sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.75]];
-		[self->sectionBackgroundContainer addSubview:self->sectionBackgroundOverlay];
+		sectionBackgroundOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
+		[sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.75]];
+		[sectionBackgroundContainer addSubview:sectionBackgroundOverlay];
 		
-		self->noResultsLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, self.appList.frame.size.width-10, 30)];
-		[self->noResultsLabel setTextColor:[UIColor colorWithWhite:0.5 alpha:1.0]];
-		[self->noResultsLabel setFont:[UIFont fontWithName:@"SegoeUI" size:17]];
-		[self->noResultsLabel setHidden:YES];
-		[self.appList addSubview:self->noResultsLabel];
+		noResultsLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, self.appList.frame.size.width-10, 30)];
+		[noResultsLabel setTextColor:[UIColor colorWithWhite:0.5 alpha:1.0]];
+		[noResultsLabel setFont:[UIFont fontWithName:@"SegoeUI" size:17]];
+		[noResultsLabel setHidden:YES];
+		[self.appList addSubview:noResultsLabel];
 		
 		[self addAppsAndSections];
 		
-		self->pinMenu = [[RSPinMenu alloc] initWithFrame:CGRectMake(0, 0, 364, 94)];
+		pinMenu = [[RSPinMenu alloc] initWithFrame:CGRectMake(0, 0, 364, 94)];
 		self.jumpList = [[RSJumpList alloc] initWithFrame:CGRectMake(screenWidth, 0, screenWidth, screenHeight)];
 	}
 	
@@ -55,13 +55,13 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)addAppsAndSections {
-	[self->sections makeObjectsPerformSelector:@selector(removeFromSuperview)];
-	for (id key in self->appsBySection) {
-		[[self->appsBySection objectForKey:key] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+	[sections makeObjectsPerformSelector:@selector(removeFromSuperview)];
+	for (id key in appsBySection) {
+		[[appsBySection objectForKey:key] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 	}
 	
-	self->sections = [NSMutableArray new];
-	self->appsBySection = [NSMutableDictionary new];
+	sections = [NSMutableArray new];
+	appsBySection = [NSMutableDictionary new];
 	
 	NSString* alphabet = @"#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
 	NSString* numbers = @"1234567890";
@@ -97,26 +97,26 @@ static RSAppListController* sharedInstance;
 				
 				if ([self sectionWithLetter:supposedSectionLetter] == nil) {
 					RSAppListSection* section = [[RSAppListSection alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60) letter:supposedSectionLetter];
-					[self->sections addObject:section];
+					[sections addObject:section];
 				}
 			}
 		}
 	}
 	
-	NSArray* sortedSections = [self->sections sortedArrayUsingComparator:^NSComparisonResult(RSAppListSection* section1, RSAppListSection* section2) {
+	NSArray* sortedSections = [sections sortedArrayUsingComparator:^NSComparisonResult(RSAppListSection* section1, RSAppListSection* section2) {
 		return [section1.displayName compare:section2.displayName];
 	}];
-	self->sections = [sortedSections mutableCopy];
+	sections = [sortedSections mutableCopy];
 	
 	for (int i=0; i<28; i++) {
-		NSArray* arrayToSort = [self->appsBySection objectForKey:[alphabet substringWithRange:NSMakeRange(i,1)]];
+		NSArray* arrayToSort = [appsBySection objectForKey:[alphabet substringWithRange:NSMakeRange(i,1)]];
 		
 		if ([arrayToSort count] > 0) {
 			arrayToSort = [arrayToSort sortedArrayUsingComparator:^NSComparisonResult(RSApp* app1, RSApp* app2) {
 				return [[app1.icon displayName] caseInsensitiveCompare:[app2.icon displayName]];
 			}];
 			
-			[self->appsBySection setObject:arrayToSort forKey:[alphabet substringWithRange:NSMakeRange(i,1)]];
+			[appsBySection setObject:arrayToSort forKey:[alphabet substringWithRange:NSMakeRange(i,1)]];
 		}
 	}
 	
@@ -125,7 +125,7 @@ static RSAppListController* sharedInstance;
 
 - (RSAppListSection*)sectionWithLetter:(NSString*)letter {
 	if (letter != nil) {
-		for (RSAppListSection* section in self->sections) {
+		for (RSAppListSection* section in sections) {
 			if ([[section displayName] isEqualToString:letter]) {
 				return section;
 				break;
@@ -152,10 +152,10 @@ static RSAppListController* sharedInstance;
 		}
 	}
 	
-	[self sortAppsAndLayout:self->sections];
+	[self sortAppsAndLayout:sections];
 }
 
-- (void)sortAppsAndLayout:(NSArray*)sections {
+- (void)sortAppsAndLayout:(NSArray*)_sections {
 	
 	
 	NSString* alphabet = @"#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
@@ -163,7 +163,7 @@ static RSAppListController* sharedInstance;
 	int yPos = 0;
 	id previousSection = nil;
 	for (int i=0; i<28; i++) {
-		NSArray* currentSection = [self->appsBySection objectForKey:[alphabet substringWithRange:NSMakeRange(i,1)]];
+		NSArray* currentSection = [appsBySection objectForKey:[alphabet substringWithRange:NSMakeRange(i,1)]];
 		
 		if ([currentSection count] > 0) {
 			previousSection = [alphabet substringWithRange:NSMakeRange(i,1)];
@@ -190,39 +190,39 @@ static RSAppListController* sharedInstance;
 	}
 	self.appList.contentSize = contentRect.size;
 	
-	[self->sectionBackgroundContainer setFrame:CGRectMake(0, 0, screenWidth, 60)];
-	[self.appList insertSubview:self->sectionBackgroundContainer belowSubview:[self->sections objectAtIndex:0]];
+	[sectionBackgroundContainer setFrame:CGRectMake(0, 0, screenWidth, 60)];
+	[self.appList insertSubview:sectionBackgroundContainer belowSubview:[_sections objectAtIndex:0]];
 }
 
 - (void)updateSectionsWithOffset:(float)offset {
-	for (int i=0; i<[self->sections count]; i++) {
-		RSAppListSection* section = [self->sections objectAtIndex:i];
+	for (int i=0; i<[sections count]; i++) {
+		RSAppListSection* section = [sections objectAtIndex:i];
 		
-		if (section.yCoordinate - offset < 0  && (i+1) < [self->sections count]) {
-			if ([self->sections objectAtIndex:i+1] && (offset + 60) < [[self->sections objectAtIndex:i+1] yCoordinate]) {
+		if (section.yCoordinate - offset < 0  && (i+1) < [sections count]) {
+			if ([sections objectAtIndex:i+1] && (offset + 60) < [[sections objectAtIndex:i+1] yCoordinate]) {
 				[section setFrame:CGRectMake(0,
 											 offset,
 											 self.appList.frame.size.width,
 											 60)];
-				[self->sectionBackgroundContainer setFrame:CGRectMake(0,
+				[sectionBackgroundContainer setFrame:CGRectMake(0,
 																	  offset,
 																	  self.appList.frame.size.width,
 																	  60)];
-				[self->sectionBackgroundImage setFrame:CGRectMake(-screenWidth + [[RSCore sharedInstance] rootScrollView].contentOffset.x,
+				[sectionBackgroundImage setFrame:CGRectMake(-screenWidth + [[RSCore sharedInstance] rootScrollView].contentOffset.x,
 																  -70,
 																  screenWidth,
 																  screenHeight)];
 			} else {
 				[section setFrame:CGRectMake(0,
-											 [[self->sections objectAtIndex:i+1] yCoordinate] - 60,
+											 [[sections objectAtIndex:i+1] yCoordinate] - 60,
 											 self.appList.frame.size.width,
 											 60)];
-				[self->sectionBackgroundContainer setFrame:CGRectMake(0,
-																	  [[self->sections objectAtIndex:i+1] yCoordinate] - 60,
+				[sectionBackgroundContainer setFrame:CGRectMake(0,
+																	  [[sections objectAtIndex:i+1] yCoordinate] - 60,
 																	  self.appList.frame.size.width,
 																	  60)];
-				[self->sectionBackgroundImage setFrame:CGRectMake(-screenWidth + [[RSCore sharedInstance] rootScrollView].contentOffset.x,
-																  (offset - [[self->sections objectAtIndex:i+1] yCoordinate] - 10),
+				[sectionBackgroundImage setFrame:CGRectMake(-screenWidth + [[RSCore sharedInstance] rootScrollView].contentOffset.x,
+																  (offset - [[sections objectAtIndex:i+1] yCoordinate] - 10),
 																  screenWidth,
 																  screenHeight)];
 				
@@ -233,9 +233,9 @@ static RSAppListController* sharedInstance;
 	}
 	
 	if (offset <= 0) {
-		[self->sectionBackgroundContainer setHidden:YES];
+		[sectionBackgroundContainer setHidden:YES];
 	} else {
-		[self->sectionBackgroundContainer setHidden:NO];
+		[sectionBackgroundContainer setHidden:NO];
 	}
 }
 
@@ -248,7 +248,7 @@ static RSAppListController* sharedInstance;
 	NSMutableArray* viewsNotInView = [NSMutableArray new];
 	
 	for (UIView* view in self.appList.subviews) {
-		if (view != self->sectionBackgroundContainer && !view.hidden) {
+		if (view != sectionBackgroundContainer && !view.hidden) {
 			if ( CGRectIntersectsRect(self.appList.bounds, view.frame)) {
 				[viewsInView addObject:view];
 			} else {
@@ -345,7 +345,7 @@ static RSAppListController* sharedInstance;
 	NSMutableArray* viewsNotInView = [NSMutableArray new];
 	
 	for (UIView* view in self.appList.subviews) {
-		if (view != self->sectionBackgroundContainer && !view.hidden) {
+		if (view != sectionBackgroundContainer && !view.hidden) {
 			[view.layer removeAllAnimations];
 			if ( CGRectIntersectsRect(self.appList.bounds, view.frame)) {
 				[viewsInView addObject:view];
@@ -429,13 +429,13 @@ static RSAppListController* sharedInstance;
 
 
 - (void)setSectionOverlayAlpha:(CGFloat)alpha {
-	[self->sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:alpha]];
+	[sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:alpha]];
 }
 
 - (void)showPinMenuForApp:(RSApp *)app {
 	AudioServicesPlaySystemSound(1520);
 	self.showsPinMenu = YES;
-	[self->pinMenu setHandlingApp:app];
+	[pinMenu setHandlingApp:app];
 	
 	CGRect globalFrame = [self.appList convertRect:app.frame toView:[[RSCore sharedInstance] rootScrollView]];
 	BOOL isBelowHalfScreen = (globalFrame.origin.y + (globalFrame.size.height/2) > screenHeight/2);
@@ -446,7 +446,7 @@ static RSAppListController* sharedInstance;
 									 (isBelowHalfScreen) ? globalFrame.origin.y - frameHeight : globalFrame.origin.y + globalFrame.size.height,
 									 364,
 									 frameHeight);
-	[self->pinMenu setFrame:pinMenuFrame];
+	[pinMenu setFrame:pinMenuFrame];
 	
 	for (UIView* view in self.appList.subviews) {
 		[view setUserInteractionEnabled:NO];
@@ -454,7 +454,7 @@ static RSAppListController* sharedInstance;
 	
 	[self.appList setScrollEnabled:NO];
 	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:NO];
-	[[[RSCore sharedInstance] rootScrollView] addSubview:self->pinMenu];
+	[[[RSCore sharedInstance] rootScrollView] addSubview:pinMenu];
 	
 	CAAnimation *opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
 															function:ExponentialEaseOut
@@ -482,8 +482,8 @@ static RSAppListController* sharedInstance;
 	scale.removedOnCompletion = NO;
 	scale.fillMode = kCAFillModeForwards;
 	
-	[self->pinMenu.layer addAnimation:opacity forKey:@"opacity"];
-	[self->pinMenu.layer addAnimation:scale forKey:@"scale"];
+	[pinMenu.layer addAnimation:opacity forKey:@"opacity"];
+	[pinMenu.layer addAnimation:scale forKey:@"scale"];
 	
 	[self.appList.tapGestureRecognizer setEnabled:YES];
 }
@@ -493,8 +493,8 @@ static RSAppListController* sharedInstance;
 		return;
 	}
 	
-	[self->pinMenu.layer removeAllAnimations];
-	[self->pinMenu setHandlingApp:nil];
+	[pinMenu.layer removeAllAnimations];
+	[pinMenu setHandlingApp:nil];
 	
 	for (UIView* view in self.appList.subviews) {
 		[view setUserInteractionEnabled:YES];
@@ -505,7 +505,7 @@ static RSAppListController* sharedInstance;
 	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:YES];
 	
 	self.showsPinMenu = NO;
-	[self->pinMenu removeFromSuperview];
+	[pinMenu removeFromSuperview];
 }
 
 - (BOOL)isSearching {
@@ -513,11 +513,11 @@ static RSAppListController* sharedInstance;
 		return YES;
 	}
 	
-	return self->_isSearching;
+	return _isSearching;
 }
 
 - (void)setIsSearching:(BOOL)isSearching {
-	self->_isSearching = isSearching;
+	_isSearching = isSearching;
 	
 	if (!isSearching) {
 		[self.searchBar resignFirstResponder];
@@ -581,25 +581,25 @@ static RSAppListController* sharedInstance;
 		[self showNoResultsLabel:YES forQuery:query];
 	} else {
 		[self showNoResultsLabel:NO forQuery:nil];
-		[self sortAppsAndLayout:self->sections];
+		[self sortAppsAndLayout:sections];
 	}
 }
 
 - (void)showNoResultsLabel:(BOOL)visible forQuery:(NSString*)query {
-	[self->noResultsLabel setHidden:!visible];
+	[noResultsLabel setHidden:!visible];
 	
 	if (query != nil && ![query isEqualToString:@""]) {
 		NSString* baseString = [NSString stringWithFormat:[RSAesthetics localizedStringForKey:@"NO_RESULTS_FOUND"], query];
 		NSRange range = [baseString rangeOfString:query options:NSBackwardsSearch];
 		NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:baseString];
 		[string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:range];
-		[self->noResultsLabel setAttributedText:string];
+		[noResultsLabel setAttributedText:string];
 	}
 }
 
 - (void)jumpToSectionWithLetter:(NSString*)letter {
 	if ([self sectionWithLetter:letter]) {
-		for (RSAppListSection* section in self->sections) {
+		for (RSAppListSection* section in sections) {
 			if ([section.displayName isEqualToString:letter]) {
 				int sectionOffset = section.yCoordinate;
 				int maxOffsetByScreen = self.appList.contentSize.height - self.appList.bounds.size.height + 80;

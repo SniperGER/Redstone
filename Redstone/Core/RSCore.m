@@ -45,21 +45,21 @@ static id currentApplication;
 	
 	if (self) {
 		sharedInstance = self;
-		self->_window = window;
+		_window = window;
 		
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeui.ttf", RESOURCE_PATH]]];
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeuil.ttf", RESOURCE_PATH]]];
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeuisl.ttf", RESOURCE_PATH]]];
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segmdl2.ttf", RESOURCE_PATH]]];
 		
-		self->preferences = [[RSPreferences alloc] init];
+		preferences = [[RSPreferences alloc] init];
 		
 		wallpaperView = [[UIImageView alloc] initWithImage:[RSAesthetics homeScreenWallpaper]];
 		[wallpaperView setFrame:[[UIScreen mainScreen] bounds]];
-		[self->_window addSubview:wallpaperView];
+		[_window addSubview:wallpaperView];
 		
 		self.rootScrollView = [[RSRootScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
-		[self->_window addSubview:self.rootScrollView];
+		[_window addSubview:self.rootScrollView];
 		
 		self.startScreenController = [RSStartScreenController new];
 		[self.rootScrollView addSubview:self.startScreenController.startScrollView];
@@ -109,7 +109,7 @@ static id currentApplication;
 - (BOOL)handleMenuButtonEvent {
 	if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")]) {
 		if ([[[RSPreferences preferences] objectForKey:@"lockScreenEnabled"] boolValue]) {
-			return YES;
+			return NO;
 		} else {
 			[self.startScreenController setIsEditing:NO];
 			[self.startScreenController saveTiles];

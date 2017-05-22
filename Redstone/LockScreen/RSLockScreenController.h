@@ -1,12 +1,13 @@
 #import <UIKit/UIKit.h>
 
-@class RSLockScreen;
+@class RSLockScreen, RSMediaControls;
 
 @interface RSLockScreenController : NSObject <UIScrollViewDelegate>
 
 @property (nonatomic, retain) UIView* containerView;
 @property (nonatomic, retain) UIImageView* wallpaperView;
 @property (nonatomic, retain) RSLockScreen* lockScreen;
+@property (nonatomic, retain) RSMediaControls* mediaControls;
 @property (nonatomic, assign) BOOL isScrolling;
 
 + (id)sharedInstance;

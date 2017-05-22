@@ -14,33 +14,33 @@
 		[self addSubview:tileBackground];
 		
 		if ([[self getTileInfo] objectForKey:@"FullBleedArtwork"] && [[[self getTileInfo] objectForKey:@"FullBleedArtwork"] boolValue]) {
-			self->appImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-			[self->appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:5]];
+			appImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+			[appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:5]];
 		} else {
-			self->appImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 37.5, 37.5)];
-			[self->appImageView setCenter:CGPointMake(25, 25)];
-			[self->appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
-			[self->appImageView setTintColor:[UIColor whiteColor]];
+			appImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 37.5, 37.5)];
+			[appImageView setCenter:CGPointMake(25, 25)];
+			[appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
+			[appImageView setTintColor:[UIColor whiteColor]];
 		}
-		[tileBackground addSubview:self->appImageView];
+		[tileBackground addSubview:appImageView];
 		
-		self->appLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, frame.size.width-70, 54)];
-		[self->appLabel setText:[self.icon displayName]];
-		[self->appLabel setFont:[UIFont fontWithName:@"SegoeUI-Semilight" size:20]];
-		[self->appLabel setTextColor:[UIColor whiteColor]];
-		[self addSubview:self->appLabel];
+		appLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, frame.size.width-70, 54)];
+		[appLabel setText:[self.icon displayName]];
+		[appLabel setFont:[UIFont fontWithName:@"SegoeUI-Semilight" size:20]];
+		[appLabel setTextColor:[UIColor whiteColor]];
+		[self addSubview:appLabel];
 		
-		self->tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
-		[self->tapGestureRecognizer setCancelsTouchesInView:NO];
-		[self->tapGestureRecognizer setDelegate:self];
-		[self addGestureRecognizer:self->tapGestureRecognizer];
+		tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+		[tapGestureRecognizer setCancelsTouchesInView:NO];
+		[tapGestureRecognizer setDelegate:self];
+		[self addGestureRecognizer:tapGestureRecognizer];
 		
-		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
-		[self->longPressGestureRecognizer setCancelsTouchesInView:NO];
-		[self->longPressGestureRecognizer setDelegate:self];
-		[self addGestureRecognizer:self->longPressGestureRecognizer];
+		longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
+		[longPressGestureRecognizer setCancelsTouchesInView:NO];
+		[longPressGestureRecognizer setDelegate:self];
+		[self addGestureRecognizer:longPressGestureRecognizer];
 		
-		[self->tapGestureRecognizer requireGestureRecognizerToFail:self->longPressGestureRecognizer];
+		[tapGestureRecognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
 	}
 	
 	return self;

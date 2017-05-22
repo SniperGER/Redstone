@@ -30,6 +30,7 @@
 
 #import "LockScreen/RSLockScreenController.h"
 #import "LockScreen/RSLockScreen.h"
+#import "LockScreen/RSMediaControls.h"
 
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
@@ -138,4 +139,10 @@
 
 @interface SBBacklightController : NSObject
 - (void)resetIdleTimer;
+@end
+
+@interface SBMediaController : NSObject
++ (id)sharedInstance;
+- (id)nowPlayingTitle;
+- (id)nowPlayingArtist;
 @end

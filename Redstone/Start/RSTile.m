@@ -10,95 +10,95 @@
 		self.icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafId];
 		self.originalCenter = self.center;
 		
-		self->tileLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-		[self->tileLabel setText:[self.icon displayName]];
-		[self->tileLabel setFont:[UIFont fontWithName:@"SegoeUI" size:14]];
-		[self->tileLabel setTextColor:[UIColor whiteColor]];
+		tileLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+		[tileLabel setText:[self.icon displayName]];
+		[tileLabel setFont:[UIFont fontWithName:@"SegoeUI" size:14]];
+		[tileLabel setTextColor:[UIColor whiteColor]];
 		
-		[self->tileLabel sizeToFit];
-		[self->tileLabel setFrame:CGRectMake(8,
-											 self.frame.size.height - self->tileLabel.frame.size.height - 8,
-											 self->tileLabel.frame.size.width,
-											 self->tileLabel.frame.size.height)];
-		[self addSubview:self->tileLabel];
+		[tileLabel sizeToFit];
+		[tileLabel setFrame:CGRectMake(8,
+											 self.frame.size.height - tileLabel.frame.size.height - 8,
+											 tileLabel.frame.size.width,
+											 tileLabel.frame.size.height)];
+		[self addSubview:tileLabel];
 		
 		if (tileSize < 2) {
-			[self->tileLabel setHidden:YES];
+			[tileLabel setHidden:YES];
 		}
 		
 		if ([[self getTileInfo] objectForKey:@"FullBleedArtwork"] && [[[self getTileInfo] objectForKey:@"FullBleedArtwork"] boolValue]) {
-			self->tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-			[self->tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size]];
+			tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size]];
 		} else {
 			CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:tileSize];
-			self->tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
-			[self->tileImageView setCenter:CGPointMake(frame.size.width/2, frame.size.height/2)];
-			[self->tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
-			[self->tileImageView setTintColor:[UIColor whiteColor]];
+			tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
+			[tileImageView setCenter:CGPointMake(frame.size.width/2, frame.size.height/2)];
+			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
+			[tileImageView setTintColor:[UIColor whiteColor]];
 		}
-		[self addSubview:self->tileImageView];
+		[self addSubview:tileImageView];
 		
-		self->badgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
-		[self->badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
-		[self->badgeLabel setTextColor:[UIColor whiteColor]];
-		[self->badgeLabel setTextAlignment:NSTextAlignmentCenter];
-		[self->badgeLabel setHidden:YES];
-		[self addSubview:self->badgeLabel];
+		badgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
+		[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
+		[badgeLabel setTextColor:[UIColor whiteColor]];
+		[badgeLabel setTextAlignment:NSTextAlignmentCenter];
+		[badgeLabel setHidden:YES];
+		[self addSubview:badgeLabel];
 		
 		[self setBackgroundColor:[RSAesthetics accentColorForTile:[[self.icon application] bundleIdentifier]]];
 		
-		self->longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
-		[self->longPressGestureRecognizer setMinimumPressDuration:0.5];
-		[self->longPressGestureRecognizer setCancelsTouchesInView:NO];
-		[self->longPressGestureRecognizer setDelaysTouchesBegan:NO];
-		[self addGestureRecognizer:self->longPressGestureRecognizer];
+		longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
+		[longPressGestureRecognizer setMinimumPressDuration:0.5];
+		[longPressGestureRecognizer setCancelsTouchesInView:NO];
+		[longPressGestureRecognizer setDelaysTouchesBegan:NO];
+		[self addGestureRecognizer:longPressGestureRecognizer];
 		
-		self->panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGestureRecognizer:)];
-		[self->panGestureRecognizer setDelegate:self];
-		[self->panGestureRecognizer setCancelsTouchesInView:NO];
-		[self->panGestureRecognizer setDelaysTouchesBegan:NO];
-		[self addGestureRecognizer:self->panGestureRecognizer];
+		panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveViewWithGestureRecognizer:)];
+		[panGestureRecognizer setDelegate:self];
+		[panGestureRecognizer setCancelsTouchesInView:NO];
+		[panGestureRecognizer setDelaysTouchesBegan:NO];
+		[self addGestureRecognizer:panGestureRecognizer];
 		
-		self->tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
-		[self->tapGestureRecognizer setCancelsTouchesInView:NO];
-		[self->tapGestureRecognizer setDelaysTouchesBegan:NO];
-		[self->tapGestureRecognizer requireGestureRecognizerToFail:self->panGestureRecognizer];
-		[self->tapGestureRecognizer requireGestureRecognizerToFail:self->longPressGestureRecognizer];
-		[self addGestureRecognizer:self->tapGestureRecognizer];
+		tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+		[tapGestureRecognizer setCancelsTouchesInView:NO];
+		[tapGestureRecognizer setDelaysTouchesBegan:NO];
+		[tapGestureRecognizer requireGestureRecognizerToFail:panGestureRecognizer];
+		[tapGestureRecognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
+		[self addGestureRecognizer:tapGestureRecognizer];
 		
 		
-		self->unpinButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-		[self->unpinButton setCenter:CGPointMake(frame.size.width, 0)];
-		[self->unpinButton setBackgroundColor:[UIColor whiteColor]];
-		[self->unpinButton.layer setCornerRadius:15];
-		[self->unpinButton setHidden:YES];
-		[self addSubview:self->unpinButton];
+		unpinButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+		[unpinButton setCenter:CGPointMake(frame.size.width, 0)];
+		[unpinButton setBackgroundColor:[UIColor whiteColor]];
+		[unpinButton.layer setCornerRadius:15];
+		[unpinButton setHidden:YES];
+		[self addSubview:unpinButton];
 		
 		UILabel* unpinLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
 		[unpinLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:14]];
 		[unpinLabel setText:@"\uE77A"];
 		[unpinLabel setTextAlignment:NSTextAlignmentCenter];
-		[self->unpinButton addSubview:unpinLabel];
+		[unpinButton addSubview:unpinLabel];
 		
-		self->unpinGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(unpin:)];
-		[self->unpinButton addGestureRecognizer:self->unpinGestureRecognizer];
+		unpinGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(unpin:)];
+		[unpinButton addGestureRecognizer:unpinGestureRecognizer];
 		
-		self->scaleButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-		[self->scaleButton setCenter:CGPointMake(frame.size.width, frame.size.height)];
-		[self->scaleButton setBackgroundColor:[UIColor whiteColor]];
-		[self->scaleButton.layer setCornerRadius:15];
-		[self->scaleButton setHidden:YES];
-		[self->scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
-		[self addSubview:self->scaleButton];
+		scaleButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+		[scaleButton setCenter:CGPointMake(frame.size.width, frame.size.height)];
+		[scaleButton setBackgroundColor:[UIColor whiteColor]];
+		[scaleButton.layer setCornerRadius:15];
+		[scaleButton setHidden:YES];
+		[scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
+		[self addSubview:scaleButton];
 		
 		UILabel* scaleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
 		[scaleLabel setText:@"\uE7EA"];
 		[scaleLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:14]];
 		[scaleLabel setTextAlignment:NSTextAlignmentCenter];
-		[self->scaleButton addSubview:scaleLabel];
+		[scaleButton addSubview:scaleLabel];
 		
-		self->scaleGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setNextSize)];
-		[self->scaleButton addGestureRecognizer:self->scaleGestureRecognizer];
+		scaleGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setNextSize)];
+		[scaleButton addGestureRecognizer:scaleGestureRecognizer];
 		
 		if ([[self.icon application] badgeNumberOrString] != nil) {
 			[self setBadge:[[[self.icon application] badgeNumberOrString] intValue]];
@@ -120,15 +120,15 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		
 		CGPoint relativePosition = [self.superview convertPoint:self.center toView:self.superview];
-		self->centerOffset = CGPointMake(relativePosition.x - touchLocation.x, relativePosition.y - touchLocation.y);
+		centerOffset = CGPointMake(relativePosition.x - touchLocation.x, relativePosition.y - touchLocation.y);
 	}
 	
 	if (_panGestureRecognizer.state == UIGestureRecognizerStateChanged && shouldAllowPan) {
-		self.center = CGPointMake(touchLocation.x + self->centerOffset.x, touchLocation.y + self->centerOffset.y);
+		self.center = CGPointMake(touchLocation.x + centerOffset.x, touchLocation.y + centerOffset.y);
 	}
 	
 	if (_panGestureRecognizer.state == UIGestureRecognizerStateEnded && shouldAllowPan) {
-		self->centerOffset = CGPointZero;
+		centerOffset = CGPointZero;
 		
 		[[RSStartScreenController sharedInstance] snapTile:self withTouchPosition:self.center];
 	}
@@ -138,7 +138,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	if ([[RSStartScreenController sharedInstance] isEditing]) {
 		if ([[RSStartScreenController sharedInstance] selectedTile] == self) {
 			[[RSStartScreenController sharedInstance] setIsEditing:NO];
-			[self->longPressGestureRecognizer setEnabled:YES];
+			[longPressGestureRecognizer setEnabled:YES];
 		} else {
 			[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		}
@@ -152,13 +152,13 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	shouldAllowPan = NO;
 	
 	if (![[RSStartScreenController sharedInstance] isEditing]) {
-		[self->tapGestureRecognizer setEnabled:NO];
-		[self->tapGestureRecognizer setEnabled:YES];
+		[tapGestureRecognizer setEnabled:NO];
+		[tapGestureRecognizer setEnabled:YES];
 		
 		[[RSStartScreenController sharedInstance] setIsEditing:YES];
 		[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		
-		[self->longPressGestureRecognizer setEnabled:NO];
+		[longPressGestureRecognizer setEnabled:NO];
 	}
 }
 
@@ -199,32 +199,32 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	self.originalCenter = self.center;
 	
 	if (self.size < 2) {
-		[self->tileLabel setHidden:YES];
+		[tileLabel setHidden:YES];
 	} else {
-		[self->tileLabel setFrame:CGRectMake(8,
-											 self.frame.size.height - self->tileLabel.frame.size.height - 8,
-											 self->tileLabel.frame.size.width,
-											 self->tileLabel.frame.size.height)];
-		[self->tileLabel setHidden:NO];
+		[tileLabel setFrame:CGRectMake(8,
+											 self.frame.size.height - tileLabel.frame.size.height - 8,
+											 tileLabel.frame.size.width,
+											 tileLabel.frame.size.height)];
+		[tileLabel setHidden:NO];
 	}
 	
 	if ([[self getTileInfo] objectForKey:@"FullBleedArtwork"] && [[[self getTileInfo] objectForKey:@"FullBleedArtwork"] boolValue]) {
-		[self->tileImageView setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
-		[self->tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size]];
+		[tileImageView setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+		[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size]];
 	} else {
 		CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
-		[self->tileImageView setFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
-		[self->tileImageView setCenter:CGPointMake(self.frame.size.width/2, self.frame.size.height/2)];
+		[tileImageView setFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
+		[tileImageView setCenter:CGPointMake(self.frame.size.width/2, self.frame.size.height/2)];
 	}
 	
 	
-	[self->unpinButton setCenter:CGPointMake(self.frame.size.width, 0)];
-	[self->scaleButton setCenter:CGPointMake(self.frame.size.width, self.frame.size.height)];
+	[unpinButton setCenter:CGPointMake(self.frame.size.width, 0)];
+	[scaleButton setCenter:CGPointMake(self.frame.size.width, self.frame.size.height)];
 	
-	[self->scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
+	[scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
 	[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
 	
-	[self setBadge:self->badgeValue];
+	[self setBadge:badgeValue];
 	
 	//[[RSStartScreenController sharedInstance] updateStartContentSize];
 	[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
@@ -264,9 +264,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 
 - (void)setIsSelectedTile:(BOOL)isSelectedTile {
 	if ([[RSStartScreenController sharedInstance] isEditing]) {
-		self->_isSelectedTile = isSelectedTile;
+		_isSelectedTile = isSelectedTile;
 		
-		[self->panGestureRecognizer setEnabled:YES];
+		[panGestureRecognizer setEnabled:YES];
 		[self.layer removeAllAnimations];
 		
 		if (isSelectedTile) {
@@ -278,12 +278,12 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[self setAlpha:1.0];
 			[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
 			
-			[self->unpinButton setHidden:NO];
-			[self->scaleButton setHidden:NO];
+			[unpinButton setHidden:NO];
+			[scaleButton setHidden:NO];
 		} else {
 			shouldAllowPan = NO;
-			[self->unpinButton setHidden:YES];
-			[self->scaleButton setHidden:YES];
+			[unpinButton setHidden:YES];
+			[scaleButton setHidden:YES];
 			
 			[UIView animateWithDuration:.2 animations:^{
 				[self setEasingFunction:easeOutQuint forKeyPath:@"frame"];
@@ -296,7 +296,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			
 		}
 	} else {
-		self->_isSelectedTile = NO;
+		_isSelectedTile = NO;
 		[self.layer removeAllAnimations];
 		
 		[UIView animateWithDuration:.2 animations:^{
@@ -308,61 +308,61 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[self removeEasingFunctionForKeyPath:@"frame"];
 		}];
 		
-		[self->longPressGestureRecognizer setEnabled:YES];
+		[longPressGestureRecognizer setEnabled:YES];
 		shouldAllowPan = NO;
 		
-		[self->unpinButton setHidden:YES];
-		[self->scaleButton setHidden:YES];
+		[unpinButton setHidden:YES];
+		[scaleButton setHidden:YES];
 	}
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
 	if (self.isSelectedTile) {
-		if (CGRectContainsPoint(self->unpinButton.frame, point)) {
+		if (CGRectContainsPoint(unpinButton.frame, point)) {
 			
-			[self->tapGestureRecognizer setEnabled:NO];
-			[self->panGestureRecognizer setEnabled:NO];
-			return self->unpinButton;
-		} else if (CGRectContainsPoint(self->scaleButton.frame, point)) {
+			[tapGestureRecognizer setEnabled:NO];
+			[panGestureRecognizer setEnabled:NO];
+			return unpinButton;
+		} else if (CGRectContainsPoint(scaleButton.frame, point)) {
 				
-			[self->tapGestureRecognizer setEnabled:NO];
-			[self->panGestureRecognizer setEnabled:NO];
-			return self->scaleButton;
+			[tapGestureRecognizer setEnabled:NO];
+			[panGestureRecognizer setEnabled:NO];
+			return scaleButton;
 		}
 	}
 	
-	[self->tapGestureRecognizer setEnabled:YES];
-	[self->panGestureRecognizer setEnabled:YES];
+	[tapGestureRecognizer setEnabled:YES];
+	[panGestureRecognizer setEnabled:YES];
 
 	return [super hitTest:point withEvent:event];
 }
 
 - (void)setBadge:(int)badgeCount {
-	self->badgeValue = badgeCount;
+	badgeValue = badgeCount;
 	
 	CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
 	
 	if (!badgeCount || badgeCount == 0) {
-		[self->badgeLabel setText:nil];
-		[self->badgeLabel setHidden:YES];
-		[self->tileImageView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
+		[badgeLabel setText:nil];
+		[badgeLabel setHidden:YES];
+		[tileImageView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
 	} else {
 		if (self.size < 2) {
-			[self->badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:24]];
+			[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:24]];
 		} else {
-			[self->badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
+			[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
 		}
 
-		[self->badgeLabel setText:[NSString stringWithFormat:@"%d", badgeCount]];
-		[self->badgeLabel sizeToFit];
+		[badgeLabel setText:[NSString stringWithFormat:@"%d", badgeCount]];
+		[badgeLabel sizeToFit];
 		
-		CGSize combinedSize = CGSizeMake(tileImageSize.width + self->badgeLabel.frame.size.width + 5, tileImageSize.height);
+		CGSize combinedSize = CGSizeMake(tileImageSize.width + badgeLabel.frame.size.width + 5, tileImageSize.height);
 		
-		[self->tileImageView setCenter:CGPointMake(self.bounds.size.width/2 - (combinedSize.width - self->tileImageView.frame.size.width)/2, self.bounds.size.height/2)];
-		[self->badgeLabel setCenter:CGPointMake(self.bounds.size.width/2 + (combinedSize.width - self->badgeLabel.frame.size.width)/2, self.bounds.size.height/2)];
+		[tileImageView setCenter:CGPointMake(self.bounds.size.width/2 - (combinedSize.width - tileImageView.frame.size.width)/2, self.bounds.size.height/2)];
+		[badgeLabel setCenter:CGPointMake(self.bounds.size.width/2 + (combinedSize.width - badgeLabel.frame.size.width)/2, self.bounds.size.height/2)];
 		
-		[self->badgeLabel setHidden:NO];
+		[badgeLabel setHidden:NO];
 	}
 }
 

@@ -21,8 +21,8 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)loadTiles {
-	self->pinnedTiles = [NSMutableArray new];
-	self->pinnedLeafIdentifiers = [NSMutableArray new];
+	pinnedTiles = [NSMutableArray new];
+	pinnedLeafIdentifiers = [NSMutableArray new];
 	
 	NSArray* tileLayout = [[RSPreferences preferences] objectForKey:[NSString stringWithFormat:@"%iColumnLayout", [RSMetrics columns]]];;
 	
@@ -43,8 +43,8 @@ static RSStartScreenController* sharedInstance;
 			
 			[self.startScrollView addSubview:tile];
 			
-			[self->pinnedTiles addObject:tile];
-			[self->pinnedLeafIdentifiers addObject:[tileLayout objectAtIndex:i][@"bundleIdentifier"]];
+			[pinnedTiles addObject:tile];
+			[pinnedLeafIdentifiers addObject:[tileLayout objectAtIndex:i][@"bundleIdentifier"]];
 		}
 	}
 	
@@ -54,7 +54,7 @@ static RSStartScreenController* sharedInstance;
 - (void)saveTiles {
 	NSMutableArray* tilesToSave = [NSMutableArray new];
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		NSMutableDictionary* tileInfo = [NSMutableDictionary new];
 		
 		int tileX = [tile positionWithoutTransform].origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
@@ -75,14 +75,14 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)updateStartContentSize {
-	if ([self->pinnedTiles count] <= 0) {
+	if ([pinnedTiles count] <= 0) {
 		[self.startScrollView setContentSize:CGSizeMake(self.startScrollView.bounds.size.width, 0)];
 		return;
 	}
 	
-	RSTile* lastTile = [self->pinnedTiles objectAtIndex:0];
+	RSTile* lastTile = [pinnedTiles objectAtIndex:0];
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		CGRect lastTileFrame = [lastTile positionWithoutTransform];
 		CGRect currentTileFrame = [tile positionWithoutTransform];
 		
@@ -136,7 +136,7 @@ static RSStartScreenController* sharedInstance;
 		RSTile* current = [stack objectAtIndex:0];
 		[stack removeObject:current];
 		
-		for (RSTile* tile in self->pinnedTiles) {
+		for (RSTile* tile in pinnedTiles) {
 			if (tile != current && CGRectIntersectsRect(current.basePosition, tile.basePosition)) {
 				[stack addObject:tile];
 				
@@ -179,7 +179,7 @@ static RSStartScreenController* sharedInstance;
 	NSMutableArray* appsInView = [NSMutableArray new];
 	NSMutableArray* appsNotInView = [NSMutableArray new];
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		if (CGRectIntersectsRect(self.startScrollView.bounds, tile.frame)) {
 			[appsInView addObject:tile];
 		} else {
@@ -208,7 +208,7 @@ static RSStartScreenController* sharedInstance;
 	[opacity setFillMode:kCAFillModeForwards];
 	
 	int minX = INT_MAX, maxX = INT_MIN, minY = INT_MAX, maxY = INT_MIN;
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		CGFloat tileX = tile.frame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
 		CGFloat tileY = tile.frame.origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
 		
@@ -253,7 +253,7 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		for (RSTile* tile in self->pinnedTiles) {
+		for (RSTile* tile in pinnedTiles) {
 			[tile.layer setOpacity:0];
 		}
 		
@@ -267,7 +267,7 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)returnToHomescreen {
-	if ([self->pinnedTiles count] <= 0) {
+	if ([pinnedTiles count] <= 0) {
 		[[RSAppListController sharedInstance] returnToHomescreen];
 		return;
 	}
@@ -278,7 +278,7 @@ static RSStartScreenController* sharedInstance;
 	NSMutableArray* appsInView = [NSMutableArray new];
 	NSMutableArray* appsNotInView = [NSMutableArray new];
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		[tile.layer removeAllAnimations];
 		if (CGRectIntersectsRect(self.startScrollView.bounds, tile.frame)) {
 			[appsInView addObject:tile];
@@ -311,7 +311,7 @@ static RSStartScreenController* sharedInstance;
 	[opacity setFillMode:kCAFillModeForwards];
 	
 	int minX = INT_MAX, maxX = INT_MIN, minY = INT_MAX, maxY = INT_MIN;
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		CGFloat tileX = tile.frame.origin.x / ([RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing]);
 		CGFloat tileY = tile.frame.origin.y / ([RSMetrics tileDimensionsForSize:1].height + [RSMetrics tileBorderSpacing]);
 		
@@ -324,7 +324,7 @@ static RSStartScreenController* sharedInstance;
 	
 	float maxDelay = ((maxY - minY) * 0.01) + (maxX * 0.01);
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		[tile.layer setShouldRasterize:YES];
 		[tile.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
 		[tile.layer setContentsScale:[[UIScreen mainScreen] scale]];
@@ -351,7 +351,7 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		for (RSTile* tile in self->pinnedTiles) {
+		for (RSTile* tile in pinnedTiles) {
 			[tile.layer removeAllAnimations];
 			[tile.layer setOpacity:1];
 			[tile setAlpha:1.0];
@@ -365,11 +365,11 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)setIsEditing:(BOOL)isEditing {
-	if (!self->_isEditing && isEditing) {
+	if (!_isEditing && isEditing) {
 		AudioServicesPlaySystemSound(1520);
 	}
 	
-	self->_isEditing = isEditing;
+	_isEditing = isEditing;
 	
 	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:!isEditing];
 	
@@ -396,9 +396,9 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)setSelectedTile:(RSTile*)selectedTile {
-	self->_selectedTile = selectedTile;
+	_selectedTile = selectedTile;
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		[tile setTiltEnabled:!self.isEditing];
 		
 		if (tile == selectedTile) {
@@ -410,17 +410,17 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)pinTileWithId:(NSString *)leafId {
-	if ([self->pinnedLeafIdentifiers containsObject:leafId]) {
+	if ([pinnedLeafIdentifiers containsObject:leafId]) {
 		return;
 	}
 	
-	if ([self->pinnedTiles count] <= 0) {
+	if ([pinnedTiles count] <= 0) {
 		[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:YES];
 	}
 	
 	int maxTileX = 0, maxTileY = 0;
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		if (tile.tileY > maxTileY) {
 			maxTileX = 0;
 		}
@@ -447,8 +447,8 @@ static RSStartScreenController* sharedInstance;
 			
 			[self.startScrollView addSubview:tile];
 			
-			[self->pinnedTiles addObject:tile];
-			[self->pinnedLeafIdentifiers addObject:leafId];
+			[pinnedTiles addObject:tile];
+			[pinnedLeafIdentifiers addObject:leafId];
 			
 			tileHasBeenPinned = YES;
 			break;
@@ -469,8 +469,8 @@ static RSStartScreenController* sharedInstance;
 				
 				[self.startScrollView addSubview:tile];
 				
-				[self->pinnedTiles addObject:tile];
-				[self->pinnedLeafIdentifiers addObject:leafId];
+				[pinnedTiles addObject:tile];
+				[pinnedLeafIdentifiers addObject:leafId];
 				
 				tileHasBeenPinned = YES;
 				break;
@@ -490,8 +490,8 @@ static RSStartScreenController* sharedInstance;
 		
 		[self.startScrollView addSubview:tile];
 		
-		[self->pinnedTiles addObject:tile];
-		[self->pinnedLeafIdentifiers addObject:leafId];
+		[pinnedTiles addObject:tile];
+		[pinnedLeafIdentifiers addObject:leafId];
 	}
 	
 	[self saveTiles];
@@ -504,8 +504,8 @@ static RSStartScreenController* sharedInstance;
 
 
 - (void)unpinTile:(RSTile *)tile {
-	[self->pinnedTiles removeObject:tile];
-	[self->pinnedLeafIdentifiers removeObject:[[tile.icon application] bundleIdentifier]];
+	[pinnedTiles removeObject:tile];
+	[pinnedLeafIdentifiers removeObject:[[tile.icon application] bundleIdentifier]];
 	
 	[UIView animateWithDuration:.2 animations:^{
 		[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
@@ -519,7 +519,7 @@ static RSStartScreenController* sharedInstance;
 		[self saveTiles];
 		[self updateStartContentSize];
 		
-		if ([self->pinnedTiles count] <= 0) {
+		if ([pinnedTiles count] <= 0) {
 			[self setIsEditing:NO];
 			[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:NO];
 			[[[RSCore sharedInstance] rootScrollView] setContentOffset:CGPointMake(screenWidth, 0) animated:YES];
@@ -528,7 +528,7 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (id)viewIntersectsWithAnotherView:(CGRect)rect {
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		if (CGRectIntersectsRect(tile.frame, rect)) {
 			return tile;
 		}
@@ -537,7 +537,7 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)resetTileVisibility {
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		[tile setHidden:NO];
 		[tile.layer setOpacity:1];
 		[tile.layer removeAllAnimations];
@@ -545,15 +545,15 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (NSArray*)pinnedTiles {
-	return self->pinnedTiles;
+	return pinnedTiles;
 }
 
 - (NSArray*)pinnedLeafIdentifiers {
-	return self->pinnedLeafIdentifiers;
+	return pinnedLeafIdentifiers;
 }
 
 - (RSTile*)tileForLeafIdentifier:(NSString*)leafId {
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		if ([[[tile.icon application] bundleIdentifier] isEqualToString:leafId]) {
 			return tile;
 			break;
@@ -576,7 +576,7 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (id)viewIntersectsWithAnotherView:(CGRect)rect {
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		if (CGRectIntersectsRect(tile.frame, rect)) {
 			return tile;
 		}
@@ -585,7 +585,7 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)resetTileVisibility {
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		[tile setHidden:NO];
 		[tile.layer setOpacity:1];
 		[tile.layer removeAllAnimations];
@@ -595,8 +595,8 @@ static RSStartScreenController* sharedInstance;
 /* TILE MANAGEMENT */
 
 - (void)loadTiles {
-	self->pinnedTiles = [NSMutableArray new];
-	self->pinnedLeafIdentifiers = [NSMutableArray new];
+	pinnedTiles = [NSMutableArray new];
+	pinnedLeafIdentifiers = [NSMutableArray new];
 	
 	NSArray* tileLayout = [[RSPreferences preferences] objectForKey:[NSString stringWithFormat:@"%iColumnLayout", [RSMetrics columns]]];
 	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
@@ -614,8 +614,8 @@ static RSStartScreenController* sharedInstance;
 			[tile setTileY:[tileLayout[i][@"row"] intValue]];
 			
 			[self.startScrollView addSubview:tile];
-			[self->pinnedTiles addObject:tile];
-			[self->pinnedLeafIdentifiers addObject:tileLayout[i][@"bundleIdentifier"]];
+			[pinnedTiles addObject:tile];
+			[pinnedLeafIdentifiers addObject:tileLayout[i][@"bundleIdentifier"]];
 		}
 	}
 	
@@ -625,7 +625,7 @@ static RSStartScreenController* sharedInstance;
 - (void)saveTiles {
 	NSMutableArray* tilesToSave = [NSMutableArray new];
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		NSMutableDictionary* tileInfo = [NSMutableDictionary new];
 		
 		[tileInfo setValue:[NSNumber numberWithInteger:tile.size] forKey:@"size"];
@@ -640,15 +640,15 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (NSArray*)pinnedTiles {
-	return self->pinnedTiles;
+	return pinnedTiles;
 }
 
 - (NSArray*)pinnedLeafIdentifiers {
-	return self->pinnedLeafIdentifiers;
+	return pinnedLeafIdentifiers;
 }
 
 - (RSTile*)tileForLeafIdentifier:(NSString *)leafId {
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		if ([[[tile.icon application] bundleIdentifier] isEqualToString:leafId]) {
 			return tile;
 			break;
@@ -661,11 +661,11 @@ static RSStartScreenController* sharedInstance;
 /* EDITING MODE */
 
 - (void)setIsEditing:(BOOL)isEditing {
-	if (!self->_isEditing && isEditing) {
+	if (!_isEditing && isEditing) {
 		AudioServicesPlaySystemSound(1520);
 	}
 	
-	self->_isEditing = isEditing;
+	_isEditing = isEditing;
 	
 	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:!isEditing];
 	
@@ -692,9 +692,9 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)setSelectedTile:(RSTile*)selectedTile {
-	self->_selectedTile = selectedTile;
+	_selectedTile = selectedTile;
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		[tile setTiltEnabled:!self.isEditing];
 		
 		if (tile == selectedTile) {
@@ -706,17 +706,17 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)pinTileWithId:(NSString *)leafId {
-	if ([self->pinnedLeafIdentifiers containsObject:leafId]) {
+	if ([pinnedLeafIdentifiers containsObject:leafId]) {
 		return;
 	}
 	
-	if ([self->pinnedTiles count] <= 0) {
+	if ([pinnedTiles count] <= 0) {
 		[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:YES];
 	}
 	
 	int maxTileX = 0, maxTileY = 0;
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		if (tile.tileY > maxTileY) {
 			maxTileX = 0;
 		}
@@ -742,8 +742,8 @@ static RSStartScreenController* sharedInstance;
 			
 			[self.startScrollView addSubview:tile];
 			
-			[self->pinnedTiles addObject:tile];
-			[self->pinnedLeafIdentifiers addObject:leafId];
+			[pinnedTiles addObject:tile];
+			[pinnedLeafIdentifiers addObject:leafId];
 			
 			tileHasBeenPinned = YES;
 			break;
@@ -764,8 +764,8 @@ static RSStartScreenController* sharedInstance;
 				
 				[self.startScrollView addSubview:tile];
 				
-				[self->pinnedTiles addObject:tile];
-				[self->pinnedLeafIdentifiers addObject:leafId];
+				[pinnedTiles addObject:tile];
+				[pinnedLeafIdentifiers addObject:leafId];
 				
 				tileHasBeenPinned = YES;
 				break;
@@ -785,8 +785,8 @@ static RSStartScreenController* sharedInstance;
 		
 		[self.startScrollView addSubview:tile];
 		
-		[self->pinnedTiles addObject:tile];
-		[self->pinnedLeafIdentifiers addObject:leafId];
+		[pinnedTiles addObject:tile];
+		[pinnedLeafIdentifiers addObject:leafId];
 	}
 	
 	[self saveTiles];
@@ -798,8 +798,8 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)unpinTile:(RSTile *)tile {
-	[self->pinnedTiles removeObject:tile];
-	[self->pinnedLeafIdentifiers removeObject:[[tile.icon application] bundleIdentifier]];
+	[pinnedTiles removeObject:tile];
+	[pinnedLeafIdentifiers removeObject:[[tile.icon application] bundleIdentifier]];
 	
 	[UIView animateWithDuration:.2 animations:^{
 		[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
@@ -813,7 +813,7 @@ static RSStartScreenController* sharedInstance;
 		[self saveTiles];
 		[self updateStartContentSize];
 		
-		if ([self->pinnedTiles count] <= 0) {
+		if ([pinnedTiles count] <= 0) {
 			[self setIsEditing:NO];
 			[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:NO];
 			[[[RSCore sharedInstance] rootScrollView] setContentOffset:CGPointMake(screenWidth, 0) animated:YES];
@@ -859,7 +859,7 @@ static RSStartScreenController* sharedInstance;
 		RSTile* current = [stack objectAtIndex:0];
 		[stack removeObject:current];
 		
-		for (RSTile* tile in self->pinnedTiles) {
+		for (RSTile* tile in pinnedTiles) {
 			if (tile != movedTile && CGRectIntersectsRect(tile.basePosition, movedTile.basePosition) && tile.basePosition.origin.y < movedTile.basePosition.origin.y && !didMoveTileIntoPosition) {
 				CGFloat moveDistance = (CGRectGetMaxY(tile.basePosition)- CGRectGetMinY(movedTile.basePosition)) + [RSMetrics tileBorderSpacing];
 				CGRect newFrame = CGRectMake(movedTile.frame.origin.x,
@@ -911,14 +911,14 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)updateStartContentSize {
-	if ([self->pinnedTiles count] <= 0) {
+	if ([pinnedTiles count] <= 0) {
 		[self.startScrollView setContentSize:CGSizeMake(self.startScrollView.bounds.size.width, 0)];
 		return;
 	}
 	
-	RSTile* lastTile = [self->pinnedTiles objectAtIndex:0];
+	RSTile* lastTile = [pinnedTiles objectAtIndex:0];
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		CGRect lastTileFrame = [lastTile positionWithoutTransform];
 		CGRect currentTileFrame = [tile positionWithoutTransform];
 		
@@ -944,7 +944,7 @@ static RSStartScreenController* sharedInstance;
 	NSMutableArray* appsInView = [NSMutableArray new];
 	NSMutableArray* appsNotInView = [NSMutableArray new];
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		if (CGRectIntersectsRect(self.startScrollView.bounds, tile.basePosition)) {
 			[appsInView addObject:tile];
 		} else {
@@ -973,7 +973,7 @@ static RSStartScreenController* sharedInstance;
 	[opacity setFillMode:kCAFillModeForwards];
 	
 	int minX = INT_MAX, maxX = INT_MIN, minY = INT_MAX, maxY = INT_MIN;
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		minX = MIN(tile.tileX, minX);
 		maxX = MAX(tile.tileX, maxX);
 		
@@ -1009,7 +1009,7 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		for (RSTile* tile in self->pinnedTiles) {
+		for (RSTile* tile in pinnedTiles) {
 			[tile.layer setOpacity:0];
 			[tile.layer removeAllAnimations];
 			[tile.layer setAnchorPoint:CGPointMake(0.5,0.5)];
@@ -1023,7 +1023,7 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)returnToHomescreen {
-	if ([self->pinnedTiles count] <= 0) {
+	if ([pinnedTiles count] <= 0) {
 		[[RSAppListController sharedInstance] returnToHomescreen];
 		return;
 	}
@@ -1034,7 +1034,7 @@ static RSStartScreenController* sharedInstance;
 	NSMutableArray* appsInView = [NSMutableArray new];
 	NSMutableArray* appsNotInView = [NSMutableArray new];
 	
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		if (CGRectIntersectsRect(self.startScrollView.bounds, tile.basePosition)) {
 			[appsInView addObject:tile];
 			
@@ -1066,7 +1066,7 @@ static RSStartScreenController* sharedInstance;
 	[opacity setFillMode:kCAFillModeForwards];
 	
 	int minX = INT_MAX, maxX = INT_MIN, minY = INT_MAX, maxY = INT_MIN;
-	for (RSTile* tile in self->pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		minX = MIN(tile.tileX, minX);
 		maxX = MAX(tile.tileX, maxX);
 		
@@ -1097,7 +1097,7 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		for (RSTile* tile in self->pinnedTiles) {
+		for (RSTile* tile in pinnedTiles) {
 			[tile.layer removeAllAnimations];
 			[tile.layer setOpacity:1];
 			[tile setAlpha:1.0];

@@ -22,6 +22,10 @@ static RSLockScreenController* sharedInstance;
 		self.lockScreen = [[RSLockScreen alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[self.lockScreen setDelegate:self];
 		[self.containerView addSubview:self.lockScreen];
+		
+		self.mediaControls = [[RSMediaControls alloc] initWithFrame:CGRectMake(0, 40, screenWidth, 120)];
+		[self.mediaControls setHidden:YES];
+		[self.lockScreen addSubview:self.mediaControls];
 	}
 	
 	return self;
@@ -31,8 +35,7 @@ static RSLockScreenController* sharedInstance;
 	self.isScrolling = YES;
 	CGFloat alpha = 1 - (scrollView.contentOffset.y / (scrollView.bounds.size.height * 0.6));
 	
-	[self.lockScreen.timeLabel setAlpha:alpha];
-	[self.lockScreen.dateLabel setAlpha:alpha];
+	[self.lockScreen setAlpha:alpha];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -55,14 +58,14 @@ static RSLockScreenController* sharedInstance;
 	[self.lockScreen.timeLabel sizeToFit];
 	
 	CGRect timeLabelFrame = self.lockScreen.timeLabel.frame;
-	[self.lockScreen.timeLabel setFrame:CGRectMake(24, screenHeight - 150 - timeLabelFrame.size.height, timeLabelFrame.size.width, timeLabelFrame.size.height)];
+	[self.lockScreen.timeLabel setFrame:CGRectMake(24, screenHeight - 160 - timeLabelFrame.size.height, timeLabelFrame.size.width, timeLabelFrame.size.height)];
 }
 - (void)setDate:(NSString*)date {
 	[self.lockScreen.dateLabel setText:date];
 	[self.lockScreen.dateLabel sizeToFit];
 	
 	CGRect dateLabelFrame = self.lockScreen.dateLabel.frame;
-	[self.lockScreen.dateLabel setFrame:CGRectMake(24, screenHeight - 110 - dateLabelFrame.size.height, dateLabelFrame.size.width, dateLabelFrame.size.height)];
+	[self.lockScreen.dateLabel setFrame:CGRectMake(24, screenHeight - 130 - dateLabelFrame.size.height, dateLabelFrame.size.width, dateLabelFrame.size.height)];
 }
 
 @end

@@ -157,6 +157,7 @@
 		8DE79E991EC6F3BE004EF2E6 /* RSAppListSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E981EC6F3BE004EF2E6 /* RSAppListSection.m */; };
 		8DE79E9C1EC79AA5004EF2E6 /* RSPinMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E9B1EC79AA5004EF2E6 /* RSPinMenu.m */; };
 		8DE79E9F1EC7B6C3004EF2E6 /* RSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E9E1EC7B6C3004EF2E6 /* RSSearchBar.m */; };
+		8DF085061ED352D700EB2342 /* RSMediaControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DF085051ED352D700EB2342 /* RSMediaControls.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -339,6 +340,8 @@
 		8DE79E9B1EC79AA5004EF2E6 /* RSPinMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPinMenu.m; sourceTree = "<group>"; };
 		8DE79E9D1EC7B6C3004EF2E6 /* RSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSearchBar.h; sourceTree = "<group>"; };
 		8DE79E9E1EC7B6C3004EF2E6 /* RSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSearchBar.m; sourceTree = "<group>"; };
+		8DF085041ED352D700EB2342 /* RSMediaControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSMediaControls.h; sourceTree = "<group>"; };
+		8DF085051ED352D700EB2342 /* RSMediaControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSMediaControls.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -828,6 +831,8 @@
 				8D2D8C301ED0158C00D220E0 /* RSLockScreenController.m */,
 				8D2D8C341ED0163900D220E0 /* RSLockScreen.h */,
 				8D2D8C351ED0163900D220E0 /* RSLockScreen.m */,
+				8DF085041ED352D700EB2342 /* RSMediaControls.h */,
+				8DF085051ED352D700EB2342 /* RSMediaControls.m */,
 			);
 			name = LockScreen;
 			path = Redstone/LockScreen;
@@ -1166,6 +1171,7 @@
 				8DBD108A1EC23BF900A5A037 /* RSAesthetics.m in Sources */,
 				8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */,
 				8D5F26111ECA40AD00DB95C6 /* RSModalAlert.m in Sources */,
+				8DF085061ED352D700EB2342 /* RSMediaControls.m in Sources */,
 				8DE79E901EC6ECFE004EF2E6 /* RSAppListController.m in Sources */,
 				8DC171221EC5E50200D45EB1 /* RSPreferences.m in Sources */,
 				8DBD108D1EC23BF900A5A037 /* RSRootScrollView.m in Sources */,

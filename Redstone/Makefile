@@ -13,7 +13,8 @@ export GO_EASY_ON_ME = 1
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = Redstone
-Redstone_PRIVATE_FRAMEWORKS = AppSupport
+Redstone_FRAMEWORKS = MediaPlayer
+Redstone_PRIVATE_FRAMEWORKS = AppSupport MediaRemote
 Redstone_FILES = Redstone.xm
 
 # Core
@@ -32,7 +33,7 @@ Redstone_FILES += Launch/RSLaunchScreenController.m Launch/RSLaunchScreen.m
 Redstone_FILES += AppList/RSAppListController.m AppList/RSAppList.m AppList/RSApp.m AppList/RSAppListSection.m AppList/RSPinMenu.m AppList/RSSearchBar.m AppList/RSJumpList.m
 
 # Lock Screen
-Redstone_FILES += Redstone_LockScreen.xm LockScreen/RSLockScreenController.m LockScreen/RSLockScreen.m
+Redstone_FILES += Redstone_LockScreen.xm LockScreen/RSLockScreenController.m LockScreen/RSLockScreen.m LockScreen/RSMediaControls.m
 
 include $(THEOS)/makefiles/tweak.mk
 

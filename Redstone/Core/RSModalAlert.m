@@ -6,36 +6,36 @@
 	self = [super init];
 	
 	if (self) {
-		self->actionButtons = [NSMutableArray new];
-		self->actionHandlers = [NSMutableArray new];
+		actionButtons = [NSMutableArray new];
+		actionHandlers = [NSMutableArray new];
 		
 		[self setFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[self setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.8]];
 		
-		self->alertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 0)];
-		[self->alertView setBackgroundColor:[UIColor colorWithWhite:0.23 alpha:1.0]];
-		[self->alertView.layer setBorderWidth:2.0];
-		[self->alertView.layer setBorderColor:[RSAesthetics accentColor].CGColor];
-		[self addSubview:self->alertView];
+		alertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 0)];
+		[alertView setBackgroundColor:[UIColor colorWithWhite:0.23 alpha:1.0]];
+		[alertView.layer setBorderWidth:2.0];
+		[alertView.layer setBorderColor:[RSAesthetics accentColor].CGColor];
+		[self addSubview:alertView];
 		
-		self->alertTitle = [[UILabel alloc] initWithFrame:CGRectMake(38, 38, screenWidth-76, 38)];
-		[self->alertTitle setFont:[UIFont fontWithName:@"SegoeUI" size:26]];
-		[self->alertTitle setText:title];
-		[self->alertTitle sizeToFit];
-		[self->alertTitle setTextColor:[UIColor whiteColor]];
-		[self->alertView addSubview:self->alertTitle];
+		alertTitle = [[UILabel alloc] initWithFrame:CGRectMake(38, 38, screenWidth-76, 38)];
+		[alertTitle setFont:[UIFont fontWithName:@"SegoeUI" size:26]];
+		[alertTitle setText:title];
+		[alertTitle sizeToFit];
+		[alertTitle setTextColor:[UIColor whiteColor]];
+		[alertView addSubview:alertTitle];
 		
-		self->alertMessage = [[UILabel alloc] initWithFrame:CGRectMake(38, self->alertTitle.frame.origin.y + self->alertTitle.frame.size.height + 5, screenWidth-76, 164)];
-		[self->alertMessage setFont:[UIFont fontWithName:@"SegoeUI" size:20]];
-		[self->alertMessage setLineBreakMode:NSLineBreakByWordWrapping];
-		[self->alertMessage setNumberOfLines:0];
-		[self->alertMessage setText:message];
-		[self->alertMessage sizeToFit];
-		[self->alertMessage setTextColor:[UIColor whiteColor]];
-		[self->alertView addSubview:self->alertMessage];
+		alertMessage = [[UILabel alloc] initWithFrame:CGRectMake(38, alertTitle.frame.origin.y + alertTitle.frame.size.height + 5, screenWidth-76, 164)];
+		[alertMessage setFont:[UIFont fontWithName:@"SegoeUI" size:20]];
+		[alertMessage setLineBreakMode:NSLineBreakByWordWrapping];
+		[alertMessage setNumberOfLines:0];
+		[alertMessage setText:message];
+		[alertMessage sizeToFit];
+		[alertMessage setTextColor:[UIColor whiteColor]];
+		[alertView addSubview:alertMessage];
 		
-		CGFloat alertHeight = self->alertMessage.frame.origin.y + self->alertMessage.frame.size.height + 38;
-		[self->alertView setFrame:CGRectMake(0, screenHeight/2 - alertHeight/2, screenWidth, alertHeight)];
+		CGFloat alertHeight = alertMessage.frame.origin.y + alertMessage.frame.size.height + 38;
+		[alertView setFrame:CGRectMake(0, screenHeight/2 - alertHeight/2, screenWidth, alertHeight)];
 	}
 	
 	return self;
@@ -45,15 +45,15 @@
 	RSTiltView* button = [[RSTiltView alloc] initWithFrame:CGRectMake(38, 0, ((screenWidth-76)-6) / 2, 38)];
 	[button setBackgroundColor:[UIColor colorWithWhite:0.38 alpha:1.0]];
 	
-	if ([self->actionButtons count] % 2 == 0) {
-		if ([self->actionButtons count] > 0) {
-			UIView* lastButton = [self->actionButtons lastObject];
+	if ([actionButtons count] % 2 == 0) {
+		if ([actionButtons count] > 0) {
+			UIView* lastButton = [actionButtons lastObject];
 			[button setFrame:CGRectMake(38, lastButton.frame.origin.y + lastButton.frame.size.height+6, ((screenWidth-76)-6) / 2, 38)];
 		} else {
-			[button setFrame:CGRectMake(38, self->alertMessage.frame.origin.y + self->alertMessage.frame.size.height + 30, ((screenWidth-76)-6) / 2, 38)];
+			[button setFrame:CGRectMake(38, alertMessage.frame.origin.y + alertMessage.frame.size.height + 30, ((screenWidth-76)-6) / 2, 38)];
 		}
 	} else {
-		UIView* lastButton = [self->actionButtons lastObject];
+		UIView* lastButton = [actionButtons lastObject];
 		[button setFrame:CGRectMake(self.frame.size.width - button.frame.size.width - 38, lastButton.frame.origin.y, ((screenWidth-76)-6) / 2, 38)];
 	}
 	
@@ -69,11 +69,11 @@
 		[button addGestureRecognizer:tap];
 	}
 	
-	[self->alertView addSubview:button];
-	[self->actionButtons addObject:button];
+	[alertView addSubview:button];
+	[actionButtons addObject:button];
 	
 	CGFloat alertHeight = button.frame.origin.y + button.frame.size.height + 38;
-	[self->alertView setFrame:CGRectMake(0, screenHeight/2 - alertHeight/2, screenWidth, alertHeight)];
+	[alertView setFrame:CGRectMake(0, screenHeight/2 - alertHeight/2, screenWidth, alertHeight)];
 }
 
 - (void)show {
@@ -102,8 +102,8 @@
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
 	
-	[self->alertView.layer addAnimation:scale forKey:@"scale"];
-	[self->alertView.layer addAnimation:opacity forKey:@"opacity"];
+	[alertView.layer addAnimation:scale forKey:@"scale"];
+	[alertView.layer addAnimation:opacity forKey:@"opacity"];
 }
 
 - (void)hide {
@@ -126,8 +126,8 @@
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
 	
-	[self->alertView.layer addAnimation:scale forKey:@"scale"];
-	[self->alertView.layer addAnimation:opacity forKey:@"opacity"];
+	[alertView.layer addAnimation:scale forKey:@"scale"];
+	[alertView.layer addAnimation:opacity forKey:@"opacity"];
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[self setHidden:YES];

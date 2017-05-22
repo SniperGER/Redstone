@@ -125,7 +125,7 @@
 }
 
 - (void)setTiltEnabled:(BOOL)tiltEnabled {
-	self->_tiltEnabled = tiltEnabled;
+	_tiltEnabled = tiltEnabled;
 	
 	if (!tiltEnabled && self.isTilted) {
 		[self untilt];

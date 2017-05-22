@@ -56,16 +56,25 @@
 
 %end
 
-/*%hook SBDashBoardMediaArtworkViewController
+%hook SBDashBoardMediaArtworkViewController
 
 -(void)willTransitionToPresented:(BOOL)arg1 {
-	%orig(arg1);
+	%orig(NO);
 	
-	mediaControlsVisible = arg1;
-	setLockWatchVisibility();
+	[[[RSLockScreenController sharedInstance] mediaControls] setHidden:!arg1];
 }
 
-%end*/
+%end
+
+%hook MPUMediaControlsTitlesView
+
+- (void)updateTrackInformationWithNowPlayingInfo:(id)arg1 {
+	%orig(arg1);
+	
+	[[[RSLockScreenController sharedInstance] mediaControls] updateNowPlayingInfo:arg1];
+}
+
+%end
 
 %end
 

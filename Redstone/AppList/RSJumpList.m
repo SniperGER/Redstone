@@ -9,9 +9,9 @@
 		[self setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.8]];
 		
 		CGFloat deviceOffsetWidth = ([UIScreen mainScreen].bounds.size.width - 320) / 2;
-		self->alphabetScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-		[self->alphabetScrollView setContentInset:UIEdgeInsetsMake(88, deviceOffsetWidth, 88, deviceOffsetWidth)];
-		[self addSubview:self->alphabetScrollView];
+		alphabetScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+		[alphabetScrollView setContentInset:UIEdgeInsetsMake(88, deviceOffsetWidth, 88, deviceOffsetWidth)];
+		[self addSubview:alphabetScrollView];
 		
 		NSString* alphabet = @"#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
 		
@@ -23,7 +23,7 @@
 				
 				RSTiltView* jumpListLetter = [[RSTiltView alloc] initWithFrame:CGRectMake(j*80, i*80, 80, 80)];
 				[jumpListLetter setHighlightEnabled:YES];
-				[self->alphabetScrollView addSubview:jumpListLetter];
+				[alphabetScrollView addSubview:jumpListLetter];
 				
 				UILabel* jumpListLetterLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
 				[jumpListLetterLabel setTextColor:[UIColor whiteColor]];
@@ -49,11 +49,11 @@
 				sectionTag++;
 				
 				[jumpListLetter addSubview:jumpListLetterLabel];
-				[self->alphabetScrollView addSubview:jumpListLetter];
+				[alphabetScrollView addSubview:jumpListLetter];
 			}
 		}
 		
-		[self->alphabetScrollView setUserInteractionEnabled:NO];
+		[alphabetScrollView setUserInteractionEnabled:NO];
 		[self setHidden:YES];
 	}
 	
@@ -85,13 +85,13 @@
 	[self.layer addAnimation:opacity forKey:@"opacity"];
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		[self->alphabetScrollView setUserInteractionEnabled:YES];
+		[alphabetScrollView setUserInteractionEnabled:YES];
 	});
 }
 
 - (void)animateOut {
 	self.isOpen = NO;
-	[self->alphabetScrollView setUserInteractionEnabled:NO];
+	[alphabetScrollView setUserInteractionEnabled:NO];
 	
 	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
 														  function:CubicEaseOut
