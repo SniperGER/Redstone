@@ -22,6 +22,10 @@
 											 tileLabel.frame.size.height)];
 		[self addSubview:tileLabel];
 		
+		if ([[self getTileInfo] objectForKey:@"TileLabelHidden"] && [[[self getTileInfo] objectForKey:@"TileLabelHidden"] boolValue]) {
+			[tileLabel setHidden:YES];
+		}
+		
 		if (tileSize < 2) {
 			[tileLabel setHidden:YES];
 		}
@@ -205,7 +209,11 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 											 self.frame.size.height - tileLabel.frame.size.height - 8,
 											 tileLabel.frame.size.width,
 											 tileLabel.frame.size.height)];
-		[tileLabel setHidden:NO];
+		if ([[self getTileInfo] objectForKey:@"TileLabelHidden"] && [[[self getTileInfo] objectForKey:@"TileLabelHidden"] boolValue]) {
+			[tileLabel setHidden:YES];
+		} else {
+			[tileLabel setHidden:NO];
+		}
 	}
 	
 	if ([[self getTileInfo] objectForKey:@"FullBleedArtwork"] && [[[self getTileInfo] objectForKey:@"FullBleedArtwork"] boolValue]) {
