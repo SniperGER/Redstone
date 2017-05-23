@@ -18,11 +18,11 @@ script:
 - cd Redstone
 - make package
 before_deploy:
-- zip Redstone-Nightly_$(date +%y)w$(date +%V)b-$TRAVIS_BUILD_NUMBER ./packages/*.deb
+- zip Redstone-Nightly_$(date +%y)w$(date +%V)a-$TRAVIS_BUILD_NUMBER ./packages/*.deb
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
 - export GIT_TAG=Redstone-Nightly_$(date +%y)w$(date +%V)b-$TRAVIS_BUILD_NUMBER
-- git tag $GIT_TAG -a -m "Redstone Nightly $(date +%y)w$(date +%V)b (Build $TRAVIS_BUILD_NUMBER)"
+- git tag $GIT_TAG -a -m "Redstone Nightly $(date +%y)w$(date +%V)a (Build $TRAVIS_BUILD_NUMBER)"
 - git push -q https://$GH_TOKEN@github.com/SniperGER/Redstone --tags
 deploy:
   skip_cleanup: true
@@ -30,7 +30,7 @@ deploy:
   prerelease: true
   api_key:
     secure: bKm818oy5YBSktmXn+8okgwpANbS/q1+HdCe6f+PYilqqx6AVlPhFx+nOFVlk8dBbQ8Q0iYfliTPahvSyp4XksPHeyaUVuYRdGSd8nC7jN4VYRoOs1KuJiSv/x0B8rMyPyU0eYsJmjmImyrVTCbH9E6h+G7FpYd1sI9ShnoKbqtxYkAWg01lj7Je3ekO5z1RTfTTFpiV9Ap2SmKiEFxXWwKmVfXEYOE9ikq/WpuiSPIkdaEZ0j6f1F2BrN1H2MNd66h88/KocSeUAXrukHCdzeISKARX9owQMFL4Pg3AAitrEiU1xbpbacOs1GvaMUOazuCmb6W/ueUNVQTgvpkdxnCHLWxppEWkxUOJ07xm12FYTbXwIvFocyq3nfBngoWL4u1hISQTRbwWNfzAUBthygEYNw3bOoBUuIkSjwmSkDS+GRxl63DE3dxQWbU3Oiwl3rm/Ezo+YGQiGUABKV3n7M8j2RYls7+UkTCNAfqEXQXoCEOmDfTbPJ+q/520hyMpzVFs+yMI1GA6p0Cu41MhMwfVcOS/lu8XTNSrJyFql2rzuCRsNRPe+NDyNcQqVf4XDjeufJCRPxj1JsSS3ulFbdALmcOEB1aOEX/gOPl+w/0paw6HSRjo7cKTrkfpEiilNGdOFMzPVl/Nba3htiVp0vbgPAk/V74f9HsQKU1R8o8=
-  file: Redstone-Nightly_$(date +%y)w$(date +%V)b-$TRAVIS_BUILD_NUMBER.zip
+  file: Redstone-Nightly_$(date +%y)w$(date +%V)a-$TRAVIS_BUILD_NUMBER.zip
   on:
     repo: SniperGER/Redstone
     all_branches: true

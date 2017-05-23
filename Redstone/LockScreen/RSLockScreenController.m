@@ -23,7 +23,7 @@ static RSLockScreenController* sharedInstance;
 		[self.lockScreen setDelegate:self];
 		[self.containerView addSubview:self.lockScreen];
 		
-		self.mediaControls = [[RSMediaControls alloc] initWithFrame:CGRectMake(0, 40, screenWidth, 120)];
+		self.mediaControls = [[RSMediaControls alloc] initWithFrame:CGRectMake(0, 40, screenWidth, 132)];
 		[self.mediaControls setHidden:YES];
 		[self.lockScreen addSubview:self.mediaControls];
 	}

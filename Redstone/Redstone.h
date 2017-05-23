@@ -145,4 +145,11 @@
 + (id)sharedInstance;
 - (id)nowPlayingTitle;
 - (id)nowPlayingArtist;
+- (BOOL)togglePlayPause;
+- (BOOL)changeTrack:(int)arg1;
+- (id)nowPlayingApplication;
+@end
+
+@interface SBPagedScrollView : UIScrollView
+
 @end

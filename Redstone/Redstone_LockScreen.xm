@@ -9,14 +9,16 @@
 	[MSHookIvar<UIView *>(self,"_pageControl") removeFromSuperview];
 	%orig;
 	
-	if (![self.subviews containsObject:[[RSLockScreenController sharedInstance] containerView]]) {
-		[self addSubview:[[RSLockScreenController sharedInstance] containerView]];
+	if (![self.superview.subviews containsObject:[[RSLockScreenController sharedInstance] containerView]]) {
+		[self.superview addSubview:[[RSLockScreenController sharedInstance] containerView]];
 	}
 	
 	if ([RSCore sharedInstance]) {
 		[[[RSLockScreenController sharedInstance] lockScreen] setHidden:NO];
-		[self bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
+		[self.superview bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
 	}
+	
+	[self setHidden:YES];
 }
 
 %end
@@ -32,6 +34,8 @@
 		[[RSLockScreenController sharedInstance] setTime:[MSHookIvar<SBUILegibilityLabel *>(self,"_timeLabel") string]];
 		[[RSLockScreenController sharedInstance] setDate:[MSHookIvar<SBUILegibilityLabel *>(self,"_dateSubtitleView") string]];
 		[self bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
+		
+		[[[RSLockScreenController sharedInstance] mediaControls] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
 	}
 	
 	%orig;
@@ -48,20 +52,11 @@
 
 %end
 
+
 %hook SBDashBoardNotificationListViewController
 
 -(void)_setListHasContent:(BOOL)arg1 {
 	%orig(NO);
-}
-
-%end
-
-%hook SBDashBoardMediaArtworkViewController
-
--(void)willTransitionToPresented:(BOOL)arg1 {
-	%orig(NO);
-	
-	[[[RSLockScreenController sharedInstance] mediaControls] setHidden:!arg1];
 }
 
 %end
@@ -72,6 +67,30 @@
 	%orig(arg1);
 	
 	[[[RSLockScreenController sharedInstance] mediaControls] updateNowPlayingInfo:arg1];
+}
+
+%end
+
+%hook SBMediaController
+
+-(void)_nowPlayingAppIsPlayingDidChange {
+	%orig;
+	
+	[[[[RSLockScreenController sharedInstance] containerView] superview] layoutSubviews];
+}
+
+%end
+
+%hook SBPagedScrollView
+
+- (void)layoutSubviews {
+	if (self.contentSize.width == screenWidth * 3) {
+		[self setScrollEnabled:NO];
+		[self setUserInteractionEnabled:NO];
+		[self setContentOffset:CGPointMake(-screenWidth, 0)];
+	} else {
+		%orig;
+	}
 }
 
 %end
