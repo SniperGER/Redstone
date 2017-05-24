@@ -1,16 +1,21 @@
 #import <UIKit/UIKit.h>
 
-@class RSLockScreenController, RSRootScrollView, RSStartScreenController, RSLaunchScreenController, RSPreferences, RSAppListController;
+@class RSLockScreenController, RSRootScrollView, RSStartScreenController, RSLaunchScreenController, RSPreferences, RSAppListController, RSNotificationView;
 
 @interface RSCore : NSObject {
 	UIWindow* _window;
 	
 	RSPreferences* preferences;
 	
+	RSLockScreenController* _lockScreenController;
 	RSRootScrollView* _rootScrollView;
 	RSStartScreenController* _startScreenController;
 	RSLaunchScreenController* _launchScreenController;
 	RSAppListController* _appListController;
+	UIWindow* _notificationWindow;
+	
+	RSNotificationView* currentNotification;
+	NSTimer* hideNotificationTimer;
 }
 
 @property (nonatomic, retain) UIWindow* window;
@@ -19,6 +24,7 @@
 @property (nonatomic, retain) RSStartScreenController* startScreenController;
 @property (nonatomic, retain) RSLaunchScreenController* launchScreenController;
 @property (nonatomic, retain) RSAppListController* appListController;
+@property (nonatomic, retain) UIWindow* notificationWindow;
 
 + (id)sharedInstance;
 + (void)hideAllExcept:(id)objectToShow;
@@ -30,5 +36,7 @@
 
 - (UIImageView*)wallpaperView;
 - (id)currentApplication;
+
+- (void)displayNotificationWithTitle:(NSString*)title subtitle:(NSString*)subtitle message:(NSString*)message;
 
 @end

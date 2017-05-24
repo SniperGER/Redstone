@@ -141,6 +141,7 @@
 		8D5F26111ECA40AD00DB95C6 /* RSModalAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5F26101ECA40AD00DB95C6 /* RSModalAlert.m */; };
 		8D6A04831ED5542600117226 /* RSPasscodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D6A04821ED5542600117226 /* RSPasscodeView.m */; };
 		8D6A04871ED56B0F00117226 /* RSPasscodeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D6A04861ED56B0F00117226 /* RSPasscodeButton.m */; };
+		8D6A048A1ED5AAC700117226 /* RSNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D6A04891ED5AAC700117226 /* RSNotificationView.m */; };
 		8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8249101EC2FEF300779648 /* RSLaunchScreenController.m */; };
 		8D8A10F21ED21BF6004A7811 /* RSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8A10F11ED21BF6004A7811 /* RSTile.m */; };
 		8DBD107E1EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD10791EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m */; };
@@ -310,6 +311,8 @@
 		8D6A04821ED5542600117226 /* RSPasscodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPasscodeView.m; sourceTree = "<group>"; };
 		8D6A04851ED56B0F00117226 /* RSPasscodeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPasscodeButton.h; sourceTree = "<group>"; };
 		8D6A04861ED56B0F00117226 /* RSPasscodeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPasscodeButton.m; sourceTree = "<group>"; };
+		8D6A04881ED5AAC700117226 /* RSNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSNotificationView.h; sourceTree = "<group>"; };
+		8D6A04891ED5AAC700117226 /* RSNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSNotificationView.m; sourceTree = "<group>"; };
 		8D82490F1EC2FEF300779648 /* RSLaunchScreenController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLaunchScreenController.h; sourceTree = "<group>"; };
 		8D8249101EC2FEF300779648 /* RSLaunchScreenController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLaunchScreenController.m; sourceTree = "<group>"; };
 		8D8A10F11ED21BF6004A7811 /* RSTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTile.m; sourceTree = "<group>"; };
@@ -893,6 +896,8 @@
 				8D5F26101ECA40AD00DB95C6 /* RSModalAlert.m */,
 				8D36C4DA1ECE4C5D00327349 /* RSTiltView.h */,
 				8D36C4DB1ECE4C5D00327349 /* RSTiltView.m */,
+				8D6A04881ED5AAC700117226 /* RSNotificationView.h */,
+				8D6A04891ED5AAC700117226 /* RSNotificationView.m */,
 			);
 			name = Core;
 			path = Redstone/Core;
@@ -1184,6 +1189,7 @@
 				8D5F26111ECA40AD00DB95C6 /* RSModalAlert.m in Sources */,
 				8DF085061ED352D700EB2342 /* RSMediaControls.m in Sources */,
 				8DE79E901EC6ECFE004EF2E6 /* RSAppListController.m in Sources */,
+				8D6A048A1ED5AAC700117226 /* RSNotificationView.m in Sources */,
 				8DC171221EC5E50200D45EB1 /* RSPreferences.m in Sources */,
 				8DBD108D1EC23BF900A5A037 /* RSRootScrollView.m in Sources */,
 				8D5F260C1EC9776600DB95C6 /* RSJumpList.m in Sources */,

@@ -9,7 +9,6 @@ SBPagedScrollView* dashboardScrollView;
 
 - (void)layoutSubviews {
 	[MSHookIvar<UIView *>(self,"_pageControl") removeFromSuperview];
-	%orig;
 	
 	if ([RSCore sharedInstance]) {
 		if (![self.superview.subviews containsObject:[[RSLockScreenController sharedInstance] containerView]]) {
@@ -21,6 +20,7 @@ SBPagedScrollView* dashboardScrollView;
 		[self.superview bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
 	}
 	
+	%orig;
 	[self setHidden:YES];
 }
 
@@ -56,14 +56,6 @@ SBPagedScrollView* dashboardScrollView;
 
 %end
 
-
-%hook SBDashBoardNotificationListViewController
-
--(void)_setListHasContent:(BOOL)arg1 {
-	%orig(NO);
-}
-
-%end
 
 %hook MPUMediaControlsTitlesView
 

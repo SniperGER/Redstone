@@ -4,7 +4,6 @@
 #import "Lib/UIView+Easing.h"
 #import "Lib/CAKeyframeAnimation+AHEasing.h"
 #import "Lib/UIFont+WDCustomLoader.h"
-#import "Lib/_UIBackdropView.h"
 
 #import "Core/RSCore.h"
 #import "Core/RSAesthetics.h"
@@ -13,6 +12,7 @@
 #import "Core/RSPreferences.h"
 #import "Core/RSModalAlert.h"
 #import "Core/RSTiltView.h"
+#import "Core/RSNotificationView.h"
 
 #import "Start/RSStartScreenController.h"
 #import "Start/RSStartScrollView.h"
@@ -152,4 +152,19 @@
 @interface SBUserAgent : NSObject
 + (id)sharedUserAgent;
 - (BOOL)deviceIsPasscodeLocked;
+@end
+
+@interface BBBulletin : NSObject
+- (id)title;
+- (id)subtitle;
+- (id)message;
+- (id)content;
+@end
+
+@interface NCNotificationShortLookView : UIView
+-(NSString *)primaryText;
+-(NSString *)primarySubtitleText;
+-(NSString *)secondaryText;
+
+- (BOOL)isNCNotification;
 @end

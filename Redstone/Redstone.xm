@@ -197,3 +197,51 @@ void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 }
 
 %end
+
+%hook NCNotificationShortLookView
+
+- (void)setFrame:(CGRect)frame {
+	if (![self isNCNotification]) {
+		frame = CGRectMake(-8, -8, screenWidth, frame.size.height);
+		%orig(frame);
+	} else {
+		%orig(frame);
+	}
+}
+
+- (void)layoutSubviews {
+	BOOL isNCNotification = [self isNCNotification];
+	for (UIView* subview in self.subviews) {
+		if ([subview isKindOfClass:%c(RSNotificationView)] && isNCNotification) {
+			[subview removeFromSuperview];
+		}
+		[subview setHidden:!isNCNotification];
+	}
+	
+	
+	if (!isNCNotification) {
+		RSNotificationView* notificationView = [[RSNotificationView alloc] notificationWithTitle:[self primaryText] subtitle:[self primarySubtitleText] message:[self secondaryText]];
+		[self addSubview:notificationView];
+	}
+	
+	%orig;
+}
+
+%new
+- (BOOL)isNCNotification {
+	UIView* view = self;
+	BOOL canProceed = NO;
+	
+	while (view.superview) {
+		if ([view.superview isKindOfClass:%c(NCNotificationListCollectionView)]) {
+			canProceed = YES;
+			break;
+		}
+		
+		view = view.superview;
+	}
+	
+	return canProceed;
+}
+
+%end
