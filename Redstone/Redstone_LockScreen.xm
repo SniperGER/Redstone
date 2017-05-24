@@ -39,6 +39,7 @@ SBPagedScrollView* dashboardScrollView;
 		[self bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
 		
 		[[[RSLockScreenController sharedInstance] mediaControls] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+		[[[RSLockScreenController sharedInstance] passcodeView] setHidden:(![[%c(SBUserAgent) sharedUserAgent] deviceIsPasscodeLocked])];
 	}
 	
 	%orig;

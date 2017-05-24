@@ -8,3 +8,6 @@
 "MEDIA_UNKNOWN_TITLE" = "Unbekannter Titel";
 "MEDIA_UNKNOWN_ARTIST" = "Unbekannter Künstler";
 "MEDIA_UNKNOWN_ALBUM" = "Unbekanntes Album";
+
+/* Lock Screen */
+"PASSCODE_ENTER_PIN" = "PIN eingeben";

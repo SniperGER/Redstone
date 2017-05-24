@@ -88,11 +88,12 @@ void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 }
 %end
 
-%hook SBLockScreenViewController
+%hook SBLockScreenManager
 
-- (void)finishUIUnlockFromSource:(int)source {
-	%orig;
-	playZoomDownAppAnimation(NO);
+- (BOOL)_finishUIUnlockFromSource:(int)arg1 withOptions:(id)arg2 {
+	[[RSLockScreenController sharedInstance] resetLockScreen];
+	
+	return %orig;
 }
 
 %end
@@ -187,7 +188,7 @@ void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 %hook SBBacklightController
 
 - (void)_startFadeOutAnimationFromLockSource:(int)arg1 {
-	if ([[RSLockScreenController sharedInstance] isScrolling]) {
+	if ([[RSLockScreenController sharedInstance] isScrolling] || [[RSLockScreenController sharedInstance] isShowingPasscodeScreen]) {
 		[self resetIdleTimer];
 		return;
 	}

@@ -4,6 +4,7 @@
 #import "Lib/UIView+Easing.h"
 #import "Lib/CAKeyframeAnimation+AHEasing.h"
 #import "Lib/UIFont+WDCustomLoader.h"
+#import "Lib/_UIBackdropView.h"
 
 #import "Core/RSCore.h"
 #import "Core/RSAesthetics.h"
@@ -31,6 +32,8 @@
 #import "LockScreen/RSLockScreenController.h"
 #import "LockScreen/RSLockScreen.h"
 #import "LockScreen/RSMediaControls.h"
+#import "LockScreen/RSPasscodeView.h"
+#import "LockScreen/RSPasscodeButton.h"
 
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
@@ -111,6 +114,7 @@
 + (id)sharedInstance;
 - (id)lockScreenViewController;
 - (void)attemptUnlockWithPasscode:(id)arg1;
+- (BOOL)_attemptUnlockWithPasscode:(id)arg1 finishUIUnlock:(BOOL)arg2 ;
 @end
 
 @interface SBUILegibilityLabel : UIView
