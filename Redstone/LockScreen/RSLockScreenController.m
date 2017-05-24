@@ -42,12 +42,19 @@ static RSLockScreenController* sharedInstance;
 	if (scrollView.contentOffset.y >= (scrollView.contentSize.height/2)) {
 		UIView* dashBoardView = [[[objc_getClass("SBLockScreenManager") sharedInstance] lockScreenViewController] view];
 		
-		[[objc_getClass("SBLockScreenManager") sharedInstance] attemptUnlockWithPasscode:nil];
+		if (kCFCoreFoundationVersionNumber > kCFCoreFoundationVersionNumber_iOS_9_x_Max) {
+			[self.lockScreen setHidden:YES];
+		} else if (kCFCoreFoundationVersionNumber > kCFCoreFoundationVersionNumber_iOS_8_x_Max) {
+			[self.containerView setHidden:YES];
+		}
+		
 		[self.lockScreen setContentOffset:CGPointZero];
-		[self.lockScreen setHidden:YES];
+		
+		[self.lockScreen setAlpha:0];
 		[dashBoardView setAlpha:1];
 		self.isScrolling = NO;
 		
+		[[objc_getClass("SBLockScreenManager") sharedInstance] attemptUnlockWithPasscode:nil];
 	} else {
 		self.isScrolling = NO;
 	}

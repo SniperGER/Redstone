@@ -62,10 +62,6 @@
 - (id)window;
 @end
 
-@interface SBHomeScreenWindow : UIWindow
-- (id)subviews;
-@end
-
 @interface SBIconController : NSObject
 + (id)sharedInstance;
 - (id)model;
@@ -117,24 +113,11 @@
 - (void)attemptUnlockWithPasscode:(id)arg1;
 @end
 
-@interface SBDashBoardMainPageViewController : UIViewController
-- (UIViewController*)isolatingViewController;
-@end
-
-@interface SBDashBoardViewController : UIViewController
-- (SBDashBoardMainPageViewController*)mainPageViewController;
-@end
-
-@interface SBDashBoardView : UIView
-@end
-
 @interface SBUILegibilityLabel : UIView
 - (id)string;
 @end
 
 @interface SBWallpaperController : NSObject
-+ (id)sharedInstance;
-- (UIImageView*)homescreenWallpaperView;
 @end
 
 @interface SBBacklightController : NSObject
@@ -150,6 +133,19 @@
 - (id)nowPlayingApplication;
 @end
 
+@interface SBDashBoardView : UIView
+
+@end
+
 @interface SBPagedScrollView : UIScrollView
 
+@end
+
+@interface SBLockScreenView : UIView
+
+@end
+
+@interface SBUserAgent : NSObject
++ (id)sharedUserAgent;
+- (BOOL)deviceIsPasscodeLocked;
 @end

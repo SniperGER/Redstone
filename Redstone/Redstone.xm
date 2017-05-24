@@ -6,13 +6,13 @@ extern "C" UIImage * _UICreateScreenUIImage();
 RSCore* redstone;
 BOOL switcherIsOpen;
 
-void playZoomDownAppAnimation() {
+void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 	[redstone.rootScrollView setHidden:NO];
 	for (RSTile* tile in [redstone.startScreenController pinnedTiles]) {
 		[tile.layer setOpacity:0];
 	}
 	
-	if ([redstone currentApplication] != nil && ![[redstone currentApplication] isKindOfClass:%c(SBDashBoardViewController)]) {
+	if (applicationSnapshot && [redstone currentApplication] != nil && ![[redstone currentApplication] isKindOfClass:%c(SBDashBoardViewController)] && ![[redstone currentApplication] isKindOfClass:%c(SBLockScreenViewController)]) {
 		UIImage *screenImage = _UICreateScreenUIImage();
 		UIImageView *screenImageView = [[UIImageView alloc] initWithImage:screenImage];
 		[redstone.window addSubview:screenImageView];
@@ -88,11 +88,20 @@ void playZoomDownAppAnimation() {
 }
 %end
 
+%hook SBLockScreenViewController
+
+- (void)finishUIUnlockFromSource:(int)source {
+	%orig;
+	playZoomDownAppAnimation(NO);
+}
+
+%end
+
 %hook SBUIAnimationZoomApp
 
 - (void)__startAnimation {
 	if ([self zoomDirection] == 1) {
-		playZoomDownAppAnimation();
+		playZoomDownAppAnimation(YES);
 	}
 	
 	%orig;
@@ -103,7 +112,7 @@ void playZoomDownAppAnimation() {
 %hook SBUIAnimationZoomDownApp
 
 - (void)_startAnimation {
-	playZoomDownAppAnimation();
+	playZoomDownAppAnimation(YES);
 	
 	%orig;
 }
