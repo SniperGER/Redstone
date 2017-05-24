@@ -7,6 +7,8 @@ env:
   - THEOS=~/theos
   - SDKVERSION=10.1
   - SYSROOT=~/theos/sdks/iPhoneOS10.1.sdk
+  - PACKAGE_BASE_VERSION=$(date +%y)w$(date +%V)a
+  - PACKAGE_VERSION=$PACKAGE_BASE_VERSION-$TRAVIS_BUILD_NUMBER
   - secure: sDAFbzLvQhpMcsox7DtertoKdyyZy7PI+pzvI3ZIdFKijuNbWppqLjKOgiLk4MDVaaEMFe3+j7DibrpG8SCBlSV4IjPpXhqYoPrFPtrdyEsiH/IH9/LqKpX0jb1b+5aQdS3xTIdwCxZ5U/+KDcS7x47t2FOHIVVm6OcWRsL3bnQPJos5uuZXuDLxKQR6NOsd24ymB41fJLNdoT/fah/IuJc323Fi9x+AK/j7+Pip+4A6rXbKD2PiOznOvBJPWAev7Z4Noq0OloAE6sYQ0JwjR8p2ppy2OHBFo90shu2A2+ocfulJlgOI/X8vThMmKoxp9lqi4OTOd4PAz3ZUkfUzDXVLE2Ni0g0oHrlqOv5+PYbB8MrYjuKa2+68QiaIkMd5IMmIOazh+j+sqh+hCifUgnm2DPyRoCbGobm5eILVz4p62jpcjiKyhfi3qSFHe/kd6i9XbXxrYXMqIr0H4CqlGkYpoQg6SGYbN7jp9+6Fo6iPnPyWPubtuNEEcQxjivcpyOiHU85IHkPKztvtHx9D7qYj4y1XFXmeW6x1nW/bOEPc+VfWo+Do7smQsTVxaDGrPmH26l9QlJl2A0E91ZtDLo89VuNvISZA+62g358Y8mYOdE4ozsyaG9EJxrp9njgCthuwKzDyt/GkpJeiCaTectjoNqD3c5Jc+JpOfGIpQsI=
 before_install:
 - HOMEBREW_NO_AUTO_UPDATE=1 brew install --force-bottle https://raw.githubusercontent.com/Homebrew/homebrew-core/7a4dabfc1a2acd9f01a1670fde4f0094c4fb6ffa/Formula/dpkg.rb
@@ -18,11 +20,11 @@ script:
 - cd Redstone
 - make package
 before_deploy:
-- zip Redstone-Nightly_$(date +%y)w$(date +%V)a-$TRAVIS_BUILD_NUMBER ./packages/*.deb
+- zip Redstone-Nightly_$PACKAGE_VERSION ./packages/*.deb
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
-- export GIT_TAG=Redstone-Nightly_$(date +%y)w$(date +%V)b-$TRAVIS_BUILD_NUMBER
-- git tag $GIT_TAG -a -m "Redstone Nightly $(date +%y)w$(date +%V)a (Build $TRAVIS_BUILD_NUMBER)"
+- export GIT_TAG=Redstone-Nightly_$PACKAGE_VERSION
+- git tag $GIT_TAG -a -m "Redstone Nightly $PACKAGE_BASE_VERSION (Build $TRAVIS_BUILD_NUMBER)"
 - git push -q https://$GH_TOKEN@github.com/SniperGER/Redstone --tags
 deploy:
   skip_cleanup: true
@@ -30,7 +32,7 @@ deploy:
   prerelease: true
   api_key:
     secure: bKm818oy5YBSktmXn+8okgwpANbS/q1+HdCe6f+PYilqqx6AVlPhFx+nOFVlk8dBbQ8Q0iYfliTPahvSyp4XksPHeyaUVuYRdGSd8nC7jN4VYRoOs1KuJiSv/x0B8rMyPyU0eYsJmjmImyrVTCbH9E6h+G7FpYd1sI9ShnoKbqtxYkAWg01lj7Je3ekO5z1RTfTTFpiV9Ap2SmKiEFxXWwKmVfXEYOE9ikq/WpuiSPIkdaEZ0j6f1F2BrN1H2MNd66h88/KocSeUAXrukHCdzeISKARX9owQMFL4Pg3AAitrEiU1xbpbacOs1GvaMUOazuCmb6W/ueUNVQTgvpkdxnCHLWxppEWkxUOJ07xm12FYTbXwIvFocyq3nfBngoWL4u1hISQTRbwWNfzAUBthygEYNw3bOoBUuIkSjwmSkDS+GRxl63DE3dxQWbU3Oiwl3rm/Ezo+YGQiGUABKV3n7M8j2RYls7+UkTCNAfqEXQXoCEOmDfTbPJ+q/520hyMpzVFs+yMI1GA6p0Cu41MhMwfVcOS/lu8XTNSrJyFql2rzuCRsNRPe+NDyNcQqVf4XDjeufJCRPxj1JsSS3ulFbdALmcOEB1aOEX/gOPl+w/0paw6HSRjo7cKTrkfpEiilNGdOFMzPVl/Nba3htiVp0vbgPAk/V74f9HsQKU1R8o8=
-  file: Redstone-Nightly_$(date +%y)w$(date +%V)a-$TRAVIS_BUILD_NUMBER.zip
+  file: Redstone-Nightly_$PACKAGE_VERSION.zip
   on:
     repo: SniperGER/Redstone
     all_branches: true
