@@ -3,8 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>AccentColor</key>
-	<string>#3B3B3B</string>
+	<string>#23232D</string>
 	<key>FullBleedArtwork</key>
+	<true/>
+	<key>TileLabelHidden</key>
 	<true/>
 </dict>
 </plist>
