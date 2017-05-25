@@ -46,6 +46,17 @@ void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 	}
 }
 
+id traverseResponderChainForUIViewController(id target) {
+	id nextResponder = [target nextResponder];
+	if ([nextResponder isKindOfClass:[UIViewController class]]) {
+		return nextResponder;
+	} else if ([nextResponder isKindOfClass:[UIView class]]) {
+		return traverseResponderChainForUIViewController(nextResponder);
+	} else {
+		return nil;
+	}
+}
+
 %hook SpringBoard
 
 - (void)applicationDidFinishLaunching:(id)arg1 {
@@ -198,6 +209,20 @@ void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 
 %end
 
+%hook BBServer
+
+-(void)_addBulletin:(BBBulletin*)arg1 {
+	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+		// I guess this has to run on the main thread so Lock Screen gets updated
+		[[RSLockScreenController sharedInstance] displayLockScreenNotificationWithTitle:[arg1 title] subtitle:[arg1 subtitle] message:[arg1 message] bundleIdentifier:[arg1 section]];
+	}];
+	
+	%log;
+	%orig;
+}
+
+%end
+
 %hook NCNotificationShortLookView
 
 - (void)setFrame:(CGRect)frame {
@@ -218,9 +243,11 @@ void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 		[subview setHidden:!isNCNotification];
 	}
 	
-	
 	if (!isNCNotification) {
-		RSNotificationView* notificationView = [[RSNotificationView alloc] notificationWithTitle:[self primaryText] subtitle:[self primarySubtitleText] message:[self secondaryText]];
+		NCNotificationShortLookViewController* viewController = traverseResponderChainForUIViewController(self);
+		BBBulletin* bulletin = [[viewController notificationRequest] bulletin];
+		
+		RSNotificationView* notificationView = [[RSNotificationView alloc] staticNotificationWithTitle:[bulletin title] subtitle:[bulletin subtitle] message:[bulletin message] bundleIdentifier:[bulletin section]];
 		[self addSubview:notificationView];
 	}
 	

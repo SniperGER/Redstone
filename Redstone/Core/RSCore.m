@@ -176,45 +176,4 @@ static id currentApplication;
 	return currentApplication;
 }
 
-- (void)displayNotificationWithTitle:(NSString*)title subtitle:(NSString*)subtitle message:(NSString*)message {
-	/*[hideNotificationTimer invalidate];
-	hideNotificationTimer = nil;
-	
-	if (currentNotification != nil) {
-		[currentNotification hide];
-		[hideNotificationTimer invalidate];
-		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-			[currentNotification removeFromSuperview];
-			
-			RSNotificationView* notificationView = [[RSNotificationView alloc] notificationWithTitle:title subtitle:subtitle message:message];
-			currentNotification = notificationView;
-			
-			[self.notificationWindow addSubview:notificationView];
-			[notificationView show];
-			
-			hideNotificationTimer = [NSTimer scheduledTimerWithTimeInterval:5 repeats:NO block:^(NSTimer *timer) {
-				if (currentNotification) {
-					[currentNotification hide];
-					currentNotification = nil;
-				}
-			}];
-		});
-	} else {
-		RSNotificationView* notificationView = [[RSNotificationView alloc] notificationWithTitle:title subtitle:subtitle message:message];
-		currentNotification = notificationView;
-		
-		[self.notificationWindow addSubview:notificationView];
-		[notificationView show];
-		
-		hideNotificationTimer = [NSTimer scheduledTimerWithTimeInterval:5 repeats:NO block:^(NSTimer *timer) {
-			if (currentNotification) {
-				[currentNotification hide];
-				currentNotification = nil;
-			}
-		}];
-	}*/
-	NSLog(@"[Redstone] Notifications are not supported yet");
-}
-
 @end

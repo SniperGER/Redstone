@@ -77,7 +77,7 @@ NSBundle* redstoneBundle;
 	UIImage* tileImage = [UIImage imageWithContentsOfFile:imagePath];
 	
 	if (!tileImage) {
-		return [[[[objc_getClass("SBIconController") sharedInstance] model] applicationIconForBundleIdentifier:bundleIdentifier] getUnmaskedIconImage:2];
+		return [self getImageForTileWithBundleIdentifier:bundleIdentifier];
 	}
 	
 	return tileImage;

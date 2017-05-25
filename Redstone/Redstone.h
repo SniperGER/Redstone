@@ -159,6 +159,7 @@
 - (id)subtitle;
 - (id)message;
 - (id)content;
+- (id)section;
 @end
 
 @interface NCNotificationShortLookView : UIView
@@ -167,4 +168,12 @@
 -(NSString *)secondaryText;
 
 - (BOOL)isNCNotification;
+@end
+
+@interface NCNotificationShortLookViewController : UIViewController
+-(id)notificationRequest;
+@end
+
+@interface NCNotificationRequest : NSObject
+-(BBBulletin *)bulletin;
 @end

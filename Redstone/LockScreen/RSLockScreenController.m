@@ -107,4 +107,11 @@ static RSLockScreenController* sharedInstance;
 	[self.passcodeView resetPasscodeTextField];
 }
 
+- (void)displayLockScreenNotificationWithTitle:(NSString*)title subtitle:(NSString*)subtitle message:(NSString*)message bundleIdentifier:(NSString *)bundleIdentifier {
+	RSNotificationView* notificationView = [[RSNotificationView alloc] notificationWithTitle:title subtitle:subtitle message:message bundleIdentifier:bundleIdentifier];
+	
+	[self.containerView addSubview:notificationView];
+	[notificationView show];
+}
+
 @end

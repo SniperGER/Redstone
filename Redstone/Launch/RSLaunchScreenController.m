@@ -22,7 +22,15 @@ static RSLaunchScreenController* sharedInstance;
 }
 
 - (void)setLaunchScreenForLeafIdentifier:(NSString *)leafIdentifier {
-	[self.launchScreen.launchImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:leafIdentifier]];
+	NSDictionary* tileInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/%@/tile.plist", RESOURCE_PATH, leafIdentifier]];
+	if ([tileInfo objectForKey:@"FullBleedArtwork"] && [[tileInfo objectForKey:@"FullBleedArtwork"] boolValue]) {
+		[self.launchScreen.launchImageView setFrame:CGRectMake(0, 0, 269, 132)];
+	} else {
+		[self.launchScreen.launchImageView setFrame:CGRectMake(0, 0, 76, 76)];
+	}
+	[self.launchScreen.launchImageView setCenter:CGPointMake(screenWidth/2, screenHeight/2)];
+	
+	[self.launchScreen.launchImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:leafIdentifier size:3]];
 	[self.launchScreen setBackgroundColor:[RSAesthetics accentColorForLaunchScreen:leafIdentifier]];
 }
 

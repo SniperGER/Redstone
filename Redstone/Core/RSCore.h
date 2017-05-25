@@ -37,6 +37,4 @@
 - (UIImageView*)wallpaperView;
 - (id)currentApplication;
 
-- (void)displayNotificationWithTitle:(NSString*)title subtitle:(NSString*)subtitle message:(NSString*)message;
-
 @end

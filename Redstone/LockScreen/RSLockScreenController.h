@@ -21,4 +21,6 @@
 
 - (void)resetLockScreen;
 
+- (void)displayLockScreenNotificationWithTitle:(NSString*)title subtitle:(NSString*)subtitle message:(NSString*)message bundleIdentifier:(NSString*)bundleIdentifier;
+
 @end
