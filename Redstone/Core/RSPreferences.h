@@ -1,11 +1,3 @@
-//
-//  RSPreferences.h
-//  Redstone
-//
-//  Created by Janik Schmidt on 12.05.17.
-//
-//
-
 #import <Foundation/Foundation.h>
 
 @interface RSPreferences : NSObject {

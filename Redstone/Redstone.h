@@ -29,11 +29,13 @@
 #import "AppList/RSSearchBar.h"
 #import "AppList/RSJumpList.h"
 
-#import "LockScreen/RSLockScreenController.h"
+/*#import "LockScreen/RSLockScreenController.h"
 #import "LockScreen/RSLockScreen.h"
 #import "LockScreen/RSMediaControls.h"
 #import "LockScreen/RSPasscodeView.h"
-#import "LockScreen/RSPasscodeButton.h"
+#import "LockScreen/RSPasscodeButton.h"*/
+#import "LockScreen/RSLockScreenController.h"
+#import "LockScreen/RSLockScreenView.h"
 
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
@@ -54,6 +56,8 @@
 #define HOME_WALLPAPER_PATH @"/var/mobile/Library/SpringBoard/HomeBackground.cpbitmap"
 
 #endif
+
+static RSCore* redstone;
 
 @interface SpringBoard : NSObject
 - (void)cancelMenuButtonRequests;
@@ -176,4 +180,18 @@
 
 @interface NCNotificationRequest : NSObject
 -(BBBulletin *)bulletin;
+@end
+
+@interface SBUIPasscodeLockViewWithKeypad : UIView
++ (id)sharedInstance;
+- (id)initWithLightStyle:(BOOL)arg1;
+- (void)passcodeLockNumberPad:(id)arg1 keyDown:(id)arg2;
+- (void)passcodeLockNumberPad:(id)arg1 keyUp:(id)arg2;
+@end
+
+@interface SBUIPasscodeLockNumberPad : UIView
++(id)_buttonForCharacter:(unsigned int)arg1 withLightStyle:(BOOL)arg2;
+@end
+
+@interface SBPasscodeNumberPadButton : UIView
 @end

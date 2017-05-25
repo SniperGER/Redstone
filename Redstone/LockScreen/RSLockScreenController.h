@@ -1,26 +1,21 @@
 #import <UIKit/UIKit.h>
 
-@class RSLockScreen, RSMediaControls, RSPasscodeView;
+@class RSLockScreenView, RSPasscodeEntryView;
 
-@interface RSLockScreenController : NSObject <UIScrollViewDelegate>
+@interface RSLockScreenController : NSObject <UIScrollViewDelegate> {
+	UIImageView* wallpaperView;
+	UIView* wallpaperOverlayView;
+	UIScrollView* lockScreenScrollView;
+}
 
 @property (nonatomic, retain) UIView* containerView;
-@property (nonatomic, retain) UIImageView* wallpaperView;
-@property (nonatomic, retain) UIView* overlayView;
-@property (nonatomic, retain) RSLockScreen* lockScreen;
-@property (nonatomic, retain) RSMediaControls* mediaControls;
-@property (nonatomic, retain) RSPasscodeView* passcodeView;
-
-@property (nonatomic, assign) BOOL isScrolling;
-@property (nonatomic, assign) BOOL isShowingPasscodeScreen;
+@property (nonatomic, retain) RSLockScreenView* lockScreenView;
+@property (nonatomic, retain) RSPasscodeEntryView* passcodeEntryView;
 
 + (id)sharedInstance;
 
-- (void)setTime:(NSString*)time;
-- (void)setDate:(NSString*)date;
-
+- (void)setLockScreenTime:(NSString*)time;
+- (void)setLockScreenDate:(NSString*)date;
 - (void)resetLockScreen;
-
-- (void)displayLockScreenNotificationWithTitle:(NSString*)title subtitle:(NSString*)subtitle message:(NSString*)message bundleIdentifier:(NSString*)bundleIdentifier;
 
 @end

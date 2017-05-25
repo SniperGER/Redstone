@@ -4,10 +4,6 @@
 
 @interface RSTile : RSTiltView <UIGestureRecognizerDelegate> {
 	CGPoint centerOffset;
-	CGPoint _originalCenter;
-	
-	int _size;
-	SBLeafIcon* _icon;
 	
 	UILabel* tileLabel;
 	UIImageView* tileImageView;
@@ -17,8 +13,6 @@
 	
 	UIView* unpinButton;
 	UIView* scaleButton;
-	
-	BOOL _isSelectedTile;
 	
 	UITapGestureRecognizer* tapGestureRecognizer;
 	UILongPressGestureRecognizer* longPressGestureRecognizer;

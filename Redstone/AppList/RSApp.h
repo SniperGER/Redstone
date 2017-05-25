@@ -1,8 +1,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RSApp : RSTiltView <UIGestureRecognizerDelegate> {
-	SBLeafIcon* _icon;
-	
 	UILabel* appLabel;
 	UIImageView* appImageView;
 	

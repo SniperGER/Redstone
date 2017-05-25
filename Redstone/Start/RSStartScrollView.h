@@ -1,7 +1,5 @@
 #import <UIKit/UIKit.h>
 
-@interface RSStartScrollView : UIScrollView {
-	
-}
+@interface RSStartScrollView : UIScrollView 
 
 @end

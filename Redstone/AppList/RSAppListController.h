@@ -3,10 +3,6 @@
 @class RSAppList, RSApp, RSAppListSection, RSPinMenu, RSSearchBar, RSJumpList, SBApplication;
 
 @interface RSAppListController : NSObject <UIScrollViewDelegate> {
-	RSSearchBar* _searchBar;
-	BOOL _isSearching;
-	
-	RSAppList* _appList;
 	NSMutableArray* sections;
 	NSMutableDictionary* appsBySection;
 	
@@ -17,14 +13,12 @@
 	UILabel* noResultsLabel;
 	
 	RSPinMenu* pinMenu;
-	BOOL _showsPinMenu;
-	
-	RSJumpList* _jumpList;
 }
 
 @property (nonatomic, retain) RSSearchBar* searchBar;
 @property (nonatomic, retain) RSAppList* appList;
 @property (nonatomic, assign) BOOL showsPinMenu;
+@property (nonatomic, assign) BOOL isSearching;
 @property (nonatomic, retain) RSJumpList* jumpList;
 
 + (id)sharedInstance;
@@ -41,8 +35,6 @@
 - (void)showPinMenuForApp:(RSApp*)app;
 - (void)hidePinMenu;
 
-- (BOOL)isSearching;
-- (void)setIsSearching:(BOOL)isSearching;
 - (void)showAppsFittingQuery:(NSString*)query;
 - (void)showNoResultsLabel:(BOOL)visible forQuery:(NSString*)query;
 

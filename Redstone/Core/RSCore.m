@@ -45,7 +45,7 @@ static id currentApplication;
 	
 	if (self) {
 		sharedInstance = self;
-		_window = window;
+		self.window = window;
 		
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeui.ttf", RESOURCE_PATH]]];
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeuil.ttf", RESOURCE_PATH]]];
@@ -55,26 +55,30 @@ static id currentApplication;
 		
 		preferences = [[RSPreferences alloc] init];
 		
-		wallpaperView = [[UIImageView alloc] initWithImage:[RSAesthetics homeScreenWallpaper]];
-		[wallpaperView setFrame:[[UIScreen mainScreen] bounds]];
-		[_window addSubview:wallpaperView];
-		
-		self.rootScrollView = [[RSRootScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
-		[_window addSubview:self.rootScrollView];
-		
-		self.startScreenController = [RSStartScreenController new];
-		[self.rootScrollView addSubview:self.startScreenController.startScrollView];
-		if ([[self.startScreenController pinnedTiles] count] <= 0) {
-			[self.rootScrollView setContentOffset:CGPointMake(screenWidth, 0)];
-			[self.rootScrollView setScrollEnabled:NO];
+		if ([[[RSPreferences preferences] objectForKey:@"startScreenEnabled"] boolValue]) {
+			[[self class] hideAllExcept:nil];
+			
+			wallpaperView = [[UIImageView alloc] initWithImage:[RSAesthetics homeScreenWallpaper]];
+			[wallpaperView setFrame:[[UIScreen mainScreen] bounds]];
+			[self.window addSubview:wallpaperView];
+			
+			self.rootScrollView = [[RSRootScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+			[self.window addSubview:self.rootScrollView];
+			
+			self.startScreenController = [RSStartScreenController new];
+			[self.rootScrollView addSubview:self.startScreenController.startScrollView];
+			if ([[self.startScreenController pinnedTiles] count] <= 0) {
+				[self.rootScrollView setContentOffset:CGPointMake(screenWidth, 0)];
+				[self.rootScrollView setScrollEnabled:NO];
+			}
+			
+			self.launchScreenController = [RSLaunchScreenController new];
+			[self.window addSubview:self.launchScreenController.launchScreen];
+			
+			self.appListController = [RSAppListController new];
+			[self.rootScrollView addSubview:self.appListController.appList];
+			[self.rootScrollView addSubview:self.appListController.jumpList];
 		}
-		
-		self.launchScreenController = [RSLaunchScreenController new];
-		[self.window addSubview:self.launchScreenController.launchScreen];
-		
-		self.appListController = [RSAppListController new];
-		[self.rootScrollView addSubview:self.appListController.appList];
-		[self.rootScrollView addSubview:self.appListController.jumpList];
 		
 		if ([[[RSPreferences preferences] objectForKey:@"lockScreenEnabled"] boolValue]) {
 			self.lockScreenController = [RSLockScreenController new];
@@ -85,6 +89,9 @@ static id currentApplication;
 }
 
 - (void)frontDisplayDidChange:(id)arg1 {
+	if (![[[RSPreferences preferences] objectForKey:@"startScreenEnabled"] boolValue]) {
+		return;
+	}
 	currentApplication = arg1;
 	
 	if (arg1) {
@@ -108,6 +115,10 @@ static id currentApplication;
 }
 
 - (BOOL)handleMenuButtonEvent {
+	if (![[[RSPreferences preferences] objectForKey:@"startScreenEnabled"] boolValue]) {
+		return NO;
+	}
+	
 	if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")]) {
 		if ([[[RSPreferences preferences] objectForKey:@"lockScreenEnabled"] boolValue]) {
 			return NO;

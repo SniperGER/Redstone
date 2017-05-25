@@ -1,8 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@interface RSLaunchScreen : UIView {
-	UIImageView* _launchImageView;
-}
+@interface RSLaunchScreen : UIView
 
 @property (nonatomic, retain) UIImageView* launchImageView;
 

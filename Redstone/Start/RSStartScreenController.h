@@ -3,13 +3,8 @@
 @class RSStartScrollView, RSTile;
 
 @interface RSStartScreenController : NSObject {
-	RSStartScrollView* _startScrollView;
-	
 	NSMutableArray* pinnedTiles;
 	NSMutableArray* pinnedLeafIdentifiers;
-	
-	BOOL _isEditing;
-	RSTile* _selectedTile;
 }
 
 @property (nonatomic, retain) RSStartScrollView* startScrollView;

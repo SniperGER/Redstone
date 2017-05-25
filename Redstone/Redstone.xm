@@ -5,6 +5,7 @@ extern "C" UIImage * _UICreateScreenUIImage();
 
 RSCore* redstone;
 BOOL switcherIsOpen;
+id lockKeypad;
 
 void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 	[redstone.rootScrollView setHidden:NO];
@@ -102,7 +103,7 @@ id traverseResponderChainForUIViewController(id target) {
 %hook SBLockScreenManager
 
 - (BOOL)_finishUIUnlockFromSource:(int)arg1 withOptions:(id)arg2 {
-	[[RSLockScreenController sharedInstance] resetLockScreen];
+	//[[RSLockScreenController sharedInstance] resetLockScreen];
 	
 	return %orig;
 }
@@ -191,7 +192,7 @@ id traverseResponderChainForUIViewController(id target) {
 	%orig(arg1);
 	
 	[[[RSCore sharedInstance] wallpaperView] setImage:[RSAesthetics homeScreenWallpaper]];
-	[[[RSLockScreenController sharedInstance] wallpaperView] setImage:[RSAesthetics lockScreenWallpaper]];
+	//[[[RSLockScreenController sharedInstance] wallpaperView] setImage:[RSAesthetics lockScreenWallpaper]];
 }
 
 %end
@@ -199,10 +200,10 @@ id traverseResponderChainForUIViewController(id target) {
 %hook SBBacklightController
 
 - (void)_startFadeOutAnimationFromLockSource:(int)arg1 {
-	if ([[RSLockScreenController sharedInstance] isScrolling] || [[RSLockScreenController sharedInstance] isShowingPasscodeScreen]) {
+	/*if ([[RSLockScreenController sharedInstance] isScrolling] || [[RSLockScreenController sharedInstance] isShowingPasscodeScreen]) {
 		[self resetIdleTimer];
 		return;
-	}
+	}*/
 	
 	%orig(arg1);
 }
@@ -214,7 +215,7 @@ id traverseResponderChainForUIViewController(id target) {
 -(void)_addBulletin:(BBBulletin*)arg1 {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
 		// I guess this has to run on the main thread so Lock Screen gets updated
-		[[RSLockScreenController sharedInstance] displayLockScreenNotificationWithTitle:[arg1 title] subtitle:[arg1 subtitle] message:[arg1 message] bundleIdentifier:[arg1 section]];
+		//[[RSLockScreenController sharedInstance] displayLockScreenNotificationWithTitle:[arg1 title] subtitle:[arg1 subtitle] message:[arg1 message] bundleIdentifier:[arg1 section]];
 	}];
 	
 	%log;
@@ -272,3 +273,29 @@ id traverseResponderChainForUIViewController(id target) {
 }
 
 %end
+
+/*%hook SBUIPasscodeLockViewWithKeypad
+
+- (void)layoutSubviews {
+	if (lockKeypad != self) {
+		lockKeypad = self;
+	}
+	%log;
+	%orig;
+}
+
+-(void)passcodeLockNumberPad:(id)arg1 keyDown:(id)arg2 {
+	%log;
+	%orig;
+}
+-(void)passcodeLockNumberPad:(id)arg1 keyUp:(id)arg2 {
+	%log;
+	%orig;
+}
+
+%new
++ (id)sharedInstance {
+	return lockKeypad;
+}
+
+%end*/

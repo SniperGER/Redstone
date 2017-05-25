@@ -1,4 +1,4 @@
-#import "Redstone.h"
+/*#import "Redstone.h"
 #import "substrate.h"
 
 %group ios10
@@ -204,6 +204,99 @@ BOOL isUnlocking;
 	if ([[settings objectForKey:@"lockScreenEnabled"] boolValue]) {
 		if (kCFCoreFoundationVersionNumber > kCFCoreFoundationVersionNumber_iOS_9_x_Max) {
 			%init(ios10);
+		} else if (kCFCoreFoundationVersionNumber > kCFCoreFoundationVersionNumber_iOS_8_x_Max) {
+			%init(ios9);
+		}
+	}
+}
+*/
+#import "Redstone.h"
+#import "substrate.h"
+
+%group ios10
+
+SBPagedScrollView* dashboardScrollView;
+
+%hook SBDashBoardScrollGestureController
+
+- (id)initWithDashBoardView:(id)arg1 systemGestureManager:(id)arg2 {
+	id r = %orig;
+	
+	dashboardScrollView = MSHookIvar<SBPagedScrollView*>(r, "_scrollView");
+	
+	return r;
+}
+
+%end // %hook SBDashBoardScrollGestureController
+
+%hook SBPagedScrollView
+
+- (void)layoutSubviews {
+	if (self == dashboardScrollView) {
+		[self setScrollEnabled:NO];
+		[self setUserInteractionEnabled:NO];
+		[self setContentOffset:CGPointMake(-screenWidth, 0)];
+	} else {
+		%orig;
+	}
+}
+
+%end // %hook SBDashBoardScrollGestureController
+
+%hook SBDashBoardView
+
+- (void)layoutSubviews {
+	[MSHookIvar<UIView *>(self,"_pageControl") removeFromSuperview];
+	[self setHidden:YES];
+	
+	if (![self.superview.subviews containsObject:[[RSLockScreenController sharedInstance] containerView]]) {
+		[self.superview addSubview:[[RSLockScreenController sharedInstance] containerView]];
+	}
+	
+	[self.superview bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
+}
+
+%end // %hook SBDashBoardView
+
+%hook SBFLockScreenDateView
+
+- (void)layoutSubviews {
+	[MSHookIvar<SBUILegibilityLabel *>(self,"_timeLabel") removeFromSuperview];
+	[MSHookIvar<SBUILegibilityLabel *>(self,"_dateSubtitleView") removeFromSuperview];
+	[MSHookIvar<SBUILegibilityLabel *>(self,"_customSubtitleView") removeFromSuperview];
+	
+	[[RSLockScreenController sharedInstance] setLockScreenTime:[MSHookIvar<SBUILegibilityLabel *>(self,"_timeLabel") string]];
+	[[RSLockScreenController sharedInstance] setLockScreenDate:[MSHookIvar<SBUILegibilityLabel *>(self,"_dateSubtitleView") string]];
+	
+	%orig;
+}
+
+%end // %hook SBFLockScreenDateView
+
+%hook SBLockScreenManager
+
+- (BOOL)_finishUIUnlockFromSource:(int)arg1 withOptions:(id)arg2 {
+	[[RSLockScreenController sharedInstance] resetLockScreen];
+	
+	return %orig;
+}
+
+%end // %hook SBLockScreenManager
+
+%end // %group ios10
+
+%group ios9
+
+%end // %group ios9
+
+%ctor {
+	NSDictionary* settings = [NSDictionary dictionaryWithContentsOfFile:PREFERENCES_PATH];
+	
+	if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"lockScreenEnabled"] boolValue]) {
+		NSLog(@"[Redstone] Initializing Lock Screen");
+		
+		if (kCFCoreFoundationVersionNumber > kCFCoreFoundationVersionNumber_iOS_9_x_Max) {
+			%init(ios10)
 		} else if (kCFCoreFoundationVersionNumber > kCFCoreFoundationVersionNumber_iOS_8_x_Max) {
 			%init(ios9);
 		}

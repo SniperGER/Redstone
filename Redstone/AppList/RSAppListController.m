@@ -508,14 +508,6 @@ static RSAppListController* sharedInstance;
 	[pinMenu removeFromSuperview];
 }
 
-- (BOOL)isSearching {
-	if (![self.searchBar.text isEqualToString:@""]) {
-		return YES;
-	}
-	
-	return _isSearching;
-}
-
 - (void)setIsSearching:(BOOL)isSearching {
 	_isSearching = isSearching;
 	
@@ -523,7 +515,6 @@ static RSAppListController* sharedInstance;
 		[self.searchBar resignFirstResponder];
 		[self.searchBar setText:@""];
 		[self showAppsFittingQuery:nil];
-		//[self showNoResultsLabel:NO forQuery:nil];
 	}
 }
 

@@ -1,18 +1,9 @@
 #import <UIKit/UIKit.h>
 
-@class RSLockScreenController, RSRootScrollView, RSStartScreenController, RSLaunchScreenController, RSPreferences, RSAppListController, RSNotificationView;
+@class RSLockScreenController, RSRootScrollView, RSStartScreenController, RSLaunchScreenController, RSPreferences, RSAppListController, RSNotificationView, SBUIPasscodeLockViewWithKeypad;
 
 @interface RSCore : NSObject {
-	UIWindow* _window;
-	
 	RSPreferences* preferences;
-	
-	RSLockScreenController* _lockScreenController;
-	RSRootScrollView* _rootScrollView;
-	RSStartScreenController* _startScreenController;
-	RSLaunchScreenController* _launchScreenController;
-	RSAppListController* _appListController;
-	UIWindow* _notificationWindow;
 	
 	RSNotificationView* currentNotification;
 	NSTimer* hideNotificationTimer;
@@ -25,6 +16,8 @@
 @property (nonatomic, retain) RSLaunchScreenController* launchScreenController;
 @property (nonatomic, retain) RSAppListController* appListController;
 @property (nonatomic, retain) UIWindow* notificationWindow;
+
+@property (nonatomic, retain) SBUIPasscodeLockViewWithKeypad* lockKeypad;
 
 + (id)sharedInstance;
 + (void)hideAllExcept:(id)objectToShow;

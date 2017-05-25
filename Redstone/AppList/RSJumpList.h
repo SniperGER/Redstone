@@ -2,7 +2,6 @@
 
 @interface RSJumpList : UIView {
 	UIScrollView* alphabetScrollView;
-	BOOL _isOpen;
 }
 
 @property (nonatomic, assign) BOOL isOpen;

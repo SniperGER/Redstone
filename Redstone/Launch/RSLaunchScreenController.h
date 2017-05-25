@@ -2,9 +2,7 @@
 
 @class RSLaunchScreen;
 
-@interface RSLaunchScreenController : NSObject {
-	RSLaunchScreen* _launchScreen;
-}
+@interface RSLaunchScreenController : NSObject
 
 @property (nonatomic, strong) RSLaunchScreen* launchScreen;
 
