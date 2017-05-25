@@ -7,7 +7,7 @@ env:
   - THEOS=~/theos
   - SDKVERSION=10.1
   - SYSROOT=~/theos/sdks/iPhoneOS10.1.sdk
-  - PACKAGE_BASE_VERSION=$(date +%y)w$(date +%V)a
+  - PACKAGE_BASE_VERSION="$(date +%y)w$(date +%V)a"
   - PACKAGE_VERSION=$PACKAGE_BASE_VERSION-$TRAVIS_BUILD_NUMBER
   - secure: sDAFbzLvQhpMcsox7DtertoKdyyZy7PI+pzvI3ZIdFKijuNbWppqLjKOgiLk4MDVaaEMFe3+j7DibrpG8SCBlSV4IjPpXhqYoPrFPtrdyEsiH/IH9/LqKpX0jb1b+5aQdS3xTIdwCxZ5U/+KDcS7x47t2FOHIVVm6OcWRsL3bnQPJos5uuZXuDLxKQR6NOsd24ymB41fJLNdoT/fah/IuJc323Fi9x+AK/j7+Pip+4A6rXbKD2PiOznOvBJPWAev7Z4Noq0OloAE6sYQ0JwjR8p2ppy2OHBFo90shu2A2+ocfulJlgOI/X8vThMmKoxp9lqi4OTOd4PAz3ZUkfUzDXVLE2Ni0g0oHrlqOv5+PYbB8MrYjuKa2+68QiaIkMd5IMmIOazh+j+sqh+hCifUgnm2DPyRoCbGobm5eILVz4p62jpcjiKyhfi3qSFHe/kd6i9XbXxrYXMqIr0H4CqlGkYpoQg6SGYbN7jp9+6Fo6iPnPyWPubtuNEEcQxjivcpyOiHU85IHkPKztvtHx9D7qYj4y1XFXmeW6x1nW/bOEPc+VfWo+Do7smQsTVxaDGrPmH26l9QlJl2A0E91ZtDLo89VuNvISZA+62g358Y8mYOdE4ozsyaG9EJxrp9njgCthuwKzDyt/GkpJeiCaTectjoNqD3c5Jc+JpOfGIpQsI=
 before_install:
