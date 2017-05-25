@@ -36,6 +36,10 @@
 #import "LockScreen/RSPasscodeButton.h"*/
 #import "LockScreen/RSLockScreenController.h"
 #import "LockScreen/RSLockScreenView.h"
+#import "LockScreen/RSLockScreenMediaControlsView.h"
+#import "LockScreen/RSLockScreenPasscodeEntryController.h"
+#import "LockScreen/RSLockScreenPasscodeEntryView.h"
+#import "LockScreen/RSLockScreenPasscodeEntryButton.h"
 
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
@@ -183,10 +187,11 @@ static RSCore* redstone;
 @end
 
 @interface SBUIPasscodeLockViewWithKeypad : UIView
-+ (id)sharedInstance;
 - (id)initWithLightStyle:(BOOL)arg1;
+- (id)passcode;
 - (void)passcodeLockNumberPad:(id)arg1 keyDown:(id)arg2;
 - (void)passcodeLockNumberPad:(id)arg1 keyUp:(id)arg2;
+- (void)passcodeLockNumberPadBackspaceButtonHit:(id)arg1;
 @end
 
 @interface SBUIPasscodeLockNumberPad : UIView

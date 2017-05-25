@@ -36,6 +36,12 @@ static RSLockScreenController* sharedInstance;
 		
 		self.lockScreenView = [[RSLockScreenView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[lockScreenScrollView addSubview:self.lockScreenView];
+		
+		self.mediaControlsView = [[RSLockScreenMediaControlsView alloc] initWithFrame:CGRectMake(24, 40, screenWidth-48, 132)];
+		[self.lockScreenView addSubview:self.mediaControlsView];
+		
+		self.passcodeEntryController = [[RSLockScreenPasscodeEntryController alloc] init];
+		[lockScreenScrollView addSubview:self.passcodeEntryController.passcodeEntryView];
 	}
 	
 	return self;
@@ -45,6 +51,7 @@ static RSLockScreenController* sharedInstance;
 	[self.lockScreenView setTime:time];
 	
 	[wallpaperOverlayView setHidden:![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsPasscodeLocked]];
+	[self.passcodeEntryController.passcodeEntryView setHidden:![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsPasscodeLocked]];
 }
 
 - (void)setLockScreenDate:(NSString*)date {
@@ -55,6 +62,7 @@ static RSLockScreenController* sharedInstance;
 	[lockScreenScrollView setContentOffset:CGPointZero];
 	[self.lockScreenView setAlpha:1];
 	[wallpaperOverlayView setAlpha:0];
+	[self.passcodeEntryController resetTextField];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

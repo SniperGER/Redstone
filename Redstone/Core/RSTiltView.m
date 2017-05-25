@@ -104,10 +104,14 @@
 			}];*/
 			
 			[self.layer setTransform:finalTransform];
-			
-			if (self.highlightEnabled) {
-				[self setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.2]];
-			}
+		}
+	}
+	
+	if (self.highlightEnabled) {
+		if (self.coloredHighlight) {
+			[self setBackgroundColor:[RSAesthetics accentColor]];
+		} else {
+			[self setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.2]];
 		}
 	}
 }

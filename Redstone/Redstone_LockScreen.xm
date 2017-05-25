@@ -243,6 +243,17 @@ SBPagedScrollView* dashboardScrollView;
 
 %end // %hook SBDashBoardScrollGestureController
 
+%hook SBDashBoardViewController
+
+-(void)startLockScreenFadeInAnimationForSource:(int)arg1 {
+	[[%c(SBLockScreenManager) sharedInstance] _setPasscodeVisible:YES animated:NO];
+	[[RSLockScreenController sharedInstance] resetLockScreen];
+	
+	%orig(arg1);
+}
+
+%end // %hook SBDashBoardViewController
+
 %hook SBDashBoardView
 
 - (void)layoutSubviews {
@@ -254,6 +265,7 @@ SBPagedScrollView* dashboardScrollView;
 	}
 	
 	[self.superview bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
+	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
 }
 
 %end // %hook SBDashBoardView
@@ -268,6 +280,8 @@ SBPagedScrollView* dashboardScrollView;
 	[[RSLockScreenController sharedInstance] setLockScreenTime:[MSHookIvar<SBUILegibilityLabel *>(self,"_timeLabel") string]];
 	[[RSLockScreenController sharedInstance] setLockScreenDate:[MSHookIvar<SBUILegibilityLabel *>(self,"_dateSubtitleView") string]];
 	
+	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+	
 	%orig;
 }
 
@@ -276,12 +290,46 @@ SBPagedScrollView* dashboardScrollView;
 %hook SBLockScreenManager
 
 - (BOOL)_finishUIUnlockFromSource:(int)arg1 withOptions:(id)arg2 {
-	[[RSLockScreenController sharedInstance] resetLockScreen];
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[[RSLockScreenController sharedInstance] resetLockScreen];
+	});
 	
 	return %orig;
 }
 
 %end // %hook SBLockScreenManager
+
+%hook MPUMediaControlsTitlesView
+
+- (void)updateTrackInformationWithNowPlayingInfo:(id)arg1 {
+	%orig(arg1);
+	
+	[[[RSLockScreenController sharedInstance] mediaControlsView] updateNowPlayingInfo:arg1];
+}
+
+%end // %hook MPUMediaControlsTitlesView
+
+%hook SBMediaController
+
+-(void)_nowPlayingAppIsPlayingDidChange {
+	%orig;
+	
+	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+		[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+	}];
+}
+
+%end // %hook SBMediaController
+
+%hook SBUIPasscodeLockViewWithKeypad
+
+- (void)layoutSubviews {
+	%log;
+	[[[RSLockScreenController sharedInstance] passcodeEntryController] setCurrentKeypad:self];
+	%orig;
+}
+
+%end
 
 %end // %group ios10
 

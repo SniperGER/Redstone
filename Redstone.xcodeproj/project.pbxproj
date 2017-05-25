@@ -144,6 +144,10 @@
 		8D49A89D1ED6E1BE00A36E8D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D49A8981ED6E1BE00A36E8D /* Info.plist */; };
 		8D49A89E1ED6E1BE00A36E8D /* Root.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D49A8991ED6E1BE00A36E8D /* Root.plist */; };
 		8D49A8A11ED7523300A36E8D /* RSLockScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8A01ED7523300A36E8D /* RSLockScreenView.m */; };
+		8D49A8A41ED75FA600A36E8D /* RSLockScreenMediaControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8A31ED75FA600A36E8D /* RSLockScreenMediaControlsView.m */; };
+		8D49A8A71ED773B100A36E8D /* RSLockScreenPasscodeEntryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8A61ED773B100A36E8D /* RSLockScreenPasscodeEntryController.m */; };
+		8D49A8AA1ED775D100A36E8D /* RSLockScreenPasscodeEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8A91ED775D100A36E8D /* RSLockScreenPasscodeEntryView.m */; };
+		8D49A8AD1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8AC1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m */; };
 		8D58CF391EC3A6AA0021F625 /* RSLaunchScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D58CF381EC3A6AA0021F625 /* RSLaunchScreen.m */; };
 		8D58CFC61EC44AB90021F625 /* UIFont+WDCustomLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D58CFC51EC44AB90021F625 /* UIFont+WDCustomLoader.m */; };
 		8D5F260C1EC9776600DB95C6 /* RSJumpList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5F260B1EC9776600DB95C6 /* RSJumpList.m */; };
@@ -315,6 +319,14 @@
 		8D49A8991ED6E1BE00A36E8D /* Root.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Root.plist; sourceTree = "<group>"; };
 		8D49A89F1ED7523300A36E8D /* RSLockScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLockScreenView.h; sourceTree = "<group>"; };
 		8D49A8A01ED7523300A36E8D /* RSLockScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLockScreenView.m; sourceTree = "<group>"; };
+		8D49A8A21ED75FA600A36E8D /* RSLockScreenMediaControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLockScreenMediaControlsView.h; sourceTree = "<group>"; };
+		8D49A8A31ED75FA600A36E8D /* RSLockScreenMediaControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLockScreenMediaControlsView.m; sourceTree = "<group>"; };
+		8D49A8A51ED773B100A36E8D /* RSLockScreenPasscodeEntryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLockScreenPasscodeEntryController.h; sourceTree = "<group>"; };
+		8D49A8A61ED773B100A36E8D /* RSLockScreenPasscodeEntryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLockScreenPasscodeEntryController.m; sourceTree = "<group>"; };
+		8D49A8A81ED775D100A36E8D /* RSLockScreenPasscodeEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLockScreenPasscodeEntryView.h; sourceTree = "<group>"; };
+		8D49A8A91ED775D100A36E8D /* RSLockScreenPasscodeEntryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLockScreenPasscodeEntryView.m; sourceTree = "<group>"; };
+		8D49A8AB1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLockScreenPasscodeEntryButton.h; sourceTree = "<group>"; };
+		8D49A8AC1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLockScreenPasscodeEntryButton.m; sourceTree = "<group>"; };
 		8D58CF371EC3A6AA0021F625 /* RSLaunchScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLaunchScreen.h; sourceTree = "<group>"; };
 		8D58CF381EC3A6AA0021F625 /* RSLaunchScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLaunchScreen.m; sourceTree = "<group>"; };
 		8D58CFC41EC44AB90021F625 /* UIFont+WDCustomLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+WDCustomLoader.h"; sourceTree = "<group>"; };
@@ -855,6 +867,14 @@
 				8D49A8881ED6CEA300A36E8D /* RSLockScreenController.m */,
 				8D49A89F1ED7523300A36E8D /* RSLockScreenView.h */,
 				8D49A8A01ED7523300A36E8D /* RSLockScreenView.m */,
+				8D49A8A21ED75FA600A36E8D /* RSLockScreenMediaControlsView.h */,
+				8D49A8A31ED75FA600A36E8D /* RSLockScreenMediaControlsView.m */,
+				8D49A8A51ED773B100A36E8D /* RSLockScreenPasscodeEntryController.h */,
+				8D49A8A61ED773B100A36E8D /* RSLockScreenPasscodeEntryController.m */,
+				8D49A8A81ED775D100A36E8D /* RSLockScreenPasscodeEntryView.h */,
+				8D49A8A91ED775D100A36E8D /* RSLockScreenPasscodeEntryView.m */,
+				8D49A8AB1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.h */,
+				8D49A8AC1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m */,
 			);
 			name = LockScreen;
 			path = Redstone/LockScreen;
@@ -1217,9 +1237,11 @@
 				8D58CFC61EC44AB90021F625 /* UIFont+WDCustomLoader.m in Sources */,
 				8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */,
 				8D49A8891ED6CEA300A36E8D /* RSLockScreenController.m in Sources */,
+				8D49A8AD1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m in Sources */,
 				8DE79E9C1EC79AA5004EF2E6 /* RSPinMenu.m in Sources */,
 				8D36C4DC1ECE4C5D00327349 /* RSTiltView.m in Sources */,
 				8DBD10801EC23BD400A5A037 /* UIView+Easing.m in Sources */,
+				8D49A8AA1ED775D100A36E8D /* RSLockScreenPasscodeEntryView.m in Sources */,
 				8DE79E991EC6F3BE004EF2E6 /* RSAppListSection.m in Sources */,
 				8DBD108A1EC23BF900A5A037 /* RSAesthetics.m in Sources */,
 				8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */,
@@ -1229,6 +1251,7 @@
 				8DC171221EC5E50200D45EB1 /* RSPreferences.m in Sources */,
 				8DBD108D1EC23BF900A5A037 /* RSRootScrollView.m in Sources */,
 				8D5F260C1EC9776600DB95C6 /* RSJumpList.m in Sources */,
+				8D49A8A71ED773B100A36E8D /* RSLockScreenPasscodeEntryController.m in Sources */,
 				8D49A8A11ED7523300A36E8D /* RSLockScreenView.m in Sources */,
 				8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */,
 				8DBD109F1EC23CD000A5A037 /* RSStartScreenController.m in Sources */,
@@ -1240,6 +1263,7 @@
 				8D58CF391EC3A6AA0021F625 /* RSLaunchScreen.m in Sources */,
 				8D49A89B1ED6E1BE00A36E8D /* Makefile in Sources */,
 				8DBD10A01EC23CD000A5A037 /* RSStartScrollView.m in Sources */,
+				8D49A8A41ED75FA600A36E8D /* RSLockScreenMediaControlsView.m in Sources */,
 				8DE79E9F1EC7B6C3004EF2E6 /* RSSearchBar.m in Sources */,
 				8D49A89C1ED6E1BE00A36E8D /* RDSRootListController.m in Sources */,
 			);
