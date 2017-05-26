@@ -24,28 +24,31 @@
 		[mediaSubtitleLabel setFrame:CGRectMake(0, 40, frame.size.width, mediaSubtitleLabel.frame.size.height)];
 		[self addSubview:mediaSubtitleLabel];
 		
-		prevTitleButton = [UIButton buttonWithType:UIButtonTypeSystem];
+		prevTitleButton = [[RSTiltView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+		[prevTitleButton setHighlightEnabled:YES];
 		[prevTitleButton setTintColor:[UIColor whiteColor]];
 		[prevTitleButton setFrame:CGRectMake(self.frame.size.width/2 - 44/2 - 100, self.frame.size.height - 44, 44, 44)];
 		[prevTitleButton.titleLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:28]];
-		[prevTitleButton setTitle:@"\uE892" forState:UIControlStateNormal];
-		[prevTitleButton addTarget:self action:@selector(previousTrack) forControlEvents:UIControlEventTouchUpInside];
+		[prevTitleButton setTitle:@"\uE892"];
+		[prevTitleButton addTarget:self action:@selector(previousTrack)];
 		[self addSubview:prevTitleButton];
 		
-		playPauseButton = [UIButton buttonWithType:UIButtonTypeSystem];
+		playPauseButton = [[RSTiltView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+		[playPauseButton setHighlightEnabled:YES];
 		[playPauseButton setTintColor:[UIColor whiteColor]];
 		[playPauseButton setFrame:CGRectMake(self.frame.size.width/2 - 44/2, self.frame.size.height - 44, 44, 44)];
 		[playPauseButton.titleLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:28]];
-		[playPauseButton setTitle:@"\uE768" forState:UIControlStateNormal];
-		[playPauseButton addTarget:self action:@selector(togglePlayPause) forControlEvents:UIControlEventTouchUpInside];
+		[playPauseButton setTitle:@"\uE768"];
+		[playPauseButton addTarget:self action:@selector(togglePlayPause)];
 		[self addSubview:playPauseButton];
 		
-		nextTitleButton = [UIButton buttonWithType:UIButtonTypeSystem];
+		nextTitleButton = [[RSTiltView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+		[nextTitleButton setHighlightEnabled:YES];
 		[nextTitleButton setTintColor:[UIColor whiteColor]];
 		[nextTitleButton setFrame:CGRectMake(self.frame.size.width/2 - 44/2 + 100, self.frame.size.height - 44, 44, 44)];
 		[nextTitleButton.titleLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:28]];
-		[nextTitleButton setTitle:@"\uE893" forState:UIControlStateNormal];
-		[nextTitleButton addTarget:self action:@selector(nextTrack) forControlEvents:UIControlEventTouchUpInside];
+		[nextTitleButton setTitle:@"\uE893"];
+		[nextTitleButton addTarget:self action:@selector(nextTrack)];
 		[self addSubview:nextTitleButton];
 
 		[self setHidden:YES];
@@ -76,9 +79,9 @@
 	
 	[UIView performWithoutAnimation:^{
 		if ([[nowPlayingInfo objectForKey:@"kMRMediaRemoteNowPlayingInfoPlaybackRate"] boolValue]) {
-			[playPauseButton setTitle:@"\uE769" forState:UIControlStateNormal];
+			[playPauseButton setTitle:@"\uE769"];
 		} else {
-			[playPauseButton setTitle:@"\uE768" forState:UIControlStateNormal];
+			[playPauseButton setTitle:@"\uE768"];
 		}
 		
 		[playPauseButton layoutIfNeeded];

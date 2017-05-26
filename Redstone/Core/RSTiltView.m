@@ -7,6 +7,10 @@
 	
 	if (self) {
 		self.tiltEnabled = YES;
+		
+		_titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+		[_titleLabel setTextAlignment:NSTextAlignmentCenter];
+		[self addSubview:_titleLabel];
 	}
 	
 	return self;
@@ -134,6 +138,25 @@
 	if (!tiltEnabled && self.isTilted) {
 		[self untilt];
 	}
+}
+
+- (void)setFrame:(CGRect)frame {
+	[super setFrame:frame];
+	
+	[self.titleLabel setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+}
+
+- (void)addTarget:(id)target action:(SEL)action {
+	UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
+	[self addGestureRecognizer:tap];
+}
+
+- (void)setTitle:(NSString*)title {
+	[self.titleLabel setText:title];
+}
+
+- (void)setTintColor:(UIColor *)tintColor {
+	[self.titleLabel setTextColor:tintColor];
 }
 
 @end

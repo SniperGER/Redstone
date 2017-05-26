@@ -246,7 +246,9 @@ SBPagedScrollView* dashboardScrollView;
 %hook SBDashBoardViewController
 
 -(void)startLockScreenFadeInAnimationForSource:(int)arg1 {
-	[[%c(SBLockScreenManager) sharedInstance] _setPasscodeVisible:YES animated:NO];
+	if ([[%c(SBUserAgent) sharedUserAgent] deviceIsPasscodeLocked]) {
+		[[%c(SBLockScreenManager) sharedInstance] _setPasscodeVisible:YES animated:NO];
+	}
 	[[RSLockScreenController sharedInstance] resetLockScreen];
 	
 	%orig(arg1);

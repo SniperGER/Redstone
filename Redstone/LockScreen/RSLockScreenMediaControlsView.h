@@ -1,12 +1,14 @@
 #import <UIKit/UIKit.h>
 
+@class RSTiltView;
+
 @interface RSLockScreenMediaControlsView : UIView {
 	UILabel* mediaTitleLabel;
 	UILabel* mediaSubtitleLabel;
 	
-	UIButton* prevTitleButton;
-	UIButton* playPauseButton;
-	UIButton* nextTitleButton;
+	RSTiltView* prevTitleButton;
+	RSTiltView* playPauseButton;
+	RSTiltView* nextTitleButton;
 }
 
 - (void)updateNowPlayingInfo:(NSDictionary*)nowPlayingInfo;
