@@ -63,6 +63,9 @@ static RSLockScreenController* sharedInstance;
 	[self.lockScreenView setAlpha:1];
 	[wallpaperOverlayView setAlpha:0];
 	[self.passcodeEntryController resetTextField];
+	
+	self.isScrolling = NO;
+	self.isShowingPasscodeScreen = NO;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -70,15 +73,21 @@ static RSLockScreenController* sharedInstance;
 	
 	[self.lockScreenView setAlpha:alpha];
 	[wallpaperOverlayView setAlpha:1-alpha];
+	self.isScrolling = YES;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+	self.isScrolling = NO;
+	
 	if (scrollView.contentOffset.y >= scrollView.frame.size.height) {
 		if ([[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsPasscodeLocked]) {
-			
+			[[objc_getClass("SBLockScreenManager") sharedInstance] _setPasscodeVisible:YES animated:NO];
+			self.isShowingPasscodeScreen = YES;
 		} else {
 			[[objc_getClass("SBLockScreenManager") sharedInstance] attemptUnlockWithPasscode:nil];
 		}
+	} else {
+		[[objc_getClass("SBLockScreenManager") sharedInstance] _setPasscodeVisible:NO animated:NO];
 	}
 }
 

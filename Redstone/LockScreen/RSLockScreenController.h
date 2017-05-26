@@ -12,6 +12,8 @@
 @property (nonatomic, retain) RSLockScreenView* lockScreenView;
 @property (nonatomic, retain) RSLockScreenMediaControlsView* mediaControlsView;
 @property (nonatomic, retain) RSLockScreenPasscodeEntryController* passcodeEntryController;
+@property (nonatomic, assign) BOOL isScrolling;
+@property (nonatomic, assign) BOOL isShowingPasscodeScreen;
 
 + (id)sharedInstance;
 

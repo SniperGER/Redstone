@@ -246,9 +246,6 @@ SBPagedScrollView* dashboardScrollView;
 %hook SBDashBoardViewController
 
 -(void)startLockScreenFadeInAnimationForSource:(int)arg1 {
-	if ([[%c(SBUserAgent) sharedUserAgent] deviceIsPasscodeLocked]) {
-		[[%c(SBLockScreenManager) sharedInstance] _setPasscodeVisible:YES animated:NO];
-	}
 	[[RSLockScreenController sharedInstance] resetLockScreen];
 	
 	%orig(arg1);
@@ -332,6 +329,19 @@ SBPagedScrollView* dashboardScrollView;
 }
 
 %end
+
+%hook SBBacklightController
+
+- (void)_startFadeOutAnimationFromLockSource:(int)arg1 {
+	if ([[RSLockScreenController sharedInstance] isScrolling] || [[RSLockScreenController sharedInstance] isShowingPasscodeScreen]) {
+		[self resetIdleTimer];
+		return;
+	}
+	
+	%orig(arg1);
+}
+
+%end // %hook SBBacklightController
 
 %end // %group ios10
 

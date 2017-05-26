@@ -123,6 +123,7 @@ static RSCore* redstone;
 - (id)lockScreenViewController;
 - (void)attemptUnlockWithPasscode:(id)arg1;
 - (BOOL)_attemptUnlockWithPasscode:(id)arg1 finishUIUnlock:(BOOL)arg2 ;
+- (void)_setPasscodeVisible:(BOOL)arg1 animated:(BOOL)arg2;
 @end
 
 @interface SBUILegibilityLabel : UIView
