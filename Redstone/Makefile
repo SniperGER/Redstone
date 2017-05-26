@@ -51,5 +51,5 @@ endif
 
 after-install::
 	install.exec "killall -9 SpringBoard"
-SUBPROJECTS += redstone_prefs
+#SUBPROJECTS += redstone_prefs
 include $(THEOS_MAKE_PATH)/aggregate.mk
