@@ -328,7 +328,12 @@ SBPagedScrollView* dashboardScrollView;
 	%orig;
 }
 
-%end
+- (void)passcodeEntryFieldTextDidChange:(id)arg1 {
+	%log;
+	%orig;
+}
+
+%end // %hook SBUIPasscodeLockViewWithKeypad
 
 %hook SBBacklightController
 
@@ -343,9 +348,135 @@ SBPagedScrollView* dashboardScrollView;
 
 %end // %hook SBBacklightController
 
+%hook BBServer
+
+-(void)_sendAddBulletin:(BBBulletin*)arg1 toFeeds:(unsigned long long)arg2 {
+	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+		if (arg2 != 1 && [[%c(SBUserAgent) sharedUserAgent] deviceIsLocked]) {
+			RSNotificationView* notificationView = [[RSNotificationView alloc] notificationWithTitle:[arg1 title] subtitle:[arg1 subtitle] message:[arg1 message] bundleIdentifier:[arg1 section]];
+			[[RSLockScreenController sharedInstance] displayNotification:notificationView];
+		}
+	}];
+	
+	%log;
+	%orig;
+}
+
+%end // %hook BBServer
+
 %end // %group ios10
 
 %group ios9
+
+%hook SBLockScreenView
+
+- (void)layoutSubviews {
+	%orig;
+	[self setHidden:YES];
+	
+	if (![self.superview.subviews containsObject:[[RSLockScreenController sharedInstance] containerView]]) {
+		[self.superview addSubview:[[RSLockScreenController sharedInstance] containerView]];
+	}
+	
+	[self.superview bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
+	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+}
+
+%end // %hook SBLockScreenView
+
+%hook SBFLockScreenDateView
+
+- (void)layoutSubviews {
+	[MSHookIvar<SBUILegibilityLabel *>(self,"_legibilityTimeLabel") removeFromSuperview];
+	[MSHookIvar<SBUILegibilityLabel *>(self,"_legibilityDateLabel") removeFromSuperview];
+	
+	[[RSLockScreenController sharedInstance] setLockScreenTime:[MSHookIvar<SBUILegibilityLabel *>(self,"_legibilityTimeLabel") string]];
+	[[RSLockScreenController sharedInstance] setLockScreenDate:[MSHookIvar<SBUILegibilityLabel *>(self,"_legibilityDateLabel") string]];
+	
+	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+	
+	%orig;
+}
+
+%end // %hook SBFLockScreenDateView
+
+%hook SBLockScreenManager
+
+- (BOOL)_finishUIUnlockFromSource:(int)arg1 withOptions:(id)arg2 {
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[[RSLockScreenController sharedInstance] resetLockScreen];
+	});
+	
+	return %orig;
+}
+
+%end // %hook SBLockScreenManager
+
+%hook MPUMediaControlsTitlesView
+
+- (void)updateTrackInformationWithNowPlayingInfo:(id)arg1 {
+	%orig(arg1);
+	
+	[[[RSLockScreenController sharedInstance] mediaControlsView] updateNowPlayingInfo:arg1];
+}
+
+%end // %hook MPUMediaControlsTitlesView
+
+%hook SBMediaController
+
+-(void)_nowPlayingAppIsPlayingDidChange {
+	%orig;
+	
+	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+		[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+	}];
+}
+
+%end // %hook SBMediaController
+
+%hook SBUIPasscodeLockViewWithKeypad
+
+- (void)layoutSubviews {
+	%log;
+	[[[RSLockScreenController sharedInstance] passcodeEntryController] setCurrentKeypad:self];
+	%orig;
+}
+
+- (void)passcodeEntryFieldTextDidChange:(id)arg1 {
+	%log;
+	%orig;
+}
+
+%end // %hook SBUIPasscodeLockViewWithKeypad
+
+%hook SBBacklightController
+
+- (void)_startFadeOutAnimationFromLockSource:(int)arg1 {
+	if ([[RSLockScreenController sharedInstance] isScrolling] || [[RSLockScreenController sharedInstance] isShowingPasscodeScreen]) {
+		[self resetIdleTimer];
+		return;
+	}
+	
+	%orig(arg1);
+}
+
+%end // %hook SBBacklightController
+
+%hook BBServer
+
+-(void)_sendAddBulletin:(BBBulletin*)arg1 toFeeds:(unsigned long long)arg2 {
+	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+		if (arg2 != 1 && [[%c(SBUserAgent) sharedUserAgent] deviceIsLocked]) {
+			RSNotificationView* notificationView = [[RSNotificationView alloc] notificationWithTitle:[arg1 title] subtitle:[arg1 subtitle] message:[arg1 message] bundleIdentifier:[arg1 section]];
+			[[RSLockScreenController sharedInstance] displayNotification:notificationView];
+		}
+	}];
+	
+	%log;
+	%orig;
+}
+
+%end // %hook BBServer
 
 %end // %group ios9
 

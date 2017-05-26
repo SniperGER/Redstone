@@ -81,14 +81,23 @@ static RSLockScreenController* sharedInstance;
 	
 	if (scrollView.contentOffset.y >= scrollView.frame.size.height) {
 		if ([[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsPasscodeLocked]) {
-			[[objc_getClass("SBLockScreenManager") sharedInstance] _setPasscodeVisible:YES animated:NO];
+			if ([[objc_getClass("SBLockScreenManager") sharedInstance] respondsToSelector:@selector(_setPasscodeVisible:animated:)]) {
+				[[objc_getClass("SBLockScreenManager") sharedInstance] _setPasscodeVisible:YES animated:NO];
+			}
 			self.isShowingPasscodeScreen = YES;
 		} else {
 			[[objc_getClass("SBLockScreenManager") sharedInstance] attemptUnlockWithPasscode:nil];
 		}
 	} else {
-		[[objc_getClass("SBLockScreenManager") sharedInstance] _setPasscodeVisible:NO animated:NO];
+		if ([[objc_getClass("SBLockScreenManager") sharedInstance] respondsToSelector:@selector(_setPasscodeVisible:animated:)]) {
+			[[objc_getClass("SBLockScreenManager") sharedInstance] _setPasscodeVisible:NO animated:NO];
+		}
 	}
+}
+
+- (void)displayNotification:(RSNotificationView*)notification {
+	[self.containerView addSubview:notification];
+	[notification show];
 }
 
 @end

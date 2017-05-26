@@ -21,4 +21,6 @@
 - (void)setLockScreenDate:(NSString*)date;
 - (void)resetLockScreen;
 
+- (void)displayNotification:(RSNotificationView*)notification;
+
 @end
