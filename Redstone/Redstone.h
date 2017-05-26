@@ -188,6 +188,18 @@ static RSCore* redstone;
 -(BBBulletin *)bulletin;
 @end
 
+@interface SBBannerContextView : UIView
+@end
+
+@interface SBUIBannerContext : NSObject
+- (id)item;
+@end
+
+@interface SBBulletinBannerItem : NSObject
+- (id)title;
+- (id)seedBulletin;
+@end
+
 @interface SBUIPasscodeLockViewWithKeypad : UIView
 - (id)initWithLightStyle:(BOOL)arg1;
 - (id)passcode;

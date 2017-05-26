@@ -3,12 +3,63 @@
 
 %group ios10
 
+id traverseResponderChainForUIViewController(id target) {
+	id nextResponder = [target nextResponder];
+	if ([nextResponder isKindOfClass:[UIViewController class]]) {
+		return nextResponder;
+	} else if ([nextResponder isKindOfClass:[UIView class]]) {
+		return traverseResponderChainForUIViewController(nextResponder);
+	} else {
+		return nil;
+	}
+}
+
 %hook NCNotificationShortLookView
 
-// iOS 10
 - (void)setFrame:(CGRect)frame {
-	%log;
-	%orig(frame);
+	if (![self isNCNotification]) {
+		frame = CGRectMake(-8, -8, screenWidth, frame.size.height);
+		%orig(frame);
+	} else {
+		%orig(frame);
+	}
+}
+
+- (void)layoutSubviews {
+	BOOL isNCNotification = [self isNCNotification];
+	for (UIView* subview in self.subviews) {
+		if ([subview isKindOfClass:%c(RSNotificationView)] && isNCNotification) {
+			[subview removeFromSuperview];
+		}
+		[subview setHidden:!isNCNotification];
+	}
+	
+	if (!isNCNotification) {
+		NCNotificationShortLookViewController* viewController = traverseResponderChainForUIViewController(self);
+		BBBulletin* bulletin = [[viewController notificationRequest] bulletin];
+		
+		RSNotificationView* notificationView = [[RSNotificationView alloc] staticNotificationWithTitle:[bulletin title] subtitle:[bulletin subtitle] message:[bulletin message] bundleIdentifier:[bulletin section]];
+		[self addSubview:notificationView];
+	}
+	
+	%orig;
+}
+
+%new
+- (BOOL)isNCNotification {
+	UIView* view = self;
+	BOOL canProceed = NO;
+	
+	while (view.superview) {
+		if ([view.superview isKindOfClass:%c(NCNotificationListCollectionView)]) {
+			canProceed = YES;
+			break;
+		}
+		
+		view = view.superview;
+	}
+	
+	return canProceed;
 }
 
 %end // %hook NCNotificationShortLookView
@@ -17,24 +68,21 @@
 
 %group ios9
 
-%hook SBLockScreenBulletinCell
-
-// iOS 9
-- (id)initWithStyle:(long long)arg1 reuseIdentifier:(id)arg2 {
-	id r = %orig(arg1, arg2);
-	%log;
-	return r;
-}
-
-%end // %hook SBLockScreenBulletinCell
-
 %hook SBBannerContextView
 
-// iOS 9
-- (id)initWithFrame:(CGRect)frame {
-	self = %orig(frame);
-	%log;
-	return self;
+- (void)layoutSubviews {
+	for (UIView* subview in self.subviews) {
+		if ([subview isKindOfClass:%c(RSNotificationView)]) {
+			[subview removeFromSuperview];
+		}
+		[subview setHidden:YES];
+	}
+	
+	BBBulletin* bulletin =  [[MSHookIvar<SBUIBannerContext*>(self,"_context") item] seedBulletin];
+	RSNotificationView* notificationView = [[RSNotificationView alloc] staticNotificationWithTitle:[bulletin title] subtitle:[bulletin subtitle] message:[bulletin message] bundleIdentifier:[bulletin section]];
+	[self addSubview:notificationView];
+	
+	%orig;
 }
 
 %end // %hook SBBannerContextView
