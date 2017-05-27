@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 
+@class BBBulletin;
+
 @interface RSNotificationView : UIView {
 	UILabel* titleLabel;
 	UILabel* subtitleLabel;
@@ -10,8 +12,7 @@
 	NSTimer* hideTimer;
 }
 
-- (id)notificationWithTitle:(NSString*)title subtitle:(NSString*)subtitle message:(NSString*)message bundleIdentifier:(NSString*)bundleIdentifier;
-- (id)staticNotificationWithTitle:(NSString*)title subtitle:(NSString*)subtitle message:(NSString*)message bundleIdentifier:(NSString*)bundleIdentifier;
+- (id)notificationForBulletin:(BBBulletin*)bulletin isStatic:(BOOL)isStatic;
 - (void)show;
 - (void)hide;
 

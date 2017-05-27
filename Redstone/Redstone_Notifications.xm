@@ -38,7 +38,7 @@ id traverseResponderChainForUIViewController(id target) {
 		NCNotificationShortLookViewController* viewController = traverseResponderChainForUIViewController(self);
 		BBBulletin* bulletin = [[viewController notificationRequest] bulletin];
 		
-		RSNotificationView* notificationView = [[RSNotificationView alloc] staticNotificationWithTitle:[bulletin title] subtitle:[bulletin subtitle] message:[bulletin message] bundleIdentifier:[bulletin section]];
+		RSNotificationView* notificationView = [[RSNotificationView alloc] notificationForBulletin:bulletin isStatic:YES];
 		[self addSubview:notificationView];
 	}
 	
@@ -79,7 +79,7 @@ id traverseResponderChainForUIViewController(id target) {
 	}
 	
 	BBBulletin* bulletin =  [[MSHookIvar<SBUIBannerContext*>(self,"_context") item] seedBulletin];
-	RSNotificationView* notificationView = [[RSNotificationView alloc] staticNotificationWithTitle:[bulletin title] subtitle:[bulletin subtitle] message:[bulletin message] bundleIdentifier:[bulletin section]];
+	RSNotificationView* notificationView = [[RSNotificationView alloc] notificationForBulletin:bulletin isStatic:YES];
 	[self addSubview:notificationView];
 	
 	%orig;

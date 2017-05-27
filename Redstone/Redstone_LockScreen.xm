@@ -353,7 +353,7 @@ SBPagedScrollView* dashboardScrollView;
 -(void)_sendAddBulletin:(BBBulletin*)arg1 toFeeds:(unsigned long long)arg2 {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
 		if (arg2 != 1 && [[%c(SBUserAgent) sharedUserAgent] deviceIsLocked]) {
-			RSNotificationView* notificationView = [[RSNotificationView alloc] notificationWithTitle:[arg1 title] subtitle:[arg1 subtitle] message:[arg1 message] bundleIdentifier:[arg1 section]];
+			RSNotificationView* notificationView = [[RSNotificationView alloc] notificationForBulletin:arg1 isStatic:NO];
 			[[RSLockScreenController sharedInstance] displayNotification:notificationView];
 		}
 	}];
@@ -467,7 +467,7 @@ SBPagedScrollView* dashboardScrollView;
 -(void)_sendAddBulletin:(BBBulletin*)arg1 toFeeds:(unsigned long long)arg2 {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
 		if (arg2 != 1 && [[%c(SBUserAgent) sharedUserAgent] deviceIsLocked]) {
-			RSNotificationView* notificationView = [[RSNotificationView alloc] notificationWithTitle:[arg1 title] subtitle:[arg1 subtitle] message:[arg1 message] bundleIdentifier:[arg1 section]];
+			RSNotificationView* notificationView = [[RSNotificationView alloc] notificationForBulletin:arg1 isStatic:NO];
 			[[RSLockScreenController sharedInstance] displayNotification:notificationView];
 		}
 	}];
