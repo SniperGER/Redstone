@@ -39,6 +39,7 @@
 #import "LockScreen/RSLockScreenMediaControlsView.h"
 #import "LockScreen/RSLockScreenPasscodeEntryController.h"
 #import "LockScreen/RSLockScreenPasscodeEntryView.h"
+#import "LockScreen/RSLockScreenPasscodeEntryTextField.h"
 #import "LockScreen/RSLockScreenPasscodeEntryButton.h"
 
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)

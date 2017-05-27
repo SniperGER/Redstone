@@ -1,15 +1,17 @@
 #import <UIKit/UIKit.h>
 
-@class SBUIPasscodeLockViewWithKeypad, RSLockScreenPasscodeEntryView;
+@class SBUIPasscodeLockViewWithKeypad, RSLockScreenPasscodeEntryTextField, RSLockScreenPasscodeEntryView;
 
 @interface RSLockScreenPasscodeEntryController : NSObject <UITextFieldDelegate> {
-	UITextField* passcodeTextField;
+	RSLockScreenPasscodeEntryTextField* passcodeTextField;
 }
 
 @property (nonatomic, retain) SBUIPasscodeLockViewWithKeypad* currentKeypad;
 @property (nonatomic, retain) RSLockScreenPasscodeEntryView* passcodeEntryView;
 
 - (void)handlePasscodeTextChanged;
+- (void)handleFailedAuthentication;
+- (void)handleFailedMesaAuthentication;
 - (void)resetTextField;
 
 @end

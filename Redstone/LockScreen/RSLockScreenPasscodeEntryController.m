@@ -8,13 +8,7 @@
 	if (self) {
 		self.passcodeEntryView = [[RSLockScreenPasscodeEntryView alloc] initWithFrame:CGRectMake(0, screenHeight*2 - 382, screenWidth, 382)];
 		
-		passcodeTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 55)];
-		[passcodeTextField setDelegate:self];
-		[passcodeTextField setFont:[UIFont fontWithName:@"SegoeUI" size:28]];
-		[passcodeTextField setTextColor:[UIColor whiteColor]];
-		[passcodeTextField setTextAlignment:NSTextAlignmentCenter];
-		[passcodeTextField setSecureTextEntry:YES];
-		[passcodeTextField setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[RSAesthetics localizedStringForKey:@"PASSCODE_ENTER_PIN"] attributes:@{ NSForegroundColorAttributeName:[UIColor colorWithWhite:1.0 alpha:1.0], NSFontAttributeName:[UIFont fontWithName:@"SegoeUI" size:18] }]];
+		passcodeTextField = [[RSLockScreenPasscodeEntryTextField alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 55)];
 		[self.passcodeEntryView addSubview:passcodeTextField];
 	}
 	
@@ -25,8 +19,22 @@
 	[passcodeTextField setText:[self.currentKeypad passcode]];
 }
 
+- (void)handleFailedAuthentication {
+	[self resetTextField];
+	[passcodeTextField showInvalidPIN];
+}
+
+- (void)handleFailedMesaAuthentication {
+	[self resetTextField];
+	[passcodeTextField showInvalidMesa];
+}
+
 - (void)resetTextField {
 	[passcodeTextField setText:nil];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	return NO;
 }
 
 @end

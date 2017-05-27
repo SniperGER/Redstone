@@ -323,17 +323,38 @@ SBPagedScrollView* dashboardScrollView;
 %hook SBUIPasscodeLockViewWithKeypad
 
 - (void)layoutSubviews {
-	%log;
 	[[[RSLockScreenController sharedInstance] passcodeEntryController] setCurrentKeypad:self];
 	%orig;
 }
 
 - (void)passcodeEntryFieldTextDidChange:(id)arg1 {
-	%log;
+	[[[RSLockScreenController sharedInstance] passcodeEntryController] handlePasscodeTextChanged];
+	
 	%orig;
 }
 
 %end // %hook SBUIPasscodeLockViewWithKeypad
+
+%hook SBFUserAuthenticationController
+
+- (void)_handleFailedAuthentication:(id)arg1 error:(id)arg2 responder:(id)arg3 {
+	[[[RSLockScreenController sharedInstance] passcodeEntryController] handleFailedAuthentication];
+	%orig;
+}
+
+%end // %hook SBFUserAuthenticationController
+
+%hook SBDashBoardMesaUnlockBehavior
+
+- (void)handleBiometricEvent:(unsigned long long)arg1 {
+	%orig;
+	
+	if(arg1 == 10) {
+		[[[RSLockScreenController sharedInstance] passcodeEntryController] handleFailedMesaAuthentication];
+	}
+}
+
+%end // %hook SBDashBoardMesaUnlockBehavior
 
 %hook SBBacklightController
 
@@ -363,6 +384,14 @@ SBPagedScrollView* dashboardScrollView;
 }
 
 %end // %hook BBServer
+
+//%hook SBUserAgent
+//
+//- (BOOL)deviceIsPasscodeLocked {
+//	return YES;
+//}
+//
+//%end // %hook SBUserAgent
 
 %end // %group ios10
 

@@ -11,3 +11,5 @@
 
 /* Lock Screen */
 "PASSCODE_ENTER_PIN" = "PIN eingeben";
+"PASSCODE_INVALID_PIN" = "Ungültige PIN";
+"PASSCODE_INVALID_MESA" = "Wiederholen";
