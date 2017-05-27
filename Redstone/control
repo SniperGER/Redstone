@@ -1,8 +1,9 @@
 Package: ml.festival.redstone
 Name: Redstone Insider Preview
 Depends: mobilesubstrate
+conflicts: gsc.ipad
 Architecture: iphoneos-arm
-Description: Confidential Insider Preview of Redstone
+Description: A Tweak to bring the Windows 10 Mobile experience to iOS
 Depiction: https://connect.festival.ml/depiction/ml.festival.redstone
 Maintainer: FESTIVAL
 Author: Sniper_GER
