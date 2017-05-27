@@ -1,7 +1,7 @@
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = redstone_prefs
-redstone_prefs_FILES = RDSRootListController.m
+redstone_prefs_FILES = RDSRootListController.m RDSAccentColorList.m
 redstone_prefs_INSTALL_PATH = /Library/PreferenceBundles
 redstone_prefs_FRAMEWORKS = UIKit
 redstone_prefs_PRIVATE_FRAMEWORKS = Preferences

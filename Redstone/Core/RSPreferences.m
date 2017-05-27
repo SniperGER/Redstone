@@ -31,7 +31,11 @@ static RSPreferences* sharedInstance;
 		}
 		
 		if (![self.preferences objectForKey:@"lockScreenEnabled"]) {
-			[self.preferences setValue:[NSNumber numberWithBool:NO] forKey:@"lockScreenEnabled"];
+			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:@"lockScreenEnabled"];
+		}
+		
+		if (![self.preferences objectForKey:@"notificationsEnabled"]) {
+			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:@"notificationsEnabled"];
 		}
 		
 		if (![self.preferences objectForKey:@"accentColor"]) {

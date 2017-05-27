@@ -3,5 +3,6 @@
 @interface RDSRootListController : PSListController
 
 - (void)killSpringBoard;
+- (void)resetHomeScreenLayout;
 
 @end
