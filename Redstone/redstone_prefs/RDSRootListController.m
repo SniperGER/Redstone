@@ -26,9 +26,12 @@
 	self.navigationController.navigationBar.tintColor = nil;
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 - (void)killSpringBoard {
 	system("killall SpringBoard");
 }
+#pragma GCC diagnostic pop
 
 - (id)readPreferenceValue:(PSSpecifier*)specifier {
 	id properties = [specifier properties];
@@ -57,6 +60,8 @@
 	}
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 - (void)resetHomeScreenLayout {
 	UIAlertController *alertController = [UIAlertController
 										  alertControllerWithTitle:@""
@@ -82,5 +87,6 @@
 	[alertController addAction:okAction];
 	[self presentViewController:alertController animated:YES completion:nil];
 }
+#pragma GCC diagnostic pop
 
 @end

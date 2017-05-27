@@ -5,7 +5,7 @@
 int columns;
 
 + (void)initialize {
-	columns = 3;
+	columns = [[[RSPreferences preferences] objectForKey:@"showMoreTiles"] boolValue] ? 3 : 2;
 }
 
 + (CGSize)tileDimensionsForSize:(int)size {

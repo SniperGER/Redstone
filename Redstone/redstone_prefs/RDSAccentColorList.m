@@ -3,7 +3,7 @@
 @implementation RDSAccentColorList
 
 - (id)tableView:(UITableView *)arg1 cellForRowAtIndexPath:(NSIndexPath *)arg2 {
-	PSTableCell *cell = [super tableView:arg1 cellForRowAtIndexPath:arg2];
+	PSTableCell *cell = (PSTableCell*)[super tableView:arg1 cellForRowAtIndexPath:arg2];
 	
 	[cell.imageView setImage:[self imageFromColor:[self colorFromHexString:cell.textLabel.text]]];
 	

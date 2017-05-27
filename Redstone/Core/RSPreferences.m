@@ -38,6 +38,10 @@ static RSPreferences* sharedInstance;
 			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:@"notificationsEnabled"];
 		}
 		
+		/*if (![self.preferences objectForKey:@"volumeControlEnabled"]) {
+			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:@"volumeControlEnabled"];
+		}*/
+		
 		if (![self.preferences objectForKey:@"accentColor"]) {
 			[self.preferences setValue:@"#0078D7" forKey:@"accentColor"];
 		}
@@ -46,29 +50,17 @@ static RSPreferences* sharedInstance;
 			[self.preferences setValue:[NSNumber numberWithFloat:0.8] forKey:@"tileOpacity"];
 		}
 		
-		/*if (![sharedPreferences objectForKey:@"themeColor"]) {
-			[sharedPreferences setValue:@"dark" forKey:@"themeColor"];
+		if (![self.preferences objectForKey:@"showMoreTiles"] || [UIScreen mainScreen].bounds.size.width == 414) {
+			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:@"showMoreTiles"];
 		}
 		
-		if (![sharedPreferences objectForKey:@"accentColor"]) {
-			[sharedPreferences setValue:@"#0078D7" forKey:@"accentColor"];
-		}
+		/*if (![self.preferences objectForKey:@"showWallpaper"]) {
+			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:@"showWallpaper"];
+		}*/
 		
-		if (![sharedPreferences objectForKey:@"showMoreTiles"]) {
-			[sharedPreferences setValue:[NSNumber numberWithBool:NO] forKey:@"showMoreTiles"];
+		if (![self.preferences objectForKey:@"2ColumnLayout"]) {
+			[self.preferences setObject:[NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/2ColumnDefaultLayout.plist", RESOURCE_PATH]] forKey:@"2ColumnLayout"];
 		}
-		
-		if (![sharedPreferences objectForKey:@"tileOpacity"]) {
-			[sharedPreferences setValue:[NSNumber numberWithFloat:0.6] forKey:@"tileOpacity"];
-		}
-		
-		if (![sharedPreferences objectForKey:@"showWallpaper"]) {
-			[sharedPreferences setValue:[NSNumber numberWithBool:NO] forKey:@"showWallpaper"];
-		}
-		
-		if (![sharedPreferences objectForKey:@"2ColumnLayout"]) {
-			[sharedPreferences setObject:[NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/2ColumnDefaultLayout.plist", RESOURCE_PATH]] forKey:@"2ColumnLayout"];
-		} */
 		
 		if (![self.preferences objectForKey:@"3ColumnLayout"]) {
 			[self.preferences setObject:[NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/3ColumnDefaultLayout.plist", RESOURCE_PATH]] forKey:@"3ColumnLayout"];
