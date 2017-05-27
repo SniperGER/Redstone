@@ -1,6 +1,9 @@
 #import <Preferences/PSListController.h>
 
-@interface RDSRootListController : PSListController
+@interface RDSRootListController : PSListController {
+	UIWindow* settingsView;
+}
+
 
 - (void)killSpringBoard;
 - (void)resetHomeScreenLayout;

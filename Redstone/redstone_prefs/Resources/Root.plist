@@ -6,6 +6,18 @@
 	<array>
 		<dict>
 			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>cellClass</key>
+			<string>PFHeaderCell</string>
+			<key>background</key>
+			<string>#EFEFF4</string>
+			<key>image</key>
+			<string>/Library/PreferenceBundles/redstone_prefs.bundle/banner</string>
+			<key>height</key>
+			<integer>100</integer>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>PSGroupCell</string>
 		</dict>
 		<dict>
@@ -217,6 +229,24 @@
 			<string>ml.festival.redstone</string>
 			<key>key</key>
 			<string>tileOpacity</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Show More Tiles enables a third column on 4&quot; and 4.7&quot; devices. This option is always enabled on 5.5&quot; devices.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>ml.festival.redstone</string>
+			<key>key</key>
+			<string>showMoreTiles</string>
+			<key>label</key>
+			<string>Show More Tiles</string>
 		</dict>
 		<dict>
 			<key>cell</key>

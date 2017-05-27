@@ -10,6 +10,22 @@
 	return cell;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	settingsView = [[UIApplication sharedApplication] keyWindow];
+	
+	settingsView.tintColor = [UIColor redColor];
+	self.navigationController.navigationBar.tintColor = [UIColor redColor];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	
+	settingsView.tintColor = nil;
+	self.navigationController.navigationBar.tintColor = nil;
+}
+
 - (UIImage *)imageFromColor:(UIColor *)color {
 	CGRect rect = CGRectMake(0, 0, 29, 29);
 	UIGraphicsBeginImageContext(rect.size);

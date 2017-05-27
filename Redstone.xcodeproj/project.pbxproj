@@ -167,6 +167,7 @@
 		8DC171221EC5E50200D45EB1 /* RSPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC171211EC5E50200D45EB1 /* RSPreferences.m */; };
 		8DC9210E1ED968270011D30E /* RSLockScreenPasscodeEntryTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC9210D1ED968270011D30E /* RSLockScreenPasscodeEntryTextField.m */; };
 		8DC921111ED97F350011D30E /* RDSAccentColorList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC921101ED97F350011D30E /* RDSAccentColorList.m */; };
+		8DC9211A1ED99E220011D30E /* PFHeaderCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8DC921191ED99E220011D30E /* PFHeaderCell.mm */; };
 		8DE79E901EC6ECFE004EF2E6 /* RSAppListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E8F1EC6ECFE004EF2E6 /* RSAppListController.m */; };
 		8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E921EC6EE2F004EF2E6 /* RSAppList.m */; };
 		8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E951EC6F195004EF2E6 /* RSApp.m */; };
@@ -367,6 +368,8 @@
 		8DC9210D1ED968270011D30E /* RSLockScreenPasscodeEntryTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLockScreenPasscodeEntryTextField.m; sourceTree = "<group>"; };
 		8DC9210F1ED97F350011D30E /* RDSAccentColorList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDSAccentColorList.h; sourceTree = "<group>"; };
 		8DC921101ED97F350011D30E /* RDSAccentColorList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDSAccentColorList.m; sourceTree = "<group>"; };
+		8DC921181ED99E220011D30E /* PFHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFHeaderCell.h; sourceTree = "<group>"; };
+		8DC921191ED99E220011D30E /* PFHeaderCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PFHeaderCell.mm; sourceTree = "<group>"; };
 		8DE79E8E1EC6ECFE004EF2E6 /* RSAppListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppListController.h; sourceTree = "<group>"; };
 		8DE79E8F1EC6ECFE004EF2E6 /* RSAppListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppListController.m; sourceTree = "<group>"; };
 		8DE79E911EC6EE2F004EF2E6 /* RSAppList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppList.h; sourceTree = "<group>"; };
@@ -897,6 +900,8 @@
 				8D49A8961ED6E1BE00A36E8D /* RDSRootListController.m */,
 				8DC9210F1ED97F350011D30E /* RDSAccentColorList.h */,
 				8DC921101ED97F350011D30E /* RDSAccentColorList.m */,
+				8DC921181ED99E220011D30E /* PFHeaderCell.h */,
+				8DC921191ED99E220011D30E /* PFHeaderCell.mm */,
 				8D49A8971ED6E1BE00A36E8D /* Resources */,
 			);
 			name = redstone_prefs;
@@ -1267,6 +1272,7 @@
 				8DBD109F1EC23CD000A5A037 /* RSStartScreenController.m in Sources */,
 				8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */,
 				8D8A10F21ED21BF6004A7811 /* RSTile.m in Sources */,
+				8DC9211A1ED99E220011D30E /* PFHeaderCell.mm in Sources */,
 				8DBD108C1EC23BF900A5A037 /* RSMetrics.m in Sources */,
 				8DBD107F1EC23BD400A5A037 /* easing.c in Sources */,
 				8DBD107E1EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m in Sources */,

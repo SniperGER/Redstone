@@ -10,6 +10,22 @@
 	return _specifiers;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	settingsView = [[UIApplication sharedApplication] keyWindow];
+	
+	settingsView.tintColor = [UIColor redColor];
+	self.navigationController.navigationBar.tintColor = [UIColor redColor];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	
+	settingsView.tintColor = nil;
+	self.navigationController.navigationBar.tintColor = nil;
+}
+
 - (void)killSpringBoard {
 	system("killall SpringBoard");
 }
@@ -19,6 +35,10 @@
 	
 	NSString *path = [NSString stringWithFormat:@"/var/mobile/Library/Preferences/%@.plist", properties[@"defaults"]];
 	NSDictionary* settings = [NSDictionary dictionaryWithContentsOfFile:path];
+	
+	if ([[specifier propertyForKey:@"key"] isEqualToString:@"showMoreTiles"] && [UIScreen mainScreen].bounds.size.width == 414) {
+		[specifier setProperty:[NSNumber numberWithBool:NO] forKey:@"enabled"];
+	}
 	
 	return (settings[properties[@"key"]]) ?: properties[@"default"];
 }
