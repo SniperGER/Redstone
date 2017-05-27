@@ -30,13 +30,14 @@
 		[subtitleLabel setFrame:CGRectMake(56, 30 + titleLabel.frame.size.height, screenWidth - 68, subtitleLabel.frame.size.height)];
 		[self addSubview:subtitleLabel];
 		
-		messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+		messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 86, 40)];
 		[messageLabel setFont:[UIFont fontWithName:@"SegoeUI" size:15]];
 		[messageLabel setTextColor:[UIColor whiteColor]];
 		[messageLabel setText:message];
 		[messageLabel setNumberOfLines:2];
-		[messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
+		[messageLabel setLineBreakMode:NSLineBreakByTruncatingTail];
 		[messageLabel sizeToFit];
+		
 		[messageLabel setFrame:CGRectMake(56, 30 + subtitleLabel.frame.size.height + titleLabel.frame.size.height, screenWidth - 86, messageLabel.frame.size.height)];
 		[self addSubview:messageLabel];
 		
@@ -45,6 +46,13 @@
 		UIView* grabberView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-20, screenWidth, 20)];
 		[grabberView setBackgroundColor:[RSAesthetics accentColor]];
 		[self addSubview:grabberView];
+		
+		UILabel* grabberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 20)];
+		[grabberLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:18]];
+		[grabberLabel setText:@"\uE76F"];
+		[grabberLabel setTextAlignment:NSTextAlignmentCenter];
+		[grabberLabel setTextColor:[UIColor whiteColor]];
+		[grabberView addSubview:grabberLabel];
 		
 		hideTimer = [NSTimer scheduledTimerWithTimeInterval:5 repeats:NO block:^(NSTimer *timer) {
 			[self hide];
@@ -86,12 +94,12 @@
 		[subtitleLabel setFrame:CGRectMake(56, 15 + titleLabel.frame.size.height, screenWidth - 68, subtitleLabel.frame.size.height)];
 		[self addSubview:subtitleLabel];
 		
-		messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+		messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 86, 40)];
 		[messageLabel setFont:[UIFont fontWithName:@"SegoeUI" size:15]];
 		[messageLabel setTextColor:[UIColor whiteColor]];
 		[messageLabel setText:message];
 		[messageLabel setNumberOfLines:2];
-		[messageLabel setLineBreakMode:NSLineBreakByWordWrapping];
+		[messageLabel setLineBreakMode:NSLineBreakByTruncatingTail];
 		[messageLabel sizeToFit];
 		[messageLabel setFrame:CGRectMake(56, 15 + subtitleLabel.frame.size.height + titleLabel.frame.size.height, screenWidth - 86, messageLabel.frame.size.height)];
 		[self addSubview:messageLabel];
@@ -101,6 +109,13 @@
 		UIView* grabberView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-20, screenWidth, 20)];
 		[grabberView setBackgroundColor:[RSAesthetics accentColor]];
 		[self addSubview:grabberView];
+		
+		UILabel* grabberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 20)];
+		[grabberLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:18]];
+		[grabberLabel setText:@"\uE76F"];
+		[grabberLabel setTextAlignment:NSTextAlignmentCenter];
+		[grabberLabel setTextColor:[UIColor whiteColor]];
+		[grabberView addSubview:grabberLabel];
 	}
 	
 	return self;
