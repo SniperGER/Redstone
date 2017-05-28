@@ -53,8 +53,6 @@ static id currentApplication;
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/seguisb.ttf", RESOURCE_PATH]]];
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segmdl2.ttf", RESOURCE_PATH]]];
 		
-		preferences = [[RSPreferences alloc] init];
-		
 		if ([[[RSPreferences preferences] objectForKey:@"startScreenEnabled"] boolValue]) {
 			[[self class] hideAllExcept:nil];
 			

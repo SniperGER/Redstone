@@ -16,9 +16,9 @@
 %end // %group core
 
 %ctor {
-	NSDictionary* settings = [NSDictionary dictionaryWithContentsOfFile:PREFERENCES_PATH];
+	[[RSPreferences alloc] init];
 	
-	if ([[settings objectForKey:@"enabled"] boolValue]) {
+	if ([[[RSPreferences preferences] objectForKey:@"enabled"] boolValue]) {
 		NSLog(@"[Redstone] Initializing");
 		%init(core);
 	}
