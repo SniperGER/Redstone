@@ -97,6 +97,8 @@ static id currentApplication;
 		[self.launchScreenController hide];
 		[[self.startScreenController startScrollView] setContentOffset:CGPointMake(0, -24)];
 		[self.appListController.appList setContentOffset:CGPointMake(0, 0)];
+		[self.appListController hidePinMenu];
+		[self.appListController hideJumpList];
 		[self.appListController setIsSearching:NO];
 		
 		if ([[self.startScreenController pinnedTiles] count] > 0) {

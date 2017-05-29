@@ -442,9 +442,9 @@ static RSAppListController* sharedInstance;
 	CGFloat frameHeight = [app.icon isUninstallSupported] ? 160.0 : 94.0;
 	
 	CGRect pinMenuFrame = CGRectMake(
-									 screenWidth + (screenWidth/2 - 364/2),
+									 screenWidth + (screenWidth/2 - MIN(screenWidth, 364)/2),
 									 (isBelowHalfScreen) ? globalFrame.origin.y - frameHeight : globalFrame.origin.y + globalFrame.size.height,
-									 364,
+									 MIN(screenWidth, 364),
 									 frameHeight);
 	[pinMenu setFrame:pinMenuFrame];
 	

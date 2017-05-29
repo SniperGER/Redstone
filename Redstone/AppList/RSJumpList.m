@@ -10,7 +10,9 @@
 		
 		CGFloat deviceOffsetWidth = ([UIScreen mainScreen].bounds.size.width - 320) / 2;
 		alphabetScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+		[alphabetScrollView setContentSize:CGSizeMake(320, 560)];
 		[alphabetScrollView setContentInset:UIEdgeInsetsMake(88, deviceOffsetWidth, 88, deviceOffsetWidth)];
+		[alphabetScrollView setContentOffset:CGPointMake(0, -88)];
 		[self addSubview:alphabetScrollView];
 		
 		NSString* alphabet = @"#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
@@ -63,6 +65,7 @@
 - (void)animateIn {
 	self.isOpen = YES;
 	[self setHidden:NO];
+	[alphabetScrollView setContentOffset:CGPointMake(0, -88)];
 	[[[RSCore sharedInstance] rootScrollView] setScrollEnabled:NO];
 	
 	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
