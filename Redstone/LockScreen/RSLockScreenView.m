@@ -25,13 +25,13 @@
 - (void)setTime:(NSString *)time {
 	[timeLabel setText:time];
 	[timeLabel sizeToFit];
-	[timeLabel setFrame:CGRectMake(24, screenHeight - timeLabel.frame.size.height - 160, timeLabel.frame.size.width, timeLabel.frame.size.height)];
+	[timeLabel setFrame:CGRectMake(24, screenHeight - timeLabel.frame.size.height - 135, timeLabel.frame.size.width, timeLabel.frame.size.height)];
 }
 
 - (void)setDate:(NSString *)date {
 	[dateLabel setText:date];
 	[dateLabel sizeToFit];
-	[dateLabel setFrame:CGRectMake(24, screenHeight - dateLabel.frame.size.height - 130, dateLabel.frame.size.width, dateLabel.frame.size.height)];
+	[dateLabel setFrame:CGRectMake(24, screenHeight - dateLabel.frame.size.height - 95, dateLabel.frame.size.width, dateLabel.frame.size.height)];
 }
 
 @end

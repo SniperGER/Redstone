@@ -3,6 +3,7 @@
 "PIN_TO_START" = "Auf Startseite anheften";
 "UNINSTALL" = "Deinstallieren";
 "NO_RESULTS_FOUND" = "Keine Ergebnisse für %@ gefunden.";
+"ALL_APPS" = "Alle Apps";
 
 /* Media Controls */
 "MEDIA_UNKNOWN_TITLE" = "Unbekannter Titel";

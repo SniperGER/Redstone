@@ -1,5 +1,9 @@
 #import <UIKit/UIKit.h>
 
-@interface RSStartScrollView : UIScrollView 
+@class RSTiltView;
+
+@interface RSStartScrollView : UIScrollView
+
+@property (nonatomic, retain) RSTiltView* allAppsButton;
 
 @end
