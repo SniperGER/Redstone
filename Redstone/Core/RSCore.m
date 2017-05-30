@@ -183,6 +183,10 @@ static id currentApplication;
 	return wallpaperView;
 }
 
+- (void)updateWallpaper {
+	[wallpaperView setImage:[RSAesthetics homeScreenWallpaper]];
+}
+
 - (id)currentApplication {
 	return currentApplication;
 }

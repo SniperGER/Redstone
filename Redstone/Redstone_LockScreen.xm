@@ -385,13 +385,15 @@ SBPagedScrollView* dashboardScrollView;
 
 %end // %hook BBServer
 
-//%hook SBUserAgent
-//
-//- (BOOL)deviceIsPasscodeLocked {
-//	return YES;
-//}
-//
-//%end // %hook SBUserAgent
+%hook SBWallpaperController
+
+- (void)_handleWallpaperChangedForVariant:(int)arg1 {
+	%orig(arg1);
+	
+	[[RSLockScreenController sharedInstance] updateWallpaper];
+}
+
+%end // %hook SBWallpaperController
 
 %end // %group ios10
 
@@ -506,6 +508,16 @@ SBPagedScrollView* dashboardScrollView;
 }
 
 %end // %hook BBServer
+
+%hook SBWallpaperController
+
+- (void)_handleWallpaperChangedForVariant:(int)arg1 {
+	%orig(arg1);
+	
+	[[RSLockScreenController sharedInstance] updateWallpaper];
+}
+
+%end // %hook SBWallpaperController
 
 %end // %group ios9
 

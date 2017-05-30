@@ -164,6 +164,16 @@ void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 
 %end // %hook SBApplication
 
+%hook SBWallpaperController
+
+- (void)_handleWallpaperChangedForVariant:(int)arg1 {
+	%orig(arg1);
+	
+	[[RSCore sharedInstance] updateWallpaper];
+}
+
+%end // %hook SBWallpaperController
+
 %end // %group core
 
 %ctor {

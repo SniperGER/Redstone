@@ -100,4 +100,8 @@ static RSLockScreenController* sharedInstance;
 	[notification show];
 }
 
+- (void)updateWallpaper {
+	[wallpaperView setImage:[RSAesthetics lockScreenWallpaper]];
+}
+
 @end

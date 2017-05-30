@@ -28,6 +28,7 @@
 - (BOOL)handleMenuButtonEvent;
 
 - (UIImageView*)wallpaperView;
+- (void)updateWallpaper;
 - (id)currentApplication;
 
 @end

@@ -23,4 +23,6 @@
 
 - (void)displayNotification:(RSNotificationView*)notification;
 
+- (void)updateWallpaper;
+
 @end
