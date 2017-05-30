@@ -87,6 +87,7 @@ static RSCore* redstone;
 @interface SBLeafIcon : NSObject
 - (id)displayName;
 - (id)application;
+- (id)applicationBundleID;
 - (BOOL)isUninstallSupported;
 - (id)uninstallAlertTitle;
 - (id)uninstallAlertBody;

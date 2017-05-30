@@ -72,10 +72,12 @@ static RSAppListController* sharedInstance;
 	
 	NSArray* visibleIcons = [[[objc_getClass("SBIconController") sharedInstance] model] visibleIconIdentifiers];
 	for (int i=0; i<[visibleIcons count]; i++) {
-		RSApp* app = [[RSApp alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 54) leafIdentifier:[visibleIcons objectAtIndex:i]];
-		[self.appList addSubview:app];
+		SBLeafIcon* icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[visibleIcons objectAtIndex:i]];
 		
-		if (![[app.icon displayName] isEqualToString:@""]) {
+		if (icon && [icon applicationBundleID] != nil && ![[icon applicationBundleID] isEqualToString:@""]) {
+			RSApp* app = [[RSApp alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 54) leafIdentifier:[visibleIcons objectAtIndex:i]];
+			[self.appList addSubview:app];
+			
 			NSString* first = [[[app.icon displayName] substringWithRange:NSMakeRange(0,1)] uppercaseString];
 			
 			if (first != nil) {

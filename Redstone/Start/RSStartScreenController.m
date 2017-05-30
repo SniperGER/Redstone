@@ -47,7 +47,8 @@ static RSStartScreenController* sharedInstance;
 	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
 	for (int i=0; i<tileLayout.count; i++) {
-		if ([[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[tileLayout objectAtIndex:i][@"bundleIdentifier"]]) {
+		SBLeafIcon* icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[tileLayout objectAtIndex:i][@"bundleIdentifier"]];
+		if (icon && [icon applicationBundleID] != nil && ![[icon applicationBundleID] isEqualToString:@""]) {
 			CGSize tileSize = [RSMetrics tileDimensionsForSize:[tileLayout[i][@"size"] intValue]];
 			CGRect tileFrame = CGRectMake(sizeForPosition * [tileLayout[i][@"column"] intValue],
 										  sizeForPosition * [tileLayout[i][@"row"] intValue],
