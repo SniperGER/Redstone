@@ -13,7 +13,7 @@
 		toastIcon = [[UIImageView alloc] initWithImage:[RSAesthetics getImageForTileWithBundleIdentifier:[bulletin section] size:1]];
 		[toastIcon setFrame:CGRectMake(12, 30, 32, 32)];
 		[toastIcon setTintColor:[UIColor whiteColor]];
-		[toastIcon setBackgroundColor:[RSAesthetics accentColorForTile:[bulletin section]]];
+		[toastIcon setBackgroundColor:[RSAesthetics accentColorForTile:[[[RSStartScreenController sharedInstance] tileForLeafIdentifier:[bulletin section]] tileInfo]]];
 		[self addSubview:toastIcon];
 		
 		titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];

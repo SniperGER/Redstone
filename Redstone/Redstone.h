@@ -17,6 +17,7 @@
 #import "Start/RSStartScreenController.h"
 #import "Start/RSStartScrollView.h"
 #import "Start/RSTile.h"
+#import "Start/RSTileInfo.h"
 
 #import "Launch/RSLaunchScreenController.h"
 #import "Launch/RSLaunchScreen.h"
@@ -29,11 +30,6 @@
 #import "AppList/RSSearchBar.h"
 #import "AppList/RSJumpList.h"
 
-/*#import "LockScreen/RSLockScreenController.h"
-#import "LockScreen/RSLockScreen.h"
-#import "LockScreen/RSMediaControls.h"
-#import "LockScreen/RSPasscodeView.h"
-#import "LockScreen/RSPasscodeButton.h"*/
 #import "LockScreen/RSLockScreenController.h"
 #import "LockScreen/RSLockScreenView.h"
 #import "LockScreen/RSLockScreenMediaControlsView.h"

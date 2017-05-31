@@ -4,10 +4,10 @@
 
 @interface RSLaunchScreenController : NSObject
 
-@property (nonatomic, strong) RSLaunchScreen* launchScreen;
+@property (nonatomic, retain) RSLaunchScreen* launchScreen;
 
 + (id)sharedInstance;
-- (void)setLaunchScreenForLeafIdentifier:(NSString*)leafIdentifier;
+- (void)setLaunchScreenForLeafIdentifier:(NSString*)leafIdentifier tileInfo:(RSTileInfo*)tileInfo;
 - (void)show;
 - (void)hide;
 

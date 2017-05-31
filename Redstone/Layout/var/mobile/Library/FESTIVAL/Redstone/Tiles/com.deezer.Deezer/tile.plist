@@ -4,9 +4,9 @@
 <dict>
 	<key>AccentColor</key>
 	<string>#23232D</string>
-	<key>FullBleedArtwork</key>
+	<key>FullSizeArtwork</key>
 	<true/>
-	<key>TileLabelHidden</key>
+	<key>TileHidesLabel</key>
 	<true/>
 </dict>
 </plist>

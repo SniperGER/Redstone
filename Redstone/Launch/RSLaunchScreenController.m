@@ -21,17 +21,22 @@ static RSLaunchScreenController* sharedInstance;
 	return self;
 }
 
-- (void)setLaunchScreenForLeafIdentifier:(NSString *)leafIdentifier {
-	NSDictionary* tileInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/%@/tile.plist", RESOURCE_PATH, leafIdentifier]];
-	if ([tileInfo objectForKey:@"FullBleedArtwork"] && [[tileInfo objectForKey:@"FullBleedArtwork"] boolValue]) {
+- (void)setLaunchScreenForLeafIdentifier:(NSString*)leafIdentifier tileInfo:(RSTileInfo*)tileInfo {
+	if (tileInfo.fullSizeArtwork) {
 		[self.launchScreen.launchImageView setFrame:CGRectMake(0, 0, 269, 132)];
 	} else {
 		[self.launchScreen.launchImageView setFrame:CGRectMake(0, 0, 76, 76)];
+		
+		if (tileInfo.hasColoredIcon) {
+			[self.launchScreen.launchImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:leafIdentifier size:3]];
+		} else {
+			[self.launchScreen.launchImageView setImage:[[RSAesthetics getImageForTileWithBundleIdentifier:leafIdentifier size:3] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+			[self.launchScreen.launchImageView setTintColor:[UIColor whiteColor]];
+		}
 	}
-	[self.launchScreen.launchImageView setCenter:CGPointMake(screenWidth/2, screenHeight/2)];
 	
-	[self.launchScreen.launchImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:leafIdentifier size:3]];
-	[self.launchScreen setBackgroundColor:[RSAesthetics accentColorForLaunchScreen:leafIdentifier]];
+	[self.launchScreen.launchImageView setCenter:CGPointMake(screenWidth/2, screenHeight/2)];
+	[self.launchScreen setBackgroundColor:[RSAesthetics accentColorForLaunchScreen:tileInfo]];
 }
 
 - (void)show {

@@ -23,7 +23,12 @@
 }
 
 - (void)setTime:(NSString *)time {
-	[timeLabel setText:time];
+	NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:time];
+	[attributedString addAttributes:@{
+									  NSBaselineOffsetAttributeName: @8.0
+									  }range:[time rangeOfString:@":"]];
+	
+	[timeLabel setAttributedText:attributedString];
 	[timeLabel sizeToFit];
 	[timeLabel setFrame:CGRectMake(21, screenHeight - timeLabel.frame.size.height - (140 - 42), timeLabel.frame.size.width, timeLabel.frame.size.height)];
 }

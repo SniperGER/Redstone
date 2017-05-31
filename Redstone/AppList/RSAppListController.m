@@ -78,7 +78,14 @@ static RSAppListController* sharedInstance;
 			RSApp* app = [[RSApp alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 54) leafIdentifier:[visibleIcons objectAtIndex:i]];
 			[self.appList addSubview:app];
 			
-			NSString* first = [[[app.icon displayName] substringWithRange:NSMakeRange(0,1)] uppercaseString];
+			NSString* first;
+			if (app.tileInfo.localizedDisplayName) {
+				first = [[app.tileInfo.localizedDisplayName substringWithRange:NSMakeRange(0,1)] uppercaseString];
+			} else if (app.tileInfo.displayName) {
+				first = [[app.tileInfo.displayName substringWithRange:NSMakeRange(0,1)] uppercaseString];
+			} else {
+				first = [[[app.icon displayName] substringWithRange:NSMakeRange(0,1)] uppercaseString];
+			}
 			
 			if (first != nil) {
 				BOOL isString = [alphabet rangeOfString:first].location != NSNotFound;
@@ -243,7 +250,7 @@ static RSAppListController* sharedInstance;
 
 - (void)prepareForAppLaunch:(RSApp *)sender {
 	[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:NO];
-	[[RSLaunchScreenController sharedInstance] setLaunchScreenForLeafIdentifier:[[sender.icon application] bundleIdentifier]];
+	[[RSLaunchScreenController sharedInstance] setLaunchScreenForLeafIdentifier:[[sender.icon application] bundleIdentifier] tileInfo:sender.tileInfo];
 	[self.searchBar resignFirstResponder];
 	
 	NSMutableArray* viewsInView = [NSMutableArray new];

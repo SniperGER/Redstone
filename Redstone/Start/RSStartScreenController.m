@@ -386,7 +386,7 @@ static RSStartScreenController* sharedInstance;
 
 - (void)prepareForAppLaunch:(RSTile *)sender {
 	[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:NO];
-	[[RSLaunchScreenController sharedInstance] setLaunchScreenForLeafIdentifier:[[sender.icon application] bundleIdentifier]];
+	[[RSLaunchScreenController sharedInstance] setLaunchScreenForLeafIdentifier:[[sender.icon application] bundleIdentifier] tileInfo:sender.tileInfo];
 	
 	NSMutableArray* appsInView = [NSMutableArray new];
 	NSMutableArray* appsNotInView = [NSMutableArray new];

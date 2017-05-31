@@ -41,7 +41,13 @@ NSBundle* redstoneBundle;
 	UIImage* tileImage = [[UIImage imageWithContentsOfFile:imagePath] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	
 	if (!tileImage) {
-		return [[[[objc_getClass("SBIconController") sharedInstance] model] applicationIconForBundleIdentifier:bundleIdentifier] getUnmaskedIconImage:2];
+		UIImage* defaultAppIcon = [[[[objc_getClass("SBIconController") sharedInstance] model] applicationIconForBundleIdentifier:bundleIdentifier] getUnmaskedIconImage:2];
+		
+		if (!defaultAppIcon) {
+			return [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/default_icon", RESOURCE_PATH]];
+		}
+		
+		return defaultAppIcon;
 	}
 	
 	return tileImage;
@@ -87,23 +93,23 @@ NSBundle* redstoneBundle;
 	return [self colorFromHexString:[[RSPreferences preferences] objectForKey:@"accentColor"]];
 }
 
-+ (UIColor*)accentColorForTile:(NSString *)bundleIdentifier {
-	NSDictionary* tileInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/%@/tile.plist", RESOURCE_PATH, bundleIdentifier]];
-	
-	if ([tileInfo objectForKey:@"AccentColor"]) {
-		return [self colorFromHexString:[tileInfo objectForKey:@"AccentColor"]];
++ (UIColor*)accentColorForTile:(RSTileInfo*)tileInfo {
+	if (tileInfo.tileAccentColor) {
+		return [self colorFromHexString:tileInfo.tileAccentColor];
+	} else if (tileInfo.accentColor) {
+		return [self colorFromHexString:tileInfo.accentColor];
 	} else {
 		return [[self accentColor] colorWithAlphaComponent:[self tileOpacity]];
 	}
 }
 
-+ (UIColor*)accentColorForLaunchScreen:(NSString*)bundleIdentifier {
-	NSDictionary* tileInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/%@/tile.plist", RESOURCE_PATH, bundleIdentifier]];
-	
-	if ([tileInfo objectForKey:@"LaunchScreenAccentColor"]) {
-		return [self colorFromHexString:[tileInfo objectForKey:@"LaunchScreenAccentColor"]];
++ (UIColor*)accentColorForLaunchScreen:(RSTileInfo*)tileInfo {
+	if (tileInfo.launchScreenAccentColor) {
+		return [self colorFromHexString:tileInfo.launchScreenAccentColor];
+	} else if (tileInfo.accentColor) {
+		return [self colorFromHexString:tileInfo.accentColor];
 	} else {
-		return [[self accentColorForTile:bundleIdentifier] colorWithAlphaComponent:1.0];
+		return [self accentColor];
 	}
 }
 

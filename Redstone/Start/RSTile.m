@@ -7,49 +7,68 @@
 	
 	if (self) {
 		self.size = tileSize;
+		self.tileInfo = [[RSTileInfo alloc] initWithBundleIdentifier:leafId];
 		self.icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafId];
 		self.originalCenter = self.center;
 		
 		tileLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-		[tileLabel setText:[self.icon displayName]];
 		[tileLabel setFont:[UIFont fontWithName:@"SegoeUI" size:14]];
 		[tileLabel setTextColor:[UIColor whiteColor]];
 		
+		if (self.tileInfo.localizedDisplayName) {
+			[tileLabel setText:self.tileInfo.localizedDisplayName];
+		} else if (self.tileInfo.displayName) {
+			[tileLabel setText:self.tileInfo.displayName];
+		} else {
+			[tileLabel setText:[self.icon displayName]];
+		}
+		
 		[tileLabel sizeToFit];
 		[tileLabel setFrame:CGRectMake(8,
-											 self.frame.size.height - tileLabel.frame.size.height - 8,
-											 tileLabel.frame.size.width,
-											 tileLabel.frame.size.height)];
+									   self.frame.size.height - tileLabel.frame.size.height - 8,
+									   tileLabel.frame.size.width,
+									   tileLabel.frame.size.height)];
 		[self addSubview:tileLabel];
 		
-		if ([[self getTileInfo] objectForKey:@"TileLabelHidden"] && [[[self getTileInfo] objectForKey:@"TileLabelHidden"] boolValue]) {
-			[tileLabel setHidden:YES];
-		}
-		
-		if (tileSize < 2) {
-			[tileLabel setHidden:YES];
-		}
-		
-		if ([[self getTileInfo] objectForKey:@"FullBleedArtwork"] && [[[self getTileInfo] objectForKey:@"FullBleedArtwork"] boolValue]) {
+		if (self.tileInfo.fullSizeArtwork) {
 			tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size]];
+			[self addSubview:tileImageView];
 		} else {
 			CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:tileSize];
 			tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
 			[tileImageView setCenter:CGPointMake(frame.size.width/2, frame.size.height/2)];
-			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
-			[tileImageView setTintColor:[UIColor whiteColor]];
+			
+			if (self.tileInfo.hasColoredIcon) {
+				[tileImageView setImage:[[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+			} else {
+				[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
+				[tileImageView setTintColor:[UIColor whiteColor]];
+			}
+			[self addSubview:tileImageView];
 		}
-		[self addSubview:tileImageView];
 		
-		badgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
-		[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
-		[badgeLabel setTextColor:[UIColor whiteColor]];
-		[badgeLabel setTextAlignment:NSTextAlignmentCenter];
-		[badgeLabel setHidden:YES];
+		if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
+			[tileLabel setHidden:YES];
+		} else {
+			[tileLabel setHidden:NO];
+		}
+		
+		if (self.tileInfo.usesCornerBadge) {
+			badgeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+			[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:14]];
+			[badgeLabel setTextColor:[UIColor whiteColor]];
+			[badgeLabel setHidden:YES];
+		} else {
+			badgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
+			[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
+			[badgeLabel setTextColor:[UIColor whiteColor]];
+			[badgeLabel setTextAlignment:NSTextAlignmentCenter];
+			[badgeLabel setHidden:YES];
+		}
 		[self addSubview:badgeLabel];
 		
-		[self setBackgroundColor:[RSAesthetics accentColorForTile:[[self.icon application] bundleIdentifier]]];
+		[self setBackgroundColor:[RSAesthetics accentColorForTile:self.tileInfo]];
 		
 		longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
 		[longPressGestureRecognizer setMinimumPressDuration:0.5];
@@ -202,29 +221,31 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	[self setFrame:newTilePosition];
 	self.originalCenter = self.center;
 	
-	if (self.size < 2) {
-		[tileLabel setHidden:YES];
-	} else {
-		[tileLabel setFrame:CGRectMake(8,
-											 self.frame.size.height - tileLabel.frame.size.height - 8,
-											 tileLabel.frame.size.width,
-											 tileLabel.frame.size.height)];
-		if ([[self getTileInfo] objectForKey:@"TileLabelHidden"] && [[[self getTileInfo] objectForKey:@"TileLabelHidden"] boolValue]) {
-			[tileLabel setHidden:YES];
-		} else {
-			[tileLabel setHidden:NO];
-		}
-	}
-	
-	if ([[self getTileInfo] objectForKey:@"FullBleedArtwork"] && [[[self getTileInfo] objectForKey:@"FullBleedArtwork"] boolValue]) {
+	if (self.tileInfo.fullSizeArtwork) {
 		[tileImageView setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
 		[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size]];
 	} else {
 		CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
 		[tileImageView setFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
-		[tileImageView setCenter:CGPointMake(self.frame.size.width/2, self.frame.size.height/2)];
+		[tileImageView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
+		
+		if (self.tileInfo.hasColoredIcon) {
+			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
+		} else {
+			[tileImageView setImage:[[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+			[tileImageView setTintColor:[UIColor whiteColor]];
+		}
 	}
 	
+	if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
+		[tileLabel setHidden:YES];
+	} else {
+		[tileLabel setHidden:NO];
+		[tileLabel setFrame:CGRectMake(8,
+									   self.frame.size.height - tileLabel.frame.size.height - 8,
+									   tileLabel.frame.size.width,
+									   tileLabel.frame.size.height)];
+	}
 	
 	[unpinButton setCenter:CGPointMake(self.frame.size.width, 0)];
 	[scaleButton setCenter:CGPointMake(self.frame.size.width, self.frame.size.height)];
@@ -233,8 +254,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
 	
 	[self setBadge:badgeValue];
-	
-	//[[RSStartScreenController sharedInstance] updateStartContentSize];
+
 	[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
 }
 
@@ -347,15 +367,52 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 }
 
 - (void)setBadge:(int)badgeCount {
+	//badgeCount = MIN(badgeCount, 99);
 	badgeValue = badgeCount;
-	
-	CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
 	
 	if (!badgeCount || badgeCount == 0) {
 		[badgeLabel setText:nil];
 		[badgeLabel setHidden:YES];
 		[tileImageView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
+		return;
+	}
+	
+	if (self.tileInfo.usesCornerBadge || [[self.tileInfo.cornerBadgeForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
+		if (badgeCount > 99) {
+			[badgeLabel setText:@"99+"];
+		} else {
+			[badgeLabel setText:[NSString stringWithFormat:@"%d", badgeCount]];
+		}
+		[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:14]];
+		[badgeLabel sizeToFit];
+		[badgeLabel setFrame:CGRectMake(self.bounds.size.width - badgeLabel.frame.size.width - 8,
+										self.bounds.size.height - badgeLabel.frame.size.height - 8,
+										badgeLabel.frame.size.width,
+										badgeLabel.frame.size.height)];
+		[badgeLabel setHidden:NO];
 	} else {
+		if (self.size < 2) {
+			[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:24]];
+		} else {
+			[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
+		}
+		
+		[badgeLabel setText:[NSString stringWithFormat:@"%d", MIN(badgeCount, 99)]];
+		[badgeLabel sizeToFit];
+		
+		CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
+		CGSize combinedSize = CGSizeMake(tileImageSize.width + badgeLabel.frame.size.width + 5, tileImageSize.height);
+		
+		[tileImageView setCenter:CGPointMake(self.bounds.size.width/2 - (combinedSize.width - tileImageView.frame.size.width)/2, self.bounds.size.height/2)];
+		[badgeLabel setCenter:CGPointMake(self.bounds.size.width/2 + (combinedSize.width - badgeLabel.frame.size.width)/2, self.bounds.size.height/2)];
+		
+		[badgeLabel setHidden:NO];
+	}
+	
+	/*CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
+	
+	if (!badgeCount || badgeCount == 0) {
+			} else {
 		if (self.size < 2) {
 			[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:24]];
 		} else {
@@ -371,7 +428,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		[badgeLabel setCenter:CGPointMake(self.bounds.size.width/2 + (combinedSize.width - badgeLabel.frame.size.width)/2, self.bounds.size.height/2)];
 		
 		[badgeLabel setHidden:NO];
-	}
+	}*/
 }
 
 - (NSDictionary*)getTileInfo {

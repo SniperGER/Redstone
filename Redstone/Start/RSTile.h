@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class SBLeafIcon, RSTiltView;
+@class SBLeafIcon, RSTiltView, RSTileInfo;
 
 @interface RSTile : RSTiltView <UIGestureRecognizerDelegate> {
 	CGPoint centerOffset;
@@ -26,7 +26,8 @@
 
 @property (nonatomic, assign) CGPoint originalCenter;
 @property (nonatomic, assign) int size;
-@property (nonatomic, strong) SBLeafIcon* icon;
+@property (nonatomic, retain) RSTileInfo* tileInfo;
+@property (nonatomic, retain) SBLeafIcon* icon;
 @property (nonatomic, assign) BOOL isSelectedTile;
 @property (nonatomic, assign) int tileX;
 @property (nonatomic, assign) int tileY;
