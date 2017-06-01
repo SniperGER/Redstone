@@ -32,7 +32,7 @@
 		
 		if (self.tileInfo.fullSizeArtwork) {
 			tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size]];
+			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size colored:YES]];
 			[self addSubview:tileImageView];
 		} else {
 			CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:tileSize];
@@ -40,7 +40,7 @@
 			[tileImageView setCenter:CGPointMake(frame.size.width/2, frame.size.height/2)];
 			
 			if (self.tileInfo.hasColoredIcon) {
-				[tileImageView setImage:[[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+				[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
 			} else {
 				[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
 				[tileImageView setTintColor:[UIColor whiteColor]];
@@ -223,7 +223,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	
 	if (self.tileInfo.fullSizeArtwork) {
 		[tileImageView setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
-		[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size]];
+		[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size colored:YES]];
 	} else {
 		CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
 		[tileImageView setFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];

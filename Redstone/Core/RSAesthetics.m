@@ -53,7 +53,7 @@ NSBundle* redstoneBundle;
 	return tileImage;
 }
 
-+ (UIImage*)getImageForTileWithBundleIdentifier:(NSString*)bundleIdentifier size:(int)size {
++ (UIImage*)getImageForTileWithBundleIdentifier:(NSString*)bundleIdentifier size:(int)size colored:(BOOL)colored {
 	NSString* iconFileName = @"";
 	
 	switch (size) {
@@ -84,6 +84,10 @@ NSBundle* redstoneBundle;
 	
 	if (!tileImage) {
 		return [self getImageForTileWithBundleIdentifier:bundleIdentifier];
+	}
+	
+	if (!colored) {
+		return [tileImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	}
 	
 	return tileImage;

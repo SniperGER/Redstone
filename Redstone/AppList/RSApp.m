@@ -16,20 +16,14 @@
 		
 		if (self.tileInfo.fullSizeArtwork) {
 			appImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-			[appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:5]];
-			[tileBackground addSubview:appImageView];
+			[appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:5 colored:YES]];
 		} else {
 			appImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 37.5, 37.5)];
 			[appImageView setCenter:CGPointMake(25, 25)];
-			
-			if (self.tileInfo.hasColoredIcon) {
-				[appImageView setImage:[[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-			} else {
-				[appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
-				[appImageView setTintColor:[UIColor whiteColor]];
-			}
-			[tileBackground addSubview:appImageView];
+			[appImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:5 colored:self.tileInfo.hasColoredIcon]];
+			[appImageView setTintColor:[UIColor whiteColor]];
 		}
+		[tileBackground addSubview:appImageView];
 		
 		appLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, frame.size.width-70, 54)];
 		[appLabel setFont:[UIFont fontWithName:@"SegoeUI-Semilight" size:20]];

@@ -24,15 +24,11 @@ static RSLaunchScreenController* sharedInstance;
 - (void)setLaunchScreenForLeafIdentifier:(NSString*)leafIdentifier tileInfo:(RSTileInfo*)tileInfo {
 	if (tileInfo.fullSizeArtwork) {
 		[self.launchScreen.launchImageView setFrame:CGRectMake(0, 0, 269, 132)];
+		[self.launchScreen.launchImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:leafIdentifier size:3 colored:YES]];
 	} else {
 		[self.launchScreen.launchImageView setFrame:CGRectMake(0, 0, 76, 76)];
-		
-		if (tileInfo.hasColoredIcon) {
-			[self.launchScreen.launchImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:leafIdentifier size:3]];
-		} else {
-			[self.launchScreen.launchImageView setImage:[[RSAesthetics getImageForTileWithBundleIdentifier:leafIdentifier size:3] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-			[self.launchScreen.launchImageView setTintColor:[UIColor whiteColor]];
-		}
+		[self.launchScreen.launchImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:leafIdentifier size:3 colored:tileInfo.hasColoredIcon]];
+		[self.launchScreen.launchImageView setTintColor:[UIColor whiteColor]];
 	}
 	
 	[self.launchScreen.launchImageView setCenter:CGPointMake(screenWidth/2, screenHeight/2)];
