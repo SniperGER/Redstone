@@ -44,7 +44,7 @@ NSBundle* redstoneBundle;
 		UIImage* defaultAppIcon = [[[[objc_getClass("SBIconController") sharedInstance] model] applicationIconForBundleIdentifier:bundleIdentifier] getUnmaskedIconImage:2];
 		
 		if (!defaultAppIcon) {
-			return [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/default_icon", RESOURCE_PATH]];
+			return [[UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/default_icon", RESOURCE_PATH]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 		}
 		
 		return defaultAppIcon;
@@ -94,6 +94,10 @@ NSBundle* redstoneBundle;
 }
 
 + (UIColor*)accentColor {
+	if ([[[RSPreferences preferences] objectForKey:@"accentColor"] isEqualToString:@"auto"]) {
+		return [[self homeScreenWallpaper] mergedColor];
+	}
+	
 	return [self colorFromHexString:[[RSPreferences preferences] objectForKey:@"accentColor"]];
 }
 

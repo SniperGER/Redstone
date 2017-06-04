@@ -13,6 +13,8 @@
 		8D0BBA5A1ED16DD3008D6246 /* segoeui.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D0BB9C11ED16DD2008D6246 /* segoeui.ttf */; };
 		8D0BBA5B1ED16DD3008D6246 /* segoeuil.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D0BB9C21ED16DD2008D6246 /* segoeuil.ttf */; };
 		8D0BBA5C1ED16DD3008D6246 /* segoeuisl.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D0BB9C31ED16DD2008D6246 /* segoeuisl.ttf */; };
+		8D17C8651EE3502300A2FE2F /* UIImageAverageColorAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D17C8641EE3502300A2FE2F /* UIImageAverageColorAddition.m */; };
+		8D17C8801EE35BB900A2FE2F /* RSTileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D17C87F1EE35BB900A2FE2F /* RSTileInfo.m */; };
 		8D1D34111EB7DCBA00BA9956 /* Redstone.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */; };
 		8D1D34121EB7DCBA00BA9956 /* Redstone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */; };
 		8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 8D1D34101EB7DCBA00BA9956 /* Makefile */; };
@@ -349,6 +351,10 @@
 		8D0BB9C21ED16DD2008D6246 /* segoeuil.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = segoeuil.ttf; sourceTree = "<group>"; };
 		8D0BB9C31ED16DD2008D6246 /* segoeuisl.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = segoeuisl.ttf; sourceTree = "<group>"; };
 		8D0CB4E31EB9DBC600E39A02 /* hiddenapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hiddenapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D17C8631EE3502300A2FE2F /* UIImageAverageColorAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageAverageColorAddition.h; sourceTree = "<group>"; };
+		8D17C8641EE3502300A2FE2F /* UIImageAverageColorAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageAverageColorAddition.m; sourceTree = "<group>"; };
+		8D17C87F1EE35BB900A2FE2F /* RSTileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTileInfo.m; sourceTree = "<group>"; };
+		8D17C8811EE35BC400A2FE2F /* RSLiveTileDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSLiveTileDelegate.h; sourceTree = "<group>"; };
 		8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Redstone.xm; path = Redstone/Redstone.xm; sourceTree = "<group>"; };
 		8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Redstone.plist; path = Redstone/Redstone.plist; sourceTree = "<group>"; };
 		8D1D34101EB7DCBA00BA9956 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = Redstone/Makefile; sourceTree = "<group>"; };
@@ -893,6 +899,8 @@
 				8DBD107D1EC23BD400A5A037 /* UIView+Easing.m */,
 				8D58CFC41EC44AB90021F625 /* UIFont+WDCustomLoader.h */,
 				8D58CFC51EC44AB90021F625 /* UIFont+WDCustomLoader.m */,
+				8D17C8631EE3502300A2FE2F /* UIImageAverageColorAddition.h */,
+				8D17C8641EE3502300A2FE2F /* UIImageAverageColorAddition.m */,
 			);
 			name = Lib;
 			path = Redstone/Lib;
@@ -932,6 +940,8 @@
 				8DBD109D1EC23CD000A5A037 /* RSTile.h */,
 				8D8A10F11ED21BF6004A7811 /* RSTile.m */,
 				8DB357201EDE8F380098BBCB /* RSTileInfo.h */,
+				8D17C87F1EE35BB900A2FE2F /* RSTileInfo.m */,
+				8D17C8811EE35BC400A2FE2F /* RSLiveTileDelegate.h */,
 			);
 			name = Start;
 			path = Redstone/Start;
@@ -2159,6 +2169,7 @@
 				8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */,
 				8D49A8891ED6CEA300A36E8D /* RSLockScreenController.m in Sources */,
 				8D49A8AD1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m in Sources */,
+				8D17C8651EE3502300A2FE2F /* UIImageAverageColorAddition.m in Sources */,
 				8DE79E9C1EC79AA5004EF2E6 /* RSPinMenu.m in Sources */,
 				8D36C4DC1ECE4C5D00327349 /* RSTiltView.m in Sources */,
 				8DBD10801EC23BD400A5A037 /* UIView+Easing.m in Sources */,
@@ -2175,6 +2186,7 @@
 				8D49A8A71ED773B100A36E8D /* RSLockScreenPasscodeEntryController.m in Sources */,
 				8D49A8A11ED7523300A36E8D /* RSLockScreenView.m in Sources */,
 				8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */,
+				8D17C8801EE35BB900A2FE2F /* RSTileInfo.m in Sources */,
 				8DBD109F1EC23CD000A5A037 /* RSStartScreenController.m in Sources */,
 				8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */,
 				8D8A10F21ED21BF6004A7811 /* RSTile.m in Sources */,

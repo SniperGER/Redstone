@@ -5,7 +5,9 @@
 - (id)tableView:(UITableView *)arg1 cellForRowAtIndexPath:(NSIndexPath *)arg2 {
 	PSTableCell *cell = (PSTableCell*)[super tableView:arg1 cellForRowAtIndexPath:arg2];
 	
-	[cell.imageView setImage:[self imageFromColor:[self colorFromHexString:cell.textLabel.text]]];
+	if (![[[[cell specifier] values] objectAtIndex:0] isEqualToString:@"auto"]) {
+		[cell.imageView setImage:[self imageFromColor:[self colorFromHexString:cell.textLabel.text]]];
+	}
 	
 	return cell;
 }

@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 
 @class SBLeafIcon, RSTiltView, RSTileInfo;
+@protocol RSLiveTileDelegate;
 
 @interface RSTile : RSTiltView <UIGestureRecognizerDelegate> {
 	CGPoint centerOffset;
@@ -22,6 +23,8 @@
 	UITapGestureRecognizer* scaleGestureRecognizer;
 	
 	BOOL shouldAllowPan;
+	
+	UIView<RSLiveTileDelegate>* liveTile;
 }
 
 @property (nonatomic, assign) CGPoint originalCenter;

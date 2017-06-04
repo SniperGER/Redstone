@@ -155,6 +155,7 @@
 				<string>#525E54</string>
 				<string>#847545</string>
 				<string>#7E735F</string>
+				<string>Automatic</string>
 			</array>
 			<key>validValues</key>
 			<array>
@@ -206,6 +207,7 @@
 				<string>#525E54</string>
 				<string>#847545</string>
 				<string>#7E735F</string>
+				<string>auto</string>
 			</array>
 		</dict>
 		<dict>

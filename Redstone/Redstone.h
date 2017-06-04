@@ -4,6 +4,7 @@
 #import "Lib/UIView+Easing.h"
 #import "Lib/CAKeyframeAnimation+AHEasing.h"
 #import "Lib/UIFont+WDCustomLoader.h"
+#import "Lib/UIImageAverageColorAddition.h"
 
 #import "Core/RSCore.h"
 #import "Core/RSAesthetics.h"
@@ -18,6 +19,7 @@
 #import "Start/RSStartScrollView.h"
 #import "Start/RSTile.h"
 #import "Start/RSTileInfo.h"
+#import "Start/RSLiveTileDelegate.h"
 
 #import "Launch/RSLaunchScreenController.h"
 #import "Launch/RSLaunchScreen.h"

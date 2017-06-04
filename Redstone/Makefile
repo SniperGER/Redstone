@@ -21,7 +21,7 @@ Redstone_FILES = Redstone_Core.xm Redstone_StartScreen.xm Redstone_LockScreen.xm
 Redstone_FILES += Core/RSCore.m Core/RSAesthetics.m Core/RSMetrics.m Core/RSRootScrollView.m Core/RSPreferences.m Core/RSModalAlert.m Core/RSTiltView.m Core/RSNotificationView.m
 
 # Lib
-Redstone_FILES += Lib/UIView+Easing.m Lib/easing.c Lib/CAKeyframeAnimation+AHEasing.m Lib/UIFont+WDCustomLoader.m
+Redstone_FILES += Lib/UIView+Easing.m Lib/easing.c Lib/CAKeyframeAnimation+AHEasing.m Lib/UIFont+WDCustomLoader.m Lib/UIImageAverageColorAddition.m
 
 # Start Screen
 Redstone_FILES += Start/RSStartScreenController.m Start/RSStartScrollView.m Start/RSTile.m Start/RSTileInfo.m
@@ -50,5 +50,5 @@ endif
 
 after-install::
 	install.exec "killall -9 SpringBoard"
-#SUBPROJECTS += redstone_prefs
+SUBPROJECTS += redstone_prefs
 include $(THEOS_MAKE_PATH)/aggregate.mk

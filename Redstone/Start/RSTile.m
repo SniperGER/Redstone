@@ -126,6 +126,15 @@
 		if ([[self.icon application] badgeNumberOrString] != nil) {
 			[self setBadge:[[[self.icon application] badgeNumberOrString] intValue]];
 		}
+		
+		NSBundle* liveTileBundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Live Tiles/%@.tile", RESOURCE_PATH, leafId]];
+		if (liveTileBundle) {
+			liveTile = [[[liveTileBundle principalClass] alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+			//[self addSubview:liveTile];
+			
+			//[tileLabel setHidden:YES];
+			//[tileImageView setHidden:YES];
+		}
 	}
 	
 	return self;
