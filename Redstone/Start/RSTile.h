@@ -25,6 +25,7 @@
 	BOOL shouldAllowPan;
 	
 	UIView<RSLiveTileDelegate>* liveTile;
+	NSTimer* liveTileUpdateTimer;
 }
 
 @property (nonatomic, assign) CGPoint originalCenter;

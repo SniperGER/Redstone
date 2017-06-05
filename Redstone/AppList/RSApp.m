@@ -73,14 +73,4 @@
 	}
 }
 
-- (NSDictionary*)getTileInfo {
-	NSDictionary* tileInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/%@/tile.plist", RESOURCE_PATH, [[self.icon application] bundleIdentifier]]];
-	
-	if (!tileInfo) {
-		return [NSDictionary new];
-	}
-	
-	return tileInfo;
-}
-
 @end

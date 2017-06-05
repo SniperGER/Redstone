@@ -30,6 +30,12 @@
 									   tileLabel.frame.size.height)];
 		[self addSubview:tileLabel];
 		
+		if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
+			[tileLabel setHidden:YES];
+		} else {
+			[tileLabel setHidden:NO];
+		}
+		
 		if (self.tileInfo.fullSizeArtwork) {
 			tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size colored:YES]];
@@ -46,12 +52,6 @@
 				[tileImageView setTintColor:[UIColor whiteColor]];
 			}
 			[self addSubview:tileImageView];
-		}
-		
-		if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
-			[tileLabel setHidden:YES];
-		} else {
-			[tileLabel setHidden:NO];
 		}
 		
 		if (self.tileInfo.usesCornerBadge) {
@@ -130,10 +130,18 @@
 		NSBundle* liveTileBundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Live Tiles/%@.tile", RESOURCE_PATH, leafId]];
 		if (liveTileBundle) {
 			liveTile = [[[liveTileBundle principalClass] alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-			//[self addSubview:liveTile];
+			[liveTile prepareForUpdate];
 			
-			//[tileLabel setHidden:YES];
-			//[tileImageView setHidden:YES];
+			if (self.size >= 2) {
+				[self addSubview:liveTile];
+				
+				[tileLabel setHidden:YES];
+				[tileImageView setHidden:YES];
+			}
+			
+			if ([liveTile tileUpdateInterval] > 0) {
+				liveTileUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:[liveTile tileUpdateInterval] target:self selector:@selector(updateLiveTile) userInfo:nil repeats:YES];
+			}
 		}
 	}
 	
@@ -440,14 +448,10 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	}*/
 }
 
-- (NSDictionary*)getTileInfo {
-	NSDictionary* tileInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Tiles/%@/tile.plist", RESOURCE_PATH, [[self.icon application] bundleIdentifier]]];
-	
-	if (!tileInfo) {
-		return [NSDictionary new];
+- (void)updateLiveTile {
+	if (![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked] && ![[RSCore sharedInstance] currentApplication]) {
+		[liveTile prepareForUpdate];
 	}
-	
-	return tileInfo;
 }
 
 @end
