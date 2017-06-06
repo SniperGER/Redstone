@@ -1,12 +1,16 @@
 #import <Foundation/Foundation.h>
 
+
 @protocol RSLiveTileDelegate <NSObject>
 
 @required
+@property (nonatomic, retain) RSTile* tile;
+
 - (BOOL)isReadyForShow;
 - (BOOL)keepsLiveTilePage;
-- (NSInteger)liveTilePages;
+- (BOOL)hasMultiplePages;
 - (CGFloat)tileUpdateInterval;
 - (void)prepareForUpdate;
+- (NSArray*)viewsForSize:(int)size;
 
 @end

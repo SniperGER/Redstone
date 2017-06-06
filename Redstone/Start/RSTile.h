@@ -6,6 +6,9 @@
 @interface RSTile : RSTiltView <UIGestureRecognizerDelegate> {
 	CGPoint centerOffset;
 	
+	UIView* tileWrapper;
+	UIView* tileContainer;
+	
 	UILabel* tileLabel;
 	UIImageView* tileImageView;
 	
@@ -26,6 +29,8 @@
 	
 	UIView<RSLiveTileDelegate>* liveTile;
 	NSTimer* liveTileUpdateTimer;
+	NSTimer* liveTileAnimationTimer;
+	NSInteger liveTilePageIndex;
 }
 
 @property (nonatomic, assign) CGPoint originalCenter;
@@ -41,5 +46,9 @@
 - (CGRect)positionWithoutTransform;
 - (CGPoint)originalCenter;
 - (void)setBadge:(int)badgeCount;
+
+- (void)setLiveTileIsReady;
+- (void)startLiveTile;
+- (void)stopLiveTile;
 
 @end

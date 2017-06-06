@@ -461,6 +461,8 @@ static RSStartScreenController* sharedInstance;
 			[tile.layer removeAllAnimations];
 			[tile.layer setAnchorPoint:CGPointMake(0.5,0.5)];
 			[tile setCenter:[tile originalCenter]];
+			
+			[tile stopLiveTile];
 		}
 		
 		[[RSLaunchScreenController sharedInstance] show];
@@ -551,6 +553,8 @@ static RSStartScreenController* sharedInstance;
 			[tile setHidden:NO];
 			[tile.layer setAnchorPoint:CGPointMake(0.5,0.5)];
 			[tile setCenter:[tile originalCenter]];
+			
+			[tile startLiveTile];
 		}
 		
 		[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:YES];
