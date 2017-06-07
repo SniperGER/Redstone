@@ -35,4 +35,6 @@
 - (void)prepareForAppLaunch:(RSTile *)sender;
 - (void)returnToHomescreen;
 
+- (void)deviceFinishedLock;
+
 @end

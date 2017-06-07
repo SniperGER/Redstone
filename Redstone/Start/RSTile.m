@@ -143,18 +143,18 @@
 			[liveTile setTile:self];
 			[tileWrapper addSubview:liveTile];
 			
-			if ([liveTile hasMultiplePages]) {
+			if ([liveTile hasMultiplePages] || [liveTile allowsRemovalOfSubviews]) {
 				[[liveTile subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+			}
 				
-				NSArray* viewsForSize = [liveTile viewsForSize:self.size];
-				for (int i=0; i<viewsForSize.count; i++) {
-					[[viewsForSize objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
-					[liveTile addSubview:[viewsForSize objectAtIndex:i]];
-				}
+			NSArray* viewsForSize = [liveTile viewsForSize:self.size];
+			for (int i=0; i<viewsForSize.count; i++) {
+				[[viewsForSize objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
+				[liveTile addSubview:[viewsForSize objectAtIndex:i]];
 			}
 			
-			if ([liveTile tileUpdateInterval] > 0) {
-				//liveTileUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:[liveTile tileUpdateInterval] target:self selector:@selector(updateLiveTile) userInfo:nil repeats:YES];
+			if (![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked]) {
+				[self startLiveTile];
 			}
 		}
 	}
@@ -268,7 +268,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		}
 	}
 	
-	if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue] || liveTile != nil) {
+	if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
 		[tileLabel setHidden:YES];
 	} else {
 		[tileLabel setHidden:NO];
@@ -284,9 +284,12 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		
 		liveTilePageIndex = 0;
 		
-		[[liveTile subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 		[liveTileAnimationTimer invalidate];
 		liveTileAnimationTimer = nil;
+		
+		if ([liveTile hasMultiplePages] || [liveTile allowsRemovalOfSubviews]) {
+			[[liveTile subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+		}
 		
 		NSArray* viewsForSize = [liveTile viewsForSize:self.size];
 		for (int i=0; i<viewsForSize.count; i++) {
@@ -294,7 +297,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[liveTile addSubview:[viewsForSize objectAtIndex:i]];
 		}
 		
-		if (viewsForSize.count > 1 && ![liveTile keepsLiveTilePage]) {
+		if (viewsForSize.count > 1 && [liveTile hasMultiplePages]) {
 			liveTileAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(showNextLiveTilePage) userInfo:nil repeats:YES];
 		}
 	}
@@ -483,31 +486,43 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	}*/
 }
 
-- (void)setLiveTileIsReady {
+- (void)setLiveTileIsReady:(BOOL)animated {
 	if (liveTile == nil) {
 		return;
 	}
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(rand()%3+1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		if (liveTile.subviews.count > 1 && ![liveTile keepsLiveTilePage]) {
+		if (liveTile.subviews.count > 1 && [liveTile hasMultiplePages]) {
 			liveTileAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(showNextLiveTilePage) userInfo:nil repeats:YES];
 		}
 		
 		[tileContainer setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
 		[liveTile setFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 		
-		[UIView animateWithDuration:1.0 animations:^{
-			[tileContainer setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-			[liveTile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-			
+		if ([liveTile hasMultiplePages]) {
+			for (int i=0; i<liveTile.subviews.count; i++) {
+				[[liveTile.subviews objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
+			}
+		}
+		
+		if (animated) {
+			[UIView animateWithDuration:1.0 animations:^{
+				[tileContainer setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+				[liveTile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+				
+				[tileContainer setFrame:CGRectMake(0, -self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
+				[liveTile setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+			} completion:^(BOOL finished){
+				[tileContainer removeEasingFunctionForKeyPath:@"frame"];
+				[liveTile removeEasingFunctionForKeyPath:@"frame"];
+				
+				[tileContainer setHidden:YES];
+			}];
+		} else {
+			[tileContainer setHidden:YES];
 			[tileContainer setFrame:CGRectMake(0, -self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 			[liveTile setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
-		} completion:^(BOOL finished){
-			[tileContainer removeEasingFunctionForKeyPath:@"frame"];
-			[liveTile removeEasingFunctionForKeyPath:@"frame"];
-			
-			[tileContainer setFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
-		}];
+		}
 	});
 }
 
@@ -528,8 +543,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	
 	[liveTile prepareForUpdate];
 	
-	if ([liveTile isReadyForShow]) {
-		[self setLiveTileIsReady];
+	if ([liveTile isReadyForDisplay]) {
+		[self setLiveTileIsReady:[liveTile hasMultiplePages]];
 	}
 }
 
@@ -548,17 +563,21 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		liveTileUpdateTimer = nil;
 	}
 	
-	[tileContainer setFrame:CGRectMake(0, -self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
-	[UIView animateWithDuration:1.0 animations:^{
-		[tileContainer setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-		[liveTile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-		
+	liveTilePageIndex = 0;
+	[liveTile requestStop];
+	
+	if ([liveTile hasMultiplePages]) {
 		[tileContainer setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+		[tileContainer setHidden:NO];
+		
 		[liveTile setFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
-	} completion:^(BOOL finished){
-		[tileContainer removeEasingFunctionForKeyPath:@"frame"];
-		[liveTile removeEasingFunctionForKeyPath:@"frame"];
-	}];
+		
+		if ([liveTile hasMultiplePages]) {
+			for (int i=0; i<liveTile.subviews.count; i++) {
+				[[liveTile.subviews objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
+			}
+		}
+	}
 }
 
 - (void)updateLiveTile {
@@ -570,7 +589,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 }
 
 - (void)showNextLiveTilePage {
-	if (!liveTile || [liveTile subviews].count < 1 || ![liveTile isReadyForShow]) {
+	if (!liveTile || [liveTile subviews].count < 1 || ![liveTile isReadyForDisplay]) {
 		return;
 	}
 	if ([[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked]) {

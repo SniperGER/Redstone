@@ -47,7 +47,7 @@
 - (CGPoint)originalCenter;
 - (void)setBadge:(int)badgeCount;
 
-- (void)setLiveTileIsReady;
+- (void)setLiveTileIsReady:(BOOL)animated;
 - (void)startLiveTile;
 - (void)stopLiveTile;
 

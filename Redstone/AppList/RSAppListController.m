@@ -165,8 +165,6 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)sortAppsAndLayout:(NSArray*)_sections {
-	
-	
 	NSString* alphabet = @"#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
 	
 	int yPos = 0;

@@ -561,4 +561,10 @@ static RSStartScreenController* sharedInstance;
 	});
 }
 
+- (void)deviceFinishedLock {
+	for (RSTile* tile in pinnedTiles) {
+		[tile stopLiveTile];
+	}
+}
+
 @end
