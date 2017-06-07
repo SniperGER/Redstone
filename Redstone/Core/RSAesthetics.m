@@ -83,7 +83,11 @@ NSBundle* redstoneBundle;
 	UIImage* tileImage = [UIImage imageWithContentsOfFile:imagePath];
 	
 	if (!tileImage) {
-		return [self getImageForTileWithBundleIdentifier:bundleIdentifier];
+		if (colored) {
+			return [[self getImageForTileWithBundleIdentifier:bundleIdentifier] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+		} else {
+			return [self getImageForTileWithBundleIdentifier:bundleIdentifier];
+		}
 	}
 	
 	if (!colored) {

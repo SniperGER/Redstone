@@ -54,12 +54,8 @@
 			tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
 			[tileImageView setCenter:CGPointMake(frame.size.width/2, frame.size.height/2)];
 			
-			if (self.tileInfo.hasColoredIcon) {
-				[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
-			} else {
-				[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
-				[tileImageView setTintColor:[UIColor whiteColor]];
-			}
+			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:5 colored:self.tileInfo.hasColoredIcon]];
+			[tileImageView setTintColor:[UIColor whiteColor]];
 			[tileContainer addSubview:tileImageView];
 		}
 		
@@ -541,11 +537,13 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		liveTileUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:[liveTile tileUpdateInterval] target:self selector:@selector(updateLiveTile) userInfo:nil repeats:YES];
 	}
 	
+	
 	[liveTile prepareForUpdate];
 	
 	if ([liveTile isReadyForDisplay]) {
-		[self setLiveTileIsReady:[liveTile hasMultiplePages]];
+		[self setLiveTileIsReady:!liveTile.started];
 	}
+	[liveTile setStarted:YES];
 }
 
 - (void)stopLiveTile {
@@ -577,6 +575,10 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 				[[liveTile.subviews objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
 			}
 		}
+	}
+	
+	if ([liveTile hasMultiplePages]) {
+		liveTile.started = NO;
 	}
 }
 

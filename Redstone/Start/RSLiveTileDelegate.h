@@ -5,6 +5,7 @@
 
 @required
 @property (nonatomic, retain) RSTile* tile;
+@property (nonatomic, assign) BOOL started;
 
 - (id)initWithFrame:(CGRect)frame;
 - (BOOL)isReadyForDisplay;
