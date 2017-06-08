@@ -13,9 +13,35 @@
 		
 		[self.titleLabel removeFromSuperview];
 		
+		[self setBackgroundColor:[RSAesthetics accentColorForTile:self.tileInfo]];
+		
 		tileWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 		[tileWrapper setClipsToBounds:YES];
 		[self addSubview:tileWrapper];
+		
+		NSBundle* liveTileBundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Live Tiles/%@.tile", RESOURCE_PATH, leafId]];
+		if (liveTileBundle) {
+			liveTile = [[[liveTileBundle principalClass] alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, frame.size.height)];
+			[liveTile setClipsToBounds:YES];
+			[liveTile setTile:self];
+			[tileWrapper addSubview:liveTile];
+			
+			if ([liveTile hasMultiplePages] || [liveTile allowsRemovalOfSubviews]) {
+				[[liveTile subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+			}
+			
+			NSArray* viewsForSize = [liveTile viewsForSize:self.size];
+			for (int i=0; i<viewsForSize.count; i++) {
+				[[viewsForSize objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
+				[liveTile addSubview:[viewsForSize objectAtIndex:i]];
+			}
+			
+			// This is because the iOS Simulator starts unlocked
+			if (![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked]) {
+				[self startLiveTile];
+			}
+		}
+		
 		
 		tileContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 		[tileWrapper addSubview:tileContainer];
@@ -35,7 +61,7 @@
 		[tileLabel sizeToFit];
 		[tileLabel setFrame:CGRectMake(8,
 									   self.frame.size.height - tileLabel.frame.size.height - 8,
-									   tileLabel.frame.size.width,
+									   MIN(tileLabel.frame.size.width, self.frame.size.width - 16),
 									   tileLabel.frame.size.height)];
 		[tileContainer addSubview:tileLabel];
 		
@@ -71,9 +97,11 @@
 			[badgeLabel setTextAlignment:NSTextAlignmentCenter];
 			[badgeLabel setHidden:YES];
 		}
-		[self addSubview:badgeLabel];
+		[tileContainer addSubview:badgeLabel];
 		
-		[self setBackgroundColor:[RSAesthetics accentColorForTile:self.tileInfo]];
+		if ([[self.icon application] badgeNumberOrString] != nil) {
+			[self setBadge:[[[self.icon application] badgeNumberOrString] intValue]];
+		}
 		
 		longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
 		[longPressGestureRecognizer setMinimumPressDuration:0.5];
@@ -93,7 +121,6 @@
 		[tapGestureRecognizer requireGestureRecognizerToFail:panGestureRecognizer];
 		[tapGestureRecognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
 		[self addGestureRecognizer:tapGestureRecognizer];
-		
 		
 		unpinButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
 		[unpinButton setCenter:CGPointMake(frame.size.width, 0)];
@@ -127,211 +154,9 @@
 		
 		scaleGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setNextSize)];
 		[scaleButton addGestureRecognizer:scaleGestureRecognizer];
-		
-		if ([[self.icon application] badgeNumberOrString] != nil) {
-			[self setBadge:[[[self.icon application] badgeNumberOrString] intValue]];
-		}
-		
-		NSBundle* liveTileBundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Live Tiles/%@.tile", RESOURCE_PATH, leafId]];
-		if (liveTileBundle) {
-			liveTile = [[[liveTileBundle principalClass] alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, frame.size.height)];
-			[liveTile setClipsToBounds:YES];
-			[liveTile setTile:self];
-			[tileWrapper addSubview:liveTile];
-			
-			if ([liveTile hasMultiplePages] || [liveTile allowsRemovalOfSubviews]) {
-				[[liveTile subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-			}
-				
-			NSArray* viewsForSize = [liveTile viewsForSize:self.size];
-			for (int i=0; i<viewsForSize.count; i++) {
-				[[viewsForSize objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
-				[liveTile addSubview:[viewsForSize objectAtIndex:i]];
-			}
-			
-			if (![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked]) {
-				[self startLiveTile];
-			}
-		}
 	}
 	
 	return self;
-}
-
-- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-	return YES;
-}
-
-- (void)moveViewWithGestureRecognizer:(UIPanGestureRecognizer *)_panGestureRecognizer {
-	CGPoint touchLocation = [_panGestureRecognizer locationInView:self.superview];
-	
-	if (_panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
-		[[RSStartScreenController sharedInstance] setSelectedTile:self];
-		
-		CGPoint relativePosition = [self.superview convertPoint:self.center toView:self.superview];
-		centerOffset = CGPointMake(relativePosition.x - touchLocation.x, relativePosition.y - touchLocation.y);
-	}
-	
-	if (_panGestureRecognizer.state == UIGestureRecognizerStateChanged && shouldAllowPan) {
-		self.center = CGPointMake(touchLocation.x + centerOffset.x, touchLocation.y + centerOffset.y);
-	}
-	
-	if (_panGestureRecognizer.state == UIGestureRecognizerStateEnded && shouldAllowPan) {
-		centerOffset = CGPointZero;
-		
-		[[RSStartScreenController sharedInstance] snapTile:self withTouchPosition:self.center];
-	}
-}
-
-- (void)tapped:(UITapGestureRecognizer*)_tapGestureRecognizer {
-	if ([[RSStartScreenController sharedInstance] isEditing]) {
-		if ([[RSStartScreenController sharedInstance] selectedTile] == self) {
-			[[RSStartScreenController sharedInstance] setIsEditing:NO];
-			[longPressGestureRecognizer setEnabled:YES];
-		} else {
-			[[RSStartScreenController sharedInstance] setSelectedTile:self];
-		}
-	} else {
-		[self untilt];
-		[[RSStartScreenController sharedInstance] prepareForAppLaunch:self];
-	}
-}
-
-- (void)pressed:(UILongPressGestureRecognizer*)_longPressGestureRecognizer {
-	shouldAllowPan = NO;
-	
-	if (![[RSStartScreenController sharedInstance] isEditing]) {
-		[tapGestureRecognizer setEnabled:NO];
-		[tapGestureRecognizer setEnabled:YES];
-		
-		[[RSStartScreenController sharedInstance] setIsEditing:YES];
-		[[RSStartScreenController sharedInstance] setSelectedTile:self];
-		
-		[longPressGestureRecognizer setEnabled:NO];
-	}
-}
-
-- (void)unpin:(UITapGestureRecognizer*)recognizer {
-	[[RSStartScreenController sharedInstance] unpinTile:self];
-}
-
-- (void)setNextSize {
-	switch (self.size) {
-		case 1:
-			self.size = 3;
-			break;
-		case 2:
-			self.size = 1;
-			break;
-		case 3:
-			self.size = 2;
-			break;
-		default: break;
-	}
-	
-	CGSize newTileSize = [RSMetrics tileDimensionsForSize:self.size];
-	
-	float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
-	
-	CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].bounds.size.width - newTileSize.width;
-	CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height + [RSMetrics tileBorderSpacing];
-	
-	[self setTransform:CGAffineTransformIdentity];
-	
-	CGRect newTilePosition = CGRectMake(MIN(MAX(step * roundf((self.frame.origin.x / step)), 0), maxPositionX),
-										MIN(MAX(step * roundf((self.frame.origin.y / step)), 0), maxPositionY),
-										newTileSize.width,
-										newTileSize.height);
-	
-	
-	[self setFrame:newTilePosition];
-	self.originalCenter = self.center;
-	
-	if (self.tileInfo.fullSizeArtwork) {
-		[tileImageView setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
-		[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size colored:YES]];
-	} else {
-		CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
-		[tileImageView setFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
-		[tileImageView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
-		
-		if (self.tileInfo.hasColoredIcon) {
-			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]]];
-		} else {
-			[tileImageView setImage:[[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-			[tileImageView setTintColor:[UIColor whiteColor]];
-		}
-	}
-	
-	if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
-		[tileLabel setHidden:YES];
-	} else {
-		[tileLabel setHidden:NO];
-		[tileLabel setFrame:CGRectMake(8,
-									   self.frame.size.height - tileLabel.frame.size.height - 8,
-									   tileLabel.frame.size.width,
-									   tileLabel.frame.size.height)];
-	}
-	
-	if (liveTile) {
-		[tileWrapper setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
-		[liveTile setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
-		
-		liveTilePageIndex = 0;
-		
-		[liveTileAnimationTimer invalidate];
-		liveTileAnimationTimer = nil;
-		
-		if ([liveTile hasMultiplePages] || [liveTile allowsRemovalOfSubviews]) {
-			[[liveTile subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-		}
-		
-		NSArray* viewsForSize = [liveTile viewsForSize:self.size];
-		for (int i=0; i<viewsForSize.count; i++) {
-			[[viewsForSize objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
-			[liveTile addSubview:[viewsForSize objectAtIndex:i]];
-		}
-		
-		if (viewsForSize.count > 1 && [liveTile hasMultiplePages]) {
-			liveTileAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(showNextLiveTilePage) userInfo:nil repeats:YES];
-		}
-	}
-	
-	[unpinButton setCenter:CGPointMake(self.frame.size.width, 0)];
-	[scaleButton setCenter:CGPointMake(self.frame.size.width, self.frame.size.height)];
-	
-	[scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
-	[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
-	
-	[self setBadge:badgeValue];
-
-	[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
-}
-
-- (CGFloat)scaleButtonRotationForCurrentSize {
-	switch (self.size) {
-		case 1:
-			return -135.0;
-			break;
-		case 2:
-			return 45.0;
-			break;
-		case 3:
-			return 0.0;
-			break;
-		default:
-			return 0.0;
-			break;
-			
-	}
-}
-
-- (CGRect)positionWithoutTransform {	
-	return CGRectMake(self.layer.position.x - (self.bounds.size.width/2),
-					  self.layer.position.y - (self.bounds.size.height/2),
-					  self.bounds.size.width,
-					  self.bounds.size.height);
 }
 
 - (CGRect)basePosition {
@@ -395,30 +220,121 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	}
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
-	if (self.isSelectedTile) {
-		if (CGRectContainsPoint(unpinButton.frame, point)) {
-			
-			[tapGestureRecognizer setEnabled:NO];
-			[panGestureRecognizer setEnabled:NO];
-			return unpinButton;
-		} else if (CGRectContainsPoint(scaleButton.frame, point)) {
-				
-			[tapGestureRecognizer setEnabled:NO];
-			[panGestureRecognizer setEnabled:NO];
-			return scaleButton;
+- (void)unpin:(UITapGestureRecognizer*)recognizer {
+	[[RSStartScreenController sharedInstance] unpinTile:self];
+}
+
+- (void)setNextSize {
+	switch (self.size) {
+		case 1:
+			self.size = 3;
+			break;
+		case 2:
+			self.size = 1;
+			break;
+		case 3:
+			self.size = 2;
+			break;
+		default: break;
+	}
+	
+	CGSize newTileSize = [RSMetrics tileDimensionsForSize:self.size];
+	
+	float step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
+	
+	CGFloat maxPositionX = [[RSStartScreenController sharedInstance] startScrollView].bounds.size.width - newTileSize.width;
+	CGFloat maxPositionY =  [[RSStartScreenController sharedInstance] startScrollView].contentSize.height + [RSMetrics tileBorderSpacing];
+	
+	[self setTransform:CGAffineTransformIdentity];
+	
+	CGRect newTilePosition = CGRectMake(MIN(MAX(step * roundf((self.frame.origin.x / step)), 0), maxPositionX),
+										MIN(MAX(step * roundf((self.frame.origin.y / step)), 0), maxPositionY),
+										newTileSize.width,
+										newTileSize.height);
+	
+	
+	[self setFrame:newTilePosition];
+	self.originalCenter = self.center;
+	
+	if (liveTile) {
+		[tileWrapper setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+		[tileContainer setFrame:CGRectMake(0, tileContainer.frame.origin.y, self.bounds.size.width, self.bounds.size.height)];
+		[liveTile setFrame:CGRectMake(0, liveTile.frame.origin.y, self.bounds.size.width, self.bounds.size.height)];
+		
+		liveTilePageIndex = 0;
+		
+		if (liveTileAnimationTimer) {
+			[liveTileAnimationTimer invalidate];
+			liveTileAnimationTimer = nil;
+		}
+		
+		if ([liveTile hasMultiplePages] || [liveTile allowsRemovalOfSubviews]) {
+			[[liveTile subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+		}
+		
+		NSArray* viewsForSize = [liveTile viewsForSize:self.size];
+		for (int i=0; i<viewsForSize.count; i++) {
+			[[viewsForSize objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
+			[liveTile addSubview:[viewsForSize objectAtIndex:i]];
+		}
+		
+		if (viewsForSize.count > 1 && [liveTile hasMultiplePages]) {
+			liveTileAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(showNextLiveTilePage) userInfo:nil repeats:YES];
 		}
 	}
 	
-	[tapGestureRecognizer setEnabled:YES];
-	[panGestureRecognizer setEnabled:YES];
+	if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
+		[tileLabel setHidden:YES];
+	} else {
+		[tileLabel setHidden:NO];
+		[tileLabel setFrame:CGRectMake(8,
+									   self.frame.size.height - tileLabel.frame.size.height - 8,
+									   tileLabel.frame.size.width,
+									   tileLabel.frame.size.height)];
+	}
+	
+	if (self.tileInfo.fullSizeArtwork) {
+		[tileImageView setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+		[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size colored:YES]];
+	} else {
+		CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
+		[tileImageView setFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
+		[tileImageView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
+		
+		[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[[self.icon application] bundleIdentifier] size:self.size colored:self.tileInfo.hasColoredIcon]];
+		[tileImageView setTintColor:[UIColor whiteColor]];
+	}
+	
+	[unpinButton setCenter:CGPointMake(self.frame.size.width, 0)];
+	[scaleButton setCenter:CGPointMake(self.frame.size.width, self.frame.size.height)];
+	
+	[scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
+	[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
+	
+	[self setBadge:badgeValue];
+	
+	[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
+}
 
-	return [super hitTest:point withEvent:event];
+- (CGFloat)scaleButtonRotationForCurrentSize {
+	switch (self.size) {
+		case 1:
+			return -135.0;
+			break;
+		case 2:
+			return 45.0;
+			break;
+		case 3:
+			return 0.0;
+			break;
+		default:
+			return 0.0;
+			break;
+			
+	}
 }
 
 - (void)setBadge:(int)badgeCount {
-	//badgeCount = MIN(badgeCount, 99);
 	badgeValue = badgeCount;
 	
 	if (!badgeCount || badgeCount == 0) {
@@ -459,27 +375,56 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		
 		[badgeLabel setHidden:NO];
 	}
-	
-	/*CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
-	
-	if (!badgeCount || badgeCount == 0) {
-			} else {
-		if (self.size < 2) {
-			[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:24]];
-		} else {
-			[badgeLabel setFont:[UIFont fontWithName:@"SegoeUI" size:36]];
-		}
+}
 
-		[badgeLabel setText:[NSString stringWithFormat:@"%d", badgeCount]];
-		[badgeLabel sizeToFit];
+// LIVE TILE METHODS
+
+- (void)startLiveTile {
+	if (liveTile == nil) {
+		return;
+	}
+	
+	if (liveTileAnimationTimer) {
+		[liveTileAnimationTimer invalidate];
+		liveTileAnimationTimer = nil;
+	}
+	
+	if (liveTileUpdateTimer) {
+		[liveTileUpdateTimer invalidate];
+		liveTileUpdateTimer = nil;
+	}
+	
+	if ([liveTile tileUpdateInterval] > 0) {
+		liveTileUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:[liveTile tileUpdateInterval] target:self selector:@selector(updateLiveTile) userInfo:nil repeats:YES];
+	}
+	
+	[liveTile prepareForUpdate];
+	
+	if (![liveTile hasAsyncLoading]) {
+		[self setLiveTileIsReady:!liveTile.started];
+	}
+	[liveTile setStarted:YES];
+}
+
+- (void)stopLiveTile {
+	if (liveTile == nil) {
+		return;
+	}
+	
+	liveTilePageIndex = 0;
+	[liveTile requestStop];
+	
+	if ([liveTile hasMultiplePages]) {
+		liveTile.started = NO;
 		
-		CGSize combinedSize = CGSizeMake(tileImageSize.width + badgeLabel.frame.size.width + 5, tileImageSize.height);
+		[tileContainer setHidden:NO];
+		[tileContainer setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+		[liveTile setFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 		
-		[tileImageView setCenter:CGPointMake(self.bounds.size.width/2 - (combinedSize.width - tileImageView.frame.size.width)/2, self.bounds.size.height/2)];
-		[badgeLabel setCenter:CGPointMake(self.bounds.size.width/2 + (combinedSize.width - badgeLabel.frame.size.width)/2, self.bounds.size.height/2)];
-		
-		[badgeLabel setHidden:NO];
-	}*/
+		for (int i=0; i<liveTile.subviews.count; i++) {
+			[[liveTile.subviews objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
+		}
+	}
 }
 
 - (void)setLiveTileIsReady:(BOOL)animated {
@@ -487,11 +432,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		return;
 	}
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(rand()%3+1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		if (liveTile.subviews.count > 1 && [liveTile hasMultiplePages]) {
-			liveTileAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(showNextLiveTilePage) userInfo:nil repeats:YES];
-		}
-		
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(arc4random()%3+1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[tileContainer setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
 		[liveTile setFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 		
@@ -519,81 +460,18 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[tileContainer setFrame:CGRectMake(0, -self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 			[liveTile setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
 		}
-	});
-}
-
-- (void)startLiveTile {
-	if (liveTileAnimationTimer) {
-		[liveTileAnimationTimer invalidate];
-		liveTileAnimationTimer = nil;
-	}
-	
-	if (liveTileUpdateTimer) {
-		[liveTileUpdateTimer invalidate];
-		liveTileUpdateTimer = nil;
-	}
-	
-	if ([liveTile tileUpdateInterval] > 0) {
-		liveTileUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:[liveTile tileUpdateInterval] target:self selector:@selector(updateLiveTile) userInfo:nil repeats:YES];
-	}
-	
-	
-	[liveTile prepareForUpdate];
-	
-	if ([liveTile isReadyForDisplay]) {
-		[self setLiveTileIsReady:!liveTile.started];
-	}
-	[liveTile setStarted:YES];
-}
-
-- (void)stopLiveTile {
-	if (liveTile == nil) {
-		return;
-	}
-	
-	if (liveTileAnimationTimer) {
-		[liveTileAnimationTimer invalidate];
-		liveTileAnimationTimer = nil;
-	}
-	
-	if (liveTileUpdateTimer) {
-		[liveTileUpdateTimer invalidate];
-		liveTileUpdateTimer = nil;
-	}
-	
-	liveTilePageIndex = 0;
-	[liveTile requestStop];
-	
-	if ([liveTile hasMultiplePages]) {
-		[tileContainer setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
-		[tileContainer setHidden:NO];
-		
-		[liveTile setFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 		
 		if ([liveTile hasMultiplePages]) {
-			for (int i=0; i<liveTile.subviews.count; i++) {
-				[[liveTile.subviews objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
-			}
+			liveTileAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(showNextLiveTilePage) userInfo:nil repeats:YES];
 		}
-	}
-	
-	if ([liveTile hasMultiplePages]) {
-		liveTile.started = NO;
-	}
-}
-
-- (void)updateLiveTile {
-	if (![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked] && ![[RSCore sharedInstance] currentApplication]) {
-		[liveTile prepareForUpdate];
-	} else {
-		[self stopLiveTile];
-	}
+	});
 }
 
 - (void)showNextLiveTilePage {
 	if (!liveTile || [liveTile subviews].count < 1 || ![liveTile isReadyForDisplay]) {
 		return;
 	}
+	
 	if ([[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked]) {
 		[self stopLiveTile];
 		return;
@@ -601,6 +479,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	
 	UIView* currentPage = [[liveTile subviews] objectAtIndex:liveTilePageIndex];
 	UIView* nextPage = [[liveTile subviews] objectAtIndex:(liveTilePageIndex+1 >= liveTile.subviews.count) ? 0 : liveTilePageIndex+1];
+	
+	[currentPage setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+	[nextPage setFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 	
 	[UIView animateWithDuration:1.0 animations:^{
 		[currentPage setEasingFunction:easeOutQuint forKeyPath:@"frame"];
@@ -619,6 +500,91 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	if (liveTilePageIndex >= liveTile.subviews.count) {
 		liveTilePageIndex = 0;
 	}
+}
+
+- (void)updateLiveTile {
+	if (![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked] && ![[RSCore sharedInstance] currentApplication]) {
+		[liveTile prepareForUpdate];
+	} else {
+		[self stopLiveTile];
+	}
+}
+
+// GESTURE RECOGNIZER METHODS
+
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+	return YES;
+}
+
+- (void)tapped:(UITapGestureRecognizer*)_tapGestureRecognizer {
+	if ([[RSStartScreenController sharedInstance] isEditing]) {
+		if ([[RSStartScreenController sharedInstance] selectedTile] == self) {
+			[[RSStartScreenController sharedInstance] setIsEditing:NO];
+			//[longPressGestureRecognizer setEnabled:YES];
+		} else {
+			[[RSStartScreenController sharedInstance] setSelectedTile:self];
+		}
+	} else {
+		[self untilt];
+		[[RSStartScreenController sharedInstance] prepareForAppLaunch:self];
+	}
+}
+
+- (void)pressed:(UILongPressGestureRecognizer*)_longPressGestureRecognizer {
+	shouldAllowPan = NO;
+	
+	if (![[RSStartScreenController sharedInstance] isEditing]) {
+		[tapGestureRecognizer setEnabled:NO];
+		[tapGestureRecognizer setEnabled:YES];
+		
+		[[RSStartScreenController sharedInstance] setIsEditing:YES];
+		[[RSStartScreenController sharedInstance] setSelectedTile:self];
+		
+		[longPressGestureRecognizer setEnabled:NO];
+	}
+}
+
+- (void)moveViewWithGestureRecognizer:(UIPanGestureRecognizer *)_panGestureRecognizer {
+	CGPoint touchLocation = [_panGestureRecognizer locationInView:self.superview];
+	
+	if (_panGestureRecognizer.state == UIGestureRecognizerStateBegan) {
+		[[RSStartScreenController sharedInstance] setSelectedTile:self];
+		
+		CGPoint relativePosition = [self.superview convertPoint:self.center toView:self.superview];
+		centerOffset = CGPointMake(relativePosition.x - touchLocation.x, relativePosition.y - touchLocation.y);
+	}
+	
+	if (_panGestureRecognizer.state == UIGestureRecognizerStateChanged && shouldAllowPan) {
+		self.center = CGPointMake(touchLocation.x + centerOffset.x, touchLocation.y + centerOffset.y);
+	}
+	
+	if (_panGestureRecognizer.state == UIGestureRecognizerStateEnded && shouldAllowPan) {
+		centerOffset = CGPointZero;
+		
+		[[RSStartScreenController sharedInstance] snapTile:self withTouchPosition:self.center];
+	}
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+	if (self.isSelectedTile) {
+		if (CGRectContainsPoint(unpinButton.frame, point)) {
+			
+			[tapGestureRecognizer setEnabled:NO];
+			[panGestureRecognizer setEnabled:NO];
+			return unpinButton;
+		} else if (CGRectContainsPoint(scaleButton.frame, point)) {
+			
+			[tapGestureRecognizer setEnabled:NO];
+			[panGestureRecognizer setEnabled:NO];
+			return scaleButton;
+		}
+	}
+	
+	[tapGestureRecognizer setEnabled:YES];
+	[panGestureRecognizer setEnabled:YES];
+	
+	return [super hitTest:point withEvent:event];
 }
 
 @end

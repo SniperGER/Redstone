@@ -43,7 +43,7 @@
 @property (nonatomic, assign, readonly) CGRect basePosition;
 
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafId size:(int)tileSize;
-- (CGRect)positionWithoutTransform;
+- (CGRect)basePosition;
 - (CGPoint)originalCenter;
 - (void)setBadge:(int)badgeCount;
 

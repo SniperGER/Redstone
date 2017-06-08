@@ -342,6 +342,30 @@
 		8DFE9A3E1EE014A90091DB93 /* tile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DFE9A3D1EE014A90091DB93 /* tile.plist */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8DBB7EE41EE89F17004C7ECB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DBB7ED31EE89F12004C7ECB /* Redstone Tiles.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D17C8711EE359D900A2FE2F;
+			remoteInfo = com.apple.mobilecal;
+		};
+		8DBB7EE61EE89F17004C7ECB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DBB7ED31EE89F12004C7ECB /* Redstone Tiles.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D17C8911EE43BF400A2FE2F;
+			remoteInfo = com.apple.weather;
+		};
+		8DBB7EE81EE89F17004C7ECB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DBB7ED31EE89F12004C7ECB /* Redstone Tiles.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DBB7ECA1EE89E97004C7ECB;
+			remoteInfo = com.apple.MobileAddressBook;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		8D0BB9BB1ED16DD2008D6246 /* 3ColumnDefaultLayout.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 3ColumnDefaultLayout.plist; sourceTree = "<group>"; };
 		8D0BB9BD1ED16DD2008D6246 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -400,6 +424,7 @@
 		8D8A10F11ED21BF6004A7811 /* RSTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTile.m; sourceTree = "<group>"; };
 		8DB357201EDE8F380098BBCB /* RSTileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTileInfo.h; sourceTree = "<group>"; };
 		8DB357211EDE8F380098BBCB /* RSTileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTileInfo.m; path = ../../../../../../../../Start/RSTileInfo.m; sourceTree = "<group>"; };
+		8DBB7ED31EE89F12004C7ECB /* Redstone Tiles.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Redstone Tiles.xcodeproj"; path = "/Users/janikschmidt/Documents/Xcode/Redstone Tiles/Redstone Tiles.xcodeproj"; sourceTree = "<absolute>"; };
 		8DBD10781EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAKeyframeAnimation+AHEasing.h"; sourceTree = "<group>"; };
 		8DBD10791EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAKeyframeAnimation+AHEasing.m"; sourceTree = "<group>"; };
 		8DBD107A1EC23BD400A5A037 /* easing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = easing.c; sourceTree = "<group>"; };
@@ -799,6 +824,7 @@
 			isa = PBXGroup;
 			children = (
 				8D1D340B1EB7DC7B00BA9956 /* Redstone */,
+				8DBB7ED31EE89F12004C7ECB /* Redstone Tiles.xcodeproj */,
 				8D0CB4E31EB9DBC600E39A02 /* hiddenapp.app */,
 			);
 			sourceTree = "<group>";
@@ -886,6 +912,16 @@
 			);
 			name = Launch;
 			path = Redstone/Launch;
+			sourceTree = "<group>";
+		};
+		8DBB7EDF1EE89F17004C7ECB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DBB7EE51EE89F17004C7ECB /* com.apple.mobilecal.tile */,
+				8DBB7EE71EE89F17004C7ECB /* com.apple.weather.tile */,
+				8DBB7EE91EE89F17004C7ECB /* com.apple.MobileAddressBook.tile */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		8DBD10771EC23BD400A5A037 /* Lib */ = {
@@ -1846,6 +1882,12 @@
 			mainGroup = 8D1D33E81EB7DC3D00BA9956;
 			productRefGroup = 8D1D33E81EB7DC3D00BA9956;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8DBB7EDF1EE89F17004C7ECB /* Products */;
+					ProjectRef = 8DBB7ED31EE89F12004C7ECB /* Redstone Tiles.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D1D34141EB7DCDD00BA9956 /* Build */,
@@ -1854,6 +1896,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8DBB7EE51EE89F17004C7ECB /* com.apple.mobilecal.tile */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = com.apple.mobilecal.tile;
+			remoteRef = 8DBB7EE41EE89F17004C7ECB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DBB7EE71EE89F17004C7ECB /* com.apple.weather.tile */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = com.apple.weather.tile;
+			remoteRef = 8DBB7EE61EE89F17004C7ECB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8DBB7EE91EE89F17004C7ECB /* com.apple.MobileAddressBook.tile */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = com.apple.MobileAddressBook.tile;
+			remoteRef = 8DBB7EE81EE89F17004C7ECB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8D1D33F11EB7DC6E00BA9956 /* Resources */ = {

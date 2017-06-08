@@ -9,6 +9,7 @@
 
 - (id)initWithFrame:(CGRect)frame;
 - (BOOL)isReadyForDisplay;
+- (BOOL)hasAsyncLoading;
 - (BOOL)hasMultiplePages;
 - (BOOL)allowsRemovalOfSubviews;
 - (CGFloat)tileUpdateInterval;

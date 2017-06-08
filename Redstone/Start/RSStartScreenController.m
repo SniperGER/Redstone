@@ -366,8 +366,8 @@ static RSStartScreenController* sharedInstance;
 	RSTile* lastTile = [pinnedTiles objectAtIndex:0];
 	
 	for (RSTile* tile in pinnedTiles) {
-		CGRect lastTileFrame = [lastTile positionWithoutTransform];
-		CGRect currentTileFrame = [tile positionWithoutTransform];
+		CGRect lastTileFrame = [lastTile basePosition];
+		CGRect currentTileFrame = [tile basePosition];
 		
 		if (currentTileFrame.origin.y > lastTileFrame.origin.y || (currentTileFrame.origin.y == lastTileFrame.origin.y && currentTileFrame.size.height > lastTileFrame.size.height)) {
 			lastTile = tile;
@@ -375,7 +375,7 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	CGSize contentSize = CGSizeMake(self.startScrollView.frame.size.width,
-									[lastTile positionWithoutTransform].origin.y + [lastTile positionWithoutTransform].size.height);
+									[lastTile basePosition].origin.y + [lastTile basePosition].size.height);
 	
 	[UIView animateWithDuration:.1 animations:^{
 		[self.startScrollView setContentSize:contentSize];
@@ -484,6 +484,7 @@ static RSStartScreenController* sharedInstance;
 	NSMutableArray* appsNotInView = [NSMutableArray new];
 	
 	for (RSTile* tile in pinnedTiles) {
+		[tile stopLiveTile];
 		if (CGRectIntersectsRect(self.startScrollView.bounds, tile.basePosition)) {
 			[appsInView addObject:tile];
 			
