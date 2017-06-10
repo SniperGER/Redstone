@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class SBLeafIcon, RSTiltView, RSTileInfo;
+@class SBLeafIcon, RSTiltView, RSTileInfo, RSTileNotificationView;
 @protocol RSLiveTileDelegate;
 
 @interface RSTile : RSTiltView <UIGestureRecognizerDelegate> {
@@ -31,6 +31,8 @@
 	NSTimer* liveTileUpdateTimer;
 	NSTimer* liveTileAnimationTimer;
 	NSInteger liveTilePageIndex;
+	
+	RSTileNotificationView* notificationTile;
 }
 
 @property (nonatomic, assign) CGPoint originalCenter;
@@ -47,8 +49,12 @@
 - (CGPoint)originalCenter;
 - (void)setBadge:(int)badgeCount;
 
-- (void)setLiveTileIsReady:(BOOL)animated;
+- (void)transitionLiveTileToStarted:(BOOL)ready;
 - (void)startLiveTile;
 - (void)stopLiveTile;
+- (void)updateLiveTile;
+
+- (void)addBulletin:(BBBulletin*)bulletin;
+- (void)removeBulletin:(BBBulletin*)bulletin;
 
 @end

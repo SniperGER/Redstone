@@ -19,6 +19,7 @@
 #import "Start/RSStartScrollView.h"
 #import "Start/RSTile.h"
 #import "Start/RSTileInfo.h"
+#import "Start/RSTileNotificationView.h"
 #import "Start/RSLiveTileDelegate.h"
 
 #import "Launch/RSLaunchScreenController.h"
@@ -100,11 +101,13 @@ static RSCore* redstone;
 - (id)bundleIdentifier;
 - (BOOL)isUninstallSupported;
 - (id)badgeNumberOrString;
+- (id)displayName;
 @end
 
 @interface SBApplicationController : NSObject
 + (id)sharedInstance;
 - (void)uninstallApplication:(SBApplication*)application;
+- (id)applicationWithBundleIdentifier:(id)arg1;
 @end
 
 @interface SBIconModel : NSObject
@@ -164,12 +167,18 @@ static RSCore* redstone;
 - (BOOL)deviceIsPasscodeLocked;
 @end
 
+@interface BBServer : NSObject
++ (id)sharedBBServer;
+- (id)_allBulletinsForSectionID:(id)sectionID;
+@end
+
 @interface BBBulletin : NSObject
 - (id)title;
 - (id)subtitle;
 - (id)message;
 - (id)content;
 - (id)section;
+- (NSDate*)date;
 @end
 
 @interface NCNotificationShortLookView : UIView

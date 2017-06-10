@@ -6,6 +6,7 @@
 extern "C" UIImage * _UICreateScreenUIImage();
 
 BOOL switcherIsOpen;
+id sharedBBServer;
 
 void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 	[[[RSCore sharedInstance] rootScrollView] setHidden:NO];
@@ -177,6 +178,39 @@ void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 static void lockedDevice(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
 	[[RSStartScreenController sharedInstance] deviceFinishedLock];
 }
+
+%hook BBServer
+
+- (id)init {
+	BBServer* server = %orig;
+	sharedBBServer = server;
+	return server;
+}
+
+- (void)_addBulletin:(BBBulletin*)arg1 {
+	%orig;
+	
+	RSTile* tile = [[RSStartScreenController sharedInstance] tileForLeafIdentifier:[arg1 section]];
+	if (tile) {
+		[tile addBulletin:arg1];
+	}
+}
+
+- (void)_removeBulletin:(BBBulletin*)arg1 rescheduleTimerIfAffected:(BOOL)arg2 shouldSync:(BOOL)arg3 {
+	RSTile* tile = [[RSStartScreenController sharedInstance] tileForLeafIdentifier:[arg1 section]];
+	if (tile) {
+		[tile removeBulletin:arg1];
+	}
+	
+	%orig;
+}
+
+%new
++ (id)sharedBBServer {
+	return sharedBBServer;
+}
+
+%end // %hook BBServer
 
 %end // %group startscreen
 

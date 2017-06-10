@@ -8,7 +8,8 @@
 @property (nonatomic, assign) BOOL started;
 
 - (id)initWithFrame:(CGRect)frame;
-- (BOOL)isReadyForDisplay;
+
+- (BOOL)readyForDisplay;
 - (BOOL)hasAsyncLoading;
 - (BOOL)hasMultiplePages;
 - (BOOL)allowsRemovalOfSubviews;

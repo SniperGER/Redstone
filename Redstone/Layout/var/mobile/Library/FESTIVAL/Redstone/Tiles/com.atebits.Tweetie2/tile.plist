@@ -4,5 +4,7 @@
 <dict>
 	<key>AccentColor</key>
 	<string>#1DA1F2</string>
+	<key>DisplaysNotificationsOnTile</key>
+	<true/>
 </dict>
 </plist>

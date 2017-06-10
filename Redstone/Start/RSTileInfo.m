@@ -25,6 +25,10 @@
 			_hasColoredIcon = [[tileInfo objectForKey:@"HasColoredIcon"] boolValue];
 		}
 		
+		if ([tileInfo objectForKey:@"DisplaysNotificationsOnTile"]) {
+			_displaysNotificationsOnTile = [[tileInfo objectForKey:@"DisplaysNotificationsOnTile"] boolValue];
+		}
+		
 		if ([tileInfo objectForKey:@"DisplayName"]) {
 			_displayName = [tileInfo objectForKey:@"DisplayName"];
 		}

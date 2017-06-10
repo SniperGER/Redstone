@@ -8,6 +8,7 @@
 @property (nonatomic, assign, readonly) BOOL tileHidesLabel;
 @property (nonatomic, assign, readonly) BOOL usesCornerBadge;
 @property (nonatomic, assign, readonly) BOOL hasColoredIcon;
+@property (nonatomic, assign, readonly) BOOL displaysNotificationsOnTile;
 @property (nonatomic, readonly) NSString* displayName;
 @property (nonatomic, readonly) NSString* localizedDisplayName;
 @property (nonatomic, readonly) NSString* accentColor;
