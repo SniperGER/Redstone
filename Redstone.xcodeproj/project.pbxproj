@@ -345,6 +345,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8D5FCAF31EED9295003268A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DBB7ED31EE89F12004C7ECB /* Redstone Tiles.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D17C8701EE359D900A2FE2F;
+			remoteInfo = com.apple.mobilecal;
+		};
+		8D5FCAF51EED9295003268A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DBB7ED31EE89F12004C7ECB /* Redstone Tiles.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D17C8901EE43BF400A2FE2F;
+			remoteInfo = com.apple.weather;
+		};
+		8D5FCAF71EED9295003268A0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8DBB7ED31EE89F12004C7ECB /* Redstone Tiles.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1B63241EE942C600B3C28C;
+			remoteInfo = com.apple.MobileAddressBook;
+		};
 		8D7DB36F1EEA0695005C9947 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8DBB7ED31EE89F12004C7ECB /* Redstone Tiles.xcodeproj */;
@@ -1836,6 +1857,9 @@
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "$(PROJECT_DIR)/$(PROJECT_NAME)";
 			dependencies = (
+				8D5FCAF41EED9295003268A0 /* PBXTargetDependency */,
+				8D5FCAF61EED9295003268A0 /* PBXTargetDependency */,
+				8D5FCAF81EED9295003268A0 /* PBXTargetDependency */,
 			);
 			name = Install;
 			passBuildSettingsInEnvironment = 1;
@@ -1917,7 +1941,7 @@
 		8D7DB3701EEA0695005C9947 /* com.atebits.Tweetie2.tile */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = com.atebits.Tweetie2.tile;
+			path = com.apple.MobileAddressBook.tile;
 			remoteRef = 8D7DB36F1EEA0695005C9947 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -2291,6 +2315,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8D5FCAF41EED9295003268A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = com.apple.mobilecal;
+			targetProxy = 8D5FCAF31EED9295003268A0 /* PBXContainerItemProxy */;
+		};
+		8D5FCAF61EED9295003268A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = com.apple.weather;
+			targetProxy = 8D5FCAF51EED9295003268A0 /* PBXContainerItemProxy */;
+		};
+		8D5FCAF81EED9295003268A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = com.apple.MobileAddressBook;
+			targetProxy = 8D5FCAF71EED9295003268A0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8D0BB9BC1ED16DD2008D6246 /* Localizable.strings */ = {

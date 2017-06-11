@@ -8,7 +8,6 @@
 @property (nonatomic, assign) BOOL started;
 
 - (id)initWithFrame:(CGRect)frame;
-
 - (BOOL)readyForDisplay;
 - (BOOL)hasAsyncLoading;
 - (BOOL)hasMultiplePages;
@@ -18,5 +17,8 @@
 - (NSArray*)viewsForSize:(int)size;
 
 - (void)requestStop;
+
+@optional
+- (void)triggerAnimation;
 
 @end

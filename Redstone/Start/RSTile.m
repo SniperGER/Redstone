@@ -261,8 +261,8 @@
 	[self setFrame:newTilePosition];
 	self.originalCenter = self.center;
 	
+	[tileWrapper setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
 	if (liveTile) {
-		[tileWrapper setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
 		[tileContainer setFrame:CGRectMake(0, tileContainer.frame.origin.y, self.bounds.size.width, self.bounds.size.height)];
 		[liveTile setFrame:CGRectMake(0, liveTile.frame.origin.y, self.bounds.size.width, self.bounds.size.height)];
 		
@@ -284,7 +284,7 @@
 				[liveTile addSubview:[viewsForSize objectAtIndex:i]];
 			}
 			
-			if (viewsForSize.count > 1 && [liveTile hasMultiplePages]) {
+			if ((viewsForSize.count > 1 && [liveTile hasMultiplePages]) || [liveTile respondsToSelector:@selector(triggerAnimation)]) {
 				liveTileAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(showNextLiveTilePage) userInfo:nil repeats:YES];
 			}
 		} else {
@@ -449,15 +449,17 @@
 	liveTilePageIndex = 0;
 	[liveTile requestStop];
 	
-	if ([liveTile hasMultiplePages]) {
+	if ([liveTile hasMultiplePages] || [liveTile respondsToSelector:@selector(triggerAnimation)]) {
 		liveTile.started = NO;
 		
 		[tileContainer setHidden:NO];
 		[tileContainer setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
 		[liveTile setFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 		
-		for (int i=0; i<liveTile.subviews.count; i++) {
-			[[liveTile.subviews objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
+		if ([liveTile hasMultiplePages]) {
+			for (int i=0; i<liveTile.subviews.count; i++) {
+				[[liveTile.subviews objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
+			}
 		}
 	}
 }
@@ -494,7 +496,7 @@
 			[tileContainer setHidden:YES];
 		}];
 		
-		if (![liveTile isKindOfClass:[RSTileNotificationView class]] && [liveTile hasMultiplePages]) {
+		if (![liveTile isKindOfClass:[RSTileNotificationView class]] && ([liveTile hasMultiplePages] || [liveTile respondsToSelector:@selector(triggerAnimation)])) {
 			if (liveTileAnimationTimer) {
 				[liveTileAnimationTimer invalidate];
 				liveTileAnimationTimer = nil;
@@ -551,6 +553,11 @@
 		[liveTile setStarted:YES];
 		[self transitionLiveTileToStarted:YES];
 		
+		return;
+	}
+	
+	if ([liveTile respondsToSelector:@selector(triggerAnimation)]) {
+		[liveTile triggerAnimation];
 		return;
 	}
 	
