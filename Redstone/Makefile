@@ -15,7 +15,7 @@ include $(THEOS)/makefiles/common.mk
 TWEAK_NAME = Redstone
 Redstone_FRAMEWORKS = MediaPlayer
 Redstone_PRIVATE_FRAMEWORKS = AppSupport MediaRemote BulletinBoard
-Redstone_FILES = Redstone_Core.xm Redstone_StartScreen.xm Redstone_LockScreen.xm
+Redstone_FILES = Redstone_Core.xm Redstone_StartScreen.xm Redstone_LockScreen.xm Redstone_Notifications.xm
 
 # Core
 Redstone_FILES += Core/RSCore.m Core/RSAesthetics.m Core/RSMetrics.m Core/RSRootScrollView.m Core/RSPreferences.m Core/RSModalAlert.m Core/RSTiltView.m Core/RSNotificationView.m

@@ -2,6 +2,9 @@
 
 @implementation RSNotificationView
 
+static CGPoint touchBegan;
+static CGPoint pointEnd;
+
 - (id)notificationForBulletin:(BBBulletin*)bulletin isStatic:(BOOL)isStatic {
 	self = [super initWithFrame:CGRectMake(0, 0, screenWidth, 80)];
 	
@@ -11,9 +14,10 @@
 		int addToHeight = (!isStatic) ? 15 : 0;
 		
 		RSTileInfo* tileInfo = [[RSTileInfo alloc] initWithBundleIdentifier:[bulletin section]];
+		SBApplication* application = [[objc_getClass("SBApplicationController") sharedInstance] applicationWithBundleIdentifier:[bulletin section]];
 		
 		toastIcon = [[UIImageView alloc] initWithImage:[RSAesthetics getImageForTileWithBundleIdentifier:[bulletin section] size:1 colored:(tileInfo.hasColoredIcon || tileInfo.fullSizeArtwork)]];
-		[toastIcon setFrame:CGRectMake(12, 30, 32, 32)];
+		[toastIcon setFrame:CGRectMake(12, 15 + addToHeight, 32, 32)];
 		[toastIcon setTintColor:[UIColor whiteColor]];
 		[toastIcon setBackgroundColor:[RSAesthetics accentColorForTile:[[[RSStartScreenController sharedInstance] tileForLeafIdentifier:[bulletin section]] tileInfo]]];
 		[self addSubview:toastIcon];
@@ -21,20 +25,27 @@
 		titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		[titleLabel setFont:[UIFont fontWithName:@"SegoeUI-Semibold" size:15]];
 		[titleLabel setTextColor:[UIColor whiteColor]];
-		[titleLabel setText:[bulletin title]];
+		
+		if ([bulletin title] && ![[bulletin title] isEqualToString:@""]) {
+			[titleLabel setText:[bulletin title]];
+		} else {
+			[titleLabel setText:[application displayName]];
+		}
 		[titleLabel sizeToFit];
-		[titleLabel setFrame:CGRectMake(56, 15 + addToHeight, screenWidth - 68, titleLabel.frame.size.height)];
+		[titleLabel setFrame:CGRectMake(56, 15 + addToHeight, screenWidth - 68, 16)];
 		[self addSubview:titleLabel];
 		
 		subtitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-		[subtitleLabel setFont:[UIFont fontWithName:@"SegoeUI-Semibold" size:15]];
-		[subtitleLabel setTextColor:[UIColor whiteColor]];
-		[subtitleLabel setText:[bulletin subtitle]];
-		[subtitleLabel sizeToFit];
-		[subtitleLabel setFrame:CGRectMake(56, 15 + addToHeight + titleLabel.frame.size.height, screenWidth - 68, subtitleLabel.frame.size.height)];
-		[self addSubview:subtitleLabel];
+		if ([bulletin subtitle] && ![[bulletin subtitle] isEqualToString:@""]) {
+			[subtitleLabel setFont:[UIFont fontWithName:@"SegoeUI-Semibold" size:15]];
+			[subtitleLabel setTextColor:[UIColor whiteColor]];
+			[subtitleLabel setText:[bulletin subtitle]];
+			[subtitleLabel sizeToFit];
+			[subtitleLabel setFrame:CGRectMake(56, 15 + addToHeight + titleLabel.frame.size.height, screenWidth - 68, 16)];
+			[self addSubview:subtitleLabel];
+		}
 		
-		messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 86, 40)];
+		messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth - 86, 32)];
 		[messageLabel setFont:[UIFont fontWithName:@"SegoeUI" size:15]];
 		[messageLabel setTextColor:[UIColor whiteColor]];
 		[messageLabel setText:[bulletin message]];
@@ -45,7 +56,8 @@
 		[messageLabel setFrame:CGRectMake(56, 15 + subtitleLabel.frame.size.height + titleLabel.frame.size.height + addToHeight, screenWidth - 86, messageLabel.frame.size.height)];
 		[self addSubview:messageLabel];
 		
-		[self setFrame:CGRectMake(0, 0, screenWidth, titleLabel.frame.size.height + subtitleLabel.frame.size.height + messageLabel.frame.size.height + 50 + addToHeight)];
+		CGFloat notificationHeight = MAX(82 + addToHeight, titleLabel.frame.size.height + subtitleLabel.frame.size.height + messageLabel.frame.size.height + 50 + addToHeight);
+		[self setFrame:CGRectMake(0, 0, screenWidth, notificationHeight)];
 		
 		UIView* grabberView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-20, screenWidth, 20)];
 		[grabberView setBackgroundColor:[RSAesthetics accentColor]];
@@ -66,6 +78,8 @@
 					[self removeFromSuperview];
 				});
 			}];
+			
+			// TODO: Add tap gesture recognizer to open app behind notification
 		}
 	}
 	
