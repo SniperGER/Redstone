@@ -141,9 +141,11 @@ extern dispatch_queue_t __BBServerQueue;
 	}
 	[bulletinView addSubview:titleLabel];
 	
-	UILabel* messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 28, self.frame.size.width-16, 20)];
+	UILabel* messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 28, self.frame.size.width-16, 40)];
 	[messageLabel setFont:[UIFont fontWithName:@"SegoeUI" size:14]];
 	[messageLabel setTextColor:[UIColor colorWithWhite:0.75 alpha:1.0]];
+	[messageLabel setNumberOfLines:2];
+	[messageLabel setLineBreakMode:NSLineBreakByTruncatingTail];
 	[messageLabel setText:[bulletin message]];
 	[bulletinView addSubview:messageLabel];
 	
