@@ -159,7 +159,7 @@ SBPagedScrollView* dashboardScrollView;
 
 %hook BBServer
 
--(void)_sendAddBulletin:(BBBulletin*)arg1 toFeeds:(unsigned long long)arg2 {
+- (void)_sendAddBulletin:(BBBulletin*)arg1 toFeeds:(unsigned long long)arg2 {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
 		if (arg2 != 1 && [[%c(SBUserAgent) sharedUserAgent] deviceIsLocked]) {
 			RSNotificationView* notificationView = [[RSNotificationView alloc] notificationForBulletin:arg1 isStatic:NO];

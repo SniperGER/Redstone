@@ -2,9 +2,6 @@
 
 @implementation RSNotificationView
 
-static CGPoint touchBegan;
-static CGPoint pointEnd;
-
 - (id)notificationForBulletin:(BBBulletin*)bulletin isStatic:(BOOL)isStatic {
 	self = [super initWithFrame:CGRectMake(0, 0, screenWidth, 80)];
 	
