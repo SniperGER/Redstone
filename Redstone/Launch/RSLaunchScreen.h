@@ -2,6 +2,6 @@
 
 @interface RSLaunchScreen : UIView
 
-@property (nonatomic, retain) UIImageView* launchImageView;
+@property (nonatomic, strong) UIImageView* launchImageView;
 
 @end

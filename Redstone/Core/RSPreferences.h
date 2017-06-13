@@ -4,7 +4,7 @@
 	NSMutableDictionary* _preferences;
 }
 
-@property (nonatomic, retain) NSMutableDictionary* preferences;
+@property (nonatomic, strong) NSMutableDictionary* preferences;
 
 + (NSMutableDictionary*)preferences;
 + (void)setValue:(id)value forKey:(NSString*)key;

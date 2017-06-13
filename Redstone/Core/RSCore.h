@@ -9,15 +9,15 @@
 	NSTimer* hideNotificationTimer;
 }
 
-@property (nonatomic, retain) UIWindow* window;
-@property (nonatomic, retain) RSLockScreenController* lockScreenController;
-@property (nonatomic, retain) RSRootScrollView* rootScrollView;
-@property (nonatomic, retain) RSStartScreenController* startScreenController;
-@property (nonatomic, retain) RSLaunchScreenController* launchScreenController;
-@property (nonatomic, retain) RSAppListController* appListController;
-@property (nonatomic, retain) UIWindow* notificationWindow;
+@property (nonatomic, strong) UIWindow* window;
+@property (nonatomic, strong) RSLockScreenController* lockScreenController;
+@property (nonatomic, strong) RSRootScrollView* rootScrollView;
+@property (nonatomic, strong) RSStartScreenController* startScreenController;
+@property (nonatomic, strong) RSLaunchScreenController* launchScreenController;
+@property (nonatomic, strong) RSAppListController* appListController;
+@property (nonatomic, strong) UIWindow* notificationWindow;
 
-@property (nonatomic, retain) SBUIPasscodeLockViewWithKeypad* lockKeypad;
+@property (nonatomic, strong) SBUIPasscodeLockViewWithKeypad* lockKeypad;
 
 + (id)sharedInstance;
 + (void)hideAllExcept:(id)objectToShow;

@@ -37,8 +37,8 @@
 
 @property (nonatomic, assign) CGPoint originalCenter;
 @property (nonatomic, assign) int size;
-@property (nonatomic, retain) RSTileInfo* tileInfo;
-@property (nonatomic, retain) SBLeafIcon* icon;
+@property (nonatomic, strong) RSTileInfo* tileInfo;
+@property (nonatomic, strong) SBLeafIcon* icon;
 @property (nonatomic, assign) BOOL isSelectedTile;
 @property (nonatomic, assign) int tileX;
 @property (nonatomic, assign) int tileY;

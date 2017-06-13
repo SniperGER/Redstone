@@ -7,6 +7,6 @@
 	RSTiltView* uninstallButton;
 }
 
-@property (nonatomic, retain) RSApp* handlingApp;
+@property (nonatomic, strong) RSApp* handlingApp;
 
 @end

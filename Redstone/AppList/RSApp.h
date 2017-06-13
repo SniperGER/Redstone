@@ -10,8 +10,8 @@
 	UILongPressGestureRecognizer* longPressGestureRecognizer;
 }
 
-@property (nonatomic, retain) SBLeafIcon* icon;
-@property (nonatomic, retain) RSTileInfo* tileInfo;
+@property (nonatomic, strong) SBLeafIcon* icon;
+@property (nonatomic, strong) RSTileInfo* tileInfo;
 
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafId;
 

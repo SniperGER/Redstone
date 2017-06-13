@@ -8,10 +8,10 @@
 	UIScrollView* lockScreenScrollView;
 }
 
-@property (nonatomic, retain) UIView* containerView;
-@property (nonatomic, retain) RSLockScreenView* lockScreenView;
-@property (nonatomic, retain) RSLockScreenMediaControlsView* mediaControlsView;
-@property (nonatomic, retain) RSLockScreenPasscodeEntryController* passcodeEntryController;
+@property (nonatomic, strong) UIView* containerView;
+@property (nonatomic, strong) RSLockScreenView* lockScreenView;
+@property (nonatomic, strong) RSLockScreenMediaControlsView* mediaControlsView;
+@property (nonatomic, strong) RSLockScreenPasscodeEntryController* passcodeEntryController;
 @property (nonatomic, assign) BOOL isScrolling;
 @property (nonatomic, assign) BOOL isShowingPasscodeScreen;
 

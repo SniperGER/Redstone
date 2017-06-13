@@ -2,6 +2,6 @@
 
 @interface RSAppList : UIScrollView
 
-@property (nonatomic, retain) UITapGestureRecognizer* tapGestureRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer* tapGestureRecognizer;
 
 @end

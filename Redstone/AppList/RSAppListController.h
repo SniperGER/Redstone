@@ -15,11 +15,11 @@
 	RSPinMenu* pinMenu;
 }
 
-@property (nonatomic, retain) RSSearchBar* searchBar;
-@property (nonatomic, retain) RSAppList* appList;
+@property (nonatomic, strong) RSSearchBar* searchBar;
+@property (nonatomic, strong) RSAppList* appList;
 @property (nonatomic, assign) BOOL showsPinMenu;
 @property (nonatomic, assign) BOOL isSearching;
-@property (nonatomic, retain) RSJumpList* jumpList;
+@property (nonatomic, strong) RSJumpList* jumpList;
 
 + (id)sharedInstance;
 

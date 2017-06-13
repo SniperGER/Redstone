@@ -7,9 +7,9 @@
 	NSMutableArray* pinnedLeafIdentifiers;
 }
 
-@property (nonatomic, retain) RSStartScrollView* startScrollView;
+@property (nonatomic, strong) RSStartScrollView* startScrollView;
 @property (nonatomic, assign) BOOL isEditing;
-@property (nonatomic, retain) RSTile* selectedTile;
+@property (nonatomic, strong) RSTile* selectedTile;
 
 + (id)sharedInstance;
 

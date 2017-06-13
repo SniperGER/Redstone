@@ -2,7 +2,7 @@
 
 @interface RSTiltView : UIView
 
-@property (nonatomic, retain, readonly) UILabel* titleLabel;
+@property (nonatomic, readonly) UILabel* titleLabel;
 @property (nonatomic, assign) BOOL isTilted;
 @property (nonatomic, assign) BOOL tiltEnabled;
 @property (nonatomic, assign) BOOL highlightEnabled;

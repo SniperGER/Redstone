@@ -9,8 +9,8 @@
 	UILabel* alertMessage;
 }
 
-@property (nonatomic, retain) NSString* title;
-@property (nonatomic, retain) NSString* message;
+@property (nonatomic, strong) NSString* title;
+@property (nonatomic, strong) NSString* message;
 
 - (id)modalAlertWithTitle:(NSString*)title message:(NSString*)message;
 - (void)addActionWithTitle:(NSString*)title handler:(void (^)(void))callback;

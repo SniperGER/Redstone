@@ -6,7 +6,7 @@
 	UILabel* buttonLabel;
 }
 
-@property (nonatomic, retain) SBPasscodeNumberPadButton* numberPadButton;
+@property (nonatomic, strong) SBPasscodeNumberPadButton* numberPadButton;
 @property (nonatomic, assign) BOOL isBackSpaceButton;
 
 - (void)setButtonLabelText:(NSString*)buttonLabelText;

@@ -4,6 +4,6 @@
 
 @interface RSStartScrollView : UIScrollView
 
-@property (nonatomic, retain) RSTiltView* allAppsButton;
+@property (nonatomic, strong) RSTiltView* allAppsButton;
 
 @end

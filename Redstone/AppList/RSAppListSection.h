@@ -7,7 +7,7 @@
 	UIView* backgroundImageOverlay;
 }
 
-@property (nonatomic, retain) NSString* displayName;
+@property (nonatomic, strong) NSString* displayName;
 @property (nonatomic, assign) int yCoordinate;
 
 - (id)initWithFrame:(CGRect)frame letter:(NSString*)letter;

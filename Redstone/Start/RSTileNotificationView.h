@@ -15,7 +15,7 @@
 	BOOL canRemoveBulletin;
 }
 
-@property (nonatomic, retain) RSTile* tile;
+@property (nonatomic, strong) RSTile* tile;
 
 - (id)initWithFrame:(CGRect)frame sectionIdentifier:(NSString*)section;
 - (void)addBulletin:(BBBulletin *)bulletin delayIncomingBulletins:(BOOL)delay;

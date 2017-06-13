@@ -6,8 +6,8 @@
 	RSLockScreenPasscodeEntryTextField* passcodeTextField;
 }
 
-@property (nonatomic, retain) SBUIPasscodeLockViewWithKeypad* currentKeypad;
-@property (nonatomic, retain) RSLockScreenPasscodeEntryView* passcodeEntryView;
+@property (nonatomic, strong) SBUIPasscodeLockViewWithKeypad* currentKeypad;
+@property (nonatomic, strong) RSLockScreenPasscodeEntryView* passcodeEntryView;
 
 - (void)handlePasscodeTextChanged;
 - (void)handleFailedAuthentication;
