@@ -39,6 +39,7 @@
 @property (nonatomic, assign) int size;
 @property (nonatomic, strong) RSTileInfo* tileInfo;
 @property (nonatomic, strong) SBLeafIcon* icon;
+@property (nonatomic, strong) NSString* iconIdentifier;
 @property (nonatomic, assign) BOOL isSelectedTile;
 @property (nonatomic, assign) int tileX;
 @property (nonatomic, assign) int tileY;
@@ -49,12 +50,18 @@
 - (CGPoint)originalCenter;
 - (void)setBadge:(int)badgeCount;
 
+- (void)startLiveTile;
+- (void)stopLiveTile;
+- (void)setLiveTileHidden:(BOOL)hidden;
+- (void)setLiveTileHidden:(BOOL)hidden animated:(BOOL)animated;
+
+/*- (void)setLiveTileStarted:(BOOL)ready;
 - (void)transitionLiveTileToStarted:(BOOL)ready;
 - (void)startLiveTile;
 - (void)stopLiveTile;
 - (void)updateLiveTile;
 
 - (void)addBulletin:(BBBulletin*)bulletin;
-- (void)removeBulletin:(BBBulletin*)bulletin;
+- (void)removeBulletin:(BBBulletin*)bulletin;*/
 
 @end

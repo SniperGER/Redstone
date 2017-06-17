@@ -192,14 +192,14 @@ static void lockedDevice(CFNotificationCenterRef center, void *observer, CFStrin
 	
 	RSTile* tile = [[RSStartScreenController sharedInstance] tileForLeafIdentifier:[arg1 section]];
 	if (tile) {
-		[tile addBulletin:arg1];
+		//[tile addBulletin:arg1];
 	}
 }
 
 - (void)_removeBulletin:(BBBulletin*)arg1 rescheduleTimerIfAffected:(BOOL)arg2 shouldSync:(BOOL)arg3 {
 	RSTile* tile = [[RSStartScreenController sharedInstance] tileForLeafIdentifier:[arg1 section]];
 	if (tile) {
-		[tile removeBulletin:arg1];
+		//[tile removeBulletin:arg1];
 	}
 	
 	%orig;

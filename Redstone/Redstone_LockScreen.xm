@@ -52,7 +52,7 @@ SBPagedScrollView* dashboardScrollView;
 	}
 	
 	[self.superview bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
-	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
 }
 
 %end // %hook SBDashBoardView
@@ -67,7 +67,7 @@ SBPagedScrollView* dashboardScrollView;
 	[[RSLockScreenController sharedInstance] setLockScreenTime:[MSHookIvar<SBUILegibilityLabel *>(self,"_timeLabel") string]];
 	[[RSLockScreenController sharedInstance] setLockScreenDate:[MSHookIvar<SBUILegibilityLabel *>(self,"_dateSubtitleView") string]];
 	
-	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
 	
 	%orig;
 }
@@ -102,7 +102,7 @@ SBPagedScrollView* dashboardScrollView;
 	%orig;
 	
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
-		[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+		[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
 	}];
 }
 
@@ -197,7 +197,7 @@ SBPagedScrollView* dashboardScrollView;
 	}
 	
 	[self.superview bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
-	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
 }
 
 %end // %hook SBLockScreenView
@@ -211,7 +211,7 @@ SBPagedScrollView* dashboardScrollView;
 	[[RSLockScreenController sharedInstance] setLockScreenTime:[MSHookIvar<SBUILegibilityLabel *>(self,"_legibilityTimeLabel") string]];
 	[[RSLockScreenController sharedInstance] setLockScreenDate:[MSHookIvar<SBUILegibilityLabel *>(self,"_legibilityDateLabel") string]];
 	
-	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
 	
 	%orig;
 }
@@ -246,7 +246,7 @@ SBPagedScrollView* dashboardScrollView;
 	%orig;
 	
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
-		[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingApplication] == nil)];
+		[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
 	}];
 }
 

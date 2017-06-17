@@ -146,7 +146,7 @@ static RSCore* redstone;
 - (id)nowPlayingArtist;
 - (BOOL)togglePlayPause;
 - (BOOL)changeTrack:(int)arg1;
-- (id)nowPlayingApplication;
+- (id)nowPlayingProcessPID;
 @end
 
 @interface SBDashBoardView : UIView

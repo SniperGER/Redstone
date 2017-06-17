@@ -466,7 +466,9 @@ static RSStartScreenController* sharedInstance;
 		}
 		
 		[[RSLaunchScreenController sharedInstance] show];
-		[[objc_getClass("SBIconController") sharedInstance] _launchIcon:sender.icon];
+		
+		SBLeafIcon* icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:sender.iconIdentifier];
+		[[objc_getClass("SBIconController") sharedInstance] _launchIcon:icon];
 		[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:YES];
 	});
 }
@@ -484,7 +486,7 @@ static RSStartScreenController* sharedInstance;
 	NSMutableArray* appsNotInView = [NSMutableArray new];
 	
 	for (RSTile* tile in pinnedTiles) {
-		[tile stopLiveTile];
+		[tile startLiveTile];
 		if (CGRectIntersectsRect(self.startScrollView.bounds, tile.basePosition)) {
 			[appsInView addObject:tile];
 			
@@ -555,7 +557,7 @@ static RSStartScreenController* sharedInstance;
 			[tile.layer setAnchorPoint:CGPointMake(0.5,0.5)];
 			[tile setCenter:[tile originalCenter]];
 			
-			[tile startLiveTile];
+			//[tile startLiveTile];
 		}
 		
 		[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:YES];
