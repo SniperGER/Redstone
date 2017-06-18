@@ -11,7 +11,7 @@
 	int highTempValue = (int)[[currentDayForecast high] temperatureForUnit:userTemperatureUnit];
 	int lowTempValue = (int)[[currentDayForecast low] temperatureForUnit:userTemperatureUnit];
 	int precipitationValue = round([currentHourForecast percentPrecipitation]);
-	NSString* windSpeedValue = [[objc_getClass("WeatherWindSpeedFormatter") convenienceFormatter] stringForWindSpeed:[city windSpeed]];
+	NSString* windSpeedValue = [[objc_getClass("WeatherWindSpeedFormatter") convenienceFormatter] stringForWindSpeed:-1];
 	
 	NSLog(@"[Redstone] %f", [city humidity]);
 	

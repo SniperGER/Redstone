@@ -2,6 +2,8 @@
 
 @interface RSTile : UIView
 
+@property (nonatomic, assign) int size;
+
 - (void)setLiveTileHidden:(BOOL)hidden;
 - (void)setLiveTileHidden:(BOOL)hidden animated:(BOOL)animated;
 
@@ -17,5 +19,8 @@
 - (BOOL)readyForDisplay;
 - (NSArray*)viewsForSize:(int)size;
 - (CGFloat)updateInterval;
+
+@optional
+- (void)triggerAnimation;
 
 @end

@@ -143,6 +143,8 @@
 		8DC921111ED97F350011D30E /* RDSAccentColorList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC921101ED97F350011D30E /* RDSAccentColorList.m */; };
 		8DC9211A1ED99E220011D30E /* PFHeaderCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8DC921191ED99E220011D30E /* PFHeaderCell.mm */; };
 		8DC9211C1ED9A5B70011D30E /* 2ColumnDefaultLayout.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DC9211B1ED9A5B70011D30E /* 2ColumnDefaultLayout.plist */; };
+		8DE675081EF658A200F65CF3 /* RSPeopleTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE675071EF658A200F65CF3 /* RSPeopleTile.m */; };
+		8DE6750B1EF659C200F65CF3 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DE6750A1EF659C200F65CF3 /* Contacts.framework */; };
 		8DE79E901EC6ECFE004EF2E6 /* RSAppListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E8F1EC6ECFE004EF2E6 /* RSAppListController.m */; };
 		8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E921EC6EE2F004EF2E6 /* RSAppList.m */; };
 		8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E951EC6F195004EF2E6 /* RSApp.m */; };
@@ -443,6 +445,20 @@
 			remoteGlobalIDString = 8D715F5B1EF1DB4F00FC65EF;
 			remoteInfo = Weather;
 		};
+		8DE6750C1EF65AEF00F65CF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DE674FB1EF657DB00F65CF3;
+			remoteInfo = People;
+		};
+		8DE6750E1EF65AF300F65CF3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DE674FB1EF657DB00F65CF3;
+			remoteInfo = People;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -654,6 +670,12 @@
 		8DC921181ED99E220011D30E /* PFHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFHeaderCell.h; sourceTree = "<group>"; };
 		8DC921191ED99E220011D30E /* PFHeaderCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PFHeaderCell.mm; sourceTree = "<group>"; };
 		8DC9211B1ED9A5B70011D30E /* 2ColumnDefaultLayout.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 2ColumnDefaultLayout.plist; sourceTree = "<group>"; };
+		8DE674FC1EF657DB00F65CF3 /* People.tile */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = People.tile; sourceTree = BUILT_PRODUCTS_DIR; };
+		8DE675031EF6584200F65CF3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DE675061EF658A200F65CF3 /* RSPeopleTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPeopleTile.h; sourceTree = "<group>"; };
+		8DE675071EF658A200F65CF3 /* RSPeopleTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPeopleTile.m; sourceTree = "<group>"; };
+		8DE6750A1EF659C200F65CF3 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		8DE675111EF65B7000F65CF3 /* UIView+Easing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Easing.h"; sourceTree = "<group>"; };
 		8DE79E8E1EC6ECFE004EF2E6 /* RSAppListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppListController.h; sourceTree = "<group>"; };
 		8DE79E8F1EC6ECFE004EF2E6 /* RSAppListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppListController.m; sourceTree = "<group>"; };
 		8DE79E911EC6EE2F004EF2E6 /* RSAppList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppList.h; sourceTree = "<group>"; };
@@ -961,6 +983,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8DE674F91EF657DB00F65CF3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DE6750B1EF659C200F65CF3 /* Contacts.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -1034,6 +1064,8 @@
 				8D1D340B1EB7DC7B00BA9956 /* Redstone */,
 				8D0CB4E31EB9DBC600E39A02 /* hiddenapp.app */,
 				8D715F5C1EF1DB4F00FC65EF /* Weather.tile */,
+				8DE674FC1EF657DB00F65CF3 /* People.tile */,
+				8DE675091EF659C200F65CF3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1124,6 +1156,7 @@
 			children = (
 				8D715F6E1EF1E23D00FC65EF /* headers */,
 				8D715F571EF1DB3100FC65EF /* Weather */,
+				8DE675021EF6584200F65CF3 /* People */,
 			);
 			name = Tiles;
 			path = Redstone/Tiles;
@@ -1157,6 +1190,7 @@
 		8D715F6E1EF1E23D00FC65EF /* headers */ = {
 			isa = PBXGroup;
 			children = (
+				8DE675111EF65B7000F65CF3 /* UIView+Easing.h */,
 				8D715F8E1EF1E49C00FC65EF /* RSLiveTileDelegate.h */,
 				8D715F6F1EF1E23D00FC65EF /* Weather */,
 				8D715F841EF1E23D00FC65EF /* WeatherFoundation */,
@@ -1365,6 +1399,24 @@
 			);
 			name = Start;
 			path = Redstone/Start;
+			sourceTree = "<group>";
+		};
+		8DE675021EF6584200F65CF3 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				8DE675031EF6584200F65CF3 /* Info.plist */,
+				8DE675061EF658A200F65CF3 /* RSPeopleTile.h */,
+				8DE675071EF658A200F65CF3 /* RSPeopleTile.m */,
+			);
+			path = People;
+			sourceTree = "<group>";
+		};
+		8DE675091EF659C200F65CF3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8DE6750A1EF659C200F65CF3 /* Contacts.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		8DE79E8D1EC6EC88004EF2E6 /* AppList */ = {
@@ -2191,6 +2243,7 @@
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "$(PROJECT_DIR)/$(PROJECT_NAME)";
 			dependencies = (
+				8DE6750D1EF65AEF00F65CF3 /* PBXTargetDependency */,
 				8D715F6B1EF1DF5600FC65EF /* PBXTargetDependency */,
 			);
 			name = Build;
@@ -2206,6 +2259,7 @@
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "$(PROJECT_DIR)/$(PROJECT_NAME)";
 			dependencies = (
+				8DE6750F1EF65AF300F65CF3 /* PBXTargetDependency */,
 				8D715F6D1EF1DF5900FC65EF /* PBXTargetDependency */,
 			);
 			name = Install;
@@ -2250,6 +2304,24 @@
 			productReference = 8D715F5C1EF1DB4F00FC65EF /* Weather.tile */;
 			productType = "com.apple.product-type.bundle";
 		};
+		8DE674FB1EF657DB00F65CF3 /* People */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8DE675011EF657DB00F65CF3 /* Build configuration list for PBXNativeTarget "People" */;
+			buildPhases = (
+				8DE674F81EF657DB00F65CF3 /* Sources */,
+				8DE674F91EF657DB00F65CF3 /* Frameworks */,
+				8DE674FA1EF657DB00F65CF3 /* Resources */,
+				8DE675051EF6588900F65CF3 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = People;
+			productName = People;
+			productReference = 8DE674FC1EF657DB00F65CF3 /* People.tile */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2278,6 +2350,11 @@
 						DevelopmentTeam = EDV7C8ZP77;
 						ProvisioningStyle = Automatic;
 					};
+					8DE674FB1EF657DB00F65CF3 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = EDV7C8ZP77;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 8D1D33EC1EB7DC3D00BA9956 /* Build configuration list for PBXProject "Redstone" */;
@@ -2298,6 +2375,7 @@
 				8D47396C1EB939B1007EA214 /* Install */,
 				8D1D33F21EB7DC6E00BA9956 /* hiddenapp */,
 				8D715F5B1EF1DB4F00FC65EF /* Weather */,
+				8DE674FB1EF657DB00F65CF3 /* People */,
 			);
 		};
 /* End PBXProject section */
@@ -2690,10 +2768,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8DE674FA1EF657DB00F65CF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		8D715F621EF1DB7000FC65EF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Fix that code signing\ncodesign --force --sign - --timestamp=none $CODESIGNING_FOLDER_PATH/$PRODUCT_NAME\n\nrm -rf /opt/simject/FESTIVAL/Redstone/Live\\ Tiles/$PRODUCT_BUNDLE_IDENTIFIER.$WRAPPER_EXTENSION/\ncp -R $CODESIGNING_FOLDER_PATH/. /opt/simject/FESTIVAL/Redstone/Live\\ Tiles/$PRODUCT_BUNDLE_IDENTIFIER.$WRAPPER_EXTENSION/";
+		};
+		8DE675051EF6588900F65CF3 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2769,6 +2867,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8DE674F81EF657DB00F65CF3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DE675081EF658A200F65CF3 /* RSPeopleTile.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2781,6 +2887,16 @@
 			isa = PBXTargetDependency;
 			target = 8D715F5B1EF1DB4F00FC65EF /* Weather */;
 			targetProxy = 8D715F6C1EF1DF5900FC65EF /* PBXContainerItemProxy */;
+		};
+		8DE6750D1EF65AEF00F65CF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DE674FB1EF657DB00F65CF3 /* People */;
+			targetProxy = 8DE6750C1EF65AEF00F65CF3 /* PBXContainerItemProxy */;
+		};
+		8DE6750F1EF65AF300F65CF3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8DE674FB1EF657DB00F65CF3 /* People */;
+			targetProxy = 8DE6750E1EF65AF300F65CF3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3229,6 +3345,109 @@
 			};
 			name = Release;
 		};
+		8DE674FF1EF657DB00F65CF3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = EDV7C8ZP77;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Redstone/Tiles/People/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apple.MobileAddressBook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos10.2;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = tile;
+			};
+			name = Debug;
+		};
+		8DE675001EF657DB00F65CF3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = EDV7C8ZP77;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Redstone/Tiles/People/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apple.MobileAddressBook;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos10.2;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = tile;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3276,6 +3495,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		8DE675011EF657DB00F65CF3 /* Build configuration list for PBXNativeTarget "People" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DE674FF1EF657DB00F65CF3 /* Debug */,
+				8DE675001EF657DB00F65CF3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

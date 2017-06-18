@@ -84,8 +84,8 @@
 		}
 		
 #pragma mark Live Tiles
-		NSBundle* liveTileBundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Live Tiles/%@.tile", RESOURCE_PATH, @"com.apple.weather"]];
-		if (liveTileBundle && [leafId isEqualToString:@"com.apple.news"]) {
+		NSBundle* liveTileBundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Live Tiles/%@.tile", RESOURCE_PATH, leafId]];
+		if (liveTileBundle) {
 			liveTile = [[[liveTileBundle principalClass] alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, frame.size.height) tile:self];
 		}
 		
@@ -449,7 +449,7 @@
 	}
 	
 	NSArray* viewsForSize = [liveTile viewsForSize:self.size];
-	if (viewsForSize && viewsForSize.count > 1) {
+	if ((viewsForSize && viewsForSize.count > 1) || [liveTile respondsToSelector:@selector(triggerAnimation)]) {
 		for (int i=0; i<viewsForSize.count; i++) {
 			[[viewsForSize objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
 		}
@@ -543,7 +543,7 @@
 	}
 	
 	if ([liveTile respondsToSelector:@selector(triggerAnimation)]) {
-		//[liveTile triggerAnimation];
+		[liveTile triggerAnimation];
 		return;
 	}
 	

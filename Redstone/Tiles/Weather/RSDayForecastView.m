@@ -126,11 +126,11 @@
 			break;
 		case 31:
 		case 33:
-			filename = @"ClearNight";
+			filename = (isDay) ? @"MostlySunny" : @"ClearNight";
 			break;
 		case 32:
 		case 34:
-			filename = @"MostlySunny";
+			filename = (isDay) ? @"MostlySunny" : @"ClearNight";
 			break;
 		case 36:
 			filename = @"Hot";

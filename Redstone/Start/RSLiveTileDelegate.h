@@ -11,4 +11,7 @@
 - (NSArray*)viewsForSize:(int)size;
 - (CGFloat)updateInterval;
 
+@optional
+- (void)triggerAnimation;
+
 @end

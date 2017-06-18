@@ -14,6 +14,7 @@
 		[weatherLocationManager setDelegate:self];
 		
 		self.tile = tile;
+		currentCity = [[objc_getClass("City") alloc] init];
 		
 		NSBundle* tileBundle = [NSBundle bundleForClass:[self class]];
 		shortLookView = [[tileBundle loadNibNamed:@"ShortLookView" owner:self options:nil] objectAtIndex:0];
@@ -27,12 +28,9 @@
 
 - (void)update {
 	isUpdatingWeatherData = YES;
+
 	
-	if ([weatherPreferences isLocalWeatherEnabled]) {
-		currentCity = [weatherPreferences localWeatherCity];
-	}
-	
-	[self weatherDataDidUpdate];
+	[self requestWeatherDataUpdate];
 }
 
 - (BOOL)isConnectedToInternet {
@@ -43,11 +41,11 @@
 }
 
 - (void)requestWeatherDataUpdate {
-	if ([weatherPreferences isLocalWeatherEnabled] && [weatherPreferences localWeatherCity]) {
+	/*if ([weatherPreferences isLocalWeatherEnabled] && [weatherPreferences localWeatherCity]) {
 		currentCity = [weatherPreferences localWeatherCity];
 	} else {
 		currentCity = [[weatherPreferences loadSavedCities] objectAtIndex:[weatherPreferences loadActiveCity]];
-	}
+	}*/
 	
 	if (![self isConnectedToInternet]) {
 		isUpdatingWeatherData = NO;
@@ -77,6 +75,10 @@
 		locationUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(locationDidUpdate) userInfo:nil repeats:YES];
 		[self locationDidUpdate];
 	} else {
+		City* staticCity = [[weatherPreferences loadSavedCities] objectAtIndex:[weatherPreferences loadActiveCity]];
+		
+		[currentCity setName:[staticCity name]];
+		[currentCity setLocation:[staticCity location]];
 		[currentCity update];
 		
 		weatherDataUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(weatherDataDidUpdate) userInfo:nil repeats:YES];
@@ -89,6 +91,7 @@
 		[locationUpdateTimer invalidate];
 		locationUpdateTimer = nil;
 		
+		[currentCity setIsLocalWeatherCity:YES];
 		[currentCity setLocation:[weatherLocationManager location]];
 		[currentCity update];
 		
