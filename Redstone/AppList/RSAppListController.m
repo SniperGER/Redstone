@@ -55,9 +55,11 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)addAppsAndSections {
-	[sections makeObjectsPerformSelector:@selector(removeFromSuperview)];
-	for (id key in appsBySection) {
-		[[appsBySection objectForKey:key] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+	if (sections && appsBySection) {
+		[sections makeObjectsPerformSelector:@selector(removeFromSuperview)];
+		for (id key in appsBySection) {
+			[[appsBySection objectForKey:key] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+		}
 	}
 	
 	sections = [NSMutableArray new];
@@ -70,7 +72,8 @@ static RSAppListController* sharedInstance;
 		[appsBySection setObject:[@[] mutableCopy] forKey:[alphabet substringWithRange:NSMakeRange(i, 1)]];
 	}
 	
-	NSArray* visibleIcons = [[[objc_getClass("SBIconController") sharedInstance] model] visibleIconIdentifiers];
+	NSArray* visibleIcons = [[[[objc_getClass("SBIconController") sharedInstance] model] visibleIconIdentifiers] allObjects];
+	
 	for (int i=0; i<[visibleIcons count]; i++) {
 		SBLeafIcon* icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[visibleIcons objectAtIndex:i]];
 		
