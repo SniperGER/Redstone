@@ -59,7 +59,7 @@
 	if (self.tile.size == 3 && (direction == 0 || direction == 2)) {
 		position = arc4random_uniform(5) + 2;
 	} else {
-		position = arc4random_uniform(3) + 2;
+		position = arc4random_uniform(3) + 3;
 	}
 	
 	NSMutableArray* contactViews = [contactFields objectAtIndex:position];
