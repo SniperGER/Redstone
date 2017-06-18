@@ -438,6 +438,16 @@
 		return;
 	}
 	
+	if (liveTileUpdateTimer) {
+		[liveTileUpdateTimer invalidate];
+		liveTileUpdateTimer = nil;
+	}
+	
+	if (liveTileAnimationTimer) {
+		[liveTileAnimationTimer invalidate];
+		liveTileAnimationTimer = nil;
+	}
+	
 	[liveTile update];
 	
 	if ([liveTile readyForDisplay]) {

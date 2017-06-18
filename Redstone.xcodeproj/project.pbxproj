@@ -145,6 +145,7 @@
 		8DC9211C1ED9A5B70011D30E /* 2ColumnDefaultLayout.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DC9211B1ED9A5B70011D30E /* 2ColumnDefaultLayout.plist */; };
 		8DE675081EF658A200F65CF3 /* RSPeopleTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE675071EF658A200F65CF3 /* RSPeopleTile.m */; };
 		8DE6750B1EF659C200F65CF3 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DE6750A1EF659C200F65CF3 /* Contacts.framework */; };
+		8DE675161EF65D4200F65CF3 /* tile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DE675151EF65D4200F65CF3 /* tile.plist */; };
 		8DE79E901EC6ECFE004EF2E6 /* RSAppListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E8F1EC6ECFE004EF2E6 /* RSAppListController.m */; };
 		8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E921EC6EE2F004EF2E6 /* RSAppList.m */; };
 		8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE79E951EC6F195004EF2E6 /* RSApp.m */; };
@@ -676,6 +677,8 @@
 		8DE675071EF658A200F65CF3 /* RSPeopleTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPeopleTile.m; sourceTree = "<group>"; };
 		8DE6750A1EF659C200F65CF3 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		8DE675111EF65B7000F65CF3 /* UIView+Easing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Easing.h"; sourceTree = "<group>"; };
+		8DE675131EF65D0000F65CF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8DE675151EF65D4200F65CF3 /* tile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tile.plist; sourceTree = "<group>"; };
 		8DE79E8E1EC6ECFE004EF2E6 /* RSAppListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppListController.h; sourceTree = "<group>"; };
 		8DE79E8F1EC6ECFE004EF2E6 /* RSAppListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppListController.m; sourceTree = "<group>"; };
 		8DE79E911EC6EE2F004EF2E6 /* RSAppList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppList.h; sourceTree = "<group>"; };
@@ -1656,6 +1659,8 @@
 				8DFE98111EE0146D0091DB93 /* tile-AppList@3x.png */,
 				8DFE98121EE0146D0091DB93 /* tile@2x.png */,
 				8DFE98131EE0146D0091DB93 /* tile@3x.png */,
+				8DE675141EF65D0000F65CF3 /* Localizable.strings */,
+				8DE675151EF65D4200F65CF3 /* tile.plist */,
 			);
 			path = com.apple.MobileAddressBook;
 			sourceTree = "<group>";
@@ -2772,6 +2777,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DE675161EF65D4200F65CF3 /* tile.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2906,6 +2912,14 @@
 			children = (
 				8D0BB9BD1ED16DD2008D6246 /* de */,
 				8D0BB9BE1ED16DD2008D6246 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		8DE675141EF65D0000F65CF3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DE675131EF65D0000F65CF3 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
