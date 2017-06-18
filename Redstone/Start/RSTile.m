@@ -459,7 +459,7 @@
 		
 		liveTilePageIndex = 0;
 		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(arc4random_uniform(2) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((arc4random_uniform(4) * 0.5)  * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			liveTileAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(displayNextLiveTilePage) userInfo:nil repeats:YES];
 		});
 	}
