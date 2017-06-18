@@ -4,30 +4,43 @@
 
 extern dispatch_queue_t __BBServerQueue;
 
-- (id)initWithFrame:(CGRect)frame sectionIdentifier:(NSString*)section {
+- (id)initWithFrame:(CGRect)frame tile:(RSTile *)tile {
 	self = [super initWithFrame:frame];
 	
 	if (self) {
-		sectionIdentifier = section;
+		self.tile = tile;
+		sectionIdentifier = tile.iconIdentifier;
 		bulletinServer = [objc_getClass("BBServer") sharedBBServer];
 		
 		canAddBulletin = YES;
 		canRemoveBulletin = YES;
 		
 		dispatch_async(__BBServerQueue, ^{
-			bulletins = [[[bulletinServer _allBulletinsForSectionID:section] allObjects] mutableCopy];
+			bulletins = [[[bulletinServer _allBulletinsForSectionID:sectionIdentifier] allObjects] mutableCopy];
 			
 			if (bulletins.count > 0) {
 				dispatch_async(dispatch_get_main_queue(), ^{
 					currentNotificationView = [self viewWithBulletin:[bulletins lastObject]];
 					[self addSubview:currentNotificationView];
-					[self.tile transitionLiveTileToStarted:YES];
+					[self.tile setLiveTileHidden:NO animated:YES];
 				});
 			}
 		});
 	}
 	
 	return self;
+}
+
+- (NSArray*)viewsForSize:(int)size {
+	return nil;
+}
+
+- (void)update {
+	return;
+}
+
+- (CGFloat)updateInterval {
+	return 0;
 }
 
 - (void)addBulletin:(BBBulletin *)bulletin delayIncomingBulletins:(BOOL)delay {
@@ -48,7 +61,7 @@ extern dispatch_queue_t __BBServerQueue;
 		if (isAboutToStartLiveTile) {
 			[self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 			[self addSubview:nextNotificationView];
-			[self.tile transitionLiveTileToStarted:YES];
+			[self.tile setLiveTileHidden:NO animated:YES];
 			
 			currentNotificationView = nextNotificationView;
 			nextNotificationView = nil;
@@ -99,7 +112,7 @@ extern dispatch_queue_t __BBServerQueue;
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (isAboutToStopLiveTile) {
 			currentNotificationView = nil;
-			[self.tile transitionLiveTileToStarted:NO];
+			[self.tile setLiveTileHidden:YES animated:YES];
 		} else {
 			nextNotificationView = [self viewWithBulletin:bulletin];
 			[self addSubview:nextNotificationView];
@@ -143,10 +156,11 @@ extern dispatch_queue_t __BBServerQueue;
 	
 	UILabel* messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 28, self.frame.size.width-16, 40)];
 	[messageLabel setFont:[UIFont fontWithName:@"SegoeUI" size:14]];
-	[messageLabel setTextColor:[UIColor colorWithWhite:0.75 alpha:1.0]];
+	[messageLabel setTextColor:[UIColor colorWithWhite:1.0 alpha:1.0]];
+	[messageLabel setText:[bulletin message]];
 	[messageLabel setNumberOfLines:2];
 	[messageLabel setLineBreakMode:NSLineBreakByTruncatingTail];
-	[messageLabel setText:[bulletin message]];
+	[messageLabel sizeToFit];
 	[bulletinView addSubview:messageLabel];
 	
 	UILabel* badgeLabel = [[UILabel alloc] initWithFrame:CGRectZero];

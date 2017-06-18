@@ -87,6 +87,8 @@
 		NSBundle* liveTileBundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Live Tiles/%@.tile", RESOURCE_PATH, leafId]];
 		if (liveTileBundle) {
 			liveTile = [[[liveTileBundle principalClass] alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, frame.size.height) tile:self];
+		} else if (self.tileInfo.displaysNotificationsOnTile) {
+			liveTile = [[RSTileNotificationView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) tile:self];
 		}
 		
 		if (liveTile) {
@@ -160,15 +162,6 @@
 		
 		scaleGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setNextSize)];
 		[scaleButton addGestureRecognizer:scaleGestureRecognizer];
-		
-		//		debugBulletins = [NSMutableArray new];
-		//		dispatch_async(__BBServerQueue, ^{
-		//			 BBServer* server = [NSClassFromString(@"BBServer") sharedBBServer];
-		//
-		//			for (BBBulletin *bulletin in [server _allBulletinsForSectionID:[[self.icon application] bundleIdentifier]]) {
-		//				[debugBulletins addObject:bulletin];
-		//			}
-		//		});
 	}
 	
 	return self;
@@ -580,6 +573,20 @@
 	if (liveTilePageIndex >= liveTile.subviews.count) {
 		liveTilePageIndex = 0;
 	}
+}
+
+- (void)addBulletin:(BBBulletin*)bulletin {
+	if (![liveTile isKindOfClass:NSClassFromString(@"RSTileNotificationView")]) {
+		return;
+	}
+	
+	[(RSTileNotificationView*)liveTile addBulletin:bulletin delayIncomingBulletins:YES];
+}
+- (void)removeBulletin:(BBBulletin*)bulletin {
+	if (![liveTile isKindOfClass:NSClassFromString(@"RSTileNotificationView")]) {
+		return;
+	}
+	[(RSTileNotificationView*)liveTile removeBulletin:bulletin];
 }
 
 /*- (void)startLiveTile {

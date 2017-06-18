@@ -1,8 +1,9 @@
 #import <UIKit/UIKit.h>
+#import "RSLiveTileDelegate.h"
 
 @class BBServer, BBBulletin, RSTile;
 
-@interface RSTileNotificationView : UIView {
+@interface RSTileNotificationView : UIView <RSLiveTileDelegate> {
 	NSString* sectionIdentifier;
 	
 	BBServer* bulletinServer;
@@ -17,10 +18,7 @@
 
 @property (nonatomic, strong) RSTile* tile;
 
-- (id)initWithFrame:(CGRect)frame sectionIdentifier:(NSString*)section;
 - (void)addBulletin:(BBBulletin *)bulletin delayIncomingBulletins:(BOOL)delay;
 - (void)removeBulletin:(BBBulletin*)bulletin;
-
-- (BOOL)readyForDisplay;
 
 @end

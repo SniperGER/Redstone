@@ -55,6 +55,9 @@
 - (void)setLiveTileHidden:(BOOL)hidden;
 - (void)setLiveTileHidden:(BOOL)hidden animated:(BOOL)animated;
 
+- (void)addBulletin:(BBBulletin*)bulletin;
+- (void)removeBulletin:(BBBulletin*)bulletin;
+
 /*- (void)setLiveTileStarted:(BOOL)ready;
 - (void)transitionLiveTileToStarted:(BOOL)ready;
 - (void)startLiveTile;
