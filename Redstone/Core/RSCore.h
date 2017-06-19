@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class RSLockScreenController, RSRootScrollView, RSStartScreenController, RSLaunchScreenController, RSPreferences, RSAppListController, RSNotificationView, SBUIPasscodeLockViewWithKeypad;
+@class RSLockScreenController, RSRootScrollView, RSStartScreenController, RSLaunchScreenController, RSPreferences, RSAppListController, RSNotificationView, SBUIPasscodeLockViewWithKeypad, SpringBoard;
 
 @interface RSCore : NSObject {
 	RSPreferences* preferences;
@@ -16,6 +16,7 @@
 @property (nonatomic, strong) RSLaunchScreenController* launchScreenController;
 @property (nonatomic, strong) RSAppListController* appListController;
 @property (nonatomic, strong) UIWindow* notificationWindow;
+@property (nonatomic, strong) SpringBoard* sharedSpringBoard;
 
 @property (nonatomic, strong) SBUIPasscodeLockViewWithKeypad* lockKeypad;
 

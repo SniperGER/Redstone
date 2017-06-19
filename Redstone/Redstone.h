@@ -66,6 +66,7 @@ static RSCore* redstone;
 @interface SpringBoard : NSObject
 - (void)cancelMenuButtonRequests;
 - (void)clearMenuButtonTimer;
+- (BOOL)launchApplicationWithIdentifier:(id)arg1 suspended:(BOOL)arg2 ;
 @end
 
 @interface SBUIController : NSObject
@@ -187,6 +188,7 @@ static RSCore* redstone;
 -(NSString *)secondaryText;
 
 - (BOOL)isNCNotification;
+- (BOOL)isIncomingNotification;
 @end
 
 @interface NCNotificationShortLookViewController : UIViewController

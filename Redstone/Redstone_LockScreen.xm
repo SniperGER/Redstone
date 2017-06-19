@@ -125,6 +125,11 @@ SBPagedScrollView* dashboardScrollView;
 
 %hook SBFUserAuthenticationController
 
+-(void)_handleSuccessfulAuthentication:(id)arg1 responder:(id)arg2 {
+	[[[RSLockScreenController sharedInstance] passcodeEntryController] handleSuccessfulAuthentication];
+	%orig;
+}
+
 - (void)_handleFailedAuthentication:(id)arg1 error:(id)arg2 responder:(id)arg3 {
 	[[[RSLockScreenController sharedInstance] passcodeEntryController] handleFailedAuthentication];
 	%orig;

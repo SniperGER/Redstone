@@ -1,8 +1,9 @@
 #import <UIKit/UIKit.h>
 
-@class BBBulletin;
+@class BBBulletin, SBApplication;
 
 @interface RSNotificationView : UIView {
+	SBApplication* application;
 	UILabel* titleLabel;
 	UILabel* subtitleLabel;
 	UILabel* messageLabel;

@@ -9,6 +9,7 @@
 	%orig(arg1);
 	
 	redstone = [[RSCore alloc] initWithWindow:[[%c(SBUIController) sharedInstance] window]];
+	[redstone setSharedSpringBoard:self];
 }
 
 %end // %hook SpringBoard

@@ -10,6 +10,7 @@
 @property (nonatomic, strong) RSLockScreenPasscodeEntryView* passcodeEntryView;
 
 - (void)handlePasscodeTextChanged;
+- (void)handleSuccessfulAuthentication;
 - (void)handleFailedAuthentication;
 - (void)handleFailedMesaAuthentication;
 - (void)resetTextField;

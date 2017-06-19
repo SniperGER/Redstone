@@ -2257,7 +2257,7 @@
 		};
 		8D47396C1EB939B1007EA214 /* Install */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = do;
+			buildArgumentsString = "";
 			buildConfigurationList = 8D47396D1EB939B1007EA214 /* Build configuration list for PBXLegacyTarget "Install" */;
 			buildPhases = (
 			);
@@ -3519,6 +3519,7 @@
 				8DE675001EF657DB00F65CF3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

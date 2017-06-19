@@ -42,6 +42,10 @@ static RSLockScreenController* sharedInstance;
 		
 		self.passcodeEntryController = [[RSLockScreenPasscodeEntryController alloc] init];
 		[lockScreenScrollView addSubview:self.passcodeEntryController.passcodeEntryView];
+		
+		if ([[objc_getClass("SBLockScreenManager") sharedInstance] respondsToSelector:@selector(_setPasscodeVisible:animated:)]) {
+			[[objc_getClass("SBLockScreenManager") sharedInstance] _setPasscodeVisible:NO animated:NO];
+		}
 	}
 	
 	return self;
@@ -68,6 +72,22 @@ static RSLockScreenController* sharedInstance;
 	self.isShowingPasscodeScreen = NO;
 }
 
+- (void)attemptManualUnlockWithCompletionHandler:(void (^)(void))completion {
+	if ([[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsPasscodeLocked]) {
+		[lockScreenScrollView setContentOffset:CGPointMake(0, screenHeight) animated:YES];
+		if ([[objc_getClass("SBLockScreenManager") sharedInstance] respondsToSelector:@selector(_setPasscodeVisible:animated:)]) {
+			[[objc_getClass("SBLockScreenManager") sharedInstance] _setPasscodeVisible:YES animated:NO];
+		}
+		self.isShowingPasscodeScreen = YES;
+		
+		self.completionHandler = completion;
+	} else {
+		//[[objc_getClass("SBLockScreenManager") sharedInstance] attemptUnlockWithPasscode:nil];
+		completion();
+	}
+	
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	CGFloat alpha = 1 - MIN(scrollView.contentOffset.y / (scrollView.bounds.size.height * 0.6), 1);
 	
@@ -92,6 +112,7 @@ static RSLockScreenController* sharedInstance;
 		if ([[objc_getClass("SBLockScreenManager") sharedInstance] respondsToSelector:@selector(_setPasscodeVisible:animated:)]) {
 			[[objc_getClass("SBLockScreenManager") sharedInstance] _setPasscodeVisible:NO animated:NO];
 		}
+		self.isShowingPasscodeScreen = NO;
 	}
 }
 

@@ -19,6 +19,15 @@
 	[passcodeTextField setText:[self.currentKeypad passcode]];
 }
 
+- (void)handleSuccessfulAuthentication {
+	RSLockScreenController* lockScreenController = [RSLockScreenController sharedInstance];
+	if (lockScreenController.completionHandler != nil) {
+		lockScreenController.completionHandler();
+		
+		lockScreenController.completionHandler = nil;
+	}
+}
+
 - (void)handleFailedAuthentication {
 	[self resetTextField];
 	[passcodeTextField showInvalidPIN];

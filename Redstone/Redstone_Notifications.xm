@@ -17,7 +17,15 @@ id traverseResponderChainForUIViewController(id target) {
 %hook NCNotificationShortLookView
 
 - (void)setFrame:(CGRect)frame {
-	if (![self isNCNotification]) {
+	BOOL isNCNotification = [self isNCNotification] && ![self isIncomingNotification];
+	for (UIView* subview in self.subviews) {
+		if ([subview isKindOfClass:%c(RSNotificationView)] && isNCNotification) {
+			[subview removeFromSuperview];
+		}
+		[subview setHidden:!isNCNotification];
+	}
+	
+	if (!isNCNotification) {
 		frame = CGRectMake(-8, -8, screenWidth, frame.size.height);
 		%orig(frame);
 	} else {
@@ -26,7 +34,7 @@ id traverseResponderChainForUIViewController(id target) {
 }
 
 - (void)layoutSubviews {
-	BOOL isNCNotification = [self isNCNotification];
+	BOOL isNCNotification = [self isNCNotification] && ![self isIncomingNotification];
 	for (UIView* subview in self.subviews) {
 		if ([subview isKindOfClass:%c(RSNotificationView)] && isNCNotification) {
 			[subview removeFromSuperview];
@@ -52,6 +60,23 @@ id traverseResponderChainForUIViewController(id target) {
 	
 	while (view.superview) {
 		if ([view.superview isKindOfClass:%c(NCNotificationListCollectionView)]) {
+			canProceed = YES;
+			break;
+		}
+		
+		view = view.superview;
+	}
+	
+	return canProceed;
+}
+
+%new
+- (BOOL)isIncomingNotification {
+	UIView* view = self;
+	BOOL canProceed = NO;
+	
+	while (view.superview) {
+		if ([view.superview isKindOfClass:%c(SBNotificationBannerWindow)]) {
 			canProceed = YES;
 			break;
 		}

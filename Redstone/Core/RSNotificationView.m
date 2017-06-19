@@ -11,7 +11,7 @@
 		int addToHeight = (!isStatic) ? 15 : 0;
 		
 		RSTileInfo* tileInfo = [[RSTileInfo alloc] initWithBundleIdentifier:[bulletin section]];
-		SBApplication* application = [[objc_getClass("SBApplicationController") sharedInstance] applicationWithBundleIdentifier:[bulletin section]];
+		application = [[objc_getClass("SBApplicationController") sharedInstance] applicationWithBundleIdentifier:[bulletin section]];
 		
 		toastIcon = [[UIImageView alloc] initWithImage:[RSAesthetics getImageForTileWithBundleIdentifier:[bulletin section] size:1 colored:(tileInfo.hasColoredIcon || tileInfo.fullSizeArtwork)]];
 		[toastIcon setFrame:CGRectMake(12, 15 + addToHeight, 32, 32)];
@@ -77,6 +77,8 @@
 			}];
 			
 			// TODO: Add tap gesture recognizer to open app behind notification
+			UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
+			[self addGestureRecognizer:tapGestureRecognizer];
 		}
 	}
 	
@@ -111,6 +113,15 @@
 	[transformOut setFillMode:kCAFillModeForwards];
 	
 	[self.layer addAnimation:transformOut forKey:@"transform"];
+}
+															
+- (void)tapped {
+	if ([RSLockScreenController sharedInstance]) {
+		[self hide];
+		[[RSLockScreenController sharedInstance] attemptManualUnlockWithCompletionHandler:^{
+			[[[RSCore sharedInstance] sharedSpringBoard] launchApplicationWithIdentifier:[application bundleIdentifier] suspended:NO];
+		}];
+	}
 }
 
 @end
