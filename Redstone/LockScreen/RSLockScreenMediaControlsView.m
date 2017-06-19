@@ -48,13 +48,58 @@
 		[self addSubview:nextTitleButton];
 
 		[self setHidden:YES];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNowPlayingInfo:) name:@"RedstoneNowPlayingUpdate" object:nil];
 	}
 	
 	return self;
 }
 
-- (void)updateNowPlayingInfo:(NSDictionary*)nowPlayingInfo {
-	if (!nowPlayingInfo) {
+- (void)updateNowPlayingInfo:(id)sender {
+	// Thanks to Andrew Wiik for this code (found in iOS Blocks/Curago)
+	
+	BOOL __block isPlaying;
+	NSString* __block title;
+	NSString* __block artist;
+	UIImage* __block artwork;
+	
+	MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
+		title = [(__bridge NSDictionary*)information objectForKey:@"kMRMediaRemoteNowPlayingInfoTitle"];
+		artist = [(__bridge NSDictionary*)information objectForKey:@"kMRMediaRemoteNowPlayingInfoArtist"];
+		isPlaying = [[(__bridge NSDictionary*)information objectForKey:@"kMRMediaRemoteNowPlayingInfoPlaybackRate"] boolValue];
+		
+		// Using the artwork as a verification that there is actually an app that plays/played music
+		artwork = [UIImage imageWithData:[(__bridge NSDictionary*)information objectForKey:@"kMRMediaRemoteNowPlayingInfoArtworkData"]];
+		
+		if (title != nil && ![title isEqualToString:@""]) {
+			[mediaTitleLabel setText:title];
+		} else {
+			[mediaTitleLabel setText:[RSAesthetics localizedStringForKey:@"MEDIA_UNKNOWN_TITLE"]];
+		}
+		
+		if (artist != nil && ![artist isEqualToString:@""]) {
+			[mediaSubtitleLabel setText:artist];
+		} else {
+			[mediaSubtitleLabel setText:[RSAesthetics localizedStringForKey:@"MEDIA_UNKNOWN_ARTIST"]];
+		}
+		
+		[UIView performWithoutAnimation:^{
+			if (isPlaying) {
+				[playPauseButton setTitle:@"\uE769"];
+			} else {
+				[playPauseButton setTitle:@"\uE768"];
+			}
+			
+			[playPauseButton layoutIfNeeded];
+		}];
+		
+		if (!isPlaying && !artwork) {
+			[self setHidden:YES];
+		} else {
+			[self setHidden:NO];
+		}
+	});
+	/*if (!nowPlayingInfo) {
 		[self setHidden:YES];
 		return;
 	}
@@ -81,7 +126,7 @@
 		}
 		
 		[playPauseButton layoutIfNeeded];
-	}];
+	}];*/
 }
 
 - (void)previousTrack {

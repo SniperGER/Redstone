@@ -52,7 +52,6 @@ SBPagedScrollView* dashboardScrollView;
 	}
 	
 	[self.superview bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
-	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
 }
 
 %end // %hook SBDashBoardView
@@ -66,8 +65,6 @@ SBPagedScrollView* dashboardScrollView;
 	
 	[[RSLockScreenController sharedInstance] setLockScreenTime:[MSHookIvar<SBUILegibilityLabel *>(self,"_timeLabel") string]];
 	[[RSLockScreenController sharedInstance] setLockScreenDate:[MSHookIvar<SBUILegibilityLabel *>(self,"_dateSubtitleView") string]];
-	
-	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
 	
 	%orig;
 }
@@ -86,24 +83,12 @@ SBPagedScrollView* dashboardScrollView;
 
 %end // %hook SBLockScreenManager
 
-%hook MPUMediaControlsTitlesView
-
-- (void)updateTrackInformationWithNowPlayingInfo:(id)arg1 {
-	%orig(arg1);
-	
-	[[[RSLockScreenController sharedInstance] mediaControlsView] updateNowPlayingInfo:arg1];
-}
-
-%end // %hook MPUMediaControlsTitlesView
-
 %hook SBMediaController
 
--(void)_nowPlayingAppIsPlayingDidChange {
+-(void)_nowPlayingInfoChanged {
 	%orig;
 	
-	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
-		[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
-	}];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneNowPlayingUpdate" object:nil];
 }
 
 %end // %hook SBMediaController
@@ -202,7 +187,6 @@ SBPagedScrollView* dashboardScrollView;
 	}
 	
 	[self.superview bringSubviewToFront:[[RSLockScreenController sharedInstance] containerView]];
-	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
 }
 
 %end // %hook SBLockScreenView
@@ -215,8 +199,6 @@ SBPagedScrollView* dashboardScrollView;
 	
 	[[RSLockScreenController sharedInstance] setLockScreenTime:[MSHookIvar<SBUILegibilityLabel *>(self,"_legibilityTimeLabel") string]];
 	[[RSLockScreenController sharedInstance] setLockScreenDate:[MSHookIvar<SBUILegibilityLabel *>(self,"_legibilityDateLabel") string]];
-	
-	[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
 	
 	%orig;
 }
@@ -235,24 +217,12 @@ SBPagedScrollView* dashboardScrollView;
 
 %end // %hook SBLockScreenManager
 
-%hook MPUMediaControlsTitlesView
-
-- (void)updateTrackInformationWithNowPlayingInfo:(id)arg1 {
-	%orig(arg1);
-	
-	[[[RSLockScreenController sharedInstance] mediaControlsView] updateNowPlayingInfo:arg1];
-}
-
-%end // %hook MPUMediaControlsTitlesView
-
 %hook SBMediaController
 
--(void)_nowPlayingAppIsPlayingDidChange {
+-(void)_nowPlayingInfoChanged {
 	%orig;
 	
-	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
-		[[[RSLockScreenController sharedInstance] mediaControlsView] setHidden:([[%c(SBMediaController) sharedInstance] nowPlayingProcessPID] == 0)];
-	}];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneNowPlayingUpdate" object:nil];
 }
 
 %end // %hook SBMediaController
