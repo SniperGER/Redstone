@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="segoeui.ttf">
+            <string>SegoeUI</string>
+        </array>
+        <array key="segoeuil.ttf">
+            <string>SegoeUI-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="RSCalendarRegularView">
+            <rect key="frame" x="0.0" y="0.0" width="132" height="132"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PyF-8G-p8q">
+                    <rect key="frame" x="0.0" y="31" width="132" height="70"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s9n-kS-OBx">
+                            <rect key="frame" x="0.0" y="0.0" width="132" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="132" id="PuL-HY-lut"/>
+                                <constraint firstAttribute="height" constant="20" id="dYP-2f-U4p"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SegoeUI" family="Segoe UI" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRX-Il-8xG">
+                            <rect key="frame" x="31" y="20" width="70" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="XSo-sn-foG"/>
+                                <constraint firstAttribute="width" constant="70" id="eeK-yv-KIU"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SegoeUI-Light" family="Segoe UI" pointSize="54"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="s9n-kS-OBx" firstAttribute="top" secondItem="PyF-8G-p8q" secondAttribute="top" id="1Ze-ty-L3m"/>
+                        <constraint firstItem="dRX-Il-8xG" firstAttribute="top" secondItem="s9n-kS-OBx" secondAttribute="bottom" id="5la-hy-i7X"/>
+                        <constraint firstAttribute="height" constant="70" id="85C-So-X3W"/>
+                        <constraint firstAttribute="bottom" secondItem="dRX-Il-8xG" secondAttribute="bottom" id="BKg-u1-4j8"/>
+                        <constraint firstItem="dRX-Il-8xG" firstAttribute="leading" secondItem="PyF-8G-p8q" secondAttribute="leading" constant="31" id="HIU-2k-kaC"/>
+                        <constraint firstAttribute="trailing" secondItem="dRX-Il-8xG" secondAttribute="trailing" constant="31" id="fWt-yn-lEF"/>
+                        <constraint firstAttribute="width" constant="132" id="l9j-d6-Ee6"/>
+                        <constraint firstItem="s9n-kS-OBx" firstAttribute="leading" secondItem="PyF-8G-p8q" secondAttribute="leading" id="osG-cf-t6S"/>
+                        <constraint firstAttribute="trailing" secondItem="s9n-kS-OBx" secondAttribute="trailing" id="yFS-oK-HmC"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="PyF-8G-p8q" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="0a5-gk-7d1"/>
+                <constraint firstItem="PyF-8G-p8q" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Zu0-tW-Lef"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="dateLabel" destination="dRX-Il-8xG" id="A7m-s8-Cop"/>
+                <outlet property="dayLabel" destination="s9n-kS-OBx" id="1uc-uj-a3k"/>
+            </connections>
+            <point key="canvasLocation" x="61" y="25"/>
+        </view>
+    </objects>
+</document>

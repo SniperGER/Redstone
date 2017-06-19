@@ -96,13 +96,7 @@
 			[liveTile setTile:self];
 			[tileWrapper addSubview:liveTile];
 			
-			NSArray* viewsForSize = [liveTile viewsForSize:self.size];
-			if (viewsForSize != nil && viewsForSize.count > 0) {
-				for (int i=0; i<viewsForSize.count; i++) {
-					[[viewsForSize objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
-					[liveTile addSubview:[viewsForSize objectAtIndex:i]];
-				}
-			}
+			
 			
 			if (![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked]) {
 				[self startLiveTile];
@@ -452,16 +446,20 @@
 	}
 	
 	NSArray* viewsForSize = [liveTile viewsForSize:self.size];
-	if ((viewsForSize && viewsForSize.count > 1) || [liveTile respondsToSelector:@selector(triggerAnimation)]) {
+	if (viewsForSize != nil && viewsForSize.count > 0) {
+		[[liveTile subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 		for (int i=0; i<viewsForSize.count; i++) {
 			[[viewsForSize objectAtIndex:i] setFrame:CGRectMake(0, (i > 0) ? self.bounds.size.height : 0, self.bounds.size.width, self.bounds.size.height)];
+			[liveTile addSubview:[viewsForSize objectAtIndex:i]];
 		}
 		
-		liveTilePageIndex = 0;
-		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((arc4random_uniform(4) * 0.5)  * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-			liveTileAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(displayNextLiveTilePage) userInfo:nil repeats:YES];
-		});
+		if (viewsForSize.count > 1) {
+			liveTilePageIndex = 0;
+			
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((arc4random_uniform(4) * 0.5)  * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				liveTileAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(displayNextLiveTilePage) userInfo:nil repeats:YES];
+			});
+		}
 	}
 }
 

@@ -38,6 +38,14 @@
 		8D49A8AD1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8AC1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m */; };
 		8D58CF391EC3A6AA0021F625 /* RSLaunchScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D58CF381EC3A6AA0021F625 /* RSLaunchScreen.m */; };
 		8D58CFC61EC44AB90021F625 /* UIFont+WDCustomLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D58CFC51EC44AB90021F625 /* UIFont+WDCustomLoader.m */; };
+		8D59BD7B1EF7C30A0085682A /* RSCalendarTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D59BD7A1EF7C30A0085682A /* RSCalendarTile.m */; };
+		8D59BD7E1EF7C3DB0085682A /* RegularView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D59BD7D1EF7C3DB0085682A /* RegularView.xib */; };
+		8D59BD811EF7C5840085682A /* RSCalendarRegularView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D59BD801EF7C5840085682A /* RSCalendarRegularView.m */; };
+		8D59BD831EF7C6620085682A /* CompactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D59BD821EF7C6620085682A /* CompactView.xib */; };
+		8D59BD861EF7C79D0085682A /* RSCalendarCompactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D59BD851EF7C79D0085682A /* RSCalendarCompactView.m */; };
+		8D59BD881EF7C92A0085682A /* EventView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D59BD871EF7C92A0085682A /* EventView.xib */; };
+		8D59BD8B1EF7CA610085682A /* RSCalendarEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D59BD8A1EF7CA610085682A /* RSCalendarEventView.m */; };
+		8D59BD8D1EF7CB280085682A /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D59BD8C1EF7CB280085682A /* EventKitUI.framework */; };
 		8D5EBB751EF3C1EB00DEDF40 /* RSHourlyForecastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5EBB731EF3C1E700DEDF40 /* RSHourlyForecastView.m */; };
 		8D5EBB761EF3C1F000DEDF40 /* HourlyForecastView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D86DB7F1EF3BD710097EF8A /* HourlyForecastView.xib */; };
 		8D5F260C1EC9776600DB95C6 /* RSJumpList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5F260B1EC9776600DB95C6 /* RSJumpList.m */; };
@@ -432,6 +440,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8D59BD751EF7C2940085682A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D59BD691EF7C2350085682A;
+			remoteInfo = Calendar;
+		};
+		8D59BD771EF7C2980085682A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D59BD691EF7C2350085682A;
+			remoteInfo = Calendar;
+		};
 		8D715F6A1EF1DF5600FC65EF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
@@ -509,6 +531,27 @@
 		8D58CF381EC3A6AA0021F625 /* RSLaunchScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLaunchScreen.m; sourceTree = "<group>"; };
 		8D58CFC41EC44AB90021F625 /* UIFont+WDCustomLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+WDCustomLoader.h"; sourceTree = "<group>"; };
 		8D58CFC51EC44AB90021F625 /* UIFont+WDCustomLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+WDCustomLoader.m"; sourceTree = "<group>"; };
+		8D59BD6A1EF7C2350085682A /* Calendar.tile */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Calendar.tile; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D59BD731EF7C2650085682A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D59BD791EF7C30A0085682A /* RSCalendarTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCalendarTile.h; sourceTree = "<group>"; };
+		8D59BD7A1EF7C30A0085682A /* RSCalendarTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCalendarTile.m; sourceTree = "<group>"; };
+		8D59BD7D1EF7C3DB0085682A /* RegularView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegularView.xib; sourceTree = "<group>"; };
+		8D59BD7F1EF7C5840085682A /* RSCalendarRegularView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCalendarRegularView.h; sourceTree = "<group>"; };
+		8D59BD801EF7C5840085682A /* RSCalendarRegularView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCalendarRegularView.m; sourceTree = "<group>"; };
+		8D59BD821EF7C6620085682A /* CompactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompactView.xib; sourceTree = "<group>"; };
+		8D59BD841EF7C79D0085682A /* RSCalendarCompactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCalendarCompactView.h; sourceTree = "<group>"; };
+		8D59BD851EF7C79D0085682A /* RSCalendarCompactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCalendarCompactView.m; sourceTree = "<group>"; };
+		8D59BD871EF7C92A0085682A /* EventView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventView.xib; sourceTree = "<group>"; };
+		8D59BD891EF7CA610085682A /* RSCalendarEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSCalendarEventView.h; sourceTree = "<group>"; };
+		8D59BD8A1EF7CA610085682A /* RSCalendarEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSCalendarEventView.m; sourceTree = "<group>"; };
+		8D59BD8C1EF7CB280085682A /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		8D59BD911EF7CCED0085682A /* CalendarModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendarModel.h; sourceTree = "<group>"; };
+		8D59BD921EF7CCED0085682A /* EKCalendarDate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKCalendarDate.h; sourceTree = "<group>"; };
+		8D59BD931EF7CCED0085682A /* EKDayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKDayView.h; sourceTree = "<group>"; };
+		8D59BD941EF7CCED0085682A /* EKDayViewDataSource-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EKDayViewDataSource-Protocol.h"; sourceTree = "<group>"; };
+		8D59BD951EF7CCED0085682A /* EKDayViewDelegate-Protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EKDayViewDelegate-Protocol.h"; sourceTree = "<group>"; };
+		8D59BD961EF7CF130085682A /* CalendarOccurrencesCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendarOccurrencesCollection.h; sourceTree = "<group>"; };
+		8D59BD981EF7D0CD0085682A /* EKEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKEvent.h; sourceTree = "<group>"; };
 		8D5EBB721EF3C1E700DEDF40 /* RSHourlyForecastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSHourlyForecastView.h; sourceTree = "<group>"; };
 		8D5EBB731EF3C1E700DEDF40 /* RSHourlyForecastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSHourlyForecastView.m; sourceTree = "<group>"; };
 		8D5F260A1EC9776600DB95C6 /* RSJumpList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSJumpList.h; sourceTree = "<group>"; };
@@ -979,6 +1022,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8D59BD671EF7C2350085682A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D59BD8D1EF7CB280085682A /* EventKitUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D715F591EF1DB4F00FC65EF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1068,6 +1119,7 @@
 				8D0CB4E31EB9DBC600E39A02 /* hiddenapp.app */,
 				8D715F5C1EF1DB4F00FC65EF /* Weather.tile */,
 				8DE674FC1EF657DB00F65CF3 /* People.tile */,
+				8D59BD6A1EF7C2350085682A /* Calendar.tile */,
 				8DE675091EF659C200F65CF3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -1154,12 +1206,54 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		8D59BD721EF7C2650085682A /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				8D59BD731EF7C2650085682A /* Info.plist */,
+				8D59BD791EF7C30A0085682A /* RSCalendarTile.h */,
+				8D59BD7A1EF7C30A0085682A /* RSCalendarTile.m */,
+				8D59BD7F1EF7C5840085682A /* RSCalendarRegularView.h */,
+				8D59BD801EF7C5840085682A /* RSCalendarRegularView.m */,
+				8D59BD841EF7C79D0085682A /* RSCalendarCompactView.h */,
+				8D59BD851EF7C79D0085682A /* RSCalendarCompactView.m */,
+				8D59BD891EF7CA610085682A /* RSCalendarEventView.h */,
+				8D59BD8A1EF7CA610085682A /* RSCalendarEventView.m */,
+				8D59BD7D1EF7C3DB0085682A /* RegularView.xib */,
+				8D59BD821EF7C6620085682A /* CompactView.xib */,
+				8D59BD871EF7C92A0085682A /* EventView.xib */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		8D59BD901EF7CCED0085682A /* EventKitUI */ = {
+			isa = PBXGroup;
+			children = (
+				8D59BD911EF7CCED0085682A /* CalendarModel.h */,
+				8D59BD921EF7CCED0085682A /* EKCalendarDate.h */,
+				8D59BD931EF7CCED0085682A /* EKDayView.h */,
+				8D59BD941EF7CCED0085682A /* EKDayViewDataSource-Protocol.h */,
+				8D59BD951EF7CCED0085682A /* EKDayViewDelegate-Protocol.h */,
+				8D59BD961EF7CF130085682A /* CalendarOccurrencesCollection.h */,
+			);
+			name = EventKitUI;
+			path = Redstone/Tiles/headers/EventKitUI;
+			sourceTree = SOURCE_ROOT;
+		};
+		8D59BD971EF7D0C40085682A /* EventKit */ = {
+			isa = PBXGroup;
+			children = (
+				8D59BD981EF7D0CD0085682A /* EKEvent.h */,
+			);
+			path = EventKit;
+			sourceTree = "<group>";
+		};
 		8D715F561EF1DAB600FC65EF /* Tiles */ = {
 			isa = PBXGroup;
 			children = (
 				8D715F6E1EF1E23D00FC65EF /* headers */,
 				8D715F571EF1DB3100FC65EF /* Weather */,
 				8DE675021EF6584200F65CF3 /* People */,
+				8D59BD721EF7C2650085682A /* Calendar */,
 			);
 			name = Tiles;
 			path = Redstone/Tiles;
@@ -1197,6 +1291,8 @@
 				8D715F8E1EF1E49C00FC65EF /* RSLiveTileDelegate.h */,
 				8D715F6F1EF1E23D00FC65EF /* Weather */,
 				8D715F841EF1E23D00FC65EF /* WeatherFoundation */,
+				8D59BD901EF7CCED0085682A /* EventKitUI */,
+				8D59BD971EF7D0C40085682A /* EventKit */,
 			);
 			path = headers;
 			sourceTree = "<group>";
@@ -1417,6 +1513,7 @@
 		8DE675091EF659C200F65CF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8D59BD8C1EF7CB280085682A /* EventKitUI.framework */,
 				8DE6750A1EF659C200F65CF3 /* Contacts.framework */,
 			);
 			name = Frameworks;
@@ -2248,6 +2345,7 @@
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "$(PROJECT_DIR)/$(PROJECT_NAME)";
 			dependencies = (
+				8D59BD761EF7C2940085682A /* PBXTargetDependency */,
 				8DE6750D1EF65AEF00F65CF3 /* PBXTargetDependency */,
 				8D715F6B1EF1DF5600FC65EF /* PBXTargetDependency */,
 			);
@@ -2264,6 +2362,7 @@
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "$(PROJECT_DIR)/$(PROJECT_NAME)";
 			dependencies = (
+				8D59BD781EF7C2980085682A /* PBXTargetDependency */,
 				8DE6750F1EF65AF300F65CF3 /* PBXTargetDependency */,
 				8D715F6D1EF1DF5900FC65EF /* PBXTargetDependency */,
 			);
@@ -2290,6 +2389,24 @@
 			productName = hiddenapp;
 			productReference = 8D0CB4E31EB9DBC600E39A02 /* hiddenapp.app */;
 			productType = "com.apple.product-type.application";
+		};
+		8D59BD691EF7C2350085682A /* Calendar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8D59BD6D1EF7C2350085682A /* Build configuration list for PBXNativeTarget "Calendar" */;
+			buildPhases = (
+				8D59BD661EF7C2350085682A /* Sources */,
+				8D59BD671EF7C2350085682A /* Frameworks */,
+				8D59BD681EF7C2350085682A /* Resources */,
+				8D59BD7C1EF7C3890085682A /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Calendar;
+			productName = Calendar;
+			productReference = 8D59BD6A1EF7C2350085682A /* Calendar.tile */;
+			productType = "com.apple.product-type.bundle";
 		};
 		8D715F5B1EF1DB4F00FC65EF /* Weather */ = {
 			isa = PBXNativeTarget;
@@ -2350,6 +2467,10 @@
 						DevelopmentTeam = EDV7C8ZP77;
 						ProvisioningStyle = Automatic;
 					};
+					8D59BD691EF7C2350085682A = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+					};
 					8D715F5B1EF1DB4F00FC65EF = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = EDV7C8ZP77;
@@ -2381,6 +2502,7 @@
 				8D1D33F21EB7DC6E00BA9956 /* hiddenapp */,
 				8D715F5B1EF1DB4F00FC65EF /* Weather */,
 				8DE674FB1EF657DB00F65CF3 /* People */,
+				8D59BD691EF7C2350085682A /* Calendar */,
 			);
 		};
 /* End PBXProject section */
@@ -2690,6 +2812,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8D59BD681EF7C2350085682A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D59BD881EF7C92A0085682A /* EventView.xib in Resources */,
+				8D59BD831EF7C6620085682A /* CompactView.xib in Resources */,
+				8D59BD7E1EF7C3DB0085682A /* RegularView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D715F5A1EF1DB4F00FC65EF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2784,6 +2916,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		8D59BD7C1EF7C3890085682A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Fix that code signing\ncodesign --force --sign - --timestamp=none $CODESIGNING_FOLDER_PATH/$PRODUCT_NAME\n\nrm -rf /opt/simject/FESTIVAL/Redstone/Live\\ Tiles/$PRODUCT_BUNDLE_IDENTIFIER.$WRAPPER_EXTENSION/\ncp -R $CODESIGNING_FOLDER_PATH/. /opt/simject/FESTIVAL/Redstone/Live\\ Tiles/$PRODUCT_BUNDLE_IDENTIFIER.$WRAPPER_EXTENSION/";
+		};
 		8D715F621EF1DB7000FC65EF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2860,6 +3005,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8D59BD661EF7C2350085682A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D59BD8B1EF7CA610085682A /* RSCalendarEventView.m in Sources */,
+				8D59BD811EF7C5840085682A /* RSCalendarRegularView.m in Sources */,
+				8D59BD7B1EF7C30A0085682A /* RSCalendarTile.m in Sources */,
+				8D59BD861EF7C79D0085682A /* RSCalendarCompactView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D715F581EF1DB4F00FC65EF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2884,6 +3040,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8D59BD761EF7C2940085682A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D59BD691EF7C2350085682A /* Calendar */;
+			targetProxy = 8D59BD751EF7C2940085682A /* PBXContainerItemProxy */;
+		};
+		8D59BD781EF7C2980085682A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D59BD691EF7C2350085682A /* Calendar */;
+			targetProxy = 8D59BD771EF7C2980085682A /* PBXContainerItemProxy */;
+		};
 		8D715F6B1EF1DF5600FC65EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D715F5B1EF1DB4F00FC65EF /* Weather */;
@@ -3256,6 +3422,111 @@
 			};
 			name = Release;
 		};
+		8D59BD6E1EF7C2350085682A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Redstone/Tiles/Calendar/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apple.mobilecal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = tile;
+			};
+			name = Debug;
+		};
+		8D59BD6F1EF7C2350085682A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Redstone/Tiles/Calendar/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apple.mobilecal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = tile;
+			};
+			name = Release;
+		};
 		8D715F601EF1DB4F00FC65EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3305,7 +3576,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.weather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos10.2;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = tile;
 			};
@@ -3353,7 +3624,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.weather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos10.2;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = tile;
 			};
@@ -3409,7 +3680,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.MobileAddressBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos10.2;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = tile;
 			};
@@ -3458,7 +3729,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.MobileAddressBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos10.2;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = tile;
 			};
@@ -3502,6 +3773,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		8D59BD6D1EF7C2350085682A /* Build configuration list for PBXNativeTarget "Calendar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8D59BD6E1EF7C2350085682A /* Debug */,
+				8D59BD6F1EF7C2350085682A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		8D715F5F1EF1DB4F00FC65EF /* Build configuration list for PBXNativeTarget "Weather" */ = {
 			isa = XCConfigurationList;
