@@ -9,7 +9,7 @@ int columns;
 }
 
 + (CGSize)tileDimensionsForSize:(int)size {
-	switch ((int)screenWidth) {
+	/*switch ((int)screenWidth) {
 		case 414:
 			if (size == 1) {
 				return CGSizeMake(63.5, 63.5);
@@ -65,14 +65,55 @@ int columns;
 					return CGSizeMake(312, 312);
 				}
 			}
-		default: break;
+		default:
+			if (columns == 3) {
+				CGFloat baseTileWidth = (screenWidth-35)/6;
+				if (size == 1) {
+					return CGSizeMake(baseTileWidth , baseTileWidth);
+				} else if (size == 2) {
+					return CGSizeMake(baseTileWidth*2 + 5 , baseTileWidth*2 + 5);
+				} else if (size == 3) {
+					return CGSizeMake(baseTileWidth*4 + 15 , baseTileWidth*2 + 5);
+				} else if (size == 4) {
+					return CGSizeMake(baseTileWidth*4 + 15 , baseTileWidth*4 + 15);
+				}
+			} else if (columns == 2) {
+				CGFloat baseTileWidth = (screenWidth-20)/4;
+				if (size == 1) {
+					return CGSizeMake(baseTileWidth , baseTileWidth);
+				} else if (size == 2) {
+					return CGSizeMake(baseTileWidth*2 + 5 , baseTileWidth*2 + 5);
+				} else if (size == 3) {
+					return CGSizeMake(baseTileWidth*4 + 15 , baseTileWidth*4 + 15);
+				}
+			}
+			break;
+	}
+	
+	return CGSizeZero;*/
+	
+	CGFloat baseTileWidth = 0;
+	if (columns == 3) {
+		baseTileWidth = (screenWidth - 8 - [self tileBorderSpacing]*5)/6;
+	} else if (columns == 2) {
+		baseTileWidth = (screenWidth - 8 - ([self tileBorderSpacing]*3))/4;
+	}
+	
+	if (size == 1) {
+		return CGSizeMake(baseTileWidth , baseTileWidth);
+	} else if (size == 2) {
+		return CGSizeMake(baseTileWidth*2 + [self tileBorderSpacing] , baseTileWidth*2 + [self tileBorderSpacing]);
+	} else if (size == 3) {
+		return CGSizeMake(baseTileWidth*4 + [self tileBorderSpacing]*3 , baseTileWidth*2 + [self tileBorderSpacing]);
+	} else if (size == 4) {
+		return CGSizeMake(baseTileWidth*4 + [self tileBorderSpacing]*3 , baseTileWidth*4 + [self tileBorderSpacing]*3);
 	}
 	
 	return CGSizeZero;
 }
 
 + (CGSize)tileIconDimensionsForSize:(int)size {
-	switch ((int)screenWidth) {
+	/*switch ((int)screenWidth) {
 		case 414:
 			if (size == 1) {
 				return CGSizeMake(32, 32);
@@ -121,6 +162,14 @@ int columns;
 			}
 			break;
 		default: break;
+	}*/
+	
+	CGSize tileSize = [self tileDimensionsForSize:size];
+	
+	if (size == 1) {
+		return CGSizeMake(tileSize.height * 0.5, tileSize.height * 0.5);
+	} else if (size == 2 || size == 3 || size == 4) {
+		return CGSizeMake(tileSize.height * 0.33333, tileSize.height * 0.33333);
 	}
 	
 	return CGSizeZero;

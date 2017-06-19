@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -44,92 +45,114 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DS6-Gd-Xei">
-                    <rect key="frame" x="8" y="44" width="68" height="44"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="maY-9q-onZ">
+                    <rect key="frame" x="0.0" y="0.0" width="132" height="132"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DS6-Gd-Xei">
+                            <rect key="frame" x="8" y="44" width="68" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="VeO-gc-YxC"/>
+                                <constraint firstAttribute="width" constant="68" id="acA-mf-Wfs"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SegoeUI-Light" family="Segoe UI" pointSize="32"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rxy-fU-P8R">
+                            <rect key="frame" x="84" y="46" width="40" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="Qtd-IP-wQO"/>
+                                <constraint firstAttribute="width" constant="40" id="W8N-mI-bwn"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SegoeUI-Semilight" family="Segoe UI" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pg5-7O-Amo">
+                            <rect key="frame" x="84" y="66" width="40" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="9rb-jg-67b"/>
+                                <constraint firstAttribute="height" constant="20" id="ik4-9f-pMa"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SegoeUI-Semilight" family="Segoe UI" pointSize="14"/>
+                            <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="VeO-gc-YxC"/>
-                        <constraint firstAttribute="width" constant="68" id="acA-mf-Wfs"/>
+                        <constraint firstItem="DS6-Gd-Xei" firstAttribute="centerY" secondItem="maY-9q-onZ" secondAttribute="centerY" id="6PQ-7b-D3P"/>
+                        <constraint firstItem="Pg5-7O-Amo" firstAttribute="centerY" secondItem="maY-9q-onZ" secondAttribute="centerY" constant="10" id="6kD-VY-oHH"/>
+                        <constraint firstAttribute="width" secondItem="maY-9q-onZ" secondAttribute="height" multiplier="1:1" id="9Zg-k2-aZe"/>
+                        <constraint firstAttribute="trailing" secondItem="Rxy-fU-P8R" secondAttribute="trailing" constant="8" id="GJp-oO-w9c"/>
+                        <constraint firstItem="Rxy-fU-P8R" firstAttribute="centerY" secondItem="maY-9q-onZ" secondAttribute="centerY" constant="-10" id="HaO-6n-f6F"/>
+                        <constraint firstItem="DS6-Gd-Xei" firstAttribute="leading" secondItem="maY-9q-onZ" secondAttribute="leading" constant="8" id="aWW-8c-isc"/>
+                        <constraint firstAttribute="trailing" secondItem="Pg5-7O-Amo" secondAttribute="trailing" constant="8" id="gMV-ey-gIn"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="SegoeUI-Light" family="Segoe UI" pointSize="32"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rxy-fU-P8R">
-                    <rect key="frame" x="84" y="46" width="40" height="20"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j64-Cj-fNZ">
+                    <rect key="frame" x="137" y="0.0" width="132" height="132"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon_PoP.png" translatesAutoresizingMaskIntoConstraints="NO" id="SPH-Bt-KdH">
+                            <rect key="frame" x="3" y="49" width="13" height="13"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="13" id="7ok-Vl-tq4"/>
+                                <constraint firstAttribute="width" constant="13" id="ww7-ru-PiK"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon_Wind.png" translatesAutoresizingMaskIntoConstraints="NO" id="9xY-YP-4e1">
+                            <rect key="frame" x="3" y="70" width="13" height="13"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="13" id="CZR-KA-WYn"/>
+                                <constraint firstAttribute="width" constant="13" id="zov-Pn-Rkv"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 %" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2O2-MQ-UFB">
+                            <rect key="frame" x="24" y="46" width="80" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="FvM-Cy-Y4g"/>
+                                <constraint firstAttribute="width" constant="80" id="ja1-Ie-hDE"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SegoeUI-Semilight" family="Segoe UI" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2t-32-wXf">
+                            <rect key="frame" x="24" y="66" width="80" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="Zfl-r7-OSy"/>
+                                <constraint firstAttribute="width" constant="80" id="sbb-Fi-wHt"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SegoeUI-Semilight" family="Segoe UI" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="20" id="Qtd-IP-wQO"/>
-                        <constraint firstAttribute="width" constant="40" id="W8N-mI-bwn"/>
+                        <constraint firstItem="2O2-MQ-UFB" firstAttribute="centerY" secondItem="j64-Cj-fNZ" secondAttribute="centerY" constant="-10" id="MHa-3B-nfm"/>
+                        <constraint firstAttribute="width" secondItem="j64-Cj-fNZ" secondAttribute="height" multiplier="1:1" id="SEN-4z-VVt"/>
+                        <constraint firstItem="Z2t-32-wXf" firstAttribute="centerY" secondItem="j64-Cj-fNZ" secondAttribute="centerY" constant="10" id="bAb-eH-6kt"/>
+                        <constraint firstItem="9xY-YP-4e1" firstAttribute="centerY" secondItem="j64-Cj-fNZ" secondAttribute="centerY" constant="10" id="brS-md-XcM"/>
+                        <constraint firstItem="9xY-YP-4e1" firstAttribute="leading" secondItem="j64-Cj-fNZ" secondAttribute="leading" constant="3" id="dDl-9o-eSP"/>
+                        <constraint firstItem="Z2t-32-wXf" firstAttribute="leading" secondItem="9xY-YP-4e1" secondAttribute="trailing" constant="8" id="jYf-75-ufE"/>
+                        <constraint firstItem="SPH-Bt-KdH" firstAttribute="leading" secondItem="j64-Cj-fNZ" secondAttribute="leading" constant="3" id="p4Y-Av-ohX"/>
+                        <constraint firstItem="2O2-MQ-UFB" firstAttribute="leading" secondItem="9xY-YP-4e1" secondAttribute="trailing" constant="8" id="q0K-Ke-y4j"/>
+                        <constraint firstItem="SPH-Bt-KdH" firstAttribute="centerY" secondItem="j64-Cj-fNZ" secondAttribute="centerY" constant="-10" id="qrR-sS-L1r"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="SegoeUI-Semilight" family="Segoe UI" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 %" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2O2-MQ-UFB">
-                    <rect key="frame" x="161" y="46" width="80" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="FvM-Cy-Y4g"/>
-                        <constraint firstAttribute="width" constant="80" id="ja1-Ie-hDE"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SegoeUI-Semilight" family="Segoe UI" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pg5-7O-Amo">
-                    <rect key="frame" x="84" y="66" width="40" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="40" id="9rb-jg-67b"/>
-                        <constraint firstAttribute="height" constant="20" id="ik4-9f-pMa"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SegoeUI-Semilight" family="Segoe UI" pointSize="14"/>
-                    <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon_PoP.png" translatesAutoresizingMaskIntoConstraints="NO" id="SPH-Bt-KdH">
-                    <rect key="frame" x="140" y="49" width="13" height="13"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="13" id="7ok-Vl-tq4"/>
-                        <constraint firstAttribute="width" constant="13" id="ww7-ru-PiK"/>
-                    </constraints>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon_Wind.png" translatesAutoresizingMaskIntoConstraints="NO" id="9xY-YP-4e1">
-                    <rect key="frame" x="140" y="70" width="13" height="13"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="13" id="CZR-KA-WYn"/>
-                        <constraint firstAttribute="width" constant="13" id="zov-Pn-Rkv"/>
-                    </constraints>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2t-32-wXf">
-                    <rect key="frame" x="161" y="66" width="80" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="Zfl-r7-OSy"/>
-                        <constraint firstAttribute="width" constant="80" id="sbb-Fi-wHt"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SegoeUI-Semilight" family="Segoe UI" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                </view>
             </subviews>
             <constraints>
-                <constraint firstItem="SPH-Bt-KdH" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-10" id="2W8-2r-zI6"/>
-                <constraint firstItem="9xY-YP-4e1" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="10" id="DSm-J2-2EA"/>
-                <constraint firstItem="9xY-YP-4e1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="140" id="Dge-UC-uWX"/>
-                <constraint firstItem="Z2t-32-wXf" firstAttribute="leading" secondItem="9xY-YP-4e1" secondAttribute="trailing" constant="8" id="Dql-hP-wDG"/>
-                <constraint firstItem="DS6-Gd-Xei" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="IdN-wR-YKR"/>
-                <constraint firstItem="2O2-MQ-UFB" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-10" id="KfM-KH-BT9"/>
-                <constraint firstItem="DS6-Gd-Xei" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="N3m-um-olw"/>
-                <constraint firstItem="SPH-Bt-KdH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="140" id="cy4-EQ-6Hg"/>
-                <constraint firstItem="Rxy-fU-P8R" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="84" id="eXX-TE-08N"/>
+                <constraint firstItem="j64-Cj-fNZ" firstAttribute="leading" secondItem="maY-9q-onZ" secondAttribute="trailing" constant="5" id="4EO-NZ-GqD"/>
+                <constraint firstItem="j64-Cj-fNZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="B00-ta-mcu"/>
+                <constraint firstAttribute="bottom" secondItem="maY-9q-onZ" secondAttribute="bottom" id="eJh-Zk-00g"/>
+                <constraint firstItem="maY-9q-onZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fkI-nx-RjA"/>
                 <constraint firstItem="F9v-KF-52m" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="gI6-Vu-3dG"/>
+                <constraint firstAttribute="bottom" secondItem="j64-Cj-fNZ" secondAttribute="bottom" id="jVB-YL-rAC"/>
                 <constraint firstItem="bs8-F9-vFq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="kaq-Oc-Y3f"/>
                 <constraint firstItem="F9v-KF-52m" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="mmo-zp-yHZ"/>
                 <constraint firstAttribute="trailing" secondItem="F9v-KF-52m" secondAttribute="trailing" constant="8" id="mtV-ur-hTT"/>
+                <constraint firstItem="maY-9q-onZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="nz6-5K-Sm4"/>
                 <constraint firstAttribute="trailing" secondItem="bs8-F9-vFq" secondAttribute="trailing" constant="8" id="oMM-7z-uZ0"/>
                 <constraint firstAttribute="bottom" secondItem="bs8-F9-vFq" secondAttribute="bottom" constant="8" id="oyO-Xz-WGj"/>
-                <constraint firstItem="Pg5-7O-Amo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="84" id="pMM-b1-9Sq"/>
-                <constraint firstItem="Rxy-fU-P8R" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-10" id="rFL-OS-JpH"/>
-                <constraint firstItem="2O2-MQ-UFB" firstAttribute="leading" secondItem="SPH-Bt-KdH" secondAttribute="trailing" constant="8" id="sFF-y6-JEe"/>
-                <constraint firstItem="Pg5-7O-Amo" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="10" id="u76-R2-Vup"/>
-                <constraint firstItem="Z2t-32-wXf" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="10" id="zxz-H8-dwm"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
