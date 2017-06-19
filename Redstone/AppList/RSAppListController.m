@@ -342,7 +342,8 @@ static RSAppListController* sharedInstance;
 			[self.searchBar.layer removeAllAnimations];
 			[self setIsSearching:NO];
 			
-			[[objc_getClass("SBIconController") sharedInstance] _launchIcon:sender.icon];
+			SBLeafIcon* icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:sender.iconIdentifier];
+			[[objc_getClass("SBIconController") sharedInstance] _launchIcon:icon];
 			[[[RSCore sharedInstance] rootScrollView] setUserInteractionEnabled:YES];
 		});
 	});

@@ -11,6 +11,7 @@
 }
 
 @property (nonatomic, strong) SBLeafIcon* icon;
+@property (nonatomic, strong) NSString* iconIdentifier;
 @property (nonatomic, strong) RSTileInfo* tileInfo;
 
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafId;

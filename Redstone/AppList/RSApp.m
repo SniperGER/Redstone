@@ -8,6 +8,7 @@
 	if (self) {
 		[self setHighlightEnabled:YES];
 		self.icon = [[[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafId];
+		self.iconIdentifier = [[self.icon application] bundleIdentifier];
 		self.tileInfo = [[RSTileInfo alloc] initWithBundleIdentifier:leafId];
 		
 		UIView* tileBackground = [[UIView alloc] initWithFrame:CGRectMake(5, 2, 50, 50)];
