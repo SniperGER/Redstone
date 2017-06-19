@@ -15,7 +15,6 @@
 		8D0BBA5C1ED16DD3008D6246 /* segoeuisl.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D0BB9C31ED16DD2008D6246 /* segoeuisl.ttf */; };
 		8D17C8651EE3502300A2FE2F /* UIImageAverageColorAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D17C8641EE3502300A2FE2F /* UIImageAverageColorAddition.m */; };
 		8D17C8801EE35BB900A2FE2F /* RSTileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D17C87F1EE35BB900A2FE2F /* RSTileInfo.m */; };
-		8D1D34111EB7DCBA00BA9956 /* Redstone.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */; };
 		8D1D34121EB7DCBA00BA9956 /* Redstone.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */; };
 		8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 8D1D34101EB7DCBA00BA9956 /* Makefile */; };
 		8D2932D81EEAA4DC0010613D /* tile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D2932D71EEAA4DC0010613D /* tile.plist */; };
@@ -45,7 +44,6 @@
 		8D59BD861EF7C79D0085682A /* RSCalendarCompactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D59BD851EF7C79D0085682A /* RSCalendarCompactView.m */; };
 		8D59BD881EF7C92A0085682A /* EventView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D59BD871EF7C92A0085682A /* EventView.xib */; };
 		8D59BD8B1EF7CA610085682A /* RSCalendarEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D59BD8A1EF7CA610085682A /* RSCalendarEventView.m */; };
-		8D59BD8D1EF7CB280085682A /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D59BD8C1EF7CB280085682A /* EventKitUI.framework */; };
 		8D5EBB751EF3C1EB00DEDF40 /* RSHourlyForecastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5EBB731EF3C1E700DEDF40 /* RSHourlyForecastView.m */; };
 		8D5EBB761EF3C1F000DEDF40 /* HourlyForecastView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D86DB7F1EF3BD710097EF8A /* HourlyForecastView.xib */; };
 		8D5F260C1EC9776600DB95C6 /* RSJumpList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5F260B1EC9776600DB95C6 /* RSJumpList.m */; };
@@ -496,7 +494,6 @@
 		8D17C8631EE3502300A2FE2F /* UIImageAverageColorAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageAverageColorAddition.h; sourceTree = "<group>"; };
 		8D17C8641EE3502300A2FE2F /* UIImageAverageColorAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageAverageColorAddition.m; sourceTree = "<group>"; };
 		8D17C87F1EE35BB900A2FE2F /* RSTileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTileInfo.m; sourceTree = "<group>"; };
-		8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Redstone.xm; path = Redstone/Redstone.xm; sourceTree = "<group>"; };
 		8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Redstone.plist; path = Redstone/Redstone.plist; sourceTree = "<group>"; };
 		8D1D34101EB7DCBA00BA9956 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = Makefile; path = Redstone/Makefile; sourceTree = "<group>"; };
 		8D1D341B1EB7E34700BA9956 /* Redstone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Redstone.h; path = Redstone/Redstone.h; sourceTree = "<group>"; };
@@ -1026,7 +1023,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D59BD8D1EF7CB280085682A /* EventKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1131,7 +1127,6 @@
 				8D4739701EB93A47007EA214 /* control */,
 				8D1D340F1EB7DCBA00BA9956 /* Redstone.plist */,
 				8D1D341B1EB7E34700BA9956 /* Redstone.h */,
-				8D1D340E1EB7DCBA00BA9956 /* Redstone.xm */,
 				8D49A8901ED6D0A000A36E8D /* Redstone_Core.xm */,
 				8D49A88A1ED6CF0600A36E8D /* Redstone_StartScreen.xm */,
 				8D2D8C321ED0161500D220E0 /* Redstone_LockScreen.xm */,
@@ -2777,7 +2772,6 @@
 				8DFE994B1EE0146E0091DB93 /* tile@3x.png in Resources */,
 				8DFE99E41EE0146E0091DB93 /* tile@2x.png in Resources */,
 				8DFE99471EE0146E0091DB93 /* tile@3x.png in Resources */,
-				8D1D34111EB7DCBA00BA9956 /* Redstone.xm in Resources */,
 				8DFE997D1EE0146E0091DB93 /* tile-AppList@2x.png in Resources */,
 				8DFE99D91EE0146E0091DB93 /* tile@2x.png in Resources */,
 				8DFE99671EE0146E0091DB93 /* tile@2x.png in Resources */,
@@ -3781,6 +3775,7 @@
 				8D59BD6F1EF7C2350085682A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8D715F5F1EF1DB4F00FC65EF /* Build configuration list for PBXNativeTarget "Weather" */ = {
 			isa = XCConfigurationList;

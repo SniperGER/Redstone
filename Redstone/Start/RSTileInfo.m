@@ -35,7 +35,6 @@
 		
 		if ([tileInfo objectForKey:@"LocalizedDisplayName"] && [[tileInfo objectForKey:@"LocalizedDisplayName"] boolValue]) {
 			_localizedDisplayName = [tileBundle localizedStringForKey:@"DisplayName" value:nil table:nil];
-			// TODO: Read localized display name from XX.lproj/Localizable.strings included with tile bundle
 		}
 		
 		if ([tileInfo objectForKey:@"AccentColor"]) {

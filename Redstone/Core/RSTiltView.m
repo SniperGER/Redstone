@@ -101,12 +101,6 @@
 				finalTransform = CATransform3DConcat(rotateX, rotateY);
 			}
 			
-			/*[UIView animateWithDuration:.05 animations:^{
-				[self.layer setTransform:finalTransform];
-			} completion:^(BOOL finished) {
-				self.isTilted = YES;
-			}];*/
-			
 			[self.layer setTransform:finalTransform];
 		}
 	}

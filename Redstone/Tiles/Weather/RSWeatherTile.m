@@ -6,7 +6,9 @@
 	self = [super initWithFrame:frame];
 	
 	if (self) {
-		//dlopen("/System/Library/PrivateFrameworks/Weather.framework/Weather", RTLD_NOW);
+		if (kCFCoreFoundationVersionNumber <= kCFCoreFoundationVersionNumber_iOS_9_x_Max) {
+			dlopen("/System/Library/PrivateFrameworks/Weather.framework/Weather", RTLD_NOW);
+		}
 		
 		weatherPreferences = [objc_getClass("WeatherPreferences") sharedPreferences];
 		weatherLocationManager = [objc_getClass("WeatherLocationManager") sharedWeatherLocationManager];
@@ -41,12 +43,6 @@
 }
 
 - (void)requestWeatherDataUpdate {
-	/*if ([weatherPreferences isLocalWeatherEnabled] && [weatherPreferences localWeatherCity]) {
-		currentCity = [weatherPreferences localWeatherCity];
-	} else {
-		currentCity = [[weatherPreferences loadSavedCities] objectAtIndex:[weatherPreferences loadActiveCity]];
-	}*/
-	
 	if (![self isConnectedToInternet]) {
 		isUpdatingWeatherData = NO;
 		[self.tile setLiveTileHidden:YES];
@@ -94,10 +90,6 @@
 		[currentCity setIsLocalWeatherCity:YES];
 		[currentCity setLocation:[weatherLocationManager location]];
 		[currentCity update];
-		
-		/*[weatherLocationManager setLocationTrackingIsReady:NO];
-		[weatherLocationManager setLocationTrackingActive:NO];
-		[weatherLocationManager setLocationTrackingReady:NO activelyTracking:NO watchKitExtension:NO];*/
 		
 		weatherDataUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(weatherDataDidUpdate) userInfo:nil repeats:YES];
 		[self weatherDataDidUpdate];

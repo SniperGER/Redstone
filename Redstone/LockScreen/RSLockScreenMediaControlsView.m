@@ -99,34 +99,6 @@
 			[self setHidden:NO];
 		}
 	});
-	/*if (!nowPlayingInfo) {
-		[self setHidden:YES];
-		return;
-	}
-	
-	[self setHidden:NO];
-	
-	if ([nowPlayingInfo objectForKey:@"kMRMediaRemoteNowPlayingInfoTitle"]) {
-		[mediaTitleLabel setText:[nowPlayingInfo objectForKey:@"kMRMediaRemoteNowPlayingInfoTitle"]];
-	} else {
-		[mediaTitleLabel setText:[RSAesthetics localizedStringForKey:@"MEDIA_UNKNOWN_TITLE"]];
-	}
-	
-	if ([nowPlayingInfo objectForKey:@"kMRMediaRemoteNowPlayingInfoArtist"]) {
-		[mediaSubtitleLabel setText:[nowPlayingInfo objectForKey:@"kMRMediaRemoteNowPlayingInfoArtist"]];
-	} else {
-		[mediaSubtitleLabel setText:[RSAesthetics localizedStringForKey:@"MEDIA_UNKNOWN_ARTIST"]];
-	}
-	
-	[UIView performWithoutAnimation:^{
-		if ([[nowPlayingInfo objectForKey:@"kMRMediaRemoteNowPlayingInfoPlaybackRate"] boolValue]) {
-			[playPauseButton setTitle:@"\uE769"];
-		} else {
-			[playPauseButton setTitle:@"\uE768"];
-		}
-		
-		[playPauseButton layoutIfNeeded];
-	}];*/
 }
 
 - (void)previousTrack {

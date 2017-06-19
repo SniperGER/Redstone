@@ -28,14 +28,12 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-	//[[RSAppListController sharedInstance] setIsSearching:YES];
 	[self.layer setBorderColor:[RSAesthetics accentColor].CGColor];
 	[self setBackgroundColor:[UIColor whiteColor]];
 	[self setTextColor:[UIColor blackColor]];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-	//[[RSAppListController sharedInstance] setIsSearching:NO];
 	[self.layer setBorderColor:[UIColor colorWithWhite:1.0 alpha:0.4].CGColor];
 	[self setBackgroundColor:[UIColor blackColor]];
 	[self setTextColor:[UIColor whiteColor]];

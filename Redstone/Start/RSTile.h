@@ -58,13 +58,4 @@
 - (void)addBulletin:(BBBulletin*)bulletin;
 - (void)removeBulletin:(BBBulletin*)bulletin;
 
-/*- (void)setLiveTileStarted:(BOOL)ready;
-- (void)transitionLiveTileToStarted:(BOOL)ready;
-- (void)startLiveTile;
-- (void)stopLiveTile;
-- (void)updateLiveTile;
-
-- (void)addBulletin:(BBBulletin*)bulletin;
-- (void)removeBulletin:(BBBulletin*)bulletin;*/
-
 @end

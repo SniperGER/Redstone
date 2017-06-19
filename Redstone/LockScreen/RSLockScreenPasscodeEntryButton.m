@@ -32,7 +32,6 @@
 		} else {
 			[[[[RSLockScreenController sharedInstance] passcodeEntryController] currentKeypad] passcodeLockNumberPad:nil keyDown:self.numberPadButton];
 		}
-		//[[[RSLockScreenController sharedInstance] passcodeEntryController] handlePasscodeTextChanged];
 	} else if (gestureRecognizer.state == UIGestureRecognizerStateEnded || gestureRecognizer.state == UIGestureRecognizerStateCancelled) {
 		[self setBackgroundColor:[UIColor clearColor]];
 		
