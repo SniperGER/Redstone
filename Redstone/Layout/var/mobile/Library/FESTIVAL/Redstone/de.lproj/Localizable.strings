@@ -14,3 +14,8 @@
 "PASSCODE_ENTER_PIN" = "PIN eingeben";
 "PASSCODE_INVALID_PIN" = "Ungültige PIN";
 "PASSCODE_INVALID_MESA" = "Wiederholen";
+
+/* Volume Controls */
+"RINGER_MODE_ENABLED" = "Klingeln + Benachrichtigungen";
+"RINGER_MODE_VIBRATION" = "Vibration";
+"MEDIA_VOLUME" = "Medien + Apps";

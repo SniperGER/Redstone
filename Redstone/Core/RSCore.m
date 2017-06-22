@@ -76,10 +76,15 @@ static id currentApplication;
 			self.appListController = [RSAppListController new];
 			[self.rootScrollView addSubview:self.appListController.appList];
 			[self.rootScrollView addSubview:self.appListController.jumpList];
+			
 		}
 		
 		if ([[[RSPreferences preferences] objectForKey:@"lockScreenEnabled"] boolValue]) {
 			self.lockScreenController = [RSLockScreenController new];
+		}
+		
+		if ([[[RSPreferences preferences] objectForKey:@"volumeControlEnabled"] boolValue]) {
+			self.soundController = [RSSoundController new];
 		}
 	}
 	

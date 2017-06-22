@@ -108,8 +108,6 @@
 
 - (void)hide {
 	// ANIMATION
-	NSLog(@"[Redstone] hiding");
-	
 	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
 														  function:CubicEaseOut
 														 fromValue:1.0

@@ -13,8 +13,6 @@
 	int precipitationValue = round([currentHourForecast percentPrecipitation]);
 	NSString* windSpeedValue = [[objc_getClass("WeatherWindSpeedFormatter") convenienceFormatter] stringForWindSpeed:-1];
 	
-	NSLog(@"[Redstone] %f", [city humidity]);
-	
 	[cityName setText:[city name]];
 	[currentCondition setText:[self localizedConditionForCode:[city conditionCode]]];
 	[currentTemperature setText:[NSString stringWithFormat:@"%i°", currentTemperatureValue]];

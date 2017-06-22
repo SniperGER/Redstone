@@ -53,6 +53,8 @@
 		8D715F691EF1DC5900FC65EF /* RSWeatherTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D715F681EF1DC5900FC65EF /* RSWeatherTile.m */; };
 		8D715F921EF261B300FC65EF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D715F911EF261B300FC65EF /* Reachability.m */; };
 		8D715F941EF26F9300FC65EF /* ConditionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D715F931EF26F9300FC65EF /* ConditionView.xib */; };
+		8D7960031EF9C5AB005730BE /* RSSoundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7960021EF9C5AB005730BE /* RSSoundController.m */; };
+		8D7960061EF9C6A8005730BE /* RSVolumeHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7960051EF9C6A8005730BE /* RSVolumeHUD.m */; };
 		8D7DB3731EEA0886005C9947 /* RSTileNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D7DB3721EEA0886005C9947 /* RSTileNotificationView.m */; };
 		8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8249101EC2FEF300779648 /* RSLaunchScreenController.m */; };
 		8D8A10F21ED21BF6004A7811 /* RSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8A10F11ED21BF6004A7811 /* RSTile.m */; };
@@ -62,6 +64,8 @@
 		8DA52D831EF5159100F23476 /* DayForecastView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA52D821EF5159100F23476 /* DayForecastView.xib */; };
 		8DA52D861EF518FE00F23476 /* RSDayForecastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA52D851EF518FE00F23476 /* RSDayForecastView.m */; };
 		8DB357221EDE8F380098BBCB /* RSTileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB357211EDE8F380098BBCB /* RSTileInfo.m */; };
+		8DB6D9BC1EFA5120002F37CC /* RSVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB6D9BB1EFA5120002F37CC /* RSVolumeView.m */; };
+		8DB6D9BF1EFA57D8002F37CC /* RSVolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB6D9BE1EFA57D8002F37CC /* RSVolumeSlider.m */; };
 		8DB8068A1EF2AF980076155A /* RSConditionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB806891EF2AF980076155A /* RSConditionView.m */; };
 		8DB84B6A1EF5A5EF00C9AC67 /* Icon_PoP@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DB84B211EF5A5EF00C9AC67 /* Icon_PoP@2x.png */; };
 		8DB84B6B1EF5A5EF00C9AC67 /* Icon_PoP@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DB84B221EF5A5EF00C9AC67 /* Icon_PoP@3x.png */; };
@@ -445,21 +449,7 @@
 			remoteGlobalIDString = 8D59BD691EF7C2350085682A;
 			remoteInfo = Calendar;
 		};
-		8D59BD771EF7C2980085682A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D59BD691EF7C2350085682A;
-			remoteInfo = Calendar;
-		};
 		8D715F6A1EF1DF5600FC65EF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D715F5B1EF1DB4F00FC65EF;
-			remoteInfo = Weather;
-		};
-		8D715F6C1EF1DF5900FC65EF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
 			proxyType = 1;
@@ -473,12 +463,26 @@
 			remoteGlobalIDString = 8DE674FB1EF657DB00F65CF3;
 			remoteInfo = People;
 		};
-		8DE6750E1EF65AF300F65CF3 /* PBXContainerItemProxy */ = {
+		8DF9F5F91EFB1A090045FBB5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D715F5B1EF1DB4F00FC65EF;
+			remoteInfo = Weather;
+		};
+		8DF9F5FB1EFB1A090045FBB5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 8DE674FB1EF657DB00F65CF3;
 			remoteInfo = People;
+		};
+		8DF9F5FD1EFB1A090045FBB5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8D1D33E91EB7DC3D00BA9956 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D59BD691EF7C2350085682A;
+			remoteInfo = Calendar;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -595,6 +599,10 @@
 		8D715F901EF261B300FC65EF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		8D715F911EF261B300FC65EF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		8D715F931EF26F9300FC65EF /* ConditionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConditionView.xib; sourceTree = "<group>"; };
+		8D7960011EF9C5AB005730BE /* RSSoundController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSoundController.h; sourceTree = "<group>"; };
+		8D7960021EF9C5AB005730BE /* RSSoundController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSoundController.m; sourceTree = "<group>"; };
+		8D7960041EF9C6A8005730BE /* RSVolumeHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVolumeHUD.h; sourceTree = "<group>"; };
+		8D7960051EF9C6A8005730BE /* RSVolumeHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVolumeHUD.m; sourceTree = "<group>"; };
 		8D7DB3711EEA0886005C9947 /* RSTileNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTileNotificationView.h; sourceTree = "<group>"; };
 		8D7DB3721EEA0886005C9947 /* RSTileNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTileNotificationView.m; sourceTree = "<group>"; };
 		8D82490F1EC2FEF300779648 /* RSLaunchScreenController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLaunchScreenController.h; sourceTree = "<group>"; };
@@ -609,6 +617,10 @@
 		8DA52D851EF518FE00F23476 /* RSDayForecastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDayForecastView.m; sourceTree = "<group>"; };
 		8DB357201EDE8F380098BBCB /* RSTileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTileInfo.h; sourceTree = "<group>"; };
 		8DB357211EDE8F380098BBCB /* RSTileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTileInfo.m; path = ../../../../../../../../Start/RSTileInfo.m; sourceTree = "<group>"; };
+		8DB6D9BA1EFA5120002F37CC /* RSVolumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVolumeView.h; sourceTree = "<group>"; };
+		8DB6D9BB1EFA5120002F37CC /* RSVolumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVolumeView.m; sourceTree = "<group>"; };
+		8DB6D9BD1EFA57D8002F37CC /* RSVolumeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVolumeSlider.h; sourceTree = "<group>"; };
+		8DB6D9BE1EFA57D8002F37CC /* RSVolumeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVolumeSlider.m; sourceTree = "<group>"; };
 		8DB806881EF2AF980076155A /* RSConditionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSConditionView.h; sourceTree = "<group>"; };
 		8DB806891EF2AF980076155A /* RSConditionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSConditionView.m; sourceTree = "<group>"; };
 		8DB84B211EF5A5EF00C9AC67 /* Icon_PoP@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_PoP@2x.png"; sourceTree = "<group>"; };
@@ -1139,6 +1151,7 @@
 				8DBD10981EC23CD000A5A037 /* Start */,
 				8D82490E1EC2FEA900779648 /* Launch */,
 				8DE79E8D1EC6EC88004EF2E6 /* AppList */,
+				8D304C671EF8FEB900B6314F /* Volume */,
 				8D2D8C2E1ED0156200D220E0 /* LockScreen */,
 				8D715F561EF1DAB600FC65EF /* Tiles */,
 			);
@@ -1174,6 +1187,22 @@
 			name = LockScreen;
 			path = Redstone/LockScreen;
 			sourceTree = SOURCE_ROOT;
+		};
+		8D304C671EF8FEB900B6314F /* Volume */ = {
+			isa = PBXGroup;
+			children = (
+				8D7960011EF9C5AB005730BE /* RSSoundController.h */,
+				8D7960021EF9C5AB005730BE /* RSSoundController.m */,
+				8D7960041EF9C6A8005730BE /* RSVolumeHUD.h */,
+				8D7960051EF9C6A8005730BE /* RSVolumeHUD.m */,
+				8DB6D9BA1EFA5120002F37CC /* RSVolumeView.h */,
+				8DB6D9BB1EFA5120002F37CC /* RSVolumeView.m */,
+				8DB6D9BD1EFA57D8002F37CC /* RSVolumeSlider.h */,
+				8DB6D9BE1EFA57D8002F37CC /* RSVolumeSlider.m */,
+			);
+			name = Volume;
+			path = Redstone/Volume;
+			sourceTree = "<group>";
 		};
 		8D49A8921ED6E1BE00A36E8D /* redstone_prefs */ = {
 			isa = PBXGroup;
@@ -2357,9 +2386,9 @@
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "$(PROJECT_DIR)/$(PROJECT_NAME)";
 			dependencies = (
-				8D59BD781EF7C2980085682A /* PBXTargetDependency */,
-				8DE6750F1EF65AF300F65CF3 /* PBXTargetDependency */,
-				8D715F6D1EF1DF5900FC65EF /* PBXTargetDependency */,
+				8DF9F5FA1EFB1A090045FBB5 /* PBXTargetDependency */,
+				8DF9F5FC1EFB1A090045FBB5 /* PBXTargetDependency */,
+				8DF9F5FE1EFB1A090045FBB5 /* PBXTargetDependency */,
 			);
 			name = Install;
 			passBuildSettingsInEnvironment = 1;
@@ -2970,6 +2999,8 @@
 				8DBD108A1EC23BF900A5A037 /* RSAesthetics.m in Sources */,
 				8D1D34131EB7DCBA00BA9956 /* Makefile in Sources */,
 				8D5F26111ECA40AD00DB95C6 /* RSModalAlert.m in Sources */,
+				8D7960061EF9C6A8005730BE /* RSVolumeHUD.m in Sources */,
+				8DB6D9BF1EFA57D8002F37CC /* RSVolumeSlider.m in Sources */,
 				8D7DB3731EEA0886005C9947 /* RSTileNotificationView.m in Sources */,
 				8DE79E901EC6ECFE004EF2E6 /* RSAppListController.m in Sources */,
 				8D6A048A1ED5AAC700117226 /* RSNotificationView.m in Sources */,
@@ -2987,9 +3018,11 @@
 				8DBD108C1EC23BF900A5A037 /* RSMetrics.m in Sources */,
 				8DBD107F1EC23BD400A5A037 /* easing.c in Sources */,
 				8DBD107E1EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m in Sources */,
+				8DB6D9BC1EFA5120002F37CC /* RSVolumeView.m in Sources */,
 				8D58CF391EC3A6AA0021F625 /* RSLaunchScreen.m in Sources */,
 				8DB357221EDE8F380098BBCB /* RSTileInfo.m in Sources */,
 				8DC921111ED97F350011D30E /* RDSAccentColorList.m in Sources */,
+				8D7960031EF9C5AB005730BE /* RSSoundController.m in Sources */,
 				8DC9210E1ED968270011D30E /* RSLockScreenPasscodeEntryTextField.m in Sources */,
 				8D49A89B1ED6E1BE00A36E8D /* Makefile in Sources */,
 				8DBD10A01EC23CD000A5A037 /* RSStartScrollView.m in Sources */,
@@ -3039,30 +3072,30 @@
 			target = 8D59BD691EF7C2350085682A /* Calendar */;
 			targetProxy = 8D59BD751EF7C2940085682A /* PBXContainerItemProxy */;
 		};
-		8D59BD781EF7C2980085682A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8D59BD691EF7C2350085682A /* Calendar */;
-			targetProxy = 8D59BD771EF7C2980085682A /* PBXContainerItemProxy */;
-		};
 		8D715F6B1EF1DF5600FC65EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D715F5B1EF1DB4F00FC65EF /* Weather */;
 			targetProxy = 8D715F6A1EF1DF5600FC65EF /* PBXContainerItemProxy */;
-		};
-		8D715F6D1EF1DF5900FC65EF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8D715F5B1EF1DB4F00FC65EF /* Weather */;
-			targetProxy = 8D715F6C1EF1DF5900FC65EF /* PBXContainerItemProxy */;
 		};
 		8DE6750D1EF65AEF00F65CF3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8DE674FB1EF657DB00F65CF3 /* People */;
 			targetProxy = 8DE6750C1EF65AEF00F65CF3 /* PBXContainerItemProxy */;
 		};
-		8DE6750F1EF65AF300F65CF3 /* PBXTargetDependency */ = {
+		8DF9F5FA1EFB1A090045FBB5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D715F5B1EF1DB4F00FC65EF /* Weather */;
+			targetProxy = 8DF9F5F91EFB1A090045FBB5 /* PBXContainerItemProxy */;
+		};
+		8DF9F5FC1EFB1A090045FBB5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8DE674FB1EF657DB00F65CF3 /* People */;
-			targetProxy = 8DE6750E1EF65AF300F65CF3 /* PBXContainerItemProxy */;
+			targetProxy = 8DF9F5FB1EFB1A090045FBB5 /* PBXContainerItemProxy */;
+		};
+		8DF9F5FE1EFB1A090045FBB5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D59BD691EF7C2350085682A /* Calendar */;
+			targetProxy = 8DF9F5FD1EFB1A090045FBB5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

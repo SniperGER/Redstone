@@ -44,8 +44,6 @@ extern dispatch_queue_t __BBServerQueue;
 }
 
 - (void)addBulletin:(BBBulletin *)bulletin delayIncomingBulletins:(BOOL)delay {
-	NSLog(@"[Redstone] adding bulletin for %@", [bulletin section]);
-	
 	BOOL isAboutToStartLiveTile = (bulletins.count < 1 && currentNotificationView == nil);
 	if (![bulletins containsObject:bulletin]) {
 		[bulletins addObject:bulletin];
@@ -102,8 +100,6 @@ extern dispatch_queue_t __BBServerQueue;
 }
 
 - (void)removeBulletin:(BBBulletin *)bulletin {
-	NSLog(@"[Redstone] removing bulletin for %@", [bulletin section]);
-	
 	BOOL isAboutToStopLiveTile = (bulletins.count-1 <= 0);
 	if ([bulletins containsObject:bulletin]) {
 		[bulletins removeObject:bulletin];

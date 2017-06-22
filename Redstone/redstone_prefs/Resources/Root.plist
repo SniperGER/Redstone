@@ -87,8 +87,6 @@
 			<string>volumeControlEnabled</string>
 			<key>label</key>
 			<string>Volume Control</string>
-			<key>enabled</key>
-			<false/>
 		</dict>
 		<dict>
 			<key>cell</key>

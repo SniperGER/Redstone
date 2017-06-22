@@ -41,6 +41,11 @@
 #import "LockScreen/RSLockScreenPasscodeEntryTextField.h"
 #import "LockScreen/RSLockScreenPasscodeEntryButton.h"
 
+#import "Volume/RSSoundController.h"
+#import "Volume/RSVolumeHUD.h"
+#import "Volume/RSVolumeView.h"
+#import "Volume/RSVolumeSlider.h"
+
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
 #define deg2rad(angle) ((angle) / 180.0 * M_PI)
@@ -64,9 +69,11 @@
 static RSCore* redstone;
 
 @interface SpringBoard : NSObject
++ (id)sharedApplication;
 - (void)cancelMenuButtonRequests;
 - (void)clearMenuButtonTimer;
-- (BOOL)launchApplicationWithIdentifier:(id)arg1 suspended:(BOOL)arg2 ;
+- (BOOL)launchApplicationWithIdentifier:(id)arg1 suspended:(BOOL)arg2;
+- (BOOL)_isDim;
 @end
 
 @interface SBUIController : NSObject
@@ -148,6 +155,8 @@ static RSCore* redstone;
 - (BOOL)togglePlayPause;
 - (BOOL)changeTrack:(int)arg1;
 - (id)nowPlayingProcessPID;
+- (BOOL)isRingerMuted;
+- (void)setRingerMuted:(BOOL)arg1;
 @end
 
 @interface SBDashBoardView : UIView
@@ -224,4 +233,20 @@ static RSCore* redstone;
 @end
 
 @interface SBPasscodeNumberPadButton : UIView
+@end
+
+@interface AVSystemController : NSObject
++ (id)sharedAVSystemController;
+- (BOOL)setVolumeTo:(float)arg1 forCategory:(id)arg2;
+- (BOOL)getVolume:(float*)arg1 forCategory:(id)arg2;
+- (BOOL)getActiveCategoryVolume:(float*)arg1 andName:(id*)arg2 ;
+- (BOOL)getActiveCategoryMuted:(BOOL*)arg1 ;
+- (BOOL)toggleActiveCategoryMuted;
+@end
+
+@interface VolumeControl : NSObject
++ (id)sharedVolumeControl;
+- (float)volume;
+- (float)getMediaVolume;
+- (BOOL)_HUDIsDisplayableForCategory:(id)arg1;
 @end
