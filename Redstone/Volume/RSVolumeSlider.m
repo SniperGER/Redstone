@@ -78,7 +78,7 @@
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
 	CGPoint location = [touch locationInView:self];
 	
-	if (CGRectContainsPoint(CGRectInset(thumbLayer.frame, -8, 0), location)) {
+	if (CGRectContainsPoint(CGRectInset(thumbLayer.frame, -14, 0), location)) {
 		return YES;
 	}
 	

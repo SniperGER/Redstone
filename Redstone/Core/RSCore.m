@@ -120,6 +120,12 @@ static id currentApplication;
 }
 
 - (BOOL)handleMenuButtonEvent {
+	if ([[[RSPreferences preferences] objectForKey:@"volumeControlEnabled"] boolValue]) {
+		if ([self.soundController isShowingVolumeHUD]) {
+			[self.soundController hideVolumeHUDAnimated:YES];
+			return YES;
+		}
+	}
 	if (![[[RSPreferences preferences] objectForKey:@"startScreenEnabled"] boolValue]) {
 		return NO;
 	}

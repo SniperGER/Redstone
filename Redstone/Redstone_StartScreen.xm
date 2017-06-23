@@ -5,7 +5,7 @@
 
 extern "C" UIImage * _UICreateScreenUIImage();
 
-BOOL switcherIsOpen;
+static BOOL switcherIsOpen;
 id sharedBBServer;
 
 void playZoomDownAppAnimation(BOOL applicationSnapshot) {
@@ -56,36 +56,8 @@ void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 	[[RSCore sharedInstance] frontDisplayDidChange:arg1];
 }
 
-// iOS 9
-- (void)_handleMenuButtonEvent {
-	if ([RSCore sharedInstance] && !switcherIsOpen) {
-		if (![[RSCore sharedInstance] handleMenuButtonEvent]) {
-			%orig;
-		} else {
-			[self clearMenuButtonTimer];
-			[self cancelMenuButtonRequests];
-		}
-	} else {
-		%orig;
-	}
-}
-
 %end // %hook SpringBoard
 
-%hook SBHomeHardwareButton
-
-// iOS 10
-- (void)singlePressUp:(id)arg1 {
-	if ([RSCore sharedInstance] && !switcherIsOpen) {
-		if (![[RSCore sharedInstance] handleMenuButtonEvent]) {
-			%orig;
-		}
-	} else {
-		%orig(arg1);
-	}
-}
-
-%end // %hook SBHomeHardwareButton
 
 %hook SBUIAnimationZoomApp
 

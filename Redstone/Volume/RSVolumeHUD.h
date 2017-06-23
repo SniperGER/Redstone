@@ -7,11 +7,17 @@
     RSVolumeView* volumeView;
 	
 	RSVolumeSlider* ringerSlider;
-	RSVolumeSlider* mediaSlider;
-	
 	UILabel* ringerStatusText;
 	RSTiltView* ringerStatusButton;
 	UILabel* ringerVolumeLabel;
+	
+	RSVolumeSlider* mediaSlider;
+	UILabel* mediaStatusText;
+	RSTiltView* mediaStatusButton;
+	UILabel* mediaVolumeLabel;
+	
+	RSTiltView* expandButton;
+	BOOL expanded;
 }
 
 - (void)animateIn;
@@ -19,5 +25,6 @@
 - (void)resetSlideOutTimer;
 - (void)stopSlideOutTimer;
 - (void)updateVolume;
+- (void)toggleExpanded;
 
 @end

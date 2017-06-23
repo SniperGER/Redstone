@@ -7,8 +7,10 @@
 	
 	if (self) {
 		volumeView = [[RSVolumeView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100)];
+		[volumeView setBounds:CGRectMake(0, 0, screenWidth, 100)];
 		[self addSubview:volumeView];
 		
+#pragma mark Ringer Volume Control
 		ringerSlider = [[RSVolumeSlider alloc] initWithFrame:CGRectMake(screenWidth/2 - 280/2, 37, 280, 24)];
 		[ringerSlider setValue:[[RSSoundController sharedInstance] ringerVolume]];
 		[ringerSlider addTarget:self action:@selector(ringerVolumeChanged) forControlEvents:UIControlEventValueChanged];
@@ -22,16 +24,6 @@
 		ringerStatusButton = [[RSTiltView alloc] initWithFrame:CGRectMake(10, 37, 36, 36)];
 		[ringerStatusButton setTintColor:[UIColor whiteColor]];
 		[ringerStatusButton.titleLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:24]];
-		
-		if ([[objc_getClass("SBMediaController") sharedInstance] isRingerMuted]) {
-			[ringerStatusText setText:[RSAesthetics localizedStringForKey:@"RINGER_MODE_VIBRATION"]];
-			[ringerStatusButton setTitle:@"\uE877"];
-		} else {
-			[ringerStatusText setText:[RSAesthetics localizedStringForKey:@"RINGER_MODE_ENABLED"]];
-			[ringerStatusButton setTitle:@"\uEA8F"];
-		}
-		
-		
 		[ringerStatusButton addTarget:self action:@selector(toggleRingerState)];
 		[volumeView addSubview:ringerStatusButton];
 		
@@ -42,7 +34,61 @@
 		[ringerVolumeLabel setText:@"--"];
 		[volumeView addSubview:ringerVolumeLabel];
 		
-		[self updateVolume];
+		if ([[objc_getClass("SBMediaController") sharedInstance] isRingerMuted]) {
+			[ringerStatusText setText:[RSAesthetics localizedStringForKey:@"RINGER_MODE_VIBRATION"]];
+			[ringerStatusButton setTitle:@"\uE877"];
+			
+			[ringerSlider setValue:0.0];
+			[ringerVolumeLabel setText:[NSString stringWithFormat:@"%02.00f", 0.0]];
+		} else {
+			[ringerStatusText setText:[RSAesthetics localizedStringForKey:@"RINGER_MODE_ENABLED"]];
+			[ringerStatusButton setTitle:@"\uEA8F"];
+			
+			[ringerSlider setValue:[[RSSoundController sharedInstance] ringerVolume]];
+			[ringerVolumeLabel setText:[NSString stringWithFormat:@"%02.00f", ([[RSSoundController sharedInstance] ringerVolume] * 16.0)]];
+		}
+		
+#pragma mark Media Volume Control
+		mediaSlider = [[RSVolumeSlider alloc] initWithFrame:CGRectMake(screenWidth/2 - 280/2, 147, 280, 24)];
+		[mediaSlider setValue:[[RSSoundController sharedInstance] mediaVolume]];
+		[mediaSlider addTarget:self action:@selector(mediaVolumeChanged) forControlEvents:UIControlEventValueChanged];
+		[volumeView addSubview:mediaSlider];
+		
+		mediaStatusText = [[UILabel alloc] initWithFrame:CGRectMake(10, 110, screenWidth-20, 20)];
+		[mediaStatusText setFont:[UIFont fontWithName:@"SegoeUI" size:15]];
+		[mediaStatusText setTextColor:[UIColor whiteColor]];
+		[mediaStatusText setText:[RSAesthetics localizedStringForKey:@"MEDIA_VOLUME"]];
+		[volumeView addSubview:mediaStatusText];
+		
+		mediaStatusButton = [[RSTiltView alloc] initWithFrame:CGRectMake(10, 147, 36, 36)];
+		[mediaStatusButton setTintColor:[UIColor whiteColor]];
+		[mediaStatusButton.titleLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:24]];
+		[mediaStatusButton addTarget:self action:@selector(toggleMuteState)];
+		[volumeView addSubview:mediaStatusButton];
+		
+		mediaVolumeLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - 51, 141, 36, 36)];
+		[mediaVolumeLabel setFont:[UIFont fontWithName:@"SegoeUI-Light" size:32]];
+		[mediaVolumeLabel setTextAlignment:NSTextAlignmentCenter];
+		[mediaVolumeLabel setTextColor:[UIColor whiteColor]];
+		[mediaVolumeLabel setText:[NSString stringWithFormat:@"%02.00f", ([[RSSoundController sharedInstance] mediaVolume] * 16.0)]];
+		[volumeView addSubview:mediaVolumeLabel];
+		
+		if ([[RSSoundController sharedInstance] mediaVolume] >= 1.0/16.0) {
+			[mediaStatusButton setTitle:@"\uE15D"];
+		} else {
+			[mediaStatusButton setTitle:@"\uE74F"];
+		}
+		
+		[self updateForChangedRingerState];
+		
+#pragma mark Expand Button
+		expandButton = [[RSTiltView alloc] initWithFrame:CGRectMake(self.frame.size.width - 46, 10, 36, 18)];
+		[expandButton setTiltEnabled:NO];
+		[expandButton setTintColor:[UIColor whiteColor]];
+		[expandButton.titleLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:24]];
+		[expandButton setTitle:@"\uE70D"];
+		[expandButton addTarget:self action:@selector(toggleExpanded)];
+		[volumeView addSubview:expandButton];
 	}
 	
 	return self;
@@ -65,15 +111,20 @@
 - (void)animateOut {
 	slideOutTimer = nil;
 	
-	[volumeView setFrame:CGRectMake(0, 0, screenWidth, 100)];
+	//[volumeView setFrame:CGRectMake(0, 0, screenWidth, 100)];
 	[UIView animateWithDuration:0.3 animations:^{
 		[volumeView setEasingFunction:easeInCubic forKeyPath:@"frame"];
 		
-		[volumeView setFrame:CGRectMake(0, -100, screenWidth, 100)];
+		[volumeView setFrame:CGRectMake(0, -volumeView.frame.size.height, screenWidth, -volumeView.frame.size.height)];
 	} completion:^(BOOL finished){
 		[volumeView removeEasingFunctionForKeyPath:@"frame"];
+		[volumeView setFrame:CGRectMake(0, 0, screenWidth, 100)];
+		[expandButton setFrame:CGRectMake(self.frame.size.width - 46, 10, 36, 18)];
+		[expandButton setTransform:CGAffineTransformIdentity];
 		[self setHidden:YES];
+		
 		[[RSSoundController sharedInstance] setIsShowingVolumeHUD:NO];
+		expanded = NO;
 	}];
 }
 
@@ -93,14 +144,22 @@
 }
 
 - (void)updateVolume {
-	if ([[RSSoundController sharedInstance] ringerVolume] >= 1.0/16.0) {
-		[[objc_getClass("SBMediaController") sharedInstance] setRingerMuted:NO];
+	if (ringerSlider.isTracking || mediaSlider.isTracking) {
+		return;
+	}
+	
+	SBMediaController* mediaController = [objc_getClass("SBMediaController") sharedInstance];
+	if ([[RSSoundController sharedInstance] ringerVolume] >= 1.0/16.0 ) {
+		[mediaController setRingerMuted:NO];
 	} else {
-		[[objc_getClass("SBMediaController") sharedInstance] setRingerMuted:YES];
+		[mediaController setRingerMuted:YES];
 	}
 	
 	[ringerSlider setValue:[[RSSoundController sharedInstance] ringerVolume]];
 	[ringerVolumeLabel setText:[NSString stringWithFormat:@"%02.00f", ([[RSSoundController sharedInstance] ringerVolume] * 16.0)]];
+	
+	[mediaSlider setValue:[[RSSoundController sharedInstance] mediaVolume]];
+	[mediaVolumeLabel setText:[NSString stringWithFormat:@"%02.00f", ([[RSSoundController sharedInstance] mediaVolume] * 16.0)]];
 	
 	[self updateForChangedRingerState];
 }
@@ -121,11 +180,26 @@
 		[[objc_getClass("AVSystemController") sharedAVSystemController] setVolumeTo:0.0 forCategory:@"Ringtone"];
 	}
 	
+	[[RSSoundController sharedInstance] setRingerVolume:ringerValue];
 	[self updateForChangedRingerState];
 }
 
 - (void)mediaVolumeChanged {
+	[self resetSlideOutTimer];
 	
+	float mediaValue = [[NSString stringWithFormat:@"%.04f", [mediaSlider value]] floatValue];
+	mediaValue = roundf(mediaValue*16)/16;
+	[mediaVolumeLabel setText:[NSString stringWithFormat:@"%02.00f", (mediaValue * 16.0)]];
+	
+	[[objc_getClass("AVSystemController") sharedAVSystemController] setVolumeTo:mediaValue forCategory:@"Audio/Video"];
+	
+	if (mediaValue >= 1.0/16.0) {
+		[mediaStatusButton setTitle:@"\uE15D"];
+	} else {
+		[mediaStatusButton setTitle:@"\uE74F"];
+	}
+	
+	[[RSSoundController sharedInstance] setMediaVolume:mediaValue];
 }
 
 - (void)updateForChangedRingerState {
@@ -151,6 +225,55 @@
 		[mediaController setRingerMuted:YES];
 		[[RSSoundController sharedInstance] volumeChanged:0.0 forCategory:@"Ringtone" increasingVolume:NO];
 		[[objc_getClass("AVSystemController") sharedAVSystemController] setVolumeTo:0.0 forCategory:@"Ringtone"];
+	}
+}
+
+- (void)toggleMuteState {
+	if ([[RSSoundController sharedInstance] mediaVolume] > 0) {
+		[[RSSoundController sharedInstance] volumeChanged:0.0 forCategory:@"Audio/Video" increasingVolume:NO];
+		[[objc_getClass("AVSystemController") sharedAVSystemController] setVolumeTo:0.0 forCategory:@"Audio/Video"];
+		
+		[mediaStatusButton setTitle:@"\uE74F"];
+	} else {
+		[[RSSoundController sharedInstance] volumeChanged:1.0/16.0 forCategory:@"Audio/Video" increasingVolume:YES];
+		[[objc_getClass("AVSystemController") sharedAVSystemController] setVolumeTo:1.0/16.0 forCategory:@"Audio/Video"];
+		
+		[mediaStatusButton setTitle:@"\uE15D"];
+	}
+}
+
+- (void)toggleExpanded {
+	if (!expanded) {
+		expanded = YES;
+		[self setFrame:CGRectMake(0, 0, screenWidth, 244)];
+		[self resetSlideOutTimer];
+		
+		[expandButton setFrame:CGRectMake(self.frame.size.width - 46, self.frame.size.height - 28, 36, 18)];
+		[expandButton setTransform:CGAffineTransformMakeRotation(deg2rad(180))];
+		
+		[UIView animateWithDuration:0.3 animations:^{
+			[volumeView setEasingFunction:easeInOutExpo forKeyPath:@"frame"];
+			
+			[volumeView setBounds:CGRectMake(0, 0, screenWidth, 244)];
+		} completion:^(BOOL finished){
+			[volumeView removeEasingFunctionForKeyPath:@"frame"];
+			
+		}];
+	} else {
+		expanded = NO;
+		[self resetSlideOutTimer];
+		
+		[expandButton setFrame:CGRectMake(self.frame.size.width - 46, 10, 36, 18)];
+		[expandButton setTransform:CGAffineTransformIdentity];
+		
+		[UIView animateWithDuration:0.3 animations:^{
+			[volumeView setEasingFunction:easeInOutExpo forKeyPath:@"frame"];
+			
+			[volumeView setBounds:CGRectMake(0, 0, screenWidth, 100)];
+		} completion:^(BOOL finished){
+			[volumeView removeEasingFunctionForKeyPath:@"frame"];
+			[self setFrame:CGRectMake(0, 0, screenWidth, 100)];
+		}];
 	}
 }
 
