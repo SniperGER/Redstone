@@ -250,3 +250,6 @@ static RSCore* redstone;
 - (float)getMediaVolume;
 - (BOOL)_HUDIsDisplayableForCategory:(id)arg1;
 @end
+
+@interface SBVolumeHUDView : UIView
+@end

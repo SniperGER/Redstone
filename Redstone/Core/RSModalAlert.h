@@ -12,7 +12,7 @@
 @property (nonatomic, strong) NSString* title;
 @property (nonatomic, strong) NSString* message;
 
-- (id)modalAlertWithTitle:(NSString*)title message:(NSString*)message;
+- (id)initModalAlertWithTitle:(NSString*)title message:(NSString*)message;
 - (void)addActionWithTitle:(NSString*)title handler:(void (^)(void))callback;
 - (void)show;
 - (void)hide;

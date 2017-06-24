@@ -2379,7 +2379,7 @@
 		};
 		8D47396C1EB939B1007EA214 /* Install */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = do;
+			buildArgumentsString = "do -B";
 			buildConfigurationList = 8D47396D1EB939B1007EA214 /* Build configuration list for PBXLegacyTarget "Install" */;
 			buildPhases = (
 			);
@@ -3133,6 +3133,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				SDKROOT = iphoneos10.2;
 				THEOS = /opt/theos;
 			};
@@ -3142,6 +3143,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				SDKROOT = iphoneos10.2;
 				THEOS = /opt/theos;
 			};
@@ -3300,6 +3302,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos10.2;
 				TARGET = "simulator:clang";
 			};
 			name = Debug;
@@ -3346,6 +3349,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos10.2;
 				TARGET = "simulator:clang";
 			};
 			name = Release;

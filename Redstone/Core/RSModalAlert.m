@@ -2,7 +2,7 @@
 
 @implementation RSModalAlert
 
-- (id)modalAlertWithTitle:(NSString*)title message:(NSString*)message {
+- (id)initModalAlertWithTitle:(NSString*)title message:(NSString*)message {
 	self = [super init];
 	
 	if (self) {

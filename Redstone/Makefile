@@ -13,6 +13,7 @@ export GO_EASY_ON_ME = 1
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = Redstone
+Redstone_CFLAGS = -fobjc-arc
 Redstone_FRAMEWORKS = MediaPlayer
 Redstone_PRIVATE_FRAMEWORKS = AppSupport MediaRemote BulletinBoard
 Redstone_FILES = Redstone_Core.xm Redstone_StartScreen.xm Redstone_LockScreen.xm Redstone_Notifications.xm Redstone_VolumeControl.xm

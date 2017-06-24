@@ -13,7 +13,7 @@
 	NSTimer* hideTimer;
 }
 
-- (id)notificationForBulletin:(BBBulletin*)bulletin isStatic:(BOOL)isStatic;
+- (id)initNotificationForBulletin:(BBBulletin*)bulletin isStatic:(BOOL)isStatic;
 - (void)show;
 - (void)hide;
 

@@ -8,6 +8,11 @@
 #import "UIFont+WDCustomLoader.h"
 #import <CoreText/CoreText.h>
 
+// Feature and deployment target check
+#if  ! __has_feature(objc_arc)
+#error This file must be compiled with ARC.
+#endif
+
 // Activate Xcode only logging
 #ifdef DEBUG
 #define UIFontWDCustomLoaderDLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
@@ -26,7 +31,7 @@ static NSMutableDictionary *appRegisteredCustomFonts = nil;
  */
 + (BOOL) deviceHasFullSupportForFontCollections {
 	
-	return (&CTFontManagerCreateFontDescriptorsFromURL != NULL); // 10.6 or 7.0
+	return (CTFontManagerCreateFontDescriptorsFromURL != NULL); // 10.6 or 7.0
 	
 }
 
@@ -100,7 +105,7 @@ static NSMutableDictionary *appRegisteredCustomFonts = nil;
 			if ([UIFont deviceHasFullSupportForFontCollections]) {
 				
 				// Retrieve font descriptors from ttf, otf, ttc and otc files
-				NSArray *fontDescriptors = (NSArray *)(CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL));
+				NSArray *fontDescriptors = (__bridge_transfer NSArray *)(CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL));
 				
 				// Check errors
 				if (fontDescriptors) {
@@ -167,7 +172,7 @@ static NSMutableDictionary *appRegisteredCustomFonts = nil;
 						
 						if ([singleFontValidExtensions containsObject:[fontURL pathExtension]]) {
 							// Read name
-							fontPSNames = @[(NSString *)(CGFontCopyPostScriptName(loadedFont))];
+							fontPSNames = @[(__bridge_transfer NSString *)(CGFontCopyPostScriptName(loadedFont))];
 							
 							// Check if registration is required
 							if ([UIFont fontWithName:fontPSNames[0] size:kSizePlaceholder] == nil) {

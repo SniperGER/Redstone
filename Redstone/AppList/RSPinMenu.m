@@ -61,7 +61,7 @@
 }
 
 - (void)uninstall {
-	RSModalAlert* alert = [[RSModalAlert alloc] modalAlertWithTitle:[[self.handlingApp icon] uninstallAlertTitle] message:[[self.handlingApp icon] uninstallAlertBody]];
+	RSModalAlert* alert = [[RSModalAlert alloc] initModalAlertWithTitle:[[self.handlingApp icon] uninstallAlertTitle] message:[[self.handlingApp icon] uninstallAlertBody]];
 	[alert addActionWithTitle:[[self.handlingApp icon] uninstallAlertConfirmTitle] handler:^{
 		[alert hide];
 		[[RSAppListController sharedInstance] uninstallApplication:self.handlingApp];

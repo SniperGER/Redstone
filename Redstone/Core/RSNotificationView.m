@@ -2,7 +2,7 @@
 
 @implementation RSNotificationView
 
-- (id)notificationForBulletin:(BBBulletin*)bulletin isStatic:(BOOL)isStatic {
+- (id)initNotificationForBulletin:(BBBulletin*)bulletin isStatic:(BOOL)isStatic {
 	self = [super initWithFrame:CGRectMake(0, 0, screenWidth, 80)];
 	
 	if (self) {
