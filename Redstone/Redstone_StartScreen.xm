@@ -147,10 +147,6 @@ void playZoomDownAppAnimation(BOOL applicationSnapshot) {
 
 %end // %hook SBWallpaperController
 
-static void lockedDevice(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
-	[[RSStartScreenController sharedInstance] deviceFinishedLock];
-}
-
 %hook BBServer
 
 - (id)init {
@@ -192,8 +188,5 @@ static void lockedDevice(CFNotificationCenterRef center, void *observer, CFStrin
 	if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"startScreenEnabled"] boolValue]) {
 		NSLog(@"[Redstone] Initializing Start Screen");
 		%init(startscreen);
-		
-		// Device has been locked
-		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, lockedDevice, CFSTR("com.apple.springboard.lockcomplete"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 	}
 }

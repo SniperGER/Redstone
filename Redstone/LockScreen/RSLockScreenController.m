@@ -37,8 +37,8 @@ static RSLockScreenController* sharedInstance;
 		self.lockScreenView = [[RSLockScreenView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[lockScreenScrollView addSubview:self.lockScreenView];
 		
-		self.mediaControlsView = [[RSLockScreenMediaControlsView alloc] initWithFrame:CGRectMake(24, 40, screenWidth-48, 120)];
-		[self.lockScreenView addSubview:self.mediaControlsView];
+		/*self.mediaControlsView = [[RSNowPlayingMediaControls alloc] initWithFrame:CGRectMake(24, 40, screenWidth-48, 120)];
+		[self.lockScreenView addSubview:self.mediaControlsView];*/
 		
 		self.passcodeEntryController = [[RSLockScreenPasscodeEntryController alloc] init];
 		[lockScreenScrollView addSubview:self.passcodeEntryController.passcodeEntryView];

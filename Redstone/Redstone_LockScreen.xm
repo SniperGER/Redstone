@@ -83,16 +83,6 @@ SBPagedScrollView* dashboardScrollView;
 
 %end // %hook SBLockScreenManager
 
-%hook SBMediaController
-
--(void)_nowPlayingInfoChanged {
-	%orig;
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneNowPlayingUpdate" object:nil];
-}
-
-%end // %hook SBMediaController
-
 %hook SBUIPasscodeLockViewWithKeypad
 
 - (void)layoutSubviews {
@@ -216,16 +206,6 @@ SBPagedScrollView* dashboardScrollView;
 }
 
 %end // %hook SBLockScreenManager
-
-%hook SBMediaController
-
--(void)_nowPlayingInfoChanged {
-	%orig;
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneNowPlayingUpdate" object:nil];
-}
-
-%end // %hook SBMediaController
 
 %hook SBUIPasscodeLockViewWithKeypad
 

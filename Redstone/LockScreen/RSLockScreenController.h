@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class RSLockScreenView, RSLockScreenMediaControlsView, RSLockScreenPasscodeEntryController;
+@class RSLockScreenView, RSNowPlayingMediaControls, RSLockScreenPasscodeEntryController;
 
 @interface RSLockScreenController : NSObject <UIScrollViewDelegate> {
 	UIImageView* wallpaperView;
@@ -10,7 +10,7 @@
 
 @property (nonatomic, strong) UIView* containerView;
 @property (nonatomic, strong) RSLockScreenView* lockScreenView;
-@property (nonatomic, strong) RSLockScreenMediaControlsView* mediaControlsView;
+@property (nonatomic, strong) RSNowPlayingMediaControls* mediaControlsView;
 @property (nonatomic, strong) RSLockScreenPasscodeEntryController* passcodeEntryController;
 @property (nonatomic, assign) BOOL isScrolling;
 @property (nonatomic, assign) BOOL isShowingPasscodeScreen;

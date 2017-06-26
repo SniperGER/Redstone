@@ -83,7 +83,7 @@ static id currentApplication;
 			self.lockScreenController = [RSLockScreenController new];
 		}
 		
-		if ([[[RSPreferences preferences] objectForKey:@"volumeControlEnabled"] boolValue]) {
+		if ([[[RSPreferences preferences] objectForKey:@"lockScreenEnabled"] boolValue] || [[[RSPreferences preferences] objectForKey:@"volumeControlsEnabled"] boolValue]) {
 			self.soundController = [RSSoundController new];
 		}
 	}

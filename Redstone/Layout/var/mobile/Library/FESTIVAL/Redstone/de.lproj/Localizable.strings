@@ -16,6 +16,7 @@
 "PASSCODE_INVALID_MESA" = "Wiederholen";
 
 /* Volume Controls */
-"RINGER_MODE_ENABLED" = "Klingeln + Benachrichtigungen";
-"RINGER_MODE_VIBRATION" = "Vibration";
+"RINGER_VOLUME_ENABLED" = "Klingeln + Benachrichtigungen";
+"RINGER_VOLUME_VIBRATION" = "Vibrieren";
 "MEDIA_VOLUME" = "Medien + Apps";
+"HEADPHONE_VOLUME" = "Kopfhörer";

@@ -50,6 +50,26 @@
 
 %end // %hook VolumeControl
 
+%hook SBMediaController
+
+- (void)_nowPlayingInfoChanged {
+	%orig;
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneNowPlayingUpdate" object:nil];
+}
+
+- (void)_nowPlayingAppIsPlayingDidChange {
+	%orig;
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneNowPlayingUpdate" object:nil];
+}
+
+%end // %hook SBMediaController
+
+void headphoneConnectionChanged(CFNotificationCenterRef center,void *observer,CFStringRef name,const void *object,CFDictionaryRef userInfo) {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneNowPlayingUpdate" object:nil];
+}
+
 %end // %group volumecontrol
 
 %ctor {
@@ -58,5 +78,7 @@
 	if ([[settings objectForKey:@"enabled"] boolValue] && [[settings objectForKey:@"volumeControlEnabled"] boolValue]) {
 		NSLog(@"[Redstone] Initializing VolumeControl");
 		%init(volumecontrol);
+		
+	CFNotificationCenterAddObserver(CFNotificationCenterGetLocalCenter(),NULL,&headphoneConnectionChanged,CFSTR("AVSystemController_HeadphoneJackIsConnectedDidChangeNotification"),NULL,CFNotificationSuspensionBehaviorDeliverImmediately);
 	}
 }

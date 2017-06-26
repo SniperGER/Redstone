@@ -61,6 +61,10 @@ static BOOL switcherIsOpen;
 
 %end // %hook SBDeckSwitcherViewController
 
+static void lockedDevice(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneDeviceHasFinishedLock" object:nil];
+}
+
 %end // %group core
 
 %ctor {
@@ -69,5 +73,8 @@ static BOOL switcherIsOpen;
 	if ([[[RSPreferences preferences] objectForKey:@"enabled"] boolValue]) {
 		NSLog(@"[Redstone] Initializing");
 		%init(core);
+		
+		// Device has been locked
+		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, lockedDevice, CFSTR("com.apple.springboard.lockcomplete"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 	}
 }

@@ -1,21 +1,39 @@
 #import <UIKit/UIKit.h>
 
-@class RSVolumeHUD;
+typedef void (^MRMediaRemoteGetNowPlayingInfoCompletion)(CFDictionaryRef information);
+void MRMediaRemoteGetNowPlayingInfo(dispatch_queue_t queue, MRMediaRemoteGetNowPlayingInfoCompletion completion);
+
+@class SBMediaController, AVSystemController, RSVolumeHUD;
 
 @interface RSSoundController : NSObject {
+	SBMediaController* mediaController;
+	AVSystemController* audioVideoController;
+	
 	RSVolumeHUD* volumeHUD;
+	
+	__block BOOL isPlaying;
+	__block UIImage* artwork;
+	__block NSString* artist;
+	__block NSString* title;
+	__block NSString* album;
 }
 
-@property (nonatomic, assign) BOOL isShowingVolumeHUD;
 @property (nonatomic, assign) float ringerVolume;
 @property (nonatomic, assign) float mediaVolume;
-@property (nonatomic, assign) float headphoneVolume;
+@property (nonatomic, assign) BOOL isShowingVolumeHUD;
 
 + (id)sharedInstance;
-- (void)volumeChanged:(double)volume forCategory:(NSString*)category increasingVolume:(BOOL)increase;
+- (void)volumeChanged:(float)volume forCategory:(NSString*)category increasingVolume:(BOOL)isIncreasing;
 - (void)showVolumeHUDAnimated:(BOOL)animated;
 - (void)hideVolumeHUDAnimated:(BOOL)animated;
-- (float)ringerVolume;
-- (float)mediaVolume;
+
+- (void)updateNowPlayingInfo:(id)sender;
+- (RSVolumeHUD*)volumeHUD;
+
+- (BOOL)isPlaying;
+- (UIImage*)artwork;
+- (NSString*)artist;
+- (NSString*)title;
+- (NSString*)album;
 
 @end

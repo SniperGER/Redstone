@@ -34,10 +34,10 @@ Redstone_FILES += Launch/RSLaunchScreenController.m Launch/RSLaunchScreen.m
 Redstone_FILES += AppList/RSAppListController.m AppList/RSAppList.m AppList/RSApp.m AppList/RSAppListSection.m AppList/RSPinMenu.m AppList/RSSearchBar.m AppList/RSJumpList.m
 
 # Lock Screen
-Redstone_FILES += LockScreen/RSLockScreenController.m LockScreen/RSLockScreenView.m LockScreen/RSLockScreenMediaControlsView.m LockScreen/RSLockScreenPasscodeEntryController.m LockScreen/RSLockScreenPasscodeEntryView.m LockScreen/RSLockScreenPasscodeEntryButton.m LockScreen/RSLockScreenPasscodeEntryTextField.m
+Redstone_FILES += LockScreen/RSLockScreenController.m LockScreen/RSLockScreenView.m LockScreen/RSLockScreenPasscodeEntryController.m LockScreen/RSLockScreenPasscodeEntryView.m LockScreen/RSLockScreenPasscodeEntryButton.m LockScreen/RSLockScreenPasscodeEntryTextField.m
 
 # Volume Control
-Redstone_FILES += Volume/RSSoundController.m Volume/RSVolumeHUD.m Volume/RSVolumeView.m Volume/RSVolumeSlider.m
+Redstone_FILES += Volume/RSSoundController.m Volume/RSVolumeHUD.m Volume/RSVolumeView.m Volume/RSVolumeSlider.m Volume/RSNowPlayingControls.m
 
 include $(THEOS)/makefiles/tweak.mk
 

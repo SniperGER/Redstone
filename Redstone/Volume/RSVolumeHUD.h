@@ -1,30 +1,35 @@
 #import <UIKit/UIKit.h>
 
-@class RSVolumeView, RSVolumeSlider;
+@class RSTiltView, RSVolumeView, RSVolumeSlider, RSNowPlayingControls;
 
 @interface RSVolumeHUD : UIWindow {
-    NSTimer* slideOutTimer;
-    RSVolumeView* volumeView;
+	NSTimer* slideOutTimer;
+	RSTiltView* expandButton;
+	
+	RSVolumeView* ringerVolumeView;
+	RSVolumeView* mediaVolumeView;
+	RSVolumeView* headphoneVolumeView;
 	
 	RSVolumeSlider* ringerSlider;
-	UILabel* ringerStatusText;
-	RSTiltView* ringerStatusButton;
-	UILabel* ringerVolumeLabel;
-	
 	RSVolumeSlider* mediaSlider;
-	UILabel* mediaStatusText;
-	RSTiltView* mediaStatusButton;
-	UILabel* mediaVolumeLabel;
+	RSVolumeSlider* headphoneSlider;
 	
-	RSTiltView* expandButton;
-	BOOL expanded;
+	RSTiltView* ringerMuteButton;
+	RSTiltView* mediaMuteButton;
+	RSTiltView* headphoneMuteButton;
+	
+	RSNowPlayingControls* nowPlayingControls;
 }
+
+@property (nonatomic, assign) BOOL isExpanded;
+@property (nonatomic, assign) BOOL isShowingMediaControls;
+@property (nonatomic, assign) BOOL isShowingHeadphoneVolume;
 
 - (void)animateIn;
 - (void)animateOut;
-- (void)resetSlideOutTimer;
 - (void)stopSlideOutTimer;
+- (void)resetSlideOutTimer;
+
 - (void)updateVolume;
-- (void)toggleExpanded;
 
 @end

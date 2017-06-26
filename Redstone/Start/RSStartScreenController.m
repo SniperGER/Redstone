@@ -15,6 +15,8 @@ static RSStartScreenController* sharedInstance;
 		sharedInstance = self;
 		self.startScrollView = [[RSStartScrollView alloc] initWithFrame:CGRectMake(4, 0, screenWidth-8, screenHeight)];
 		[self loadTiles];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceFinishedLock) name:@"RedstoneDeviceHasFinishedLock" object:nil];
 	}
 	
 	return self;

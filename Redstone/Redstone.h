@@ -35,7 +35,6 @@
 
 #import "LockScreen/RSLockScreenController.h"
 #import "LockScreen/RSLockScreenView.h"
-#import "LockScreen/RSLockScreenMediaControlsView.h"
 #import "LockScreen/RSLockScreenPasscodeEntryController.h"
 #import "LockScreen/RSLockScreenPasscodeEntryView.h"
 #import "LockScreen/RSLockScreenPasscodeEntryTextField.h"
@@ -45,6 +44,7 @@
 #import "Volume/RSVolumeHUD.h"
 #import "Volume/RSVolumeView.h"
 #import "Volume/RSVolumeSlider.h"
+#import "Volume/RSNowPlayingControls.h"
 
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
@@ -152,6 +152,7 @@ static RSCore* redstone;
 + (id)sharedInstance;
 - (id)nowPlayingTitle;
 - (id)nowPlayingArtist;
+- (SBApplication*)nowPlayingApplication;
 - (BOOL)togglePlayPause;
 - (BOOL)changeTrack:(int)arg1;
 - (id)nowPlayingProcessPID;
@@ -242,6 +243,7 @@ static RSCore* redstone;
 - (BOOL)getActiveCategoryVolume:(float*)arg1 andName:(id*)arg2 ;
 - (BOOL)getActiveCategoryMuted:(BOOL*)arg1 ;
 - (BOOL)toggleActiveCategoryMuted;
+- (id)attributeForKey:(id)arg1;
 @end
 
 @interface VolumeControl : NSObject
