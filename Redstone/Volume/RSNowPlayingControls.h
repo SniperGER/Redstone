@@ -11,6 +11,7 @@
 	RSTiltView* nextTitleButton;
 }
 
+- (void)setLightTextEnabled:(BOOL)lightText;
 - (void)updateNowPlayingInfo;
 
 @end

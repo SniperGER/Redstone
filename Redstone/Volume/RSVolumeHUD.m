@@ -80,7 +80,7 @@
 		[self addSubview:expandButton];
 		
 		nowPlayingControls = [[RSNowPlayingControls alloc] initWithFrame:CGRectMake(0, 100, screenWidth, 120)];
-		[nowPlayingControls setHidden:YES];
+		[nowPlayingControls setLightTextEnabled:NO];
 		[self addSubview:nowPlayingControls];
 	}
 	
@@ -248,7 +248,6 @@
 		[self removeEasingFunctionForKeyPath:@"frame"];
 	}];
 	
-	[nowPlayingControls updateNowPlayingInfo];
 	if ([[RSSoundController sharedInstance] isShowingVolumeHUD]) {
 		[self resetSlideOutTimer];
 	}
@@ -283,84 +282,6 @@
 		[self resetSlideOutTimer];
 	}
 }
-
-/*- (void)setIsShowingMediaControls:(BOOL)isShowingMediaControls {
-	_isShowingMediaControls = isShowingMediaControls;
-	
-	if (isShowingMediaControls) {
-		[ringerVolumeView setHidden:YES];
-		[nowPlayingControls setHidden:NO];
-		
-		[mediaVolumeView setFrame:CGRectMake(0, 0, screenWidth, 100)];
-		[headphoneVolumeView setFrame:CGRectMake(0, 0, screenWidth, 100)];
-		
-		if (self.isShowingHeadphoneVolume) {
-			[mediaVolumeView setHidden:YES];
-			[headphoneVolumeView setHidden:NO];
-		} else {
-			[mediaVolumeView setHidden:NO];
-			[headphoneVolumeView setHidden:YES];
-		}
-	} else {
-		[ringerVolumeView setHidden:NO];
-		[nowPlayingControls setHidden:YES];
-		
-		[mediaVolumeView setFrame:CGRectMake(0, 110, screenWidth, 100)];
-		[headphoneVolumeView setFrame:CGRectMake(0, 110, screenWidth, 100)];
-		
-		if (self.isShowingHeadphoneVolume) {
-			[mediaVolumeView setHidden:YES];
-			[headphoneVolumeView setHidden:NO];
-		} else {
-			[mediaVolumeView setHidden:NO];
-			[headphoneVolumeView setHidden:YES];
-		}
-	}
-	
-	[UIView animateWithDuration:0.3 animations:^{
-		[self setEasingFunction:easeInOutExpo forKeyPath:@"frame"];
-		
-		if (isShowingMediaControls) {
-			if (self.isExpanded) {
-				[self setBounds:CGRectMake(0, 0, screenWidth, 190)];
-			} else {
-				[self setBounds:CGRectMake(0, 0, screenWidth, 220)];
-			}
-		} else {
-			if (self.isExpanded) {
-				[self setBounds:CGRectMake(0, 0, screenWidth, 244)];
-			} else {
-				[self setBounds:CGRectMake(0, 0, screenWidth, 100)];
-			}
-		}
-	} completion:^(BOOL finished){
-		[self removeEasingFunctionForKeyPath:@"frame"];
-	}];
-	
-	[nowPlayingControls updateNowPlayingInfo];
-	if ([[RSSoundController sharedInstance] isShowingVolumeHUD]) {
-		[self resetSlideOutTimer];
-	}
-}
-
-- (void)setIsShowingHeadphoneVolume:(BOOL)isShowingHeadphoneVolume {
-	_isShowingHeadphoneVolume = isShowingHeadphoneVolume;
-	
-	[headphoneVolumeView setHidden:!isShowingHeadphoneVolume];
-	
-	if (self.isShowingMediaControls) {
-		[ringerVolumeView setHidden:isShowingHeadphoneVolume];
-	} else {
-		[ringerVolumeView setHidden:isShowingHeadphoneVolume];1
-		[mediaVolumeView setHidden:isShowingHeadphoneVolume];
-	}
-	
-	[headphoneSlider setValue:[[RSSoundController sharedInstance] mediaVolume]];
-	
-	if ([[RSSoundController sharedInstance] isShowingVolumeHUD]) {
-		[self resetSlideOutTimer];
-	}
-}*/
 
 #pragma mark Volume Changes
 

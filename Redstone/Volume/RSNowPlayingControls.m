@@ -13,7 +13,7 @@
 		
 		mediaSubtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, frame.size.width-20, 18)];
 		[mediaSubtitleLabel setFont:[UIFont fontWithName:@"SegoeUI-Semibold" size:15]];
-		[mediaSubtitleLabel setTextColor:[UIColor colorWithWhite:0.60 alpha:1.0]];
+		[mediaSubtitleLabel setTextColor:[UIColor whiteColor]];
 		[mediaSubtitleLabel setTextAlignment:NSTextAlignmentCenter];
 		[self addSubview:mediaSubtitleLabel];
 		
@@ -40,9 +40,20 @@
 		[nextTitleButton setTitle:@"\uE893"];
 		[nextTitleButton addTarget:self action:@selector(nextTrack)];
 		[self addSubview:nextTitleButton];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNowPlayingInfo) name:@"RedstoneNowPlayingUpdateFinished" object:nil];
+		[self updateNowPlayingInfo];
 	}
 	
 	return self;
+}
+
+- (void)setLightTextEnabled:(BOOL)lightText {
+	if (lightText) {
+		[mediaSubtitleLabel setTextColor:[UIColor whiteColor]];
+	} else {
+		[mediaSubtitleLabel setTextColor:[UIColor colorWithWhite:0.60 alpha:1.0]];
+	}
 }
 
 - (void)updateNowPlayingInfo {
@@ -50,11 +61,6 @@
 	UIImage* artwork = [[RSSoundController sharedInstance] artwork];
 	NSString* artist = [[RSSoundController sharedInstance] artist];
 	NSString* title = [[RSSoundController sharedInstance] title];
-	
-	if (!artwork) {
-		[mediaTitleLabel setText:@""];
-		return;
-	}
 	
 	if (title != nil && ![title isEqualToString:@""]) {
 		[mediaTitleLabel setText:title];
@@ -77,6 +83,12 @@
 		
 		[playPauseButton layoutIfNeeded];
 	}];
+	
+	if (!isPlaying && !artwork) {
+		[self setHidden:YES];
+	} else {
+		[self setHidden:NO];
+	}
 }
 
 - (void)previousTrack {

@@ -14,3 +14,9 @@
 "PASSCODE_ENTER_PIN" = "Enter PIN";
 "PASSCODE_INVALID_PIN" = "Invalid PIN";
 "PASSCODE_INVALID_MESA" = "try again";
+
+/* Volume Controls */
+"RINGER_VOLUME_ENABLED" = "Ringer + Notifications";
+"RINGER_VOLUME_VIBRATION" = "Vibrate";
+"MEDIA_VOLUME" = "Media + Apps";
+"HEADPHONE_VOLUME" = "Headphones";
