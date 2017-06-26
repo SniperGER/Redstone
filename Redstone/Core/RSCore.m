@@ -79,6 +79,10 @@ static id currentApplication;
 			
 		}
 		
+		if ([[[RSPreferences preferences] objectForKey:@"notificationsEnabled"] boolValue]) {
+			self.notificationController = [RSNotificationController new];
+		}
+		
 		if ([[[RSPreferences preferences] objectForKey:@"lockScreenEnabled"] boolValue]) {
 			self.lockScreenController = [RSLockScreenController new];
 		}

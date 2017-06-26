@@ -13,7 +13,6 @@
 #import "Core/RSPreferences.h"
 #import "Core/RSModalAlert.h"
 #import "Core/RSTiltView.h"
-#import "Core/RSNotificationView.h"
 
 #import "Start/RSStartScreenController.h"
 #import "Start/RSStartScrollView.h"
@@ -32,6 +31,10 @@
 #import "AppList/RSPinMenu.h"
 #import "AppList/RSSearchBar.h"
 #import "AppList/RSJumpList.h"
+
+#import "Notifications/RSNotificationController.h"
+#import "Notifications/RSNotificationWindow.h"
+#import "Notifications/RSNotificationView.h"
 
 #import "LockScreen/RSLockScreenController.h"
 #import "LockScreen/RSLockScreenView.h"
@@ -190,6 +193,12 @@ static RSCore* redstone;
 - (id)content;
 - (id)section;
 - (NSDate*)date;
+@end
+
+@interface SBNotificationBannerWindow : UIWindow
+@end
+
+@interface SBBannerContainerView : UIView
 @end
 
 @interface NCNotificationShortLookView : UIView

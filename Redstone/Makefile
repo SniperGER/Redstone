@@ -19,7 +19,7 @@ Redstone_PRIVATE_FRAMEWORKS = AppSupport MediaRemote BulletinBoard
 Redstone_FILES = Redstone_Core.xm Redstone_StartScreen.xm Redstone_LockScreen.xm Redstone_Notifications.xm Redstone_VolumeControl.xm
 
 # Core
-Redstone_FILES += Core/RSCore.m Core/RSAesthetics.m Core/RSMetrics.m Core/RSRootScrollView.m Core/RSPreferences.m Core/RSModalAlert.m Core/RSTiltView.m Core/RSNotificationView.m
+Redstone_FILES += Core/RSCore.m Core/RSAesthetics.m Core/RSMetrics.m Core/RSRootScrollView.m Core/RSPreferences.m Core/RSModalAlert.m Core/RSTiltView.m
 
 # Lib
 Redstone_FILES += Lib/UIView+Easing.m Lib/easing.c Lib/CAKeyframeAnimation+AHEasing.m Lib/UIFont+WDCustomLoader.m Lib/UIImageAverageColorAddition.m
@@ -32,6 +32,9 @@ Redstone_FILES += Launch/RSLaunchScreenController.m Launch/RSLaunchScreen.m
 
 # App List
 Redstone_FILES += AppList/RSAppListController.m AppList/RSAppList.m AppList/RSApp.m AppList/RSAppListSection.m AppList/RSPinMenu.m AppList/RSSearchBar.m AppList/RSJumpList.m
+
+# Notifications
+Redstone_FILES += Notifications/RSNotificationController.m Notifications/RSNotificationWindow.m Notifications/RSNotificationView.m
 
 # Lock Screen
 Redstone_FILES += LockScreen/RSLockScreenController.m LockScreen/RSLockScreenView.m LockScreen/RSLockScreenPasscodeEntryController.m LockScreen/RSLockScreenPasscodeEntryView.m LockScreen/RSLockScreenPasscodeEntryButton.m LockScreen/RSLockScreenPasscodeEntryTextField.m

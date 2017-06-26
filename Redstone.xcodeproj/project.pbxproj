@@ -34,7 +34,6 @@
 		8D49A89D1ED6E1BE00A36E8D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D49A8981ED6E1BE00A36E8D /* Info.plist */; };
 		8D49A89E1ED6E1BE00A36E8D /* Root.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D49A8991ED6E1BE00A36E8D /* Root.plist */; };
 		8D49A8A11ED7523300A36E8D /* RSLockScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8A01ED7523300A36E8D /* RSLockScreenView.m */; };
-		8D49A8A41ED75FA600A36E8D /* RSLockScreenMediaControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8A31ED75FA600A36E8D /* RSLockScreenMediaControlsView.m */; };
 		8D49A8A71ED773B100A36E8D /* RSLockScreenPasscodeEntryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8A61ED773B100A36E8D /* RSLockScreenPasscodeEntryController.m */; };
 		8D49A8AA1ED775D100A36E8D /* RSLockScreenPasscodeEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8A91ED775D100A36E8D /* RSLockScreenPasscodeEntryView.m */; };
 		8D49A8AD1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D49A8AC1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m */; };
@@ -60,6 +59,7 @@
 		8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8249101EC2FEF300779648 /* RSLaunchScreenController.m */; };
 		8D8A10F21ED21BF6004A7811 /* RSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8A10F11ED21BF6004A7811 /* RSTile.m */; };
 		8D8C59431F005DC900732DA3 /* RSVolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8C59421F005DC900732DA3 /* RSVolumeSlider.m */; };
+		8D98ACEA1F00FBFE00A223B5 /* RSNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D98ACE91F00FBFE00A223B5 /* RSNotificationController.m */; };
 		8DA52D7C1EF3DDF400F23476 /* ShortLookView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA52D7B1EF3DDF400F23476 /* ShortLookView.xib */; };
 		8DA52D801EF3DF0300F23476 /* RSShortLookView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DA52D7F1EF3DF0300F23476 /* RSShortLookView.m */; };
 		8DA52D811EF3DF3A00F23476 /* ShortLookView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DA52D7B1EF3DDF400F23476 /* ShortLookView.xib */; };
@@ -154,6 +154,8 @@
 		8DC921111ED97F350011D30E /* RDSAccentColorList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC921101ED97F350011D30E /* RDSAccentColorList.m */; };
 		8DC9211A1ED99E220011D30E /* PFHeaderCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8DC921191ED99E220011D30E /* PFHeaderCell.mm */; };
 		8DC9211C1ED9A5B70011D30E /* 2ColumnDefaultLayout.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DC9211B1ED9A5B70011D30E /* 2ColumnDefaultLayout.plist */; };
+		8DD8697D1F010644005D5BF9 /* RSNotificationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DD8697C1F010644005D5BF9 /* RSNotificationWindow.m */; };
+		8DD869801F010655005D5BF9 /* RSNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DD8697F1F010655005D5BF9 /* RSNotificationView.m */; };
 		8DE675081EF658A200F65CF3 /* RSPeopleTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DE675071EF658A200F65CF3 /* RSPeopleTile.m */; };
 		8DE6750B1EF659C200F65CF3 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DE6750A1EF659C200F65CF3 /* Contacts.framework */; };
 		8DE675161EF65D4200F65CF3 /* tile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DE675151EF65D4200F65CF3 /* tile.plist */; };
@@ -527,8 +529,6 @@
 		8D49A8991ED6E1BE00A36E8D /* Root.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Root.plist; sourceTree = "<group>"; };
 		8D49A89F1ED7523300A36E8D /* RSLockScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLockScreenView.h; sourceTree = "<group>"; };
 		8D49A8A01ED7523300A36E8D /* RSLockScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLockScreenView.m; sourceTree = "<group>"; };
-		8D49A8A21ED75FA600A36E8D /* RSLockScreenMediaControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLockScreenMediaControlsView.h; sourceTree = "<group>"; };
-		8D49A8A31ED75FA600A36E8D /* RSLockScreenMediaControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLockScreenMediaControlsView.m; sourceTree = "<group>"; };
 		8D49A8A51ED773B100A36E8D /* RSLockScreenPasscodeEntryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLockScreenPasscodeEntryController.h; sourceTree = "<group>"; };
 		8D49A8A61ED773B100A36E8D /* RSLockScreenPasscodeEntryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLockScreenPasscodeEntryController.m; sourceTree = "<group>"; };
 		8D49A8A81ED775D100A36E8D /* RSLockScreenPasscodeEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLockScreenPasscodeEntryView.h; sourceTree = "<group>"; };
@@ -614,6 +614,8 @@
 		8D8A10F11ED21BF6004A7811 /* RSTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTile.m; sourceTree = "<group>"; };
 		8D8C59411F005DC900732DA3 /* RSVolumeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSVolumeSlider.h; sourceTree = "<group>"; };
 		8D8C59421F005DC900732DA3 /* RSVolumeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSVolumeSlider.m; sourceTree = "<group>"; };
+		8D98ACE81F00FBFE00A223B5 /* RSNotificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSNotificationController.h; sourceTree = "<group>"; };
+		8D98ACE91F00FBFE00A223B5 /* RSNotificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSNotificationController.m; sourceTree = "<group>"; };
 		8DA52D7B1EF3DDF400F23476 /* ShortLookView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShortLookView.xib; sourceTree = "<group>"; };
 		8DA52D7E1EF3DF0300F23476 /* RSShortLookView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSShortLookView.h; sourceTree = "<group>"; };
 		8DA52D7F1EF3DF0300F23476 /* RSShortLookView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSShortLookView.m; sourceTree = "<group>"; };
@@ -726,6 +728,10 @@
 		8DC921181ED99E220011D30E /* PFHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFHeaderCell.h; sourceTree = "<group>"; };
 		8DC921191ED99E220011D30E /* PFHeaderCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PFHeaderCell.mm; sourceTree = "<group>"; };
 		8DC9211B1ED9A5B70011D30E /* 2ColumnDefaultLayout.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = 2ColumnDefaultLayout.plist; sourceTree = "<group>"; };
+		8DD8697B1F010644005D5BF9 /* RSNotificationWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSNotificationWindow.h; sourceTree = "<group>"; };
+		8DD8697C1F010644005D5BF9 /* RSNotificationWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSNotificationWindow.m; sourceTree = "<group>"; };
+		8DD8697E1F010655005D5BF9 /* RSNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSNotificationView.h; sourceTree = "<group>"; };
+		8DD8697F1F010655005D5BF9 /* RSNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSNotificationView.m; sourceTree = "<group>"; };
 		8DE674FC1EF657DB00F65CF3 /* People.tile */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = People.tile; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DE675031EF6584200F65CF3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DE675061EF658A200F65CF3 /* RSPeopleTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPeopleTile.h; sourceTree = "<group>"; };
@@ -1154,6 +1160,7 @@
 				8DBD10981EC23CD000A5A037 /* Start */,
 				8D82490E1EC2FEA900779648 /* Launch */,
 				8DE79E8D1EC6EC88004EF2E6 /* AppList */,
+				8D98ACE71F00FADA00A223B5 /* Notifications */,
 				8D22F3A11EFF24BD00CFC3EE /* Volume */,
 				8D2D8C2E1ED0156200D220E0 /* LockScreen */,
 				8D715F561EF1DAB600FC65EF /* Tiles */,
@@ -1194,8 +1201,6 @@
 				8D49A8881ED6CEA300A36E8D /* RSLockScreenController.m */,
 				8D49A89F1ED7523300A36E8D /* RSLockScreenView.h */,
 				8D49A8A01ED7523300A36E8D /* RSLockScreenView.m */,
-				8D49A8A21ED75FA600A36E8D /* RSLockScreenMediaControlsView.h */,
-				8D49A8A31ED75FA600A36E8D /* RSLockScreenMediaControlsView.m */,
 				8D49A8A51ED773B100A36E8D /* RSLockScreenPasscodeEntryController.h */,
 				8D49A8A61ED773B100A36E8D /* RSLockScreenPasscodeEntryController.m */,
 				8D49A8A81ED775D100A36E8D /* RSLockScreenPasscodeEntryView.h */,
@@ -1379,6 +1384,20 @@
 			);
 			name = Launch;
 			path = Redstone/Launch;
+			sourceTree = "<group>";
+		};
+		8D98ACE71F00FADA00A223B5 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				8D98ACE81F00FBFE00A223B5 /* RSNotificationController.h */,
+				8D98ACE91F00FBFE00A223B5 /* RSNotificationController.m */,
+				8DD8697B1F010644005D5BF9 /* RSNotificationWindow.h */,
+				8DD8697C1F010644005D5BF9 /* RSNotificationWindow.m */,
+				8DD8697E1F010655005D5BF9 /* RSNotificationView.h */,
+				8DD8697F1F010655005D5BF9 /* RSNotificationView.m */,
+			);
+			name = Notifications;
+			path = Redstone/Notifications;
 			sourceTree = "<group>";
 		};
 		8DB84B201EF5A5EF00C9AC67 /* Resources */ = {
@@ -2995,6 +3014,7 @@
 				8D8249111EC2FEF300779648 /* RSLaunchScreenController.m in Sources */,
 				8D49A8891ED6CEA300A36E8D /* RSLockScreenController.m in Sources */,
 				8D49A8AD1ED779A300A36E8D /* RSLockScreenPasscodeEntryButton.m in Sources */,
+				8D98ACEA1F00FBFE00A223B5 /* RSNotificationController.m in Sources */,
 				8D17C8651EE3502300A2FE2F /* UIImageAverageColorAddition.m in Sources */,
 				8DE79E9C1EC79AA5004EF2E6 /* RSPinMenu.m in Sources */,
 				8D36C4DC1ECE4C5D00327349 /* RSTiltView.m in Sources */,
@@ -3016,6 +3036,7 @@
 				8D49A8A11ED7523300A36E8D /* RSLockScreenView.m in Sources */,
 				8DE79E931EC6EE2F004EF2E6 /* RSAppList.m in Sources */,
 				8D17C8801EE35BB900A2FE2F /* RSTileInfo.m in Sources */,
+				8DD8697D1F010644005D5BF9 /* RSNotificationWindow.m in Sources */,
 				8DBD109F1EC23CD000A5A037 /* RSStartScreenController.m in Sources */,
 				8DE79E961EC6F195004EF2E6 /* RSApp.m in Sources */,
 				8D8A10F21ED21BF6004A7811 /* RSTile.m in Sources */,
@@ -3026,13 +3047,13 @@
 				8DBD107E1EC23BD400A5A037 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				8DC1DA211EFFA5AC00B91E3F /* RSVolumeView.m in Sources */,
 				8D58CF391EC3A6AA0021F625 /* RSLaunchScreen.m in Sources */,
+				8DD869801F010655005D5BF9 /* RSNotificationView.m in Sources */,
 				8DB357221EDE8F380098BBCB /* RSTileInfo.m in Sources */,
 				8DC921111ED97F350011D30E /* RDSAccentColorList.m in Sources */,
 				8D22F3A41EFF98AE00CFC3EE /* RSSoundController.m in Sources */,
 				8DC9210E1ED968270011D30E /* RSLockScreenPasscodeEntryTextField.m in Sources */,
 				8D49A89B1ED6E1BE00A36E8D /* Makefile in Sources */,
 				8DBD10A01EC23CD000A5A037 /* RSStartScrollView.m in Sources */,
-				8D49A8A41ED75FA600A36E8D /* RSLockScreenMediaControlsView.m in Sources */,
 				8DE79E9F1EC7B6C3004EF2E6 /* RSSearchBar.m in Sources */,
 				8D49A89C1ED6E1BE00A36E8D /* RDSRootListController.m in Sources */,
 			);
@@ -3139,7 +3160,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				SDKROOT = iphoneos10.2;
 				THEOS = /opt/theos;
 			};
@@ -3149,7 +3170,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				SDKROOT = iphoneos10.2;
 				THEOS = /opt/theos;
 			};

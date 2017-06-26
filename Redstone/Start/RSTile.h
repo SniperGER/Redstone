@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class SBLeafIcon, RSTiltView, RSTileInfo, RSTileNotificationView;
+@class SBLeafIcon, RSTiltView, RSTileInfo, RSTileNotificationView, BBBulletin;
 @protocol RSLiveTileDelegate;
 
 @interface RSTile : RSTiltView <UIGestureRecognizerDelegate> {

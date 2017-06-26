@@ -116,11 +116,6 @@ static RSLockScreenController* sharedInstance;
 	}
 }
 
-- (void)displayNotification:(RSNotificationView*)notification {
-	[self.containerView addSubview:notification];
-	[notification show];
-}
-
 - (void)updateWallpaper {
 	[wallpaperView setImage:[RSAesthetics lockScreenWallpaper]];
 }

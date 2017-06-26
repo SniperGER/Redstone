@@ -4,7 +4,7 @@
 
 - (id)initWithFrame:(CGRect)frame {
 	if (self = [super initWithFrame:frame]) {
-		[self setBackgroundColor:[UIColor colorWithWhite:0.18 alpha:1.0]];
+		[self setBackgroundColor:[UIColor colorWithWhite:0.22 alpha:1.0]];
 		[self setWindowLevel:2200];
 		[self setClipsToBounds:YES];
 		[self.layer setAnchorPoint:CGPointMake(0.5, 0)];

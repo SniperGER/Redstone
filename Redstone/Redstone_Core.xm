@@ -68,7 +68,7 @@ static void lockedDevice(CFNotificationCenterRef center, void *observer, CFStrin
 %end // %group core
 
 %ctor {
-	[[RSPreferences alloc] init];
+	id preferences = [[RSPreferences alloc] init];
 	
 	if ([[[RSPreferences preferences] objectForKey:@"enabled"] boolValue]) {
 		NSLog(@"[Redstone] Initializing");

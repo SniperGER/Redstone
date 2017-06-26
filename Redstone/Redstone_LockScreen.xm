@@ -137,21 +137,6 @@ SBPagedScrollView* dashboardScrollView;
 
 %end // %hook SBBacklightController
 
-%hook BBServer
-
-- (void)_sendAddBulletin:(BBBulletin*)arg1 toFeeds:(unsigned long long)arg2 {
-	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
-		if (arg2 != 1 && [[%c(SBUserAgent) sharedUserAgent] deviceIsLocked]) {
-			RSNotificationView* notificationView = [[RSNotificationView alloc] initNotificationForBulletin:arg1 isStatic:NO];
-			[[RSLockScreenController sharedInstance] displayNotification:notificationView];
-		}
-	}];
-	
-	%orig;
-}
-
-%end // %hook BBServer
-
 %hook SBWallpaperController
 
 - (void)_handleWallpaperChangedForVariant:(int)arg1 {
@@ -232,21 +217,6 @@ SBPagedScrollView* dashboardScrollView;
 }
 
 %end // %hook SBBacklightController
-
-%hook BBServer
-
--(void)_sendAddBulletin:(BBBulletin*)arg1 toFeeds:(unsigned long long)arg2 {
-	[[NSOperationQueue mainQueue] addOperationWithBlock:^ {
-		if (arg2 != 1 && [[%c(SBUserAgent) sharedUserAgent] deviceIsLocked]) {
-			RSNotificationView* notificationView = [[RSNotificationView alloc] initNotificationForBulletin:arg1 isStatic:NO];
-			[[RSLockScreenController sharedInstance] displayNotification:notificationView];
-		}
-	}];
-	
-	%orig;
-}
-
-%end // %hook BBServer
 
 %hook SBWallpaperController
 
