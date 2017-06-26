@@ -101,8 +101,7 @@
 }
 
 - (void)tapped {
-	[self stopSlideOutTimer];
-	[self animateOut];
+	[[RSNotificationController sharedInstance] removeAllBulletins];
 	
 	if ([RSLockScreenController sharedInstance]) {
 		[[RSLockScreenController sharedInstance] attemptManualUnlockWithCompletionHandler:^{

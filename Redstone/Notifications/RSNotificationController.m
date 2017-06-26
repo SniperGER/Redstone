@@ -22,6 +22,10 @@ static RSNotificationController* sharedInstance;
 	NSLog(@"[Redstone | RSNotificationController] bulletin added");
 	
 	dispatch_async(dispatch_get_main_queue(), ^{
+		if ([RSSoundController sharedInstance] && [[RSSoundController sharedInstance] isShowingVolumeHUD]) {
+			[[RSSoundController sharedInstance] hideVolumeHUDAnimated:YES];
+		}
+		
 		if (![notificationWindow isKeyWindow]) {
 			[notificationWindow makeKeyAndVisible];
 		}
@@ -31,6 +35,13 @@ static RSNotificationController* sharedInstance;
 		[notification animateIn];
 		[notification resetSlideOutTimer];
 	});
+}
+
+- (void)removeAllBulletins {
+	for (RSNotificationView* notification in notificationWindow.subviews) {
+		[notification stopSlideOutTimer];
+		[notification animateOut];
+	}
 }
 
 @end

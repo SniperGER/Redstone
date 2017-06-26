@@ -9,5 +9,6 @@
 + (id)sharedInstance;
 
 - (void)addBulletin:(BBBulletin*)bulletin;
+- (void)removeAllBulletins;
 
 @end
