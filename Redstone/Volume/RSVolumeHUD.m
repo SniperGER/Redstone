@@ -92,6 +92,9 @@
 - (void)animateIn {
 	[self setHidden:NO];
 	
+	[CATransaction begin];
+	[CATransaction setDisableActions:YES];
+	
 	[self setFrame:CGRectMake(0, -self.frame.size.height, screenWidth, self.frame.size.height)];
 	
 	[[RSSoundController sharedInstance] updateNowPlayingInfo:nil];
@@ -102,6 +105,8 @@
 	[expandButton setFrame:CGRectMake(self.frame.size.width - 46, 10, 36, 18)];
 	[expandButton setTransform:CGAffineTransformIdentity];
 	[expandButton setAlpha:1.0];
+	
+	[CATransaction commit];
 	
 	[UIView animateWithDuration:0.3 animations:^{
 		[self setEasingFunction:easeOutCubic forKeyPath:@"frame"];
