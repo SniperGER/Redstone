@@ -9,6 +9,7 @@
 + (id)sharedInstance;
 
 - (void)addBulletin:(BBBulletin*)bulletin;
+- (void)removeBulletin:(RSNotificationView*)bulletin;
 - (void)removeAllBulletins;
 
 @end

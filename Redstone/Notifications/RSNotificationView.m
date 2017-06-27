@@ -83,7 +83,7 @@
 		[self setFrame:CGRectMake(0, -self.frame.size.height, self.frame.size.width, self.frame.size.height)];
 	} completion:^(BOOL finished){
 		[self removeEasingFunctionForKeyPath:@"frame"];
-		[self removeFromSuperview];
+		[[RSNotificationController sharedInstance] removeBulletin:self];
 	}];
 }
 

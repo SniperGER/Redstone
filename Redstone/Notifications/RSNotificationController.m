@@ -37,6 +37,14 @@ static RSNotificationController* sharedInstance;
 	});
 }
 
+- (void)removeBulletin:(RSNotificationView*)bulletin {
+	[bulletin removeFromSuperview];
+	
+	if (notificationWindow.subviews.count < 1) {
+		[notificationWindow setHidden:YES];
+	}
+}
+
 - (void)removeAllBulletins {
 	for (RSNotificationView* notification in notificationWindow.subviews) {
 		[notification stopSlideOutTimer];
