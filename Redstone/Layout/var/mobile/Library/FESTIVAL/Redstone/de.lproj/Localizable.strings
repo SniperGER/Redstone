@@ -20,3 +20,7 @@
 "RINGER_VOLUME_VIBRATION" = "Vibrieren";
 "MEDIA_VOLUME" = "Medien + Apps";
 "HEADPHONE_VOLUME" = "Kopfhörer";
+"VIBRATE_ENABLED" = "Vibrieren ein";
+"VIBRATE_DISABLED" = "Vibrieren aus";
+"RINGER_ENABLED" = "Klingeln ein";
+"RINGER_DISABLED" = "Klingeln aus";

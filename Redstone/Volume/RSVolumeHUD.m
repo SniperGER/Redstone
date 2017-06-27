@@ -82,6 +82,16 @@
 		nowPlayingControls = [[RSNowPlayingControls alloc] initWithFrame:CGRectMake(0, 100, screenWidth, 120)];
 		[nowPlayingControls setLightTextEnabled:NO];
 		[self addSubview:nowPlayingControls];
+		
+		vibrateButton = [UIButton buttonWithType:UIButtonTypeSystem];
+		[vibrateButton addTarget:self action:@selector(toggleVibrationEnabled) forControlEvents:UIControlEventTouchUpInside];
+		[self addSubview:vibrateButton];
+		[self updateVibrateButtonStatus];
+		
+		ringerButton = [UIButton buttonWithType:UIButtonTypeSystem];
+		[ringerButton addTarget:self action:@selector(toggleRingerMuted) forControlEvents:UIControlEventTouchUpInside];
+		[self addSubview:ringerButton];
+		[self updateRingerButtonStatus];
 	}
 	
 	return self;
@@ -105,6 +115,10 @@
 	[expandButton setFrame:CGRectMake(self.frame.size.width - 46, 10, 36, 18)];
 	[expandButton setTransform:CGAffineTransformIdentity];
 	[expandButton setAlpha:1.0];
+	
+	if (self.isShowingMediaControls) {
+		[ringerButton setHidden:YES];
+	}
 	
 	[CATransaction commit];
 	
@@ -167,17 +181,23 @@
 	if (isExpanded) {
 		if (self.isShowingMediaControls) {
 			[expandButton setFrame:CGRectMake(self.frame.size.width - 46, 162, 36, 18)];
+			[vibrateButton setFrame:CGRectMake(10, 110, vibrateButton.frame.size.width, vibrateButton.frame.size.height)];
 			[nowPlayingControls setHidden:YES];
+			[ringerButton setHidden:NO];
 		} else {
 			[expandButton setFrame:CGRectMake(self.frame.size.width - 46, 216, 36, 18)];
-			
+			[vibrateButton setFrame:CGRectMake(10, 214, vibrateButton.frame.size.width, vibrateButton.frame.size.height)];
+			[ringerButton setHidden:YES];
 		}
+		[vibrateButton setHidden:NO];
 		
 		[expandButton setTransform:CGAffineTransformMakeRotation(deg2rad(180))];
 	} else {
 		if (self.isShowingMediaControls) {
 			[nowPlayingControls setHidden:NO];
+			[vibrateButton setHidden:YES];
 		}
+		[ringerButton setHidden:YES];
 		
 		[expandButton setFrame:CGRectMake(self.frame.size.width - 46, 10, 36, 18)];
 		[expandButton setTransform:CGAffineTransformIdentity];
@@ -215,7 +235,14 @@
 	
 	if (isShowingMediaControls) {
 		[ringerVolumeView setHidden:YES];
-		[nowPlayingControls setHidden:NO];
+		
+		if (!self.isExpanded) {
+			[nowPlayingControls setHidden:NO];
+			[vibrateButton setHidden:YES];
+		} else {
+			[nowPlayingControls setHidden:YES];
+			[vibrateButton setHidden:NO];
+		}
 		
 		[mediaVolumeView setFrame:CGRectMake(0, 0, screenWidth, 100)];
 		[headphoneVolumeView setFrame:CGRectMake(0, 0, screenWidth, 100)];
@@ -225,6 +252,8 @@
 		
 		[mediaVolumeView setFrame:CGRectMake(0, 110, screenWidth, 100)];
 		[headphoneVolumeView setFrame:CGRectMake(0, 110, screenWidth, 100)];
+		
+		[vibrateButton setHidden:NO];
 	}
 	
 	[mediaVolumeView setHidden:self.isShowingHeadphoneVolume];
@@ -338,7 +367,12 @@
 		[ringerMuteButton setTitle:@"\uEA8F"];
 	} else {
 		[[objc_getClass("SBMediaController") sharedInstance] setRingerMuted:YES];
-		[ringerMuteButton setTitle:@"\uE877"];
+		
+		if ([self getVibrationEnabled]) {
+			[ringerMuteButton setTitle:@"\uE877"];
+		} else {
+			[ringerMuteButton setTitle:@"\uE7ED"];
+		}
 	}
 	
 	if (mediaVolume >= 1.0/16.0) {
@@ -366,7 +400,12 @@
 		[[objc_getClass("SBMediaController") sharedInstance] setRingerMuted:YES];
 		[[RSSoundController sharedInstance] volumeChanged:0.0 forCategory:@"Ringtone" increasingVolume:NO];
 		[[objc_getClass("AVSystemController") sharedAVSystemController] setVolumeTo:0.0 forCategory:@"Ringtone"];
-		[ringerMuteButton setTitle:@"\uE877"];
+		
+		if ([self getVibrationEnabled]) {
+			[ringerMuteButton setTitle:@"\uE877"];
+		} else {
+			[ringerMuteButton setTitle:@"\uE7ED"];
+		}
 	}
 	
 	[[RSSoundController sharedInstance] setRingerVolume:ringerVolume];
@@ -423,6 +462,8 @@
 		[[RSSoundController sharedInstance] volumeChanged:0.0 forCategory:@"Ringtone" increasingVolume:NO];
 		[[objc_getClass("AVSystemController") sharedAVSystemController] setVolumeTo:0.0 forCategory:@"Ringtone"];
 	}
+	
+	[self updateRingerButtonStatus];
 }
 
 - (void)toggleMediaMuted {
@@ -432,6 +473,146 @@
 	} else {
 		[[RSSoundController sharedInstance] volumeChanged:1.0/16.0 forCategory:@"Audio/Video" increasingVolume:YES];
 		[[objc_getClass("AVSystemController") sharedAVSystemController] setVolumeTo:1.0/16.0 forCategory:@"Audio/Video"];
+	}
+}
+
+#pragma mark Vibration State
+
+- (BOOL)getVibrationEnabled {
+	if ([[objc_getClass("SBMediaController") sharedInstance] isRingerMuted]) {
+		BOOL silentVibrate = [[[NSUserDefaults standardUserDefaults] objectForKey:@"silent-vibrate"] boolValue];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:silentVibrate] forKey:@"ring-vibrate"];
+		
+		return silentVibrate;
+	} else {
+		BOOL ringerVibrate = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ring-vibrate"] boolValue];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:ringerVibrate] forKey:@"silent-vibrate"];
+		
+		return ringerVibrate;
+	}
+	
+	return NO;
+}
+
+- (void)toggleVibrationEnabled {
+	if ([[objc_getClass("SBMediaController") sharedInstance] isRingerMuted]) {
+		BOOL silentVibrate = [[[NSUserDefaults standardUserDefaults] objectForKey:@"silent-vibrate"] boolValue];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:!silentVibrate] forKey:@"silent-vibrate"];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:!silentVibrate] forKey:@"slient-vibrate"];
+		
+	} else {
+		BOOL ringerVibrate = [[[NSUserDefaults standardUserDefaults] objectForKey:@"ring-vibrate"] boolValue];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:!ringerVibrate] forKey:@"ring-vibrate"];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:!ringerVibrate] forKey:@"ring-vibrate"];
+	}
+	
+	[self updateVibrateButtonStatus];
+	[self resetSlideOutTimer];
+}
+
+- (void)updateVibrateButtonStatus {
+	[vibrateButton setFrame:CGRectMake(10, 214, self.frame.size.width/2 - 10, 20)];
+	
+	[UIView performWithoutAnimation:^{
+		if ([self getVibrationEnabled]) {
+			NSString* baseString = [NSString stringWithFormat:@"\uE877 %@", [RSAesthetics localizedStringForKey:@"VIBRATE_ENABLED"]];
+			NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:baseString];
+			
+			[attributedString addAttributes:@{
+											  NSFontAttributeName:[UIFont fontWithName:@"SegoeMDL2Assets" size:14],
+											  NSForegroundColorAttributeName: [RSAesthetics accentColor],
+											  NSBaselineOffsetAttributeName: @-3.0
+											  } range:[baseString rangeOfString:@"\uE877"]];
+			[attributedString addAttributes:@{
+											  NSFontAttributeName:[UIFont fontWithName:@"SegoeUI" size:14],
+											  NSForegroundColorAttributeName: [RSAesthetics accentColor]
+											  } range:[baseString rangeOfString:[RSAesthetics localizedStringForKey:@"VIBRATE_ENABLED"]]];
+			[vibrateButton setAttributedTitle:attributedString forState:UIControlStateNormal];
+		} else {
+			NSString* baseString = [NSString stringWithFormat:@"\uE877 %@", [RSAesthetics localizedStringForKey:@"VIBRATE_DISABLED"]];
+			NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:baseString];
+			
+			[attributedString addAttributes:@{
+											  NSFontAttributeName:[UIFont fontWithName:@"SegoeMDL2Assets" size:14],
+											  NSForegroundColorAttributeName: [UIColor whiteColor],
+											  NSBaselineOffsetAttributeName: @-3.0
+											  } range:[baseString rangeOfString:@"\uE877"]];
+			[attributedString addAttributes:@{
+											  NSFontAttributeName:[UIFont fontWithName:@"SegoeUI" size:14],
+											  NSForegroundColorAttributeName: [UIColor whiteColor]
+											  } range:[baseString rangeOfString:[RSAesthetics localizedStringForKey:@"VIBRATE_DISABLED"]]];
+			[vibrateButton setAttributedTitle:attributedString forState:UIControlStateNormal];
+		}
+		
+		[vibrateButton layoutIfNeeded];
+	}];
+	
+	CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.apple.springboard.silent-vibrate.changed"), NULL, NULL, TRUE);
+	CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("com.apple.springboard.ring-vibrate.changed"), NULL, NULL, TRUE);
+	
+	[vibrateButton sizeToFit];
+	
+	if (self.isShowingMediaControls) {
+		[vibrateButton setFrame:CGRectMake(10, 110, vibrateButton.frame.size.width, 20)];
+	} else {
+		[vibrateButton setFrame:CGRectMake(10, 214, vibrateButton.frame.size.width, 20)];
+	}
+	
+	if ([[RSSoundController sharedInstance] ringerVolume] >= 1.0/16.0) {
+		[ringerMuteButton setTitle:@"\uEA8F"];
+	} else if ([self getVibrationEnabled]) {
+		[ringerMuteButton setTitle:@"\uE877"];
+	} else {
+		[ringerMuteButton setTitle:@"\uE7ED"];
+	}
+}
+
+- (void)updateRingerButtonStatus {
+	[ringerButton setFrame:CGRectMake(self.frame.size.width/2, 214, self.frame.size.width/2 - 10, 20)];
+	
+	SBMediaController* mediaController = [objc_getClass("SBMediaController") sharedInstance];
+	
+	[UIView performWithoutAnimation:^{
+		if (![mediaController isRingerMuted]) {
+			NSString* baseString = [NSString stringWithFormat:@"\uEA8F %@", [RSAesthetics localizedStringForKey:@"RINGER_ENABLED"]];
+			NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:baseString];
+			
+			[attributedString addAttributes:@{
+											  NSFontAttributeName:[UIFont fontWithName:@"SegoeMDL2Assets" size:14],
+											  NSForegroundColorAttributeName: [RSAesthetics accentColor],
+											  NSBaselineOffsetAttributeName: @-3.0
+											  } range:[baseString rangeOfString:@"\uEA8F"]];
+			[attributedString addAttributes:@{
+											  NSFontAttributeName:[UIFont fontWithName:@"SegoeUI" size:14],
+											  NSForegroundColorAttributeName: [RSAesthetics accentColor]
+											  } range:[baseString rangeOfString:[RSAesthetics localizedStringForKey:@"RINGER_ENABLED"]]];
+			[ringerButton setAttributedTitle:attributedString forState:UIControlStateNormal];
+		} else {
+			NSString* baseString = [NSString stringWithFormat:@"\uE7ED %@", [RSAesthetics localizedStringForKey:@"RINGER_DISABLED"]];
+			NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:baseString];
+			
+			[attributedString addAttributes:@{
+											  NSFontAttributeName:[UIFont fontWithName:@"SegoeMDL2Assets" size:14],
+											  NSForegroundColorAttributeName: [UIColor whiteColor],
+											  NSBaselineOffsetAttributeName: @-3.0
+											  } range:[baseString rangeOfString:@"\uE7ED"]];
+			[attributedString addAttributes:@{
+											  NSFontAttributeName:[UIFont fontWithName:@"SegoeUI" size:14],
+											  NSForegroundColorAttributeName: [UIColor whiteColor]
+											  } range:[baseString rangeOfString:[RSAesthetics localizedStringForKey:@"RINGER_DISABLED"]]];
+			[ringerButton setAttributedTitle:attributedString forState:UIControlStateNormal];
+		}
+		
+		[ringerButton layoutIfNeeded];
+	}];
+	
+	[ringerButton sizeToFit];
+	
+	[ringerButton setFrame:CGRectMake(self.frame.size.width - ringerButton.frame.size.width - 10, 110, ringerButton.frame.size.width, 20)];
+	if (self.isShowingMediaControls) {
+		[ringerButton setHidden:NO];
+	} else {
+		[ringerButton setHidden:YES];
 	}
 }
 

@@ -19,6 +19,9 @@
 	RSTiltView* headphoneMuteButton;
 	
 	RSNowPlayingControls* nowPlayingControls;
+	
+	UIButton* vibrateButton;
+	UIButton* ringerButton;
 }
 
 @property (nonatomic, assign) BOOL isExpanded;
