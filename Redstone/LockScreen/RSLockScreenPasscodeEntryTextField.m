@@ -19,6 +19,10 @@
 	return self;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	return NO;
+}
+
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
 	return CGRectMake(0, 7.5, screenWidth, 40);
 }

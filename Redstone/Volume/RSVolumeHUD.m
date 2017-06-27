@@ -95,6 +95,9 @@
 	[self setFrame:CGRectMake(0, -self.frame.size.height, screenWidth, self.frame.size.height)];
 	
 	[[RSSoundController sharedInstance] updateNowPlayingInfo:nil];
+	[ringerVolumeView updateVolumeDisplay];
+	[mediaVolumeView updateVolumeDisplay];
+	[headphoneVolumeView updateVolumeDisplay];
 	
 	[expandButton setFrame:CGRectMake(self.frame.size.width - 46, 10, 36, 18)];
 	[expandButton setTransform:CGAffineTransformIdentity];

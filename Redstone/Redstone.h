@@ -264,3 +264,7 @@ static RSCore* redstone;
 
 @interface SBVolumeHUDView : UIView
 @end
+
+@interface UIWindow(SecureWindow)
+- (void)_setSecure:(BOOL)arg1;
+@end
