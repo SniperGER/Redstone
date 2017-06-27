@@ -113,7 +113,7 @@
 }
 
 - (BOOL)readyForDisplay {
-	return !isUpdatingWeatherData;
+	return !isUpdatingWeatherData && ([[currentCity hourlyForecasts] count] > 0);
 }
 
 - (NSArray*)viewsForSize:(int)size {
