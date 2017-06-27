@@ -193,6 +193,16 @@ static RSCore* redstone;
 - (id)content;
 - (id)section;
 - (NSDate*)date;
+- (id)responseForDefaultAction;
+@end
+
+@interface BBObserver : NSObject
+- (void)sendResponse:(id)arg1;
+@end
+
+@interface SBBulletinBannerController : NSObject
++ (id)sharedInstance;
+- (BBObserver*)observer;
 @end
 
 @interface SBNotificationBannerWindow : UIWindow

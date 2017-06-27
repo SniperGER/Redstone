@@ -2,9 +2,10 @@
 
 @implementation RSNotificationView
 
-- (id)initForBulletin:(BBBulletin*)bulletin {
+- (id)initForBulletin:(BBBulletin*)_bulletin {
 	if (self = [super initWithFrame:CGRectMake(0, 0, screenWidth, 130)]) {
 		[self setBackgroundColor:[UIColor colorWithWhite:0.22 alpha:1.0]];
+		bulletin = _bulletin;
 		
 		RSTileInfo* tileInfo = [[RSTileInfo alloc] initWithBundleIdentifier:[bulletin section]];
 		application = [[objc_getClass("SBApplicationController") sharedInstance] applicationWithBundleIdentifier:[bulletin section]];
@@ -105,11 +106,12 @@
 	
 	if ([RSLockScreenController sharedInstance]) {
 		[[RSLockScreenController sharedInstance] attemptManualUnlockWithCompletionHandler:^{
-			[[[RSCore sharedInstance] sharedSpringBoard] launchApplicationWithIdentifier:[application bundleIdentifier] suspended:NO];
+			[[[objc_getClass("SBBulletinBannerController") sharedInstance] observer] sendResponse:[bulletin responseForDefaultAction]];
 		}];
 	} else {
-		[[[RSCore sharedInstance] sharedSpringBoard] launchApplicationWithIdentifier:[application bundleIdentifier] suspended:NO];
+		[[[objc_getClass("SBBulletinBannerController") sharedInstance] observer] sendResponse:[bulletin responseForDefaultAction]];
 	}
+	
 }
 
 @end

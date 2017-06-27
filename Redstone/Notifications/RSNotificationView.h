@@ -10,10 +10,11 @@
 	UILabel* subtitleLabel;
 	UILabel* messageLabel;
 	
+	BBBulletin* bulletin;
 	SBApplication* application;
 }
 
-- (id)initForBulletin:(BBBulletin*)bulletin;
+- (id)initForBulletin:(BBBulletin*)_bulletin;
 - (void)animateIn;
 - (void)animateOut;
 - (void)stopSlideOutTimer;

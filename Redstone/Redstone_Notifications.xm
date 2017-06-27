@@ -54,6 +54,16 @@
 
 %end // %hook BBServer
 
+%hook SBBulletinBannerController
+
+%new
+- (BBObserver*)observer {
+	BBObserver* observer = MSHookIvar<BBObserver*>(self, "_observer");
+	return observer;
+}
+
+%end // %hook SBBulletinBannerController
+
 %end // %group notifications
 
 %ctor {
