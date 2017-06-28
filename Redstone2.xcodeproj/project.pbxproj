@@ -1,0 +1,428 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D9EDACE1F02FE6900C97EEA /* Redstone2_Core.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */; };
+		8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EDAD21F02FFCD00C97EEA /* RSCore.m */; };
+		8D9EDAD71F0302A600C97EEA /* RSPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EDAD61F0302A600C97EEA /* RSPreferences.m */; };
+		8DC97C5A1F0382E6004A75CB /* Redstone2_HomeScreen.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */; };
+		8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C5C1F038409004A75CB /* RSHomeScreenController.m */; };
+		8DC97C621F039C94004A75CB /* RSHomeScreenScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C611F039C94004A75CB /* RSHomeScreenScrollView.m */; };
+		8DC97C661F039D1A004A75CB /* RSStartScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C651F039D1A004A75CB /* RSStartScreenController.m */; };
+		8DCB95401EFE4A9900C0038F /* Redstone2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DCB953F1EFE4A9900C0038F /* Redstone2.plist */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8D34D12F1EFDC8F700B2D634 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		8D34D13F1EFDD28700B2D634 /* hiddenapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hiddenapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D9EDAC81F02FDFA00C97EEA /* Redstone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Redstone.h; sourceTree = "<group>"; };
+		8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */ = {isa = PBXFileReference; lastKnownFileType = text; path = Redstone2_Core.xm; sourceTree = "<group>"; };
+		8D9EDAD11F02FFCD00C97EEA /* RSCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSCore.h; sourceTree = "<group>"; };
+		8D9EDAD21F02FFCD00C97EEA /* RSCore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSCore.m; sourceTree = "<group>"; };
+		8D9EDAD51F0302A600C97EEA /* RSPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSPreferences.h; sourceTree = "<group>"; };
+		8D9EDAD61F0302A600C97EEA /* RSPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSPreferences.m; sourceTree = "<group>"; };
+		8DC97C581F03190D004A75CB /* SBUIController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBUIController.h; sourceTree = "<group>"; };
+		8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */ = {isa = PBXFileReference; lastKnownFileType = text; path = Redstone2_HomeScreen.xm; sourceTree = "<group>"; };
+		8DC97C5B1F038409004A75CB /* RSHomeScreenController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSHomeScreenController.h; sourceTree = "<group>"; };
+		8DC97C5C1F038409004A75CB /* RSHomeScreenController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSHomeScreenController.m; sourceTree = "<group>"; };
+		8DC97C5E1F038A82004A75CB /* SBUIAnimationZoomApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBUIAnimationZoomApp.h; sourceTree = "<group>"; };
+		8DC97C601F039C94004A75CB /* RSHomeScreenScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSHomeScreenScrollView.h; sourceTree = "<group>"; };
+		8DC97C611F039C94004A75CB /* RSHomeScreenScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSHomeScreenScrollView.m; sourceTree = "<group>"; };
+		8DC97C641F039D1A004A75CB /* RSStartScreenController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSStartScreenController.h; sourceTree = "<group>"; };
+		8DC97C651F039D1A004A75CB /* RSStartScreenController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSStartScreenController.m; sourceTree = "<group>"; };
+		8DCB953F1EFE4A9900C0038F /* Redstone2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Redstone2.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D34D13C1EFDD28700B2D634 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8D34D11F1EFDC71200B2D634 = {
+			isa = PBXGroup;
+			children = (
+				8D34D12E1EFDC8DD00B2D634 /* Redstone2 */,
+				8D34D1401EFDD28700B2D634 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8D34D12E1EFDC8DD00B2D634 /* Redstone2 */ = {
+			isa = PBXGroup;
+			children = (
+				8D34D12F1EFDC8F700B2D634 /* Makefile */,
+				8DCB953F1EFE4A9900C0038F /* Redstone2.plist */,
+				8D9EDAC81F02FDFA00C97EEA /* Redstone.h */,
+				8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */,
+				8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */,
+				8D9EDACA1F02FE1C00C97EEA /* headers */,
+				8D9EDAD01F02FF4A00C97EEA /* Core */,
+				8D9EDAD41F0301AC00C97EEA /* HomeScreen */,
+				8DC97C631F039CE3004A75CB /* App Switcher */,
+				8DC97C5F1F039C66004A75CB /* StartScreen */,
+			);
+			path = Redstone2;
+			sourceTree = "<group>";
+		};
+		8D34D1401EFDD28700B2D634 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D34D13F1EFDD28700B2D634 /* hiddenapp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8D9EDACA1F02FE1C00C97EEA /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				8DC97C571F0318E7004A75CB /* SpringBoard */,
+			);
+			path = headers;
+			sourceTree = "<group>";
+		};
+		8D9EDAD01F02FF4A00C97EEA /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				8D9EDAD11F02FFCD00C97EEA /* RSCore.h */,
+				8D9EDAD21F02FFCD00C97EEA /* RSCore.m */,
+				8D9EDAD51F0302A600C97EEA /* RSPreferences.h */,
+				8D9EDAD61F0302A600C97EEA /* RSPreferences.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		8D9EDAD41F0301AC00C97EEA /* HomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				8DC97C5B1F038409004A75CB /* RSHomeScreenController.h */,
+				8DC97C5C1F038409004A75CB /* RSHomeScreenController.m */,
+				8DC97C601F039C94004A75CB /* RSHomeScreenScrollView.h */,
+				8DC97C611F039C94004A75CB /* RSHomeScreenScrollView.m */,
+			);
+			path = HomeScreen;
+			sourceTree = "<group>";
+		};
+		8DC97C571F0318E7004A75CB /* SpringBoard */ = {
+			isa = PBXGroup;
+			children = (
+				8DC97C581F03190D004A75CB /* SBUIController.h */,
+				8DC97C5E1F038A82004A75CB /* SBUIAnimationZoomApp.h */,
+			);
+			path = SpringBoard;
+			sourceTree = "<group>";
+		};
+		8DC97C5F1F039C66004A75CB /* StartScreen */ = {
+			isa = PBXGroup;
+			children = (
+				8DC97C641F039D1A004A75CB /* RSStartScreenController.h */,
+				8DC97C651F039D1A004A75CB /* RSStartScreenController.m */,
+			);
+			path = StartScreen;
+			sourceTree = "<group>";
+		};
+		8DC97C631F039CE3004A75CB /* App Switcher */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "App Switcher";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		8D34D1241EFDC71200B2D634 /* Build */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "";
+			buildConfigurationList = 8D34D1271EFDC71200B2D634 /* Build configuration list for PBXLegacyTarget "Build" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "$(PROJECT_DIR)/$(PROJECT_NAME)";
+			dependencies = (
+			);
+			name = Build;
+			passBuildSettingsInEnvironment = 1;
+			productName = Redstone2;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXNativeTarget section */
+		8D34D13E1EFDD28700B2D634 /* hiddenapp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8D34D1531EFDD28700B2D634 /* Build configuration list for PBXNativeTarget "hiddenapp" */;
+			buildPhases = (
+				8D34D13B1EFDD28700B2D634 /* Sources */,
+				8D34D13C1EFDD28700B2D634 /* Frameworks */,
+				8D34D13D1EFDD28700B2D634 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = hiddenapp;
+			productName = hiddenapp;
+			productReference = 8D34D13F1EFDD28700B2D634 /* hiddenapp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8D34D1201EFDC71200B2D634 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Janik Schmidt";
+				TargetAttributes = {
+					8D34D1241EFDC71200B2D634 = {
+						CreatedOnToolsVersion = 9.0;
+					};
+					8D34D13E1EFDD28700B2D634 = {
+						CreatedOnToolsVersion = 9.0;
+					};
+				};
+			};
+			buildConfigurationList = 8D34D1231EFDC71200B2D634 /* Build configuration list for PBXProject "Redstone2" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8D34D11F1EFDC71200B2D634;
+			productRefGroup = 8D34D1401EFDD28700B2D634 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D34D13E1EFDD28700B2D634 /* hiddenapp */,
+				8D34D1241EFDC71200B2D634 /* Build */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D34D13D1EFDD28700B2D634 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D9EDACE1F02FE6900C97EEA /* Redstone2_Core.xm in Resources */,
+				8DCB95401EFE4A9900C0038F /* Redstone2.plist in Resources */,
+				8DC97C5A1F0382E6004A75CB /* Redstone2_HomeScreen.xm in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D34D13B1EFDD28700B2D634 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */,
+				8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */,
+				8D9EDAD71F0302A600C97EEA /* RSPreferences.m in Sources */,
+				8DC97C661F039D1A004A75CB /* RSStartScreenController.m in Sources */,
+				8DC97C621F039C94004A75CB /* RSHomeScreenScrollView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8D34D1251EFDC71200B2D634 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		8D34D1261EFDC71200B2D634 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+			};
+			name = Release;
+		};
+		8D34D1281EFDC71200B2D634 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphonesimulator;
+				SYSROOT = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk;
+				TARGET = "simulator:latest";
+				THEOS = /opt/theos/;
+			};
+			name = Debug;
+		};
+		8D34D1291EFDC71200B2D634 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphonesimulator;
+				SYSROOT = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk;
+				TARGET = "simulator:latest";
+				THEOS = /opt/theos/;
+			};
+			name = Release;
+		};
+		8D34D1541EFDD28700B2D634 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = hiddenapp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ml.festival.hiddenapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		8D34D1551EFDD28700B2D634 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = hiddenapp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = ml.festival.hiddenapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8D34D1231EFDC71200B2D634 /* Build configuration list for PBXProject "Redstone2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8D34D1251EFDC71200B2D634 /* Debug */,
+				8D34D1261EFDC71200B2D634 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8D34D1271EFDC71200B2D634 /* Build configuration list for PBXLegacyTarget "Build" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8D34D1281EFDC71200B2D634 /* Debug */,
+				8D34D1291EFDC71200B2D634 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8D34D1531EFDD28700B2D634 /* Build configuration list for PBXNativeTarget "hiddenapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8D34D1541EFDD28700B2D634 /* Debug */,
+				8D34D1551EFDD28700B2D634 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8D34D1201EFDC71200B2D634 /* Project object */;
+}
