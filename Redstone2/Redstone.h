@@ -1,3 +1,5 @@
+#import <objc/runtime.h>
+
 #pragma mark Definitions
 #define screenWidth roundf([UIScreen mainScreen].bounds.size.width)
 #define screenHeight roundf([UIScreen mainScreen].bounds.size.height)
@@ -25,10 +27,13 @@
 #define kRSPLockScreenEnabledKey @"lockScreenEnabled"
 #define kRSPNotificationsEnabledKey @"notificationsEnabled"
 #define kRSPVolumeControlEnabledKey @"volumeControlEnabled"
+#define kRSP2ColumnLayoutKey @"2ColumnLayout"
+#define kRSP3ColumnLayoutKey @"3ColumnLayout"
 
 #pragma mark Core
 #import "Core/RSCore.h"
 #import "Core/RSPreferences.h"
+#import "Core/RSMetrics.h"
 
 #pragma mark Home Screen
 #import "HomeScreen/RSHomeScreenController.h"
@@ -40,5 +45,4 @@
 static RSCore* redstone;
 static RSPreferences* redstonePreferences;
 
-#import "headers/SpringBoard/SBUIController.h"
-#import "headers/SpringBoard/SBUIAnimationZoomApp.h"
+#import "headers/SpringBoard/SpringBoard.h"

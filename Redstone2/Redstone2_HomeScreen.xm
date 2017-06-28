@@ -51,6 +51,7 @@
 
 %ctor {
 	if ([[[RSPreferences preferences] objectForKey:kRSPHomeScreenEnabledKey] boolValue]) {
+		NSLog(@"[Redstone | Home Screen] Initializing Home Screen");
 		%init(homeScreen);
 	}
 }

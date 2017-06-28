@@ -42,6 +42,16 @@ static RSPreferences* sharedInstance;
 			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:kRSPVolumeControlEnabledKey];
 		}
 		
+		// 2 column tile layout
+		if (![self.preferences objectForKey:kRSP2ColumnLayoutKey]) {
+			[self.preferences setObject:[NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/2ColumnDefaultLayout.plist", RESOURCE_PATH]] forKey:kRSP2ColumnLayoutKey];
+		}
+		
+		// 3 column tile layout
+		if (![self.preferences objectForKey:kRSP3ColumnLayoutKey]) {
+			[self.preferences setObject:[NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/3ColumnDefaultLayout.plist", RESOURCE_PATH]] forKey:kRSP3ColumnLayoutKey];
+		}
+		
 		[self.preferences writeToFile:PREFERENCES_PATH atomically:YES];
 	}
 	

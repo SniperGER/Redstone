@@ -10,6 +10,7 @@
 		8D9EDACE1F02FE6900C97EEA /* Redstone2_Core.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */; };
 		8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EDAD21F02FFCD00C97EEA /* RSCore.m */; };
 		8D9EDAD71F0302A600C97EEA /* RSPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EDAD61F0302A600C97EEA /* RSPreferences.m */; };
+		8DB9859C1F03CC8E00CD1AEB /* RSMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB9859B1F03CC8E00CD1AEB /* RSMetrics.m */; };
 		8DC97C5A1F0382E6004A75CB /* Redstone2_HomeScreen.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */; };
 		8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C5C1F038409004A75CB /* RSHomeScreenController.m */; };
 		8DC97C621F039C94004A75CB /* RSHomeScreenScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C611F039C94004A75CB /* RSHomeScreenScrollView.m */; };
@@ -26,6 +27,12 @@
 		8D9EDAD21F02FFCD00C97EEA /* RSCore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSCore.m; sourceTree = "<group>"; };
 		8D9EDAD51F0302A600C97EEA /* RSPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSPreferences.h; sourceTree = "<group>"; };
 		8D9EDAD61F0302A600C97EEA /* RSPreferences.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSPreferences.m; sourceTree = "<group>"; };
+		8DB9859A1F03CC8E00CD1AEB /* RSMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSMetrics.h; sourceTree = "<group>"; };
+		8DB9859B1F03CC8E00CD1AEB /* RSMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSMetrics.m; sourceTree = "<group>"; };
+		8DB9859D1F03DC5C00CD1AEB /* SpringBoard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpringBoard.h; sourceTree = "<group>"; };
+		8DB9859E1F03DC9100CD1AEB /* SBIconController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBIconController.h; sourceTree = "<group>"; };
+		8DB9859F1F03DCC400CD1AEB /* SBLeafIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBLeafIcon.h; sourceTree = "<group>"; };
+		8DB985A01F03DD0E00CD1AEB /* SBIconModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBIconModel.h; sourceTree = "<group>"; };
 		8DC97C581F03190D004A75CB /* SBUIController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBUIController.h; sourceTree = "<group>"; };
 		8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */ = {isa = PBXFileReference; lastKnownFileType = text; path = Redstone2_HomeScreen.xm; sourceTree = "<group>"; };
 		8DC97C5B1F038409004A75CB /* RSHomeScreenController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSHomeScreenController.h; sourceTree = "<group>"; };
@@ -97,6 +104,8 @@
 				8D9EDAD21F02FFCD00C97EEA /* RSCore.m */,
 				8D9EDAD51F0302A600C97EEA /* RSPreferences.h */,
 				8D9EDAD61F0302A600C97EEA /* RSPreferences.m */,
+				8DB9859A1F03CC8E00CD1AEB /* RSMetrics.h */,
+				8DB9859B1F03CC8E00CD1AEB /* RSMetrics.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -115,8 +124,12 @@
 		8DC97C571F0318E7004A75CB /* SpringBoard */ = {
 			isa = PBXGroup;
 			children = (
-				8DC97C581F03190D004A75CB /* SBUIController.h */,
+				8DB9859D1F03DC5C00CD1AEB /* SpringBoard.h */,
+				8DB9859E1F03DC9100CD1AEB /* SBIconController.h */,
+				8DB985A01F03DD0E00CD1AEB /* SBIconModel.h */,
+				8DB9859F1F03DCC400CD1AEB /* SBLeafIcon.h */,
 				8DC97C5E1F038A82004A75CB /* SBUIAnimationZoomApp.h */,
+				8DC97C581F03190D004A75CB /* SBUIController.h */,
 			);
 			path = SpringBoard;
 			sourceTree = "<group>";
@@ -230,6 +243,7 @@
 			files = (
 				8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */,
 				8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */,
+				8DB9859C1F03CC8E00CD1AEB /* RSMetrics.m in Sources */,
 				8D9EDAD71F0302A600C97EEA /* RSPreferences.m in Sources */,
 				8DC97C661F039D1A004A75CB /* RSStartScreenController.m in Sources */,
 				8DC97C621F039C94004A75CB /* RSHomeScreenScrollView.m in Sources */,

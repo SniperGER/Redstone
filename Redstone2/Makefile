@@ -13,7 +13,7 @@ Redstone2_CFLAGS = -fobjc-arc
 Redstone2_FILES = Redstone2_Core.xm Redstone2_HomeScreen.xm
 
 # Core
-Redstone2_FILES += Core/RSCore.m Core/RSPreferences.m
+Redstone2_FILES += Core/RSCore.m Core/RSPreferences.m Core/RSMetrics.m
 
 # Home Screen
 Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenScrollView.m
