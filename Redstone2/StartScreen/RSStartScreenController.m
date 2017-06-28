@@ -13,6 +13,8 @@
 	[self loadTiles];
 }
 
+#pragma mark Tile Management
+
 - (void)loadTiles {
 	pinnedTiles = [NSMutableArray new];
 	pinnedLeafIdentifiers = [NSMutableArray new];
@@ -41,6 +43,42 @@
 
 - (void)saveTiles {
 	
+}
+
+#pragma mark Editing Mode
+
+- (void)moveAffectedRowsForTile:(UIView*)tile {
+	
+}
+
+- (void)eliminateEmptyRows {
+	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
+	
+	for (UIView* tile in pinnedTiles) {
+		NSInteger yPosition = tile.frame.origin.y / sizeForPosition;
+		
+		if (yPosition > 0) {
+			for (int i = (yPosition-1); i>=0; i--) {
+				CGRect testFrame = CGRectMake(tile.frame.origin.x, i*sizeForPosition, tile.frame.size.width, tile.frame.size.height);
+				
+				BOOL canSetFrame = YES;
+				for (UIView* view in pinnedTiles) {
+					if (view != tile) {
+						if (CGRectIntersectsRect(testFrame, view.frame)) {
+							canSetFrame = NO;
+							break;
+						}
+					}
+				}
+				
+				if (canSetFrame) {
+					[tile setFrame:testFrame];
+				} else {
+					break;
+				}
+			}
+		}
+	}
 }
 
 @end

@@ -34,6 +34,7 @@
 #import "Core/RSCore.h"
 #import "Core/RSPreferences.h"
 #import "Core/RSMetrics.h"
+#import "Core/RSAesthetics.h"
 
 #pragma mark Home Screen
 #import "HomeScreen/RSHomeScreenController.h"
