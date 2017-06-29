@@ -15,6 +15,9 @@ Redstone2_FILES = Redstone2_Core.xm Redstone2_HomeScreen.xm
 # Core
 Redstone2_FILES += Core/RSCore.m Core/RSPreferences.m Core/RSMetrics.m Core/RSAesthetics.m
 
+# UI
+Redstone2_FILES += UI/RSTiltView.m
+
 # Home Screen
 Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenScrollView.m
 
@@ -22,7 +25,7 @@ Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenSc
 # Redstone2_FILES +=
 
 # Start Screen
-Redstone2_FILES += StartScreen/RSStartScreenController.m
+Redstone2_FILES += StartScreen/RSStartScreenController.m StartScreen/RSTile.m
 
 include $(THEOS)/makefiles/tweak.mk
 

@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D63E36E1F04D91F00FC242C /* RSTiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D63E36D1F04D91F00FC242C /* RSTiltView.m */; };
 		8D9EDACE1F02FE6900C97EEA /* Redstone2_Core.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */; };
 		8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EDAD21F02FFCD00C97EEA /* RSCore.m */; };
 		8D9EDAD71F0302A600C97EEA /* RSPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EDAD61F0302A600C97EEA /* RSPreferences.m */; };
 		8DB9859C1F03CC8E00CD1AEB /* RSMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB9859B1F03CC8E00CD1AEB /* RSMetrics.m */; };
 		8DB985A31F04600C00CD1AEB /* RSAesthetics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB985A21F04600C00CD1AEB /* RSAesthetics.m */; };
+		8DB985A61F04630400CD1AEB /* RSTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB985A51F04630400CD1AEB /* RSTile.m */; };
 		8DC97C5A1F0382E6004A75CB /* Redstone2_HomeScreen.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */; };
 		8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C5C1F038409004A75CB /* RSHomeScreenController.m */; };
 		8DC97C621F039C94004A75CB /* RSHomeScreenScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C611F039C94004A75CB /* RSHomeScreenScrollView.m */; };
@@ -22,6 +24,8 @@
 /* Begin PBXFileReference section */
 		8D34D12F1EFDC8F700B2D634 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		8D34D13F1EFDD28700B2D634 /* hiddenapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hiddenapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D63E36C1F04D91F00FC242C /* RSTiltView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSTiltView.h; sourceTree = "<group>"; };
+		8D63E36D1F04D91F00FC242C /* RSTiltView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTiltView.m; sourceTree = "<group>"; };
 		8D9EDAC81F02FDFA00C97EEA /* Redstone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Redstone.h; sourceTree = "<group>"; };
 		8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */ = {isa = PBXFileReference; lastKnownFileType = text; path = Redstone2_Core.xm; sourceTree = "<group>"; };
 		8D9EDAD11F02FFCD00C97EEA /* RSCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSCore.h; sourceTree = "<group>"; };
@@ -36,6 +40,8 @@
 		8DB985A01F03DD0E00CD1AEB /* SBIconModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBIconModel.h; sourceTree = "<group>"; };
 		8DB985A11F04600C00CD1AEB /* RSAesthetics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAesthetics.h; sourceTree = "<group>"; };
 		8DB985A21F04600C00CD1AEB /* RSAesthetics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAesthetics.m; sourceTree = "<group>"; };
+		8DB985A41F04630400CD1AEB /* RSTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTile.h; sourceTree = "<group>"; };
+		8DB985A51F04630400CD1AEB /* RSTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTile.m; sourceTree = "<group>"; };
 		8DC97C581F03190D004A75CB /* SBUIController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBUIController.h; sourceTree = "<group>"; };
 		8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */ = {isa = PBXFileReference; lastKnownFileType = text; path = Redstone2_HomeScreen.xm; sourceTree = "<group>"; };
 		8DC97C5B1F038409004A75CB /* RSHomeScreenController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSHomeScreenController.h; sourceTree = "<group>"; };
@@ -77,6 +83,7 @@
 				8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */,
 				8D9EDACA1F02FE1C00C97EEA /* headers */,
 				8D9EDAD01F02FF4A00C97EEA /* Core */,
+				8D63E36B1F04D86E00FC242C /* UI */,
 				8D9EDAD41F0301AC00C97EEA /* HomeScreen */,
 				8DC97C631F039CE3004A75CB /* App Switcher */,
 				8DC97C5F1F039C66004A75CB /* StartScreen */,
@@ -90,6 +97,15 @@
 				8D34D13F1EFDD28700B2D634 /* hiddenapp.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8D63E36B1F04D86E00FC242C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				8D63E36C1F04D91F00FC242C /* RSTiltView.h */,
+				8D63E36D1F04D91F00FC242C /* RSTiltView.m */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		8D9EDACA1F02FE1C00C97EEA /* headers */ = {
@@ -144,6 +160,8 @@
 			children = (
 				8DC97C641F039D1A004A75CB /* RSStartScreenController.h */,
 				8DC97C651F039D1A004A75CB /* RSStartScreenController.m */,
+				8DB985A41F04630400CD1AEB /* RSTile.h */,
+				8DB985A51F04630400CD1AEB /* RSTile.m */,
 			);
 			path = StartScreen;
 			sourceTree = "<group>";
@@ -247,11 +265,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */,
+				8D63E36E1F04D91F00FC242C /* RSTiltView.m in Sources */,
 				8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */,
 				8DB985A31F04600C00CD1AEB /* RSAesthetics.m in Sources */,
 				8DB9859C1F03CC8E00CD1AEB /* RSMetrics.m in Sources */,
 				8D9EDAD71F0302A600C97EEA /* RSPreferences.m in Sources */,
 				8DC97C661F039D1A004A75CB /* RSStartScreenController.m in Sources */,
+				8DB985A61F04630400CD1AEB /* RSTile.m in Sources */,
 				8DC97C621F039C94004A75CB /* RSHomeScreenScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

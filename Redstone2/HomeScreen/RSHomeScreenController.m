@@ -30,9 +30,9 @@ static RSHomeScreenController* sharedInstance;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)_scrollView {
-	CGFloat progress = MIN(_scrollView.contentOffset.x / _scrollView.contentSize.width, 0.75);
+	CGFloat progress = MIN(_scrollView.contentOffset.x / _scrollView.frame.size.width, 0.75);
 	
-	[_scrollView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:progress]];
+	[_scrollView setBackgroundColor:[[[RSAesthetics colorsForTheme:@"dark"] objectForKey:@"RedstoneOpaqueBackgroundColor"] colorWithAlphaComponent:progress]];
 }
 
 @end

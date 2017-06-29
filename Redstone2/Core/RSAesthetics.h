@@ -8,6 +8,14 @@
 
 @interface RSAesthetics : NSObject
 
+
+/**
+ Returns the currently selected accent color
+
+ @return An UIColor object with the currently selected accent color
+ */
++ (UIColor*)accentColor;
+
 /**
  Returns the colors for a specified theme name \p themeName as a dictionary
 

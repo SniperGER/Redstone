@@ -3,8 +3,10 @@
 @implementation RSStartScreenController
 
 - (void)loadView {
-	self.view = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
-	[(UIScrollView*)self.view setContentSize:CGSizeMake(screenWidth, 1000)];
+	self.view = [[UIScrollView alloc] initWithFrame:CGRectMake(4, 0, screenWidth-8, screenHeight)];
+	[(UIScrollView*)self.view setContentSize:CGSizeMake(self.view.frame.size.width, 1000)];
+	[(UIScrollView*)self.view setContentInset:UIEdgeInsetsMake(24, 0, 70, 0)];
+	[(UIScrollView*)self.view setContentOffset:CGPointMake(0, -24)];
 }
 
 - (void)viewDidLoad {
@@ -31,8 +33,7 @@
 										  sizeForPosition * [[tileLayout objectAtIndex:i][@"row"] intValue],
 										  tileSize.width, tileSize.height);
 			
-			UIView* tile = [[UIView alloc] initWithFrame:tileFrame];
-			[tile setBackgroundColor:[UIColor blueColor]];
+			RSTile* tile = [[RSTile alloc] initWithFrame:tileFrame];
 			
 			[self.view addSubview:tile];
 			[pinnedTiles addObject:tile];
@@ -47,14 +48,14 @@
 
 #pragma mark Editing Mode
 
-- (void)moveAffectedRowsForTile:(UIView*)tile {
+- (void)moveAffectedRowsForTile:(RSTile*)tile {
 	
 }
 
 - (void)eliminateEmptyRows {
 	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
-	for (UIView* tile in pinnedTiles) {
+	for (RSTile* tile in pinnedTiles) {
 		NSInteger yPosition = tile.frame.origin.y / sizeForPosition;
 		
 		if (yPosition > 0) {
@@ -62,7 +63,7 @@
 				CGRect testFrame = CGRectMake(tile.frame.origin.x, i*sizeForPosition, tile.frame.size.width, tile.frame.size.height);
 				
 				BOOL canSetFrame = YES;
-				for (UIView* view in pinnedTiles) {
+				for (RSTile* view in pinnedTiles) {
 					if (view != tile) {
 						if (CGRectIntersectsRect(testFrame, view.frame)) {
 							canSetFrame = NO;

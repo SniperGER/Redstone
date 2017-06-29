@@ -36,12 +36,16 @@
 #import "Core/RSMetrics.h"
 #import "Core/RSAesthetics.h"
 
+#pragma mark UI
+#import "UI/RSTiltView.h"
+
 #pragma mark Home Screen
 #import "HomeScreen/RSHomeScreenController.h"
 #import "HomeScreen/RSHomeScreenScrollView.h"
 
 #pragma mark App Switcher
 #import "StartScreen/RSStartScreenController.h"
+#import "StartScreen/RSTile.h"
 
 static RSCore* redstone;
 static RSPreferences* redstonePreferences;
