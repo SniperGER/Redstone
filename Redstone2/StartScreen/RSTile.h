@@ -8,6 +8,32 @@
 
 @class RSTiltView;
 
-@interface RSTile : RSTiltView
+@interface RSTile : RSTiltView <UIGestureRecognizerDelegate> {
+	UITapGestureRecognizer* tapGestureRecognizer;
+	UILongPressGestureRecognizer* longPressGestureRecognizer;
+	UIPanGestureRecognizer* panGestureRecognizer;
+	
+	BOOL panEnabled;
+	CGPoint centerOffset;
+}
+
+@property (nonatomic, assign) BOOL isSelectedTile;
+
+/**
+ Initializes a tile with a given frame, application identifier and size index
+
+ @param frame The frame to initialize the tile with
+ @param leafIdentifier The identifier for the application the tile is supposed to launch
+ @param size The size index (1-3 on phones, 1-4 on tablets) for internal use
+ @return An initialized instance of RSTile
+ */
+- (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafIdentifier size:(int)size;
+
+/**
+ Returns a tile's position regardless of animations or transforms
+
+ @return A \p CGRect containing the tile's position regardless of animations or transforms
+ */
+- (CGRect)basePosition;
 
 @end

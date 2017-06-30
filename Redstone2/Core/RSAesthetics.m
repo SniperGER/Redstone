@@ -6,6 +6,10 @@
 	return [self colorFromHexString:[[RSPreferences preferences] objectForKey:@"accentColor"]];
 }
 
++ (CGFloat)tileOpacity {
+	return [[[RSPreferences preferences] objectForKey:@"tileOpacity"] floatValue];
+}
+
 + (NSDictionary*)colorsForTheme:(NSString *)themeName {
 	if ([themeName isEqualToString:@"dark"]) {
 		return @{

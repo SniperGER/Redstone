@@ -1,0 +1,11 @@
+Package: ml.festival.redstone
+Name: Redstone Insider Preview
+Depends: mobilesubstrate, firmware (>= 9.0)
+Conflicts: gsc.ipad
+Icon: file:///Library/PreferenceBundles/Redstone.bundle/icon@2x.png
+Architecture: iphoneos-arm
+Description: A Tweak to bring the Windows 10 Mobile experience to iOS
+Depiction: https://connect.festival.ml/depiction/ml.festival.redstone
+Maintainer: FESTIVAL
+Author: Sniper_GER
+Section: Tweaks

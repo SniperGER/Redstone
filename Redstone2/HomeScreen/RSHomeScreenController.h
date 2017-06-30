@@ -24,4 +24,12 @@
  */
 + (id)sharedInstance;
 
+
+/**
+ Enables or disables the scrolling behavior of the Home Screen Controller scroll view
+
+ @param scrollEnabled The desired scrolling state
+ */
+- (void)setScrollEnabled:(BOOL)scrollEnabled;
+
 @end

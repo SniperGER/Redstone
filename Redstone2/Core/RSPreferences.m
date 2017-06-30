@@ -42,6 +42,26 @@ static RSPreferences* sharedInstance;
 			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:kRSPVolumeControlEnabledKey];
 		}
 		
+		// Accent Color
+		if (![self.preferences objectForKey:@"accentColor"]) {
+			[self.preferences setValue:@"#0078D7" forKey:@"accentColor"];
+		}
+		
+		// Theme Color
+		if (![self.preferences objectForKey:@"themeColor"]) {
+			[self.preferences setValue:@"dark" forKey:@"themeColor"];
+		}
+		
+		// Tile Opacity
+		if (![self.preferences objectForKey:@"tileOpacity"]) {
+			[self.preferences setValue:[NSNumber numberWithFloat:0.6] forKey:@"tileOpacity"];
+		}
+		
+		// Show More Tiles
+		if (![self.preferences objectForKey:@"showMoreTiles"]) {
+			[self.preferences setValue:[NSNumber numberWithBool:(screenWidth >= 414)] forKey:@"showMoreTiles"];
+		}
+		
 		// 2 column tile layout
 		if (![self.preferences objectForKey:kRSP2ColumnLayoutKey]) {
 			[self.preferences setObject:[NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/2ColumnDefaultLayout.plist", RESOURCE_PATH]] forKey:kRSP2ColumnLayoutKey];

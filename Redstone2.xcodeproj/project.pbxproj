@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D56CFCA1F06286A009E3070 /* RSStartScreenScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D56CFC91F06286A009E3070 /* RSStartScreenScrollView.m */; };
 		8D63E36E1F04D91F00FC242C /* RSTiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D63E36D1F04D91F00FC242C /* RSTiltView.m */; };
 		8D9EDACE1F02FE6900C97EEA /* Redstone2_Core.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */; };
 		8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EDAD21F02FFCD00C97EEA /* RSCore.m */; };
@@ -19,11 +20,15 @@
 		8DC97C621F039C94004A75CB /* RSHomeScreenScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C611F039C94004A75CB /* RSHomeScreenScrollView.m */; };
 		8DC97C661F039D1A004A75CB /* RSStartScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C651F039D1A004A75CB /* RSStartScreenController.m */; };
 		8DCB95401EFE4A9900C0038F /* Redstone2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DCB953F1EFE4A9900C0038F /* Redstone2.plist */; };
+		8DDC17E01F0581E500C57D6E /* control in Resources */ = {isa = PBXBuildFile; fileRef = 8DDC17DF1F0581E500C57D6E /* control */; };
+		8DDC17E81F059D8D00C57D6E /* UIView+Easing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DDC17E71F059D8D00C57D6E /* UIView+Easing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8D34D12F1EFDC8F700B2D634 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		8D34D13F1EFDD28700B2D634 /* hiddenapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hiddenapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D56CFC81F06286A009E3070 /* RSStartScreenScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSStartScreenScrollView.h; sourceTree = "<group>"; };
+		8D56CFC91F06286A009E3070 /* RSStartScreenScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSStartScreenScrollView.m; sourceTree = "<group>"; };
 		8D63E36C1F04D91F00FC242C /* RSTiltView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSTiltView.h; sourceTree = "<group>"; };
 		8D63E36D1F04D91F00FC242C /* RSTiltView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTiltView.m; sourceTree = "<group>"; };
 		8D9EDAC81F02FDFA00C97EEA /* Redstone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Redstone.h; sourceTree = "<group>"; };
@@ -52,6 +57,9 @@
 		8DC97C641F039D1A004A75CB /* RSStartScreenController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSStartScreenController.h; sourceTree = "<group>"; };
 		8DC97C651F039D1A004A75CB /* RSStartScreenController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSStartScreenController.m; sourceTree = "<group>"; };
 		8DCB953F1EFE4A9900C0038F /* Redstone2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Redstone2.plist; sourceTree = "<group>"; };
+		8DDC17DF1F0581E500C57D6E /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
+		8DDC17E61F059D8D00C57D6E /* UIView+Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Easing.h"; sourceTree = "<group>"; };
+		8DDC17E71F059D8D00C57D6E /* UIView+Easing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Easing.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,12 +84,14 @@
 		8D34D12E1EFDC8DD00B2D634 /* Redstone2 */ = {
 			isa = PBXGroup;
 			children = (
+				8DDC17DF1F0581E500C57D6E /* control */,
 				8D34D12F1EFDC8F700B2D634 /* Makefile */,
 				8DCB953F1EFE4A9900C0038F /* Redstone2.plist */,
 				8D9EDAC81F02FDFA00C97EEA /* Redstone.h */,
 				8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */,
 				8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */,
 				8D9EDACA1F02FE1C00C97EEA /* headers */,
+				8DDC17E51F059D7200C57D6E /* Libraries */,
 				8D9EDAD01F02FF4A00C97EEA /* Core */,
 				8D63E36B1F04D86E00FC242C /* UI */,
 				8D9EDAD41F0301AC00C97EEA /* HomeScreen */,
@@ -160,6 +170,8 @@
 			children = (
 				8DC97C641F039D1A004A75CB /* RSStartScreenController.h */,
 				8DC97C651F039D1A004A75CB /* RSStartScreenController.m */,
+				8D56CFC81F06286A009E3070 /* RSStartScreenScrollView.h */,
+				8D56CFC91F06286A009E3070 /* RSStartScreenScrollView.m */,
 				8DB985A41F04630400CD1AEB /* RSTile.h */,
 				8DB985A51F04630400CD1AEB /* RSTile.m */,
 			);
@@ -172,6 +184,16 @@
 			);
 			path = "App Switcher";
 			sourceTree = "<group>";
+		};
+		8DDC17E51F059D7200C57D6E /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				8DDC17E61F059D8D00C57D6E /* UIView+Easing.h */,
+				8DDC17E71F059D8D00C57D6E /* UIView+Easing.m */,
+			);
+			name = Libraries;
+			path = Redstone2/Libraries;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -189,6 +211,20 @@
 			name = Build;
 			passBuildSettingsInEnvironment = 1;
 			productName = Redstone2;
+		};
+		8DDC17E11F05845E00C57D6E /* Install */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = do;
+			buildConfigurationList = 8DDC17E21F05845E00C57D6E /* Build configuration list for PBXLegacyTarget "Install" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "$(PROJECT_DIR)/$(PROJECT_NAME)";
+			dependencies = (
+			);
+			name = Install;
+			passBuildSettingsInEnvironment = 1;
+			productName = Install;
 		};
 /* End PBXLegacyTarget section */
 
@@ -225,6 +261,10 @@
 					8D34D13E1EFDD28700B2D634 = {
 						CreatedOnToolsVersion = 9.0;
 					};
+					8DDC17E11F05845E00C57D6E = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 8D34D1231EFDC71200B2D634 /* Build configuration list for PBXProject "Redstone2" */;
@@ -242,6 +282,7 @@
 			targets = (
 				8D34D13E1EFDD28700B2D634 /* hiddenapp */,
 				8D34D1241EFDC71200B2D634 /* Build */,
+				8DDC17E11F05845E00C57D6E /* Install */,
 			);
 		};
 /* End PBXProject section */
@@ -251,6 +292,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DDC17E01F0581E500C57D6E /* control in Resources */,
 				8D9EDACE1F02FE6900C97EEA /* Redstone2_Core.xm in Resources */,
 				8DCB95401EFE4A9900C0038F /* Redstone2.plist in Resources */,
 				8DC97C5A1F0382E6004A75CB /* Redstone2_HomeScreen.xm in Resources */,
@@ -267,6 +309,8 @@
 				8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */,
 				8D63E36E1F04D91F00FC242C /* RSTiltView.m in Sources */,
 				8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */,
+				8DDC17E81F059D8D00C57D6E /* UIView+Easing.m in Sources */,
+				8D56CFCA1F06286A009E3070 /* RSStartScreenScrollView.m in Sources */,
 				8DB985A31F04600C00CD1AEB /* RSAesthetics.m in Sources */,
 				8DB9859C1F03CC8E00CD1AEB /* RSMetrics.m in Sources */,
 				8D9EDAD71F0302A600C97EEA /* RSPreferences.m in Sources */,
@@ -432,6 +476,41 @@
 			};
 			name = Release;
 		};
+		8DDC17E31F05845E00C57D6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SYSROOT = "$(THEOS)/sdks/iPhoneOS10.1.sdk";
+				TARGET = "iphone:latest";
+				THEOS = /opt/theos/;
+			};
+			name = Debug;
+		};
+		8DDC17E41F05845E00C57D6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SYSROOT = "$(THEOS)/sdks/iPhoneOS10.1.sdk";
+				TARGET = "iphone:latest";
+				THEOS = /opt/theos/;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -458,6 +537,15 @@
 			buildConfigurations = (
 				8D34D1541EFDD28700B2D634 /* Debug */,
 				8D34D1551EFDD28700B2D634 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8DDC17E21F05845E00C57D6E /* Build configuration list for PBXLegacyTarget "Install" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DDC17E31F05845E00C57D6E /* Debug */,
+				8DDC17E41F05845E00C57D6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

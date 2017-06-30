@@ -12,6 +12,9 @@ TWEAK_NAME=Redstone2
 Redstone2_CFLAGS = -fobjc-arc
 Redstone2_FILES = Redstone2_Core.xm Redstone2_HomeScreen.xm
 
+# Libraries
+Redstone2_FILES += Libraries/UIView+Easing.m
+
 # Core
 Redstone2_FILES += Core/RSCore.m Core/RSPreferences.m Core/RSMetrics.m Core/RSAesthetics.m
 
@@ -25,7 +28,7 @@ Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenSc
 # Redstone2_FILES +=
 
 # Start Screen
-Redstone2_FILES += StartScreen/RSStartScreenController.m StartScreen/RSTile.m
+Redstone2_FILES += StartScreen/RSStartScreenController.m StartScreen/RSStartScreenScrollView.m StartScreen/RSTile.m
 
 include $(THEOS)/makefiles/tweak.mk
 
@@ -35,4 +38,9 @@ after-all::
 	@cp $(THEOS_OBJ_DIR)/$(PROJECT_NAME).dylib /opt/simject
 	@cp $(PROJECT_NAME).plist /opt/simject
 #	@~/Documents/Xcode/simject/bin/respring_simulator
+endif
+
+ifeq ($(THEOS_TARGET_NAME),iphone)
+after-install::
+	install.exec "killall -9 SpringBoard"
 endif

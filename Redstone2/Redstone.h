@@ -30,6 +30,9 @@
 #define kRSP2ColumnLayoutKey @"2ColumnLayout"
 #define kRSP3ColumnLayoutKey @"3ColumnLayout"
 
+#pragma mark Libraries
+#import "Libraries/UIView+Easing.h"
+
 #pragma mark Core
 #import "Core/RSCore.h"
 #import "Core/RSPreferences.h"
@@ -45,6 +48,7 @@
 
 #pragma mark App Switcher
 #import "StartScreen/RSStartScreenController.h"
+#import "StartScreen/RSStartScreenScrollView.h"
 #import "StartScreen/RSTile.h"
 
 static RSCore* redstone;

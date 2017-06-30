@@ -16,6 +16,14 @@
  */
 + (UIColor*)accentColor;
 
+
+/**
+ Returns the currently selected tile opacity
+
+ @return The currently selected tile opacity
+ */
++ (CGFloat)tileOpacity;
+
 /**
  Returns the colors for a specified theme name \p themeName as a dictionary
 
