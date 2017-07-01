@@ -9,6 +9,8 @@
 @interface RSLaunchScreenController : NSObject {
 	UIWindow* window;
 	UIImageView* launchImageView;
+	
+	UIImageView* applicationSnapshot;
 }
 
 @property (nonatomic, strong) NSString* launchIdentifier;
@@ -19,5 +21,7 @@
 - (void)animateIn;
 
 - (void)animateOut;
+
+- (void)animateCurrentApplicationSnapshot;
 
 @end

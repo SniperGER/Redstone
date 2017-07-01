@@ -17,4 +17,6 @@
 @property (nonatomic, strong) UILabel* titleLabel;
 @property (nonatomic, assign) BOOL isButton;
 
+- (void)untilt;
+
 @end

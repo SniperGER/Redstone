@@ -18,7 +18,6 @@
 	RSHomeScreenScrollView* scrollView;
 }
 
-
 /**
  Returns a global instance of \p RSHomeScreenController
  
@@ -26,6 +25,7 @@
  */
 + (id)sharedInstance;
 
+- (void)setParallaxPosition;
 
 /**
  Enables or disables the scrolling behavior of the Home Screen Controller scroll view

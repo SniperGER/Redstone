@@ -3,6 +3,7 @@
 @implementation RSLaunchScreenController
 
 static RSLaunchScreenController* sharedInstance;
+UIImage* _UICreateScreenUIImage();
 
 + (id)sharedInstance {
 	return sharedInstance;
@@ -18,6 +19,10 @@ static RSLaunchScreenController* sharedInstance;
 		
 		launchImageView = [UIImageView new];
 		[window addSubview:launchImageView];
+		
+		applicationSnapshot = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+		[applicationSnapshot setHidden:YES];
+		[window addSubview:applicationSnapshot];
 	}
 	
 	return self;
@@ -49,6 +54,11 @@ static RSLaunchScreenController* sharedInstance;
 	[window makeKeyAndVisible];
 	[window setAlpha:0];
 	[window setHidden:NO];
+	
+	[launchImageView setHidden:NO];
+	
+	[applicationSnapshot setImage:nil];
+	[applicationSnapshot setHidden:YES];
 	
 	[window.layer removeAllAnimations];
 	[launchImageView.layer removeAllAnimations];
@@ -85,6 +95,41 @@ static RSLaunchScreenController* sharedInstance;
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
 	[window.layer addAnimation:opacity forKey:@"opacity"];
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[window setHidden:YES];
+	});
+}
+
+- (void)animateCurrentApplicationSnapshot {
+	[applicationSnapshot setImage:_UICreateScreenUIImage()];
+	[applicationSnapshot setHidden:NO];
+	
+	[window setBackgroundColor:[UIColor clearColor]];
+	[launchImageView setHidden:YES];
+	
+	[window makeKeyAndVisible];
+	[window setAlpha:0];
+	[window setHidden:NO];
+	
+	CAAnimation *opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
+															function:CubicEaseInOut
+														   fromValue:1.0
+															 toValue:0.0];
+	opacity.duration = 0.225;
+	opacity.removedOnCompletion = NO;
+	opacity.fillMode = kCAFillModeForwards;
+	
+	CAAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
+														  function:CubicEaseInOut
+														 fromValue:1.0
+														   toValue:1.5];
+	scale.duration = 0.25;
+	scale.removedOnCompletion = NO;
+	scale.fillMode = kCAFillModeForwards;
+	
+	[window.layer addAnimation:opacity forKey:@"opacity"];
+	[window.layer addAnimation:scale forKey:@"scale"];
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[window setHidden:YES];

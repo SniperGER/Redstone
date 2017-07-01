@@ -8,12 +8,17 @@
 		[self setDelaysContentTouches:NO];
 		[self setContentInset:UIEdgeInsetsMake(24, 0, 70, 0)];
 		[self setContentOffset:CGPointMake(0, -24)];
+		[self setDelegate:self];
 		
 		[self setShowsVerticalScrollIndicator:NO];
 		[self setShowsHorizontalScrollIndicator:NO];
 	}
 	
 	return self;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	[[RSHomeScreenController sharedInstance] setParallaxPosition];
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {

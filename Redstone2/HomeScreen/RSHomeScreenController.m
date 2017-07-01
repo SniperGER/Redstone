@@ -20,7 +20,7 @@ static RSHomeScreenController* sharedInstance;
 		[window setWindowLevel:-2];
 		[window makeKeyAndVisible];
 		
-		wallpaperView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+		wallpaperView = [[UIImageView alloc] initWithFrame:CGRectMake(-100, -100, screenWidth+200, screenHeight+200)];
 		[wallpaperView setContentMode:UIViewContentModeScaleAspectFill];
 		[wallpaperView setImage:[RSAesthetics homeScreenWallpaper]];
 		[window addSubview:wallpaperView];
@@ -33,6 +33,11 @@ static RSHomeScreenController* sharedInstance;
 	}
 	
 	return self;
+}
+
+- (void)setParallaxPosition {
+	CGFloat position = (([(UIScrollView*)startScreenController.view contentOffset].y - 0) / [(UIScrollView*)startScreenController.view contentSize].height) * 200;
+	[wallpaperView setTransform:CGAffineTransformMakeTranslation(0, -position)];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)_scrollView {

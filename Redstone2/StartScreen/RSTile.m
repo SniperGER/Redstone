@@ -111,9 +111,10 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		}
 	} else {
+		[self setUserInteractionEnabled:NO];
+		[self setTransform:CGAffineTransformIdentity];
 		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[self.icon applicationBundleID]];
 		[[objc_getClass("SBIconController") sharedInstance] _launchIcon:self.icon];
-		//[[RSLaunchScreenController sharedInstance] animateIn];
 	}
 }
 

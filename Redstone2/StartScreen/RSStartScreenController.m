@@ -296,7 +296,7 @@ static RSStartScreenController* sharedInstance;
 
 - (void)animateIn {
 	// App to Home Screen
-	
+	[self.view setUserInteractionEnabled:NO];
 	[(UIScrollView*)self.view setContentOffset:CGPointMake(0, -24)];
 	
 	NSMutableArray* appsInView = [NSMutableArray new];
@@ -354,8 +354,6 @@ static RSStartScreenController* sharedInstance;
 		CGFloat layerX = -(tile.basePosition.origin.x - CGRectGetMidX(self.view.bounds))/tile.basePosition.size.width;
 		CGFloat layerY = -(tile.basePosition.origin.y - CGRectGetMidY(self.view.bounds))/tile.basePosition.size.height;
 		
-		NSLog(@"[Redstone] [%@] %f, %f", NSStringFromCGRect(tile.basePosition), layerX, layerY);
-		
 		int tileX = tile.basePosition.origin.x / sizeForPosition;
 		int tileY = tile.basePosition.origin.y / sizeForPosition;
 		CGFloat delay = (tileX * 0.01) + (tileY - minY) * 0.01;
@@ -372,7 +370,10 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[self.view setUserInteractionEnabled:YES];
 		for (RSTile* tile in pinnedTiles) {
+			[tile setTiltEnabled:YES];
+			[tile setUserInteractionEnabled:YES];
 			[tile.layer removeAllAnimations];
 			[tile.layer setOpacity:1];
 			[tile setAlpha:1.0];
@@ -387,13 +388,17 @@ static RSStartScreenController* sharedInstance;
 
 - (void)animateOut {
 	// Home Screen to App
+	[self.view setUserInteractionEnabled:NO];
 	RSTile* sender = [self tileForLeafIdentifier:[[RSLaunchScreenController sharedInstance] launchIdentifier]];
 	
 	NSMutableArray* appsInView = [NSMutableArray new];
 	NSMutableArray* appsNotInView = [NSMutableArray new];
 	
 	for (RSTile* tile in pinnedTiles) {
+		[tile setTiltEnabled:NO];
 		[tile.layer removeAllAnimations];
+		[tile setTransform:CGAffineTransformIdentity];
+		
 		if (CGRectIntersectsRect(self.view.bounds, tile.basePosition)) {
 			[appsInView addObject:tile];
 		} else {
@@ -452,6 +457,7 @@ static RSStartScreenController* sharedInstance;
 		[tile.layer setAnchorPoint:CGPointMake(layerX, layerY)];
 		
 		if (tile == sender) {
+			[self.view sendSubviewToBack:tile];
 			[scale setBeginTime:CACurrentMediaTime() + delay + 0.1];
 			[opacity setBeginTime:CACurrentMediaTime() + delay + 0.1];
 		} else {
@@ -464,6 +470,7 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[self.view setUserInteractionEnabled:YES];
 		for (RSTile* tile in pinnedTiles) {
 			[tile.layer setOpacity:0];
 			[tile.layer removeAllAnimations];

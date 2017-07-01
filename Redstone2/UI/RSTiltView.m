@@ -35,18 +35,25 @@
 		return;
 	}
 	
-	[UIView animateWithDuration:.15 animations:^{
-		if (self.tiltEnabled) {
-			[self.layer setTransform:CATransform3DIdentity];
-		}
-		
-		if (self.highlightEnabled) {
-			[self setBackgroundColor:[UIColor clearColor]];
-		}
-	} completion:^(BOOL finished) {
-		isTilted = NO;
-		isHighlighted = NO;
-	}];
+	if (isTilted || isHighlighted) {
+		[UIView animateWithDuration:.15 animations:^{
+			if (self.tiltEnabled && isTilted) {
+				[self.layer setTransform:CATransform3DIdentity];
+			}
+			
+			if (self.highlightEnabled && isHighlighted) {
+				[self setBackgroundColor:[UIColor clearColor]];
+			}
+		} completion:^(BOOL finished) {
+			isTilted = NO;
+			isHighlighted = NO;
+		}];
+	} else {
+		[self.layer setTransform:CATransform3DIdentity];
+	}
+	
+	isTilted = NO;
+	isHighlighted = NO;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
