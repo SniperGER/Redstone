@@ -31,6 +31,14 @@ int columns = 3;
 }
 
 + (CGSize)tileIconDimensionsForSize:(NSInteger)size {
+	CGSize tileSize = [self tileDimensionsForSize:size];
+	
+	if (size == 1) {
+		return CGSizeMake(tileSize.height * 0.5, tileSize.height * 0.5);
+	} else if (size == 2 || size == 3 || size == 4) {
+		return CGSizeMake(tileSize.height * 0.33333, tileSize.height * 0.33333);
+	}
+	
 	return CGSizeZero;
 }
 

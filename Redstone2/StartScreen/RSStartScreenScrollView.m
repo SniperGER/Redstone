@@ -8,6 +8,9 @@
 		[self setDelaysContentTouches:NO];
 		[self setContentInset:UIEdgeInsetsMake(24, 0, 70, 0)];
 		[self setContentOffset:CGPointMake(0, -24)];
+		
+		[self setShowsVerticalScrollIndicator:NO];
+		[self setShowsHorizontalScrollIndicator:NO];
 	}
 	
 	return self;

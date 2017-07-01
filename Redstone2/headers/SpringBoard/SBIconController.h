@@ -6,5 +6,6 @@
 
 + (id)sharedInstance;
 - (SBIconModel*)model;
+- (void)_launchIcon:(id)arg1;
 
 @end

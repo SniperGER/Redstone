@@ -37,6 +37,7 @@
  */
 - (void)saveTiles;
 
+- (RSTile*)tileForLeafIdentifier:(NSString*)leafIdentifier;
 
 /**
  Enable/disable Start Screen's editing mode. Does not automatically set the originating tile as selected
@@ -54,5 +55,11 @@
 - (void)setSelectedTile:(RSTile*)selectedTile;
 
 - (void)snapTile:(RSTile*)tile withTouchPosition:(CGPoint)touchPosition;
+
+- (CGFloat)getMaxDelayForAnimation;
+
+- (void)animateIn;
+
+- (void)animateOut;
 
 @end

@@ -32,6 +32,9 @@
 
 #pragma mark Libraries
 #import "Libraries/UIView+Easing.h"
+#import "Libraries/UIFont+WDCustomLoader.h"
+#import "Libraries/CAKeyframeAnimation+AHEasing.h"
+#import "Libraries/easing.h"
 
 #pragma mark Core
 #import "Core/RSCore.h"
@@ -47,9 +50,15 @@
 #import "HomeScreen/RSHomeScreenScrollView.h"
 
 #pragma mark App Switcher
+
+#pragma mark Start Screen
 #import "StartScreen/RSStartScreenController.h"
 #import "StartScreen/RSStartScreenScrollView.h"
 #import "StartScreen/RSTile.h"
+#import "StartScreen/RSTileInfo.h"
+
+#pragma mark Launch Screen
+#import "LaunchScreen/RSLaunchScreenController.h"
 
 static RSCore* redstone;
 static RSPreferences* redstonePreferences;

@@ -4,9 +4,58 @@
 
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafIdentifier size:(int)size {
 	if (self = [super initWithFrame:frame]) {
-		[self setBackgroundColor:[[RSAesthetics accentColor] colorWithAlphaComponent:[RSAesthetics tileOpacity]]];
+		self.size = size;
+		self.icon = [[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafIdentifier];
+		self.tileInfo = [[RSTileInfo alloc] initWithBundleIdentifier:leafIdentifier];
+		self.originalCenter = self.center;
 		
-		// GESTURE RECOGNIZERS
+		[self setBackgroundColor:[RSAesthetics accentColorForTile:self.tileInfo]];
+		
+		tileWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+		[tileWrapper setClipsToBounds:YES];
+		[self addSubview:tileWrapper];
+		
+		tileContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+		[tileWrapper addSubview:tileContainer];
+		
+		// Title Label
+		[[self titleLabel] removeFromSuperview];
+		tileLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, self.frame.size.height - 28, self.frame.size.width - 16, 20)];
+		[tileLabel setFont:[UIFont fontWithName:@"SegoeUI" size:14]];
+		[tileLabel setTextAlignment:NSTextAlignmentLeft];
+		[tileLabel setTextColor:[RSAesthetics readableForegroundColorForBackgroundColor:self.backgroundColor]];
+		[tileContainer addSubview:tileLabel];
+		
+		if (self.tileInfo.localizedDisplayName) {
+			[tileLabel setText:self.tileInfo.localizedDisplayName];
+		} else if (self.tileInfo.displayName) {
+			[tileLabel setText:self.tileInfo.displayName];
+		} else {
+			[tileLabel setText:[self.icon displayName]];
+		}
+		
+		if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
+			[tileLabel setHidden:YES];
+		} else {
+			[tileLabel setHidden:NO];
+		}
+		
+		// Tile Icon
+		if (self.tileInfo.fullSizeArtwork) {
+			tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[self.icon applicationBundleID] size:self.size colored:YES]];
+			[tileContainer addSubview:tileImageView];
+		} else {
+			CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:size];
+			tileImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
+			[tileImageView setCenter:CGPointMake(frame.size.width/2, frame.size.height/2)];
+			
+			[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[self.icon applicationBundleID] size:5 colored:self.tileInfo.hasColoredIcon]];
+			[tileImageView setTintColor:[UIColor whiteColor]];
+			[tileContainer addSubview:tileImageView];
+		}
+		
+		// Gesture Recognizers
 		longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressed:)];
 		[longPressGestureRecognizer setMinimumPressDuration:0.5];
 		[longPressGestureRecognizer setCancelsTouchesInView:NO];
@@ -61,6 +110,10 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		} else {
 			[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		}
+	} else {
+		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[self.icon applicationBundleID]];
+		[[objc_getClass("SBIconController") sharedInstance] _launchIcon:self.icon];
+		//[[RSLaunchScreenController sharedInstance] animateIn];
 	}
 }
 

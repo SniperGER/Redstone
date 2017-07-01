@@ -6,13 +6,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class RSStartScreenController, RSAppListController, RSHomeScreenScrollView;
+@class RSStartScreenController, RSAppListController, RSLaunchScreenController, RSHomeScreenScrollView;
 
 @interface RSHomeScreenController : NSObject <UIScrollViewDelegate> {
 	RSStartScreenController* startScreenController;
 	RSAppListController* appListController;
+	RSLaunchScreenController* launchScreenController;
 	
 	UIWindow* window;
+	UIImageView* wallpaperView;
 	RSHomeScreenScrollView* scrollView;
 }
 

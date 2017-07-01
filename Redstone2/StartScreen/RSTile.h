@@ -6,7 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class RSTiltView;
+@class RSTiltView, SBLeafIcon, RSTileInfo;
 
 @interface RSTile : RSTiltView <UIGestureRecognizerDelegate> {
 	UITapGestureRecognizer* tapGestureRecognizer;
@@ -15,9 +15,19 @@
 	
 	BOOL panEnabled;
 	CGPoint centerOffset;
+	
+	UIView* tileWrapper;
+	UIView* tileContainer;
+	
+	UILabel* tileLabel;
+	UIImageView* tileImageView;
 }
 
+@property (nonatomic, assign) int size;
+@property (nonatomic, strong) SBLeafIcon* icon;
+@property (nonatomic, strong) RSTileInfo* tileInfo;
 @property (nonatomic, assign) BOOL isSelectedTile;
+@property (nonatomic, assign) CGPoint originalCenter;
 
 /**
  Initializes a tile with a given frame, application identifier and size index

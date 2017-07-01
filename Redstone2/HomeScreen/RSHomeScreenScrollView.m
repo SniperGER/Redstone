@@ -8,7 +8,7 @@
 		[self setPagingEnabled:YES];
 		[self setBounces:NO];
 		[self setShowsVerticalScrollIndicator:NO];
-		[self setShowsHorizontalScrollIndicator:YES];
+		[self setShowsHorizontalScrollIndicator:NO];
 	}
 	
 	return self;

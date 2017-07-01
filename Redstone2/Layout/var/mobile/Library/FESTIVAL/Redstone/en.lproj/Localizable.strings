@@ -1,0 +1,26 @@
+/* App List */
+"SEARCH" = "Search";
+"PIN_TO_START" = "Pin to Start";
+"UNINSTALL" = "Uninstall";
+"NO_RESULTS_FOUND" = "No results for %@";
+"ALL_APPS" = "All apps";
+
+/* Media Controls */
+"MEDIA_UNKNOWN_TITLE" = "Unknown Title";
+"MEDIA_UNKNOWN_ARTIST" = "Unknown Artist";
+"MEDIA_UNKNOWN_ALBUM" = "Unknown Album";
+
+/* Lock Screen */
+"PASSCODE_ENTER_PIN" = "Enter PIN";
+"PASSCODE_INVALID_PIN" = "Invalid PIN";
+"PASSCODE_INVALID_MESA" = "try again";
+
+/* Volume Controls */
+"RINGER_VOLUME_ENABLED" = "Ringer + Notifications";
+"RINGER_VOLUME_VIBRATION" = "Vibrate";
+"MEDIA_VOLUME" = "Media + Apps";
+"HEADPHONE_VOLUME" = "Headphones";
+"VIBRATE_ENABLED" = "Vibrate on";
+"VIBRATE_DISABLED" = "Vibrate off";
+"RINGER_ENABLED" = "Ringer on";
+"RINGER_DISABLED" = "Ringer off";

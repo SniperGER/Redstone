@@ -1,0 +1,26 @@
+/* App List */
+"SEARCH" = "Suchen";
+"PIN_TO_START" = "Auf Startseite anheften";
+"UNINSTALL" = "Deinstallieren";
+"NO_RESULTS_FOUND" = "Keine Ergebnisse für %@ gefunden.";
+"ALL_APPS" = "Alle Apps";
+
+/* Media Controls */
+"MEDIA_UNKNOWN_TITLE" = "Unbekannter Titel";
+"MEDIA_UNKNOWN_ARTIST" = "Unbekannter Künstler";
+"MEDIA_UNKNOWN_ALBUM" = "Unbekanntes Album";
+
+/* Lock Screen */
+"PASSCODE_ENTER_PIN" = "PIN eingeben";
+"PASSCODE_INVALID_PIN" = "Ungültige PIN";
+"PASSCODE_INVALID_MESA" = "Wiederholen";
+
+/* Volume Controls */
+"RINGER_VOLUME_ENABLED" = "Klingeln + Benachrichtigungen";
+"RINGER_VOLUME_VIBRATION" = "Vibrieren";
+"MEDIA_VOLUME" = "Medien + Apps";
+"HEADPHONE_VOLUME" = "Kopfhörer";
+"VIBRATE_ENABLED" = "Vibrieren ein";
+"VIBRATE_DISABLED" = "Vibrieren aus";
+"RINGER_ENABLED" = "Klingeln ein";
+"RINGER_DISABLED" = "Klingeln aus";

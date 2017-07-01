@@ -10,10 +10,11 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME=Redstone2
 Redstone2_CFLAGS = -fobjc-arc
+Redstone2_PRIVATE_FRAMEWORKS = AppSupport
 Redstone2_FILES = Redstone2_Core.xm Redstone2_HomeScreen.xm
 
 # Libraries
-Redstone2_FILES += Libraries/UIView+Easing.m
+Redstone2_FILES += Libraries/UIView+Easing.m Libraries/UIFont+WDCustomLoader.m Libraries/CAKeyframeAnimation+AHEasing.m Libraries/easing.c
 
 # Core
 Redstone2_FILES += Core/RSCore.m Core/RSPreferences.m Core/RSMetrics.m Core/RSAesthetics.m
@@ -28,7 +29,10 @@ Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenSc
 # Redstone2_FILES +=
 
 # Start Screen
-Redstone2_FILES += StartScreen/RSStartScreenController.m StartScreen/RSStartScreenScrollView.m StartScreen/RSTile.m
+Redstone2_FILES += StartScreen/RSStartScreenController.m StartScreen/RSStartScreenScrollView.m StartScreen/RSTile.m StartScreen/RSTileInfo.m
+
+# Launch Screen
+Redstone2_FILES += LaunchScreen/RSLaunchScreenController.m
 
 include $(THEOS)/makefiles/tweak.mk
 
