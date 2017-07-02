@@ -884,6 +884,7 @@
 		8D56D7141F08BE44009E3070 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		8D56D7161F08BE7E009E3070 /* Tweak.xm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tweak.xm; sourceTree = "<group>"; };
 		8D56D7181F08BED0009E3070 /* Redstone2_UIKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Redstone2_UIKit.plist; sourceTree = "<group>"; };
+		8D56D71C1F099CC1009E3070 /* SBApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBApplication.h; sourceTree = "<group>"; };
 		8D63E36C1F04D91F00FC242C /* RSTiltView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSTiltView.h; sourceTree = "<group>"; };
 		8D63E36D1F04D91F00FC242C /* RSTiltView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTiltView.m; sourceTree = "<group>"; };
 		8D9EDAC81F02FDFA00C97EEA /* Redstone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Redstone.h; sourceTree = "<group>"; };
@@ -2132,6 +2133,7 @@
 				8DB9859F1F03DCC400CD1AEB /* SBLeafIcon.h */,
 				8DC97C5E1F038A82004A75CB /* SBUIAnimationZoomApp.h */,
 				8DC97C581F03190D004A75CB /* SBUIController.h */,
+				8D56D71C1F099CC1009E3070 /* SBApplication.h */,
 			);
 			path = SpringBoard;
 			sourceTree = "<group>";

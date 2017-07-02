@@ -90,7 +90,7 @@
 		[unpinLabel setTextAlignment:NSTextAlignmentCenter];
 		[unpinButton addSubview:unpinLabel];
 		
-		unpinGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(unpin:)];
+		unpinGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(unpin)];
 		[unpinButton addGestureRecognizer:unpinGestureRecognizer];
 		
 		scaleButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
@@ -147,7 +147,6 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		}
 	} else {
-		[self setUserInteractionEnabled:NO];
 		[self setTransform:CGAffineTransformIdentity];
 		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[self.icon applicationBundleID]];
 		[[objc_getClass("SBIconController") sharedInstance] _launchIcon:self.icon];
@@ -187,6 +186,27 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		
 		[[RSStartScreenController sharedInstance] snapTile:self withTouchPosition:self.center];
 	}
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+	if (self.isSelectedTile) {
+		if (CGRectContainsPoint(unpinButton.frame, point)) {
+			
+			[tapGestureRecognizer setEnabled:NO];
+			[panGestureRecognizer setEnabled:NO];
+			return unpinButton;
+		} else if (CGRectContainsPoint(scaleButton.frame, point)) {
+			
+			[tapGestureRecognizer setEnabled:NO];
+			[panGestureRecognizer setEnabled:NO];
+			return scaleButton;
+		}
+	}
+	
+	[tapGestureRecognizer setEnabled:YES];
+	[panGestureRecognizer setEnabled:YES];
+	
+	return [super hitTest:point withEvent:event];
 }
 
 #pragma mark Editing Mode
@@ -247,11 +267,72 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 }
 
 - (void)unpin {
-	
+	[[RSStartScreenController sharedInstance] unpinTile:self];
 }
 
 - (void)setNextSize {
+	switch (self.size) {
+		case 1:
+			self.size = 3;
+			break;
+		case 2:
+			self.size = 1;
+			break;
+		case 3:
+			self.size = 2;
+			break;
+		default: break;
+	}
 	
+	CGSize newTileSize = [RSMetrics tileDimensionsForSize:self.size];
+	CGFloat step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
+	
+	CGFloat maxPositionX = [[RSStartScreenController sharedInstance] view].bounds.size.width - newTileSize.width;
+	CGFloat maxPositionY = [(UIScrollView*)[[RSStartScreenController sharedInstance] view] contentSize].height + [RSMetrics tileBorderSpacing];
+	
+	CGRect newFrame = CGRectMake(MIN(MAX(step * roundf((self.basePosition.origin.x / step)), 0), maxPositionX),
+								 MIN(MAX(step * roundf((self.basePosition.origin.y / step)), 0), maxPositionY),
+								 newTileSize.width,
+								 newTileSize.height);
+	
+	CGAffineTransform currentTransform = self.transform;
+	
+	[self setTransform:CGAffineTransformIdentity];
+	[self setFrame:newFrame];
+	[self setTransform:currentTransform];
+	
+	[tileWrapper setFrame:CGRectMake(0, 0, newFrame.size.width, newFrame.size.height)];
+	
+	/// TODO: Live Tile
+	
+	if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
+		[tileLabel setHidden:YES];
+	} else {
+		[tileLabel setHidden:NO];
+		[tileLabel setFrame:CGRectMake(8,
+									   newFrame.size.height - tileLabel.frame.size.height - 8,
+									   tileLabel.frame.size.width,
+									   tileLabel.frame.size.height)];
+	}
+	
+	if (self.tileInfo.fullSizeArtwork) {
+		[tileImageView setFrame:CGRectMake(0, 0, newFrame.size.width, newFrame.size.height)];
+		[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[self.icon applicationBundleID] size:self.size colored:YES]];
+	} else {
+		CGSize tileImageSize = [RSMetrics tileIconDimensionsForSize:self.size];
+		[tileImageView setFrame:CGRectMake(0, 0, tileImageSize.width, tileImageSize.height)];
+		[tileImageView setCenter:CGPointMake(newFrame.size.width/2, newFrame.size.height/2)];
+		
+		[tileImageView setImage:[RSAesthetics getImageForTileWithBundleIdentifier:[self.icon applicationBundleID] size:self.size colored:self.tileInfo.hasColoredIcon]];
+		[tileImageView setTintColor:[UIColor whiteColor]];
+	}
+	
+	[unpinButton setCenter:CGPointMake(newFrame.size.width, 0)];
+	[scaleButton setCenter:CGPointMake(newFrame.size.width, newFrame.size.height)];
+	
+	[scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
+	
+	[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
 }
 
 - (CGFloat)scaleButtonRotationForCurrentSize {

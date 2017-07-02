@@ -17,6 +17,9 @@
 @property (nonatomic, strong) UILabel* titleLabel;
 @property (nonatomic, assign) BOOL isButton;
 
+/**
+ Removes transform and highlight of a tilted view
+ */
 - (void)untilt;
 
 @end

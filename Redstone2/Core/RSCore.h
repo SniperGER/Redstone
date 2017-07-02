@@ -6,7 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class RSHomeScreenController, RSLockScreenController, RSNotificationController, RSSoundController;
+@class RSHomeScreenController, RSLockScreenController, RSNotificationController, RSSoundController, SBApplication;
 
 @interface RSCore : NSObject {
 	UIWindow* homeScreenWindow;
@@ -17,6 +17,8 @@
 	RSSoundController* soundController;
 }
 
++ (id)sharedInstance;
+
 /**
  Initializes Redstone's core component
  
@@ -24,5 +26,9 @@
  @return An instance of Redstone
  */
 - (id)initWithWindow:(UIWindow*)window;
+
+- (void)frontDisplayDidChange:(SBApplication*)application;
+
+- (SBApplication*)currentApplication;
 
 @end

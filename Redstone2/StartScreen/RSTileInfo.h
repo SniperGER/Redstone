@@ -23,6 +23,12 @@
 @property (nonatomic, readonly) NSDictionary* labelHiddenForSizes;
 @property (nonatomic, readonly) NSDictionary* cornerBadgeForSizes;
 
+/**
+ Initializes a tile info object for \p bundleIdentifier
+
+ @param bundleIdentifier The bundle identifier to load tile info for
+ @return An instance of RSTileInfo with read-only properties
+ */
 - (id)initWithBundleIdentifier:(NSString*)bundleIdentifier;
 
 @end

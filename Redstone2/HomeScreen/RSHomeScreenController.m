@@ -16,18 +16,18 @@ static RSHomeScreenController* sharedInstance;
 		//appListController = [RSAppListController new];
 		launchScreenController = [RSLaunchScreenController new];
 		
-		window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
-		[window setWindowLevel:-2];
-		[window makeKeyAndVisible];
+		self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+		[self.window setWindowLevel:-2];
+		[self.window makeKeyAndVisible];
 		
 		wallpaperView = [[UIImageView alloc] initWithFrame:CGRectMake(-100, -100, screenWidth+200, screenHeight+200)];
 		[wallpaperView setContentMode:UIViewContentModeScaleAspectFill];
 		[wallpaperView setImage:[RSAesthetics homeScreenWallpaper]];
-		[window addSubview:wallpaperView];
+		[self.window addSubview:wallpaperView];
 		
 		scrollView = [[RSHomeScreenScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[scrollView setDelegate:self];
-		[window addSubview:scrollView];
+		[self.window addSubview:scrollView];
 		
 		[scrollView addSubview:startScreenController.view];
 	}

@@ -11,6 +11,14 @@
 
 %hook SpringBoard
 
+- (void)frontDisplayDidChange:(id)arg1 {
+	%orig(arg1);
+	%log;
+	
+	NSLog(@"[Redstone] %@", [RSCore sharedInstance]);
+	[[RSCore sharedInstance] frontDisplayDidChange:arg1];
+}
+
 - (long long) homeScreenRotationStyle {
 	return 0;
 }
@@ -47,15 +55,19 @@
 		case 1:
 			// App to Home Screen
 			
-			if ([[RSLaunchScreenController sharedInstance] launchIdentifier]) {
+			if ([[RSCore sharedInstance] currentApplication]) {
 				[[RSLaunchScreenController sharedInstance] animateCurrentApplicationSnapshot];
 				[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:nil];
+				
+				[[RSStartScreenController sharedInstance] setTilesVisible:NO];
+				
 				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 					[[RSStartScreenController sharedInstance] animateIn];
 					
 					%orig;
 				});
 			} else {
+				[[RSStartScreenController sharedInstance] setTilesVisible:NO];
 				[[RSStartScreenController sharedInstance] animateIn];
 				
 				%orig;

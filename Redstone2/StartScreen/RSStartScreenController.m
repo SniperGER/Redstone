@@ -26,6 +26,15 @@ static RSStartScreenController* sharedInstance;
 	[self loadTiles];
 }
 
+- (id)viewIntersectsWithAnotherView:(CGRect)rect {
+	for (RSTile* tile in pinnedTiles) {
+		if (CGRectIntersectsRect(tile.basePosition, rect)) {
+			return tile;
+		}
+	}
+	return nil;
+}
+
 #pragma mark Tile Management
 
 - (void)loadTiles {
@@ -93,6 +102,95 @@ static RSStartScreenController* sharedInstance;
 	[UIView animateWithDuration:.1 animations:^{
 		[(UIScrollView*)self.view setContentSize:contentSize];
 	} completion:nil];
+}
+
+- (void)pinTileWithIdentifier:(NSString*)leafIdentifier {
+	if ([pinnedLeafIdentifiers containsObject:leafIdentifier]) {
+		return;
+	}
+	
+	if (![[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafIdentifier]) {
+		return;
+	}
+	
+	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
+	
+	int maxTileX = 0, maxTileY = 0;
+	for (RSTile* tile in pinnedTiles) {
+		if (tile.basePosition.origin.y / sizeForPosition > maxTileY) {
+			maxTileX = 0;
+		}
+		
+		maxTileX = MAX(tile.basePosition.origin.x / sizeForPosition, maxTileX);
+		maxTileY = MAX(tile.basePosition.origin.y / sizeForPosition, maxTileY);
+	}
+	
+	CGSize tileSize = [RSMetrics tileDimensionsForSize:2];
+	BOOL tileHasBeenPinned = NO;
+	
+	for (int i=0; i<3; i++) {
+		for (int j=0; j<[RSMetrics columns]*2; j++) {
+			CGRect tileFrame = CGRectMake(j * sizeForPosition,
+										  (maxTileY + i) * sizeForPosition,
+										  tileSize.width,
+										  tileSize.height);
+			
+			if (![self viewIntersectsWithAnotherView:tileFrame] && (tileFrame.origin.x + tileFrame.size.width) <= self.view.bounds.size.width) {
+				RSTile* tile = [[RSTile alloc] initWithFrame:tileFrame leafIdentifier:leafIdentifier size:2];
+				[self.view addSubview:tile];
+				
+				[pinnedTiles addObject:tile];
+				[pinnedLeafIdentifiers addObject:leafIdentifier];
+				
+				tileHasBeenPinned = YES;
+				break;
+			}
+		}
+		
+		if (tileHasBeenPinned) {
+			break;
+		}
+	}
+	
+	[self eliminateEmptyRows];
+	[(UIScrollView*)self.view setContentOffset:CGPointMake(0, MAX([(UIScrollView*)self.view contentSize].height - self.view.bounds.size.height + 64, -24))];
+}
+
+- (void)unpinTile:(RSTile*)tile {
+	if (![pinnedTiles containsObject:tile]) {
+		return;
+	}
+	
+	[pinnedTiles removeObject:tile];
+	[pinnedLeafIdentifiers removeObject:[tile.icon applicationBundleID]];
+	
+	[UIView animateWithDuration:.2 animations:^{
+		[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+		
+		[tile setTransform:CGAffineTransformMakeScale(0.5, 0.5)];
+		[tile.layer setOpacity:0.0];
+	} completion:^(BOOL finished) {
+		[tile removeEasingFunctionForKeyPath:@"frame"];
+		[tile removeFromSuperview];
+		
+		[self saveTiles];
+		[self eliminateEmptyRows];
+	}];
+}
+
+- (void)setTilesVisible:(BOOL)visible {
+	if (visible) {
+		for (RSTile* tile in pinnedTiles) {
+			[tile setHidden:NO];
+			[tile.layer setOpacity:1];
+			[tile.layer removeAllAnimations];
+		}
+	} else {
+		for (RSTile* tile in pinnedTiles) {
+			[tile setHidden:YES];
+			[tile.layer setOpacity:0];
+		}
+	}
 }
 
 #pragma mark Editing Mode
@@ -307,6 +405,8 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (NSMutableArray*)sortPinnedTiles {
+	pinnedLeafIdentifiers = [NSMutableArray new];
+	
 	NSArray* sortedTiles = [pinnedTiles sortedArrayUsingComparator:^NSComparisonResult(RSTile* tile1, RSTile* tile2) {
 		CGRect firstTileFrame, secondTileFrame;
 		
@@ -328,6 +428,10 @@ static RSStartScreenController* sharedInstance;
 			return [[NSNumber numberWithFloat:firstTileFrame.origin.y] compare:[NSNumber numberWithFloat:secondTileFrame.origin.y]];
 		}
 	}];
+	
+	for (RSTile* tile in sortedTiles) {
+		[pinnedLeafIdentifiers addObject:[tile.icon applicationBundleID]];
+	}
 	
 	return [sortedTiles mutableCopy];
 }

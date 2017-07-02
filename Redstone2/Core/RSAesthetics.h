@@ -55,10 +55,30 @@
  */
 + (NSDictionary*)colorsForCurrentTheme;
 
+/**
+ Returns a tile icon for the specified bundle identifier \p bundleIdentifier
+
+ @param bundleIdentifier The bundle identifier to load a tile icon for
+ @return An UIImage with the tile icon for \p bundleIdentifier, or if no tile icon exists, the application's icon file
+ */
 + (UIImage*)getImageForTileWithBundleIdentifier:(NSString*)bundleIdentifier;
 
+/**
+ Returns a tile icon for the specified bundle identifier \p bundleIdentifier for size \p size. Loads colored icons by setting \p colored to \p YES
+
+ @param bundleIdentifier The bundle identifier to load a tile icon for
+ @param size The size category specifying the use of the icon
+ @param colored Enables/disables support for colored icons
+ @return An UIImage with the tile icon for \p bundleIdentifier, or if no tile icon exists, the application's icon file
+ */
 + (UIImage*)getImageForTileWithBundleIdentifier:(NSString*)bundleIdentifier size:(int)size colored:(BOOL)colored;
 
+/**
+ Measures the brightness of \p backgroundColor and returns a readable foreground color
+
+ @param backgroundColor The color to measure the brightness
+ @return A readable foreground color for \p backgroundColor
+ */
 + (UIColor *)readableForegroundColorForBackgroundColor:(UIColor*)backgroundColor;
 
 @end

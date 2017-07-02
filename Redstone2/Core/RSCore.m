@@ -1,9 +1,18 @@
 #import "../Redstone.h"
 
+static RSCore* sharedInstance;
+static id currentApplication;
+
 @implementation RSCore
+
++ (id)sharedInstance {
+	return sharedInstance;
+}
 
 - (id)initWithWindow:(UIWindow*)window {
 	if (self = [super init]) {
+		sharedInstance = self;
+		
 		homeScreenWindow = window;
 		[homeScreenWindow setHidden:YES];
 		
@@ -31,6 +40,24 @@
 	}
 	
 	return self;
+}
+
+- (void)frontDisplayDidChange:(SBApplication*)application {
+	if ([application isKindOfClass:NSClassFromString(@"SBDashBoardViewController")]) {
+		currentApplication = nil;
+		return;
+	}
+	
+	currentApplication = application;
+	
+	if (application) {
+		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[application bundleIdentifier]];
+		[[RSStartScreenController sharedInstance] setTilesVisible:YES];
+	}
+}
+
+- (SBApplication*)currentApplication {
+	return currentApplication;
 }
 
 @end

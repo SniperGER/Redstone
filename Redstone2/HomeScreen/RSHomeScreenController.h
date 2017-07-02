@@ -13,10 +13,12 @@
 	RSAppListController* appListController;
 	RSLaunchScreenController* launchScreenController;
 	
-	UIWindow* window;
+	//UIWindow* window;
 	UIImageView* wallpaperView;
 	RSHomeScreenScrollView* scrollView;
 }
+
+@property (nonatomic, strong) UIWindow* window;
 
 /**
  Returns a global instance of \p RSHomeScreenController
@@ -25,6 +27,9 @@
  */
 + (id)sharedInstance;
 
+/**
+ Sets the parallax value of \p wallpaperView based on \p RSStartScreenController's scroll view offset
+ */
 - (void)setParallaxPosition;
 
 /**
