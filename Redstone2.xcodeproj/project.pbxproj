@@ -428,6 +428,9 @@
 		8D56D7101F07988E009E3070 /* tile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D56D5711F07988E009E3070 /* tile.plist */; };
 		8D56D7111F07988E009E3070 /* tile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D56D5721F07988E009E3070 /* tile@2x.png */; };
 		8D56D7121F07988E009E3070 /* tile@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D56D5731F07988E009E3070 /* tile@3x.png */; };
+		8D56D7151F08BE44009E3070 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 8D56D7141F08BE44009E3070 /* Makefile */; };
+		8D56D7171F08BE7E009E3070 /* Tweak.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D56D7161F08BE7E009E3070 /* Tweak.xm */; };
+		8D56D7191F08BED0009E3070 /* Redstone2_UIKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D56D7181F08BED0009E3070 /* Redstone2_UIKit.plist */; };
 		8D63E36E1F04D91F00FC242C /* RSTiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D63E36D1F04D91F00FC242C /* RSTiltView.m */; };
 		8D9EDACE1F02FE6900C97EEA /* Redstone2_Core.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */; };
 		8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EDAD21F02FFCD00C97EEA /* RSCore.m */; };
@@ -878,6 +881,9 @@
 		8D56D5711F07988E009E3070 /* tile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tile.plist; sourceTree = "<group>"; };
 		8D56D5721F07988E009E3070 /* tile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile@2x.png"; sourceTree = "<group>"; };
 		8D56D5731F07988E009E3070 /* tile@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tile@3x.png"; sourceTree = "<group>"; };
+		8D56D7141F08BE44009E3070 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		8D56D7161F08BE7E009E3070 /* Tweak.xm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tweak.xm; sourceTree = "<group>"; };
+		8D56D7181F08BED0009E3070 /* Redstone2_UIKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Redstone2_UIKit.plist; sourceTree = "<group>"; };
 		8D63E36C1F04D91F00FC242C /* RSTiltView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSTiltView.h; sourceTree = "<group>"; };
 		8D63E36D1F04D91F00FC242C /* RSTiltView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTiltView.m; sourceTree = "<group>"; };
 		8D9EDAC81F02FDFA00C97EEA /* Redstone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Redstone.h; sourceTree = "<group>"; };
@@ -939,6 +945,7 @@
 				8D9EDAC81F02FDFA00C97EEA /* Redstone.h */,
 				8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */,
 				8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */,
+				8D56D7131F08BDD7009E3070 /* Redstone2_UIKit */,
 				8D9EDACA1F02FE1C00C97EEA /* headers */,
 				8D56D3771F07988D009E3070 /* Layout */,
 				8DDC17E51F059D7200C57D6E /* Libraries */,
@@ -2063,6 +2070,16 @@
 			path = ph.telegra.Telegraph;
 			sourceTree = "<group>";
 		};
+		8D56D7131F08BDD7009E3070 /* Redstone2_UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				8D56D7141F08BE44009E3070 /* Makefile */,
+				8D56D7181F08BED0009E3070 /* Redstone2_UIKit.plist */,
+				8D56D7161F08BE7E009E3070 /* Tweak.xm */,
+			);
+			path = Redstone2_UIKit;
+			sourceTree = "<group>";
+		};
 		8D63E36B1F04D86E00FC242C /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -2443,6 +2460,7 @@
 				8D56D6031F07988E009E3070 /* tile-AppList@2x.png in Resources */,
 				8D56D5DA1F07988E009E3070 /* tile-AppList@3x.png in Resources */,
 				8D56D5B11F07988E009E3070 /* MostlyCloudy@2x.png in Resources */,
+				8D56D7191F08BED0009E3070 /* Redstone2_UIKit.plist in Resources */,
 				8D56D5A41F07988E009E3070 /* Hot@3x.png in Resources */,
 				8D56D5821F07988E009E3070 /* CompactView.nib in Resources */,
 				8D56D6DE1F07988E009E3070 /* tile@2x.png in Resources */,
@@ -2542,6 +2560,7 @@
 				8D56D6F01F07988E009E3070 /* tile-AppList@2x.png in Resources */,
 				8D56D61F1F07988E009E3070 /* tile@2x.png in Resources */,
 				8D56D6231F07988E009E3070 /* tile@2x.png in Resources */,
+				8D56D7171F08BE7E009E3070 /* Tweak.xm in Resources */,
 				8D56D5C81F07988E009E3070 /* Sleet@2x.png in Resources */,
 				8D56D69D1F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D6831F07988E009E3070 /* tile@3x.png in Resources */,
@@ -2685,6 +2704,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */,
+				8D56D7151F08BE44009E3070 /* Makefile in Sources */,
 				8D63E36E1F04D91F00FC242C /* RSTiltView.m in Sources */,
 				8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */,
 				8D56D3691F06FEA1009E3070 /* UIFont+WDCustomLoader.m in Sources */,

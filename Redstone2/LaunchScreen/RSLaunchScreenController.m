@@ -23,6 +23,8 @@ UIImage* _UICreateScreenUIImage();
 		applicationSnapshot = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[applicationSnapshot setHidden:YES];
 		[window addSubview:applicationSnapshot];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(animateOut) name:@"RedstoneApplicationDidBecomeActive" object:nil];
 	}
 	
 	return self;
@@ -80,13 +82,10 @@ UIImage* _UICreateScreenUIImage();
 	[scale setRemovedOnCompletion:NO];
 	[scale setFillMode:kCAFillModeForwards];
 	[launchImageView.layer addAnimation:scale forKey:@"scale"];
-	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		[self animateOut];
-	});
 }
 
 - (void)animateOut {
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 	CAAnimation* opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
 															function:CubicEaseInOut
 														   fromValue:1.0
@@ -98,6 +97,7 @@ UIImage* _UICreateScreenUIImage();
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[window setHidden:YES];
+	});
 	});
 }
 

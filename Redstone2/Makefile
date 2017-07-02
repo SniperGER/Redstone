@@ -10,6 +10,7 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME=Redstone2
 Redstone2_CFLAGS = -fobjc-arc
+Redstone2_LIBRARIES = objcipc
 Redstone2_PRIVATE_FRAMEWORKS = AppSupport
 Redstone2_FILES = Redstone2_Core.xm Redstone2_HomeScreen.xm
 
@@ -48,3 +49,6 @@ ifeq ($(THEOS_TARGET_NAME),iphone)
 after-install::
 	install.exec "killall -9 SpringBoard"
 endif
+
+SUBPROJECTS += Redstone2_UIKit
+include $(THEOS_MAKE_PATH)/aggregate.mk

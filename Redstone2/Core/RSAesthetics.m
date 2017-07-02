@@ -56,15 +56,19 @@ NSBundle* redstoneBundle;
 	NSString* themeName = [[RSPreferences preferences] objectForKey:@"themeColor"];
 	if ([themeName isEqualToString:@"dark"]) {
 		return @{
-				 @"RedstoneForegroundColor": [UIColor whiteColor],
-				 @"RedstoneBackgroundColor": [UIColor colorWithWhite:0.22 alpha:1.0],
-				 @"RedstoneOpaqueBackgroundColor": [UIColor colorWithWhite:0.0 alpha:0.75]
+				 @"ForegroundColor": [UIColor whiteColor],
+				 @"BackgroundColor": [UIColor colorWithWhite:0.22 alpha:1.0],
+				 @"InvertedForegroundColor": [UIColor blackColor],
+				 @"InvertedBackgroundColor": [UIColor whiteColor],
+				 @"OpaqueBackgroundColor": [UIColor colorWithWhite:0.0 alpha:0.75]
 				 };
 	} else if ([themeName isEqualToString:@"light"]) {
 		return @{
-				 @"RedstoneForegroundColor": [UIColor blackColor],
-				 @"RedstoneBackgroundColor": [UIColor whiteColor],
-				 @"RedstoneOpaqueBackgroundColor": [UIColor colorWithWhite:1.0 alpha:0.75]
+				 @"ForegroundColor": [UIColor blackColor],
+				 @"BackgroundColor": [UIColor whiteColor],
+				 @"InvertedForegroundColor": [UIColor whiteColor],
+				 @"InvertedBackgroundColor": [UIColor colorWithWhite:0.22 alpha:1.0],
+				 @"OpaqueBackgroundColor": [UIColor colorWithWhite:1.0 alpha:0.75]
 				 };
 	}
 	

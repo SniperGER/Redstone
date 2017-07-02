@@ -6,6 +6,7 @@
 
 #import "Redstone.h"
 #import "substrate.h"
+#import <objcipc/objcipc.h>
 
 %group core
 
@@ -28,5 +29,10 @@
 		NSLog(@"[Redstone | Core] Initializing Core");
 		
 		%init(core);
+		[OBJCIPC registerIncomingMessageFromAppHandlerForMessageName:@"Redstone.Application.BecameActive"  handler:^NSDictionary *(NSDictionary *message) {
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneApplicationDidBecomeActive" object:nil];
+			
+			return nil;
+		}];
 	}
 }

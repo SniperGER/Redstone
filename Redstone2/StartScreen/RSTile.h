@@ -21,6 +21,11 @@
 	
 	UILabel* tileLabel;
 	UIImageView* tileImageView;
+	
+	UIView* unpinButton;
+	UIView* scaleButton;
+	UITapGestureRecognizer* unpinGestureRecognizer;
+	UITapGestureRecognizer* scaleGestureRecognizer;
 }
 
 @property (nonatomic, assign) int size;
@@ -28,6 +33,9 @@
 @property (nonatomic, strong) RSTileInfo* tileInfo;
 @property (nonatomic, assign) BOOL isSelectedTile;
 @property (nonatomic, assign) CGPoint originalCenter;
+
+@property (nonatomic, assign) CGPoint nextCenterUpdate;
+@property (nonatomic, assign) CGRect nextFrameUpdate;
 
 /**
  Initializes a tile with a given frame, application identifier and size index

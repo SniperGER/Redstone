@@ -146,14 +146,13 @@ static RSStartScreenController* sharedInstance;
 	CGPoint newCenter = CGPointMake(MIN(MAX(step * roundf(tile.basePosition.origin.x / step), 0), maxPositionX) + tile.basePosition.size.width/2,
 									MIN(MAX(step * roundf(tile.basePosition.origin.y / step), 0), maxPositionY) + tile.basePosition.size.height/2);
 	
-	[UIView animateWithDuration:.3 animations:^{
-		[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-		[tile setCenter:newCenter];
-		[tile setOriginalCenter:tile.center];
-	} completion:^(BOOL finished) {
-		[tile removeEasingFunctionForKeyPath:@"frame"];
-	}];
+	[tile setNextCenterUpdate:newCenter];
+	[tile setNextFrameUpdate:CGRectMake(newCenter.x - tile.basePosition.size.width/2,
+										newCenter.y - tile.basePosition.size.height/2,
+										tile.basePosition.size.width,
+										tile.basePosition.size.height)];
 	
+	//[self applyPendingFrameUpdates];
 	[self moveAffectedTilesForTile:tile];
 }
 
@@ -161,8 +160,9 @@ static RSStartScreenController* sharedInstance;
 	// This algorithm is based on Daniel T.'s answer here:
 	// http://stackoverflow.com/questions/43825803/get-all-uiviews-affected-by-moving-another-uiview-above-them/
 	
+	pinnedTiles = [self sortPinnedTiles];
+	
 	NSMutableArray* stack = [NSMutableArray new];
-	//CGFloat step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	BOOL didMoveTileIntoPosition = NO;
 	
 	[stack addObject:movedTile];
@@ -172,109 +172,164 @@ static RSStartScreenController* sharedInstance;
 		[stack removeObject:current];
 		
 		for (RSTile* tile in pinnedTiles) {
-			if (tile != movedTile && CGRectIntersectsRect(tile.basePosition, movedTile.basePosition) && tile.basePosition.origin.y < movedTile.basePosition.origin.y && !didMoveTileIntoPosition) {
-				CGFloat moveDistance = (CGRectGetMaxY(tile.basePosition)- CGRectGetMinY(movedTile.basePosition)) + [RSMetrics tileBorderSpacing];
-				CGRect newFrame = CGRectMake(movedTile.frame.origin.x,
-											 movedTile.frame.origin.y + moveDistance,
-											 movedTile.frame.size.width,
-											 movedTile.frame.size.height);
+			if (tile != movedTile && CGRectIntersectsRect(tile.basePosition, movedTile.nextFrameUpdate) && tile.basePosition.origin.y < movedTile.nextFrameUpdate.origin.y && !didMoveTileIntoPosition) {
+				NSLog(@"[Redstone] A");
+				CGFloat moveDistance = (CGRectGetMaxY(tile.basePosition) - CGRectGetMinY(movedTile.nextFrameUpdate)) + [RSMetrics tileBorderSpacing];
 				
-				[movedTile.layer removeAllAnimations];
+				CGPoint newCenter = CGPointMake(movedTile.nextCenterUpdate.x,
+												movedTile.nextCenterUpdate.y + moveDistance);
 				
-				[UIView animateWithDuration:.3 animations:^{
-					[movedTile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-					[movedTile setFrame:newFrame];
-				} completion:^(BOOL finished) {
-					[movedTile removeEasingFunctionForKeyPath:@"frame"];
-					[movedTile setOriginalCenter:movedTile.center];
-				}];
+				[movedTile setNextCenterUpdate:newCenter];
+				[movedTile setNextFrameUpdate:CGRectMake(newCenter.x - movedTile.basePosition.size.width/2,
+														 newCenter.y - movedTile.basePosition.size.height/2,
+														 movedTile.basePosition.size.width,
+														 movedTile.basePosition.size.height)];
 				
 				didMoveTileIntoPosition = YES;
-			} else if (tile != current && CGRectIntersectsRect(current.basePosition, tile.basePosition)) {
-				[stack addObject:tile];
-				
-				CGFloat moveDistance = (CGRectGetMaxY(current.basePosition) - CGRectGetMinY(tile.basePosition)) + [RSMetrics tileBorderSpacing];
-				CGRect newFrame = CGRectMake(tile.frame.origin.x,
-											 tile.frame.origin.y + moveDistance,
-											 tile.frame.size.width,
-											 tile.frame.size.height);
-				
-				[tile.layer removeAllAnimations];
-				
-				if (tile == self.selectedTile) {
-					[tile setFrame:newFrame];
+			} else if (tile != current) {
+				CGRect currentFrame, tileFrame;
+				if (!CGRectEqualToRect(current.nextFrameUpdate, CGRectZero)) {
+					currentFrame = current.nextFrameUpdate;
 				} else {
-					[UIView animateWithDuration:.3 animations:^{
-						[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-						[tile setFrame:newFrame];
-					} completion:^(BOOL finished) {
-						[tile removeEasingFunctionForKeyPath:@"frame"];
-						[tile setOriginalCenter:tile.center];
-					}];
+					currentFrame = current.basePosition;
+				}
+				
+				if (!CGRectEqualToRect(tile.nextFrameUpdate, CGRectZero)) {
+					tileFrame = tile.nextFrameUpdate;
+				} else {
+					tileFrame = tile.basePosition;
+				}
+				
+				if (CGRectIntersectsRect(currentFrame, tileFrame)) {
+					NSLog(@"[Redstone] B");
+					NSLog(@"[Redstone] %@", NSStringFromCGRect(CGRectIntersection(currentFrame, tileFrame)));
+					
+					[stack addObject:tile];
+					
+					CGFloat moveDistance = (CGRectGetMaxY(currentFrame) - CGRectGetMinY(tileFrame)) + [RSMetrics tileBorderSpacing];
+					
+					CGPoint newCenter = CGPointMake(CGRectGetMidX(tileFrame),
+													CGRectGetMidY(tileFrame) + moveDistance);
+					
+					[tile setNextCenterUpdate:newCenter];
+					[tile setNextFrameUpdate:CGRectMake(newCenter.x - tile.basePosition.size.width/2,
+														newCenter.y - tile.basePosition.size.height/2,
+														tile.basePosition.size.width,
+														tile.basePosition.size.height)];
 				}
 			}
 		}
 	}
 	
 #if TARGET_OS_SIMULATOR
-	[self updateStartContentSize];
+	//[self updateStartContentSize];
 #else
+	//[self applyPendingFrameUpdates];
 	[self eliminateEmptyRows];
 #endif
 }
 
 - (void)eliminateEmptyRows {
-	NSArray* sortedViews = [pinnedTiles sortedArrayUsingComparator:^NSComparisonResult(RSTile* tile1, RSTile* tile2) {
-		if (tile1.basePosition.origin.y == tile2.basePosition.origin.y) {
-			return [[NSNumber numberWithFloat:tile1.basePosition.origin.x] compare:[NSNumber numberWithFloat:tile2.basePosition.origin.x]];
-		} else {
-			return [[NSNumber numberWithFloat:tile1.basePosition.origin.y] compare:[NSNumber numberWithFloat:tile2.basePosition.origin.y]];
-		}
-	}];
+	pinnedTiles = [self sortPinnedTiles];
 	
 	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
-	[UIView animateWithDuration:.3 animations:^{
-		for (RSTile* tile in sortedViews) {
-			int yPosition = tile.basePosition.origin.y / sizeForPosition;
-			for (int i=0; i<yPosition; i++) {
-				CGRect testFrame = CGRectMake(tile.basePosition.origin.x,
-											  i * sizeForPosition,
-											  tile.basePosition.size.width,
-											  tile.basePosition.origin.y - (i * sizeForPosition));
-				
-				BOOL canSetFrame = YES;
-				for (RSTile* view in sortedViews) {
-					if (view != tile) {
-						if (CGRectIntersectsRect(testFrame, [view basePosition])) {
-							canSetFrame = NO;
-							break;
-						}
+	for (RSTile* tile in pinnedTiles) {
+		CGRect tileFrame;
+		
+		if (!CGRectEqualToRect(tile.nextFrameUpdate, CGRectZero)) {
+			tileFrame = tile.nextFrameUpdate;
+		} else {
+			tileFrame = tile.basePosition;
+		}
+		
+		int yPosition = tileFrame.origin.y / sizeForPosition;
+		
+		for (int i=0; i<yPosition; i++) {
+			CGRect testFrame = CGRectMake(tileFrame.origin.x,
+										  i * sizeForPosition,
+										  tileFrame.size.width,
+										  tileFrame.origin.y - (i * sizeForPosition));
+			
+			BOOL canSetFrame = YES;
+			for (RSTile* view in pinnedTiles) {
+				if (view != tile) {
+					CGRect viewFrame;
+					if (!CGRectEqualToRect(view.nextFrameUpdate, CGRectZero)) {
+						viewFrame = view.nextFrameUpdate;
+					} else {
+						viewFrame = view.basePosition;
+					}
+					
+					if (CGRectIntersectsRect(testFrame, viewFrame)) {
+						canSetFrame = NO;
+						break;
 					}
 				}
+			}
+			
+			if (canSetFrame) {
+				CGPoint newCenter = CGPointMake(CGRectGetMidX(tileFrame),
+												CGRectGetMidY(tileFrame) - testFrame.size.height);
 				
-				if (canSetFrame) {
-					CGRect newFrame = CGRectMake(tile.frame.origin.x,
-												 tile.frame.origin.y - testFrame.size.height,
-												 tile.frame.size.width,
-												 tile.frame.size.height);
-					
-					
-					[tile.layer removeAllAnimations];
-					[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
-					[tile setFrame:newFrame];
-					break;
-				}
+				[tile setNextCenterUpdate:newCenter];
+				[tile setNextFrameUpdate:CGRectMake(newCenter.x - tile.basePosition.size.width/2,
+													newCenter.y - tile.basePosition.size.height/2,
+													tile.basePosition.size.width,
+													tile.basePosition.size.height)];
+				break;
+			}
+		}
+	}
+	
+	[self applyPendingFrameUpdates];
+}
+
+- (void)applyPendingFrameUpdates {
+	[UIView animateWithDuration:.3 animations:^{
+		for (RSTile* tile in pinnedTiles) {
+			if (!CGPointEqualToPoint(tile.nextCenterUpdate, CGPointZero)) {
+				[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+				[tile setCenter:tile.nextCenterUpdate];
 			}
 		}
 	} completion:^(BOOL finished) {
-		for (RSTile* tile in sortedViews) {
+		for (RSTile* tile in pinnedTiles) {
 			[tile removeEasingFunctionForKeyPath:@"frame"];
 			[tile setOriginalCenter:tile.center];
+			
+			[tile setNextCenterUpdate:CGPointZero];
+			[tile setNextFrameUpdate:CGRectZero];
+		}
+	}];
+	
+	[self updateStartContentSize];
+}
+
+- (NSMutableArray*)sortPinnedTiles {
+	NSArray* sortedTiles = [pinnedTiles sortedArrayUsingComparator:^NSComparisonResult(RSTile* tile1, RSTile* tile2) {
+		CGRect firstTileFrame, secondTileFrame;
+		
+		if (!CGRectEqualToRect(tile1.nextFrameUpdate, CGRectZero)) {
+			firstTileFrame = tile1.nextFrameUpdate;
+		} else {
+			firstTileFrame = tile1.basePosition;
 		}
 		
-		[self updateStartContentSize];
+		if (!CGRectEqualToRect(tile2.nextFrameUpdate, CGRectZero)) {
+			secondTileFrame = tile2.nextFrameUpdate;
+		} else {
+			secondTileFrame = tile2.basePosition;
+		}
+		
+		if (firstTileFrame.origin.y == secondTileFrame.origin.y) {
+			return [[NSNumber numberWithFloat:firstTileFrame.origin.x] compare:[NSNumber numberWithFloat:secondTileFrame.origin.x]];
+		} else {
+			return [[NSNumber numberWithFloat:firstTileFrame.origin.y] compare:[NSNumber numberWithFloat:secondTileFrame.origin.y]];
+		}
 	}];
+	
+	return [sortedTiles mutableCopy];
 }
 
 #pragma mark Animations
@@ -371,6 +426,7 @@ static RSStartScreenController* sharedInstance;
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[self.view setUserInteractionEnabled:YES];
+		
 		for (RSTile* tile in pinnedTiles) {
 			[tile setTiltEnabled:YES];
 			[tile setUserInteractionEnabled:YES];
@@ -471,12 +527,17 @@ static RSStartScreenController* sharedInstance;
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[self.view setUserInteractionEnabled:YES];
+		
 		for (RSTile* tile in pinnedTiles) {
 			[tile.layer setOpacity:0];
 			[tile.layer removeAllAnimations];
 			[tile.layer setAnchorPoint:CGPointMake(0.5,0.5)];
 			[tile setCenter:[tile originalCenter]];
 		}
+		
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[(UIScrollView*)self.view setContentOffset:CGPointMake(0, -24)];
+		});
 	});
 }
 

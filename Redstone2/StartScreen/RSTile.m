@@ -74,6 +74,42 @@
 		[tapGestureRecognizer requireGestureRecognizerToFail:panGestureRecognizer];
 		[tapGestureRecognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
 		[self addGestureRecognizer:tapGestureRecognizer];
+		
+		// Editing Mode Buttons
+		unpinButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+		[unpinButton setCenter:CGPointMake(frame.size.width, 0)];
+		[unpinButton setBackgroundColor:[RSAesthetics colorsForCurrentTheme][@"InvertedBackgroundColor"]];
+		[unpinButton.layer setCornerRadius:15];
+		[unpinButton setHidden:YES];
+		[self addSubview:unpinButton];
+		
+		UILabel* unpinLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+		[unpinLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:14]];
+		[unpinLabel setTextColor:[RSAesthetics colorsForCurrentTheme][@"InvertedForegroundColor"]];
+		[unpinLabel setText:@"\uE77A"];
+		[unpinLabel setTextAlignment:NSTextAlignmentCenter];
+		[unpinButton addSubview:unpinLabel];
+		
+		unpinGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(unpin:)];
+		[unpinButton addGestureRecognizer:unpinGestureRecognizer];
+		
+		scaleButton = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+		[scaleButton setCenter:CGPointMake(frame.size.width, frame.size.height)];
+		[scaleButton setBackgroundColor:[RSAesthetics colorsForCurrentTheme][@"InvertedBackgroundColor"]];
+		[scaleButton.layer setCornerRadius:15];
+		[scaleButton setHidden:YES];
+		[scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
+		[self addSubview:scaleButton];
+		
+		UILabel* scaleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+		[scaleLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:14]];
+		[scaleLabel setTextColor:[RSAesthetics colorsForCurrentTheme][@"InvertedForegroundColor"]];
+		[scaleLabel setText:@"\uE7EA"];
+		[scaleLabel setTextAlignment:NSTextAlignmentCenter];
+		[scaleButton addSubview:scaleLabel];
+		
+		scaleGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setNextSize)];
+		[scaleButton addGestureRecognizer:scaleGestureRecognizer];
 	}
 	
 	return self;
@@ -167,17 +203,17 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[[(UIScrollView*)[[RSStartScreenController sharedInstance] view] panGestureRecognizer] setEnabled:NO];
 			[[(UIScrollView*)[[RSStartScreenController sharedInstance] view] panGestureRecognizer] setEnabled:YES];
 			
-			[UIView animateWithDuration:.2 animations:^{
-				[self setEasingFunction:easeOutQuint forKeyPath:@"frame"];
 			
-				[self.superview bringSubviewToFront:self];
-				[self setAlpha:1.0];
-				[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
-			} completion:^(BOOL finished) {
-				[self removeEasingFunctionForKeyPath:@"frame"];
-			}];
+			[self.superview bringSubviewToFront:self];
+			[self setAlpha:1.0];
+			[self setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
+			
+			[unpinButton setHidden:NO];
+			[scaleButton setHidden:NO];
 		} else {
 			panEnabled = NO;
+			[unpinButton setHidden:YES];
+			[scaleButton setHidden:YES];
 			
 			[UIView animateWithDuration:.2 animations:^{
 				[self setEasingFunction:easeOutQuint forKeyPath:@"frame"];
@@ -204,6 +240,37 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		
 		[longPressGestureRecognizer setEnabled:YES];
 		panEnabled = NO;
+		
+		[unpinButton setHidden:YES];
+		[scaleButton setHidden:YES];
+	}
+}
+
+- (void)unpin {
+	
+}
+
+- (void)setNextSize {
+	
+}
+
+- (CGFloat)scaleButtonRotationForCurrentSize {
+	switch (self.size) {
+		case 1:
+			return -135.0;
+			break;
+		case 2:
+			return 45.0;
+			break;
+		case 3:
+			return 0.0;
+			break;
+		case 4:
+			return 90.0;
+		default:
+			return 0.0;
+			break;
+			
 	}
 }
 
