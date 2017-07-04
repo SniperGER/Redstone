@@ -13,16 +13,16 @@ UIImage* _UICreateScreenUIImage();
 	if (self = [super init]) {
 		sharedInstance = self;
 		
-		window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
-		[window setWindowLevel:2];
-		[window setBackgroundColor:[RSAesthetics accentColor]];
+		self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+		[self.window setWindowLevel:2];
+		[self.window setBackgroundColor:[RSAesthetics accentColor]];
 		
 		launchImageView = [UIImageView new];
-		[window addSubview:launchImageView];
+		[self.window addSubview:launchImageView];
 		
 		applicationSnapshot = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[applicationSnapshot setHidden:YES];
-		[window addSubview:applicationSnapshot];
+		[self.window addSubview:applicationSnapshot];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(animateOut) name:@"RedstoneApplicationDidBecomeActive" object:nil];
 	}
@@ -35,7 +35,7 @@ UIImage* _UICreateScreenUIImage();
 	RSTileInfo* tileInfo = [[RSTileInfo alloc] initWithBundleIdentifier:launchIdentifier];
 	
 	if (tileInfo) {
-		[window setBackgroundColor:[[RSAesthetics accentColorForTile:tileInfo] colorWithAlphaComponent:1.0]];
+		[self.window setBackgroundColor:[[RSAesthetics accentColorForTile:tileInfo] colorWithAlphaComponent:1.0]];
 		
 		if (tileInfo.fullSizeArtwork) {
 			[launchImageView setFrame:CGRectMake(0, 0, 269, 132)];
@@ -53,16 +53,16 @@ UIImage* _UICreateScreenUIImage();
 - (void)animateIn {
 	_isLaunchingApp = YES;
 	
-	[window makeKeyAndVisible];
-	[window setAlpha:0];
-	[window setHidden:NO];
+	[self.window makeKeyAndVisible];
+	[self.window setAlpha:0];
+	[self.window setHidden:NO];
 	
 	[launchImageView setHidden:NO];
 	
 	[applicationSnapshot setImage:nil];
 	[applicationSnapshot setHidden:YES];
 	
-	[window.layer removeAllAnimations];
+	[self.window.layer removeAllAnimations];
 	[launchImageView.layer removeAllAnimations];
 	
 	CAAnimation* opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
@@ -72,7 +72,7 @@ UIImage* _UICreateScreenUIImage();
 	[opacity setDuration:0.3];
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
-	[window.layer addAnimation:opacity forKey:@"opacity"];
+	[self.window.layer addAnimation:opacity forKey:@"opacity"];
 	
 	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
 														  function:CubicEaseOut
@@ -86,31 +86,33 @@ UIImage* _UICreateScreenUIImage();
 
 - (void)animateOut {
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-	CAAnimation* opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
-															function:CubicEaseInOut
-														   fromValue:1.0
-															 toValue:0.0];
-	[opacity setDuration:0.225];
-	[opacity setRemovedOnCompletion:NO];
-	[opacity setFillMode:kCAFillModeForwards];
-	[window.layer addAnimation:opacity forKey:@"opacity"];
-	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		[window setHidden:YES];
-	});
+		CAAnimation* opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
+																function:CubicEaseInOut
+															   fromValue:1.0
+																 toValue:0.0];
+		[opacity setDuration:0.225];
+		[opacity setRemovedOnCompletion:NO];
+		[opacity setFillMode:kCAFillModeForwards];
+		[self.window.layer addAnimation:opacity forKey:@"opacity"];
+		
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[self.window setHidden:YES];
+		});
 	});
 }
 
 - (void)animateCurrentApplicationSnapshot {
+	[applicationSnapshot.layer removeAllAnimations];
 	[applicationSnapshot setImage:_UICreateScreenUIImage()];
 	[applicationSnapshot setHidden:NO];
 	
-	[window setBackgroundColor:[UIColor clearColor]];
+	[self.window.layer removeAllAnimations];
+	[self.window setBackgroundColor:[UIColor clearColor]];
 	[launchImageView setHidden:YES];
 	
-	[window makeKeyAndVisible];
-	[window setAlpha:0];
-	[window setHidden:NO];
+	[self.window makeKeyAndVisible];
+	[self.window setAlpha:0];
+	[self.window setHidden:NO];
 	
 	CAAnimation *opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
 															function:CubicEaseInOut
@@ -128,11 +130,13 @@ UIImage* _UICreateScreenUIImage();
 	scale.removedOnCompletion = NO;
 	scale.fillMode = kCAFillModeForwards;
 	
-	[window.layer addAnimation:opacity forKey:@"opacity"];
-	[window.layer addAnimation:scale forKey:@"scale"];
+	[self.window.layer addAnimation:opacity forKey:@"opacity"];
+	[self.window.layer addAnimation:scale forKey:@"scale"];
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		[window setHidden:YES];
+		[self.window setHidden:YES];
+		[applicationSnapshot setImage:nil];
+		[applicationSnapshot setHidden:YES];
 	});
 }
 

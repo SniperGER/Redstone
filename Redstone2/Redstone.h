@@ -57,6 +57,12 @@
 #import "StartScreen/RSTile.h"
 #import "StartScreen/RSTileInfo.h"
 
+#pragma mark App List
+#import "AppList/RSAppListController.h"
+#import "AppList/RSAppListScrollView.h"
+#import "AppList/RSAppListSection.h"
+#import "AppList/RSApp.h"
+
 #pragma mark Launch Screen
 #import "LaunchScreen/RSLaunchScreenController.h"
 

@@ -32,6 +32,9 @@ Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenSc
 # Start Screen
 Redstone2_FILES += StartScreen/RSStartScreenController.m StartScreen/RSStartScreenScrollView.m StartScreen/RSTile.m StartScreen/RSTileInfo.m
 
+# App List
+Redstone2_FILES += AppList/RSAppListController.m AppList/RSAppListScrollView.m AppList/RSAppListSection.m AppList/RSApp.m
+
 # Launch Screen
 Redstone2_FILES += LaunchScreen/RSLaunchScreenController.m
 

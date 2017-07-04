@@ -13,7 +13,7 @@ static RSHomeScreenController* sharedInstance;
 		sharedInstance = self;
 		
 		startScreenController = [RSStartScreenController new];
-		//appListController = [RSAppListController new];
+		appListController = [RSAppListController new];
 		launchScreenController = [RSLaunchScreenController new];
 		
 		self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
@@ -30,6 +30,7 @@ static RSHomeScreenController* sharedInstance;
 		[self.window addSubview:scrollView];
 		
 		[scrollView addSubview:startScreenController.view];
+		[scrollView addSubview:appListController.view];
 	}
 	
 	return self;
@@ -40,6 +41,31 @@ static RSHomeScreenController* sharedInstance;
 	[wallpaperView setTransform:CGAffineTransformMakeTranslation(0, -position)];
 }
 
+- (void)deviceHasBeenUnlocked {
+	[scrollView setAlpha:0];
+	
+	[UIView animateWithDuration:0.3 animations:^{
+		[scrollView setEasingFunction:easeInCubic forKeyPath:@"opacity"];
+		[scrollView setAlpha:1.0];
+	} completion:^(BOOL finished) {
+		[scrollView removeEasingFunctionForKeyPath:@"opacity"];
+	}];
+}
+
+- (CGFloat)launchApplication {
+	if (scrollView.contentOffset.x < screenWidth) {
+		[startScreenController animateOut];
+		
+		return [startScreenController getMaxDelayForAnimation];
+	} else {
+		[appListController animateOut];
+		
+		return [appListController getMaxDelayForAnimation];
+	}
+	
+	return 0;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)_scrollView {
 	CGFloat progress = MIN(_scrollView.contentOffset.x / _scrollView.frame.size.width, 0.75);
 	
@@ -48,6 +74,10 @@ static RSHomeScreenController* sharedInstance;
 
 - (void)setScrollEnabled:(BOOL)scrollEnabled {
 	[scrollView setScrollEnabled:scrollEnabled];
+}
+
+- (void)setContentOffset:(CGPoint)offset {
+	[scrollView setContentOffset:offset];
 }
 
 @end

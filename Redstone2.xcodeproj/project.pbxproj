@@ -431,6 +431,8 @@
 		8D56D7151F08BE44009E3070 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 8D56D7141F08BE44009E3070 /* Makefile */; };
 		8D56D7171F08BE7E009E3070 /* Tweak.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D56D7161F08BE7E009E3070 /* Tweak.xm */; };
 		8D56D7191F08BED0009E3070 /* Redstone2_UIKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D56D7181F08BED0009E3070 /* Redstone2_UIKit.plist */; };
+		8D5AA3361F0A2D4100DC2073 /* RSAppListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5AA3351F0A2D4100DC2073 /* RSAppListController.m */; };
+		8D5AA3391F0A2E8D00DC2073 /* RSAppListScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5AA3381F0A2E8D00DC2073 /* RSAppListScrollView.m */; };
 		8D63E36E1F04D91F00FC242C /* RSTiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D63E36D1F04D91F00FC242C /* RSTiltView.m */; };
 		8D9EDACE1F02FE6900C97EEA /* Redstone2_Core.xm in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */; };
 		8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EDAD21F02FFCD00C97EEA /* RSCore.m */; };
@@ -442,6 +444,8 @@
 		8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C5C1F038409004A75CB /* RSHomeScreenController.m */; };
 		8DC97C621F039C94004A75CB /* RSHomeScreenScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C611F039C94004A75CB /* RSHomeScreenScrollView.m */; };
 		8DC97C661F039D1A004A75CB /* RSStartScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DC97C651F039D1A004A75CB /* RSStartScreenController.m */; };
+		8DCAFCC01F0A321A00038094 /* RSAppListSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCAFCBF1F0A321A00038094 /* RSAppListSection.m */; };
+		8DCAFCC31F0A327500038094 /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCAFCC21F0A327500038094 /* RSApp.m */; };
 		8DCB95401EFE4A9900C0038F /* Redstone2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DCB953F1EFE4A9900C0038F /* Redstone2.plist */; };
 		8DDC17E01F0581E500C57D6E /* control in Resources */ = {isa = PBXBuildFile; fileRef = 8DDC17DF1F0581E500C57D6E /* control */; };
 		8DDC17E81F059D8D00C57D6E /* UIView+Easing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DDC17E71F059D8D00C57D6E /* UIView+Easing.m */; };
@@ -477,10 +481,10 @@
 		8D56D38E1F07988D009E3070 /* tile.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = tile.plist; sourceTree = "<group>"; };
 		8D56D3911F07988D009E3070 /* CodeResources */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CodeResources; sourceTree = "<group>"; };
 		8D56D3921F07988D009E3070 /* Calendar */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = Calendar; sourceTree = "<group>"; };
-		8D56D3931F07988D009E3070 /* CompactView.nib */ = {isa = PBXFileReference; lastKnownFileType = file; path = CompactView.nib; sourceTree = "<group>"; };
-		8D56D3941F07988D009E3070 /* EventView.nib */ = {isa = PBXFileReference; lastKnownFileType = file; path = EventView.nib; sourceTree = "<group>"; };
+		8D56D3931F07988D009E3070 /* CompactView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = CompactView.nib; sourceTree = "<group>"; };
+		8D56D3941F07988D009E3070 /* EventView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = EventView.nib; sourceTree = "<group>"; };
 		8D56D3951F07988D009E3070 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Info.plist; sourceTree = "<group>"; };
-		8D56D3961F07988D009E3070 /* RegularView.nib */ = {isa = PBXFileReference; lastKnownFileType = file; path = RegularView.nib; sourceTree = "<group>"; };
+		8D56D3961F07988D009E3070 /* RegularView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = RegularView.nib; sourceTree = "<group>"; };
 		8D56D3991F07988D009E3070 /* CodeResources */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CodeResources; sourceTree = "<group>"; };
 		8D56D39A1F07988D009E3070 /* Blizzard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blizzard@2x.png"; sourceTree = "<group>"; };
 		8D56D39B1F07988D009E3070 /* Blizzard@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blizzard@3x.png"; sourceTree = "<group>"; };
@@ -490,8 +494,8 @@
 		8D56D39F1F07988D009E3070 /* Breezy@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Breezy@3x.png"; sourceTree = "<group>"; };
 		8D56D3A01F07988D009E3070 /* ClearNight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ClearNight@2x.png"; sourceTree = "<group>"; };
 		8D56D3A11F07988D009E3070 /* ClearNight@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ClearNight@3x.png"; sourceTree = "<group>"; };
-		8D56D3A21F07988D009E3070 /* ConditionView.nib */ = {isa = PBXFileReference; lastKnownFileType = file; path = ConditionView.nib; sourceTree = "<group>"; };
-		8D56D3A31F07988D009E3070 /* DayForecastView.nib */ = {isa = PBXFileReference; lastKnownFileType = file; path = DayForecastView.nib; sourceTree = "<group>"; };
+		8D56D3A21F07988D009E3070 /* ConditionView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = ConditionView.nib; sourceTree = "<group>"; };
+		8D56D3A31F07988D009E3070 /* DayForecastView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = DayForecastView.nib; sourceTree = "<group>"; };
 		8D56D3A41F07988D009E3070 /* Drizzle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Drizzle@2x.png"; sourceTree = "<group>"; };
 		8D56D3A51F07988D009E3070 /* Drizzle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Drizzle@3x.png"; sourceTree = "<group>"; };
 		8D56D3A61F07988D009E3070 /* Dust@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Dust@2x.png"; sourceTree = "<group>"; };
@@ -512,7 +516,7 @@
 		8D56D3B51F07988D009E3070 /* HeavyRain@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeavyRain@3x.png"; sourceTree = "<group>"; };
 		8D56D3B61F07988D009E3070 /* Hot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hot@2x.png"; sourceTree = "<group>"; };
 		8D56D3B71F07988D009E3070 /* Hot@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hot@3x.png"; sourceTree = "<group>"; };
-		8D56D3B81F07988D009E3070 /* HourlyForecastView.nib */ = {isa = PBXFileReference; lastKnownFileType = file; path = HourlyForecastView.nib; sourceTree = "<group>"; };
+		8D56D3B81F07988D009E3070 /* HourlyForecastView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = HourlyForecastView.nib; sourceTree = "<group>"; };
 		8D56D3B91F07988D009E3070 /* Hurricane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hurricane@2x.png"; sourceTree = "<group>"; };
 		8D56D3BA1F07988D009E3070 /* Hurricane@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Hurricane@3x.png"; sourceTree = "<group>"; };
 		8D56D3BB1F07988D009E3070 /* Ice@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ice@2x.png"; sourceTree = "<group>"; };
@@ -546,7 +550,7 @@
 		8D56D3D71F07988D009E3070 /* ScatteredThunderstormNight@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScatteredThunderstormNight@3x.png"; sourceTree = "<group>"; };
 		8D56D3D81F07988D009E3070 /* SevereThunderstorm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SevereThunderstorm@2x.png"; sourceTree = "<group>"; };
 		8D56D3D91F07988D009E3070 /* SevereThunderstorm@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SevereThunderstorm@3x.png"; sourceTree = "<group>"; };
-		8D56D3DA1F07988D009E3070 /* ShortLookView.nib */ = {isa = PBXFileReference; lastKnownFileType = file; path = ShortLookView.nib; sourceTree = "<group>"; };
+		8D56D3DA1F07988D009E3070 /* ShortLookView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = ShortLookView.nib; sourceTree = "<group>"; };
 		8D56D3DB1F07988D009E3070 /* Sleet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sleet@2x.png"; sourceTree = "<group>"; };
 		8D56D3DC1F07988D009E3070 /* Sleet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sleet@3x.png"; sourceTree = "<group>"; };
 		8D56D3DD1F07988D009E3070 /* Smoke@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Smoke@2x.png"; sourceTree = "<group>"; };
@@ -885,6 +889,11 @@
 		8D56D7161F08BE7E009E3070 /* Tweak.xm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Tweak.xm; sourceTree = "<group>"; };
 		8D56D7181F08BED0009E3070 /* Redstone2_UIKit.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Redstone2_UIKit.plist; sourceTree = "<group>"; };
 		8D56D71C1F099CC1009E3070 /* SBApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBApplication.h; sourceTree = "<group>"; };
+		8D56D71D1F0A1685009E3070 /* SpringBoard-Class.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpringBoard-Class.h"; sourceTree = "<group>"; };
+		8D5AA3341F0A2D4100DC2073 /* RSAppListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSAppListController.h; sourceTree = "<group>"; };
+		8D5AA3351F0A2D4100DC2073 /* RSAppListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSAppListController.m; sourceTree = "<group>"; };
+		8D5AA3371F0A2E8D00DC2073 /* RSAppListScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSAppListScrollView.h; sourceTree = "<group>"; };
+		8D5AA3381F0A2E8D00DC2073 /* RSAppListScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSAppListScrollView.m; sourceTree = "<group>"; };
 		8D63E36C1F04D91F00FC242C /* RSTiltView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSTiltView.h; sourceTree = "<group>"; };
 		8D63E36D1F04D91F00FC242C /* RSTiltView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTiltView.m; sourceTree = "<group>"; };
 		8D9EDAC81F02FDFA00C97EEA /* Redstone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Redstone.h; sourceTree = "<group>"; };
@@ -912,6 +921,10 @@
 		8DC97C611F039C94004A75CB /* RSHomeScreenScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSHomeScreenScrollView.m; sourceTree = "<group>"; };
 		8DC97C641F039D1A004A75CB /* RSStartScreenController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSStartScreenController.h; sourceTree = "<group>"; };
 		8DC97C651F039D1A004A75CB /* RSStartScreenController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSStartScreenController.m; sourceTree = "<group>"; };
+		8DCAFCBE1F0A321A00038094 /* RSAppListSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppListSection.h; sourceTree = "<group>"; };
+		8DCAFCBF1F0A321A00038094 /* RSAppListSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppListSection.m; sourceTree = "<group>"; };
+		8DCAFCC11F0A327500038094 /* RSApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSApp.h; sourceTree = "<group>"; };
+		8DCAFCC21F0A327500038094 /* RSApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSApp.m; sourceTree = "<group>"; };
 		8DCB953F1EFE4A9900C0038F /* Redstone2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Redstone2.plist; sourceTree = "<group>"; };
 		8DDC17DF1F0581E500C57D6E /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
 		8DDC17E61F059D8D00C57D6E /* UIView+Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Easing.h"; sourceTree = "<group>"; };
@@ -953,8 +966,9 @@
 				8D9EDAD01F02FF4A00C97EEA /* Core */,
 				8D63E36B1F04D86E00FC242C /* UI */,
 				8D9EDAD41F0301AC00C97EEA /* HomeScreen */,
-				8DC97C631F039CE3004A75CB /* App Switcher */,
+				8DC97C631F039CE3004A75CB /* AppSwitcher */,
 				8DC97C5F1F039C66004A75CB /* StartScreen */,
+				8D5AA3331F0A2CFB00DC2073 /* AppList */,
 				8D56D36A1F07046C009E3070 /* LaunchScreen */,
 			);
 			path = Redstone2;
@@ -2081,6 +2095,21 @@
 			path = Redstone2_UIKit;
 			sourceTree = "<group>";
 		};
+		8D5AA3331F0A2CFB00DC2073 /* AppList */ = {
+			isa = PBXGroup;
+			children = (
+				8D5AA3341F0A2D4100DC2073 /* RSAppListController.h */,
+				8D5AA3351F0A2D4100DC2073 /* RSAppListController.m */,
+				8D5AA3371F0A2E8D00DC2073 /* RSAppListScrollView.h */,
+				8D5AA3381F0A2E8D00DC2073 /* RSAppListScrollView.m */,
+				8DCAFCBE1F0A321A00038094 /* RSAppListSection.h */,
+				8DCAFCBF1F0A321A00038094 /* RSAppListSection.m */,
+				8DCAFCC11F0A327500038094 /* RSApp.h */,
+				8DCAFCC21F0A327500038094 /* RSApp.m */,
+			);
+			path = AppList;
+			sourceTree = "<group>";
+		};
 		8D63E36B1F04D86E00FC242C /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -2128,12 +2157,13 @@
 			isa = PBXGroup;
 			children = (
 				8DB9859D1F03DC5C00CD1AEB /* SpringBoard.h */,
+				8D56D71D1F0A1685009E3070 /* SpringBoard-Class.h */,
+				8D56D71C1F099CC1009E3070 /* SBApplication.h */,
 				8DB9859E1F03DC9100CD1AEB /* SBIconController.h */,
 				8DB985A01F03DD0E00CD1AEB /* SBIconModel.h */,
 				8DB9859F1F03DCC400CD1AEB /* SBLeafIcon.h */,
 				8DC97C5E1F038A82004A75CB /* SBUIAnimationZoomApp.h */,
 				8DC97C581F03190D004A75CB /* SBUIController.h */,
-				8D56D71C1F099CC1009E3070 /* SBApplication.h */,
 			);
 			path = SpringBoard;
 			sourceTree = "<group>";
@@ -2153,11 +2183,11 @@
 			path = StartScreen;
 			sourceTree = "<group>";
 		};
-		8DC97C631F039CE3004A75CB /* App Switcher */ = {
+		8DC97C631F039CE3004A75CB /* AppSwitcher */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = "App Switcher";
+			path = AppSwitcher;
 			sourceTree = "<group>";
 		};
 		8DDC17E51F059D7200C57D6E /* Libraries */ = {
@@ -2705,16 +2735,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D5AA3361F0A2D4100DC2073 /* RSAppListController.m in Sources */,
 				8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */,
 				8D56D7151F08BE44009E3070 /* Makefile in Sources */,
 				8D63E36E1F04D91F00FC242C /* RSTiltView.m in Sources */,
 				8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */,
+				8D5AA3391F0A2E8D00DC2073 /* RSAppListScrollView.m in Sources */,
+				8DCAFCC31F0A327500038094 /* RSApp.m in Sources */,
 				8D56D3691F06FEA1009E3070 /* UIFont+WDCustomLoader.m in Sources */,
 				8D56D36D1F07048B009E3070 /* RSLaunchScreenController.m in Sources */,
 				8DDC17E81F059D8D00C57D6E /* UIView+Easing.m in Sources */,
 				8D56D3761F070915009E3070 /* RSTileInfo.m in Sources */,
 				8D56CFCA1F06286A009E3070 /* RSStartScreenScrollView.m in Sources */,
 				8DB985A31F04600C00CD1AEB /* RSAesthetics.m in Sources */,
+				8DCAFCC01F0A321A00038094 /* RSAppListSection.m in Sources */,
 				8DB9859C1F03CC8E00CD1AEB /* RSMetrics.m in Sources */,
 				8D56D3731F070752009E3070 /* easing.c in Sources */,
 				8D9EDAD71F0302A600C97EEA /* RSPreferences.m in Sources */,

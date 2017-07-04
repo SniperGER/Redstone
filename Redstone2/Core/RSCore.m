@@ -1,9 +1,9 @@
 #import "../Redstone.h"
 
+@implementation RSCore
+
 static RSCore* sharedInstance;
 static id currentApplication;
-
-@implementation RSCore
 
 + (id)sharedInstance {
 	return sharedInstance;
@@ -42,22 +42,15 @@ static id currentApplication;
 	return self;
 }
 
-- (void)frontDisplayDidChange:(SBApplication*)application {
-	if ([application isKindOfClass:NSClassFromString(@"SBDashBoardViewController")]) {
-		currentApplication = nil;
-		return;
-	}
+- (void)frontDisplayDidChange {
+	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
-	currentApplication = application;
-	
-	if (application) {
-		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[application bundleIdentifier]];
+	if (frontApp) {
+		[[RSStartScreenController sharedInstance] setTilesVisible:NO];
+		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
+	} else {
 		[[RSStartScreenController sharedInstance] setTilesVisible:YES];
 	}
-}
-
-- (SBApplication*)currentApplication {
-	return currentApplication;
 }
 
 @end

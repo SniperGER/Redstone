@@ -29,10 +29,13 @@
 		NSLog(@"[Redstone | Core] Initializing Core");
 		
 		%init(core);
+		
+#if (!TARGET_OS_SIMULATOR)
 		[OBJCIPC registerIncomingMessageFromAppHandlerForMessageName:@"Redstone.Application.BecameActive"  handler:^NSDictionary *(NSDictionary *message) {
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneApplicationDidBecomeActive" object:nil];
 			
 			return nil;
 		}];
+#endif
 	}
 }

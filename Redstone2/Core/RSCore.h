@@ -27,8 +27,6 @@
  */
 - (id)initWithWindow:(UIWindow*)window;
 
-- (void)frontDisplayDidChange:(SBApplication*)application;
-
-- (SBApplication*)currentApplication;
+- (void)frontDisplayDidChange;
 
 @end

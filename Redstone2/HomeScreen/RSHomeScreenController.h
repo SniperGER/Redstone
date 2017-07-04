@@ -13,7 +13,6 @@
 	RSAppListController* appListController;
 	RSLaunchScreenController* launchScreenController;
 	
-	//UIWindow* window;
 	UIImageView* wallpaperView;
 	RSHomeScreenScrollView* scrollView;
 }
@@ -32,11 +31,17 @@
  */
 - (void)setParallaxPosition;
 
+- (void)deviceHasBeenUnlocked;
+
+- (CGFloat)launchApplication;
+
 /**
  Enables or disables the scrolling behavior of the Home Screen Controller scroll view
 
  @param scrollEnabled The desired scrolling state
  */
 - (void)setScrollEnabled:(BOOL)scrollEnabled;
+
+- (void)setContentOffset:(CGPoint)offset;
 
 @end

@@ -456,7 +456,7 @@ static RSStartScreenController* sharedInstance;
 - (void)animateIn {
 	// App to Home Screen
 	[self.view setUserInteractionEnabled:NO];
-	[(UIScrollView*)self.view setContentOffset:CGPointMake(0, -24)];
+	//[(UIScrollView*)self.view setContentOffset:CGPointMake(0, -24)];
 	
 	NSMutableArray* appsInView = [NSMutableArray new];
 	NSMutableArray* appsNotInView = [NSMutableArray new];
@@ -638,10 +638,6 @@ static RSStartScreenController* sharedInstance;
 			[tile.layer setAnchorPoint:CGPointMake(0.5,0.5)];
 			[tile setCenter:[tile originalCenter]];
 		}
-		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-			[(UIScrollView*)self.view setContentOffset:CGPointMake(0, -24)];
-		});
 	});
 }
 
