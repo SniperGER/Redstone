@@ -44,6 +44,7 @@
 
 #pragma mark UI
 #import "UI/RSTiltView.h"
+#import "UI/RSFlyoutMenu.h"
 
 #pragma mark Home Screen
 #import "HomeScreen/RSHomeScreenController.h"

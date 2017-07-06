@@ -21,7 +21,7 @@ Redstone2_FILES += Libraries/UIView+Easing.m Libraries/UIFont+WDCustomLoader.m L
 Redstone2_FILES += Core/RSCore.m Core/RSPreferences.m Core/RSMetrics.m Core/RSAesthetics.m
 
 # UI
-Redstone2_FILES += UI/RSTiltView.m
+Redstone2_FILES += UI/RSTiltView.m UI/RSFlyoutMenu.m
 
 # Home Screen
 Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenScrollView.m

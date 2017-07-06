@@ -42,7 +42,8 @@ static id currentApplication;
 	return self;
 }
 
-- (void)frontDisplayDidChange {
+- (void)frontDisplayDidChange:(id)application {
+	currentApplication = application;
 	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
 	if (frontApp) {
@@ -51,6 +52,34 @@ static id currentApplication;
 	} else {
 		[[RSStartScreenController sharedInstance] setTilesVisible:YES];
 	}
+}
+
+- (BOOL)handleMenuButtonEvent {
+	if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")]) {
+		return YES;
+	}
+	if ([RSLaunchScreenController sharedInstance]) {
+		if ([[RSLaunchScreenController sharedInstance] isLaunchingApp]) {
+			return NO;
+		}
+	}
+	
+	if ([RSStartScreenController sharedInstance]) {
+		if ([[RSStartScreenController sharedInstance] isEditing]) {
+			[[RSStartScreenController sharedInstance] setIsEditing:NO];
+			return NO;
+		}
+		
+		if ([[RSHomeScreenController sharedInstance] contentOffset].x != 0 || [(UIScrollView*)[[RSStartScreenController sharedInstance] view] contentOffset].y != -24) {
+			[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero animated:YES];
+			[(UIScrollView*)[[RSStartScreenController sharedInstance] view] setContentOffset:CGPointMake(0, -24) animated:YES];
+			[(UIScrollView*)[[RSAppListController sharedInstance] view] setContentOffset:CGPointZero animated:YES];
+			
+			return NO;
+		}
+	}
+	
+	return YES;
 }
 
 @end

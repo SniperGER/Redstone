@@ -96,12 +96,19 @@ UIImage* _UICreateScreenUIImage();
 		[self.window.layer addAnimation:opacity forKey:@"opacity"];
 		
 		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			_isLaunchingApp = NO;
 			[self.window setHidden:YES];
 		});
 	});
 }
 
 - (void)animateCurrentApplicationSnapshot {
+	if (_isLaunchingApp) {
+		return;
+	}
+	
+	_isLaunchingApp = YES;
+	
 	[applicationSnapshot.layer removeAllAnimations];
 	[applicationSnapshot setImage:_UICreateScreenUIImage()];
 	[applicationSnapshot setHidden:NO];
@@ -118,7 +125,7 @@ UIImage* _UICreateScreenUIImage();
 															function:CubicEaseInOut
 														   fromValue:1.0
 															 toValue:0.0];
-	opacity.duration = 0.225;
+	opacity.duration = 0.2;
 	opacity.removedOnCompletion = NO;
 	opacity.fillMode = kCAFillModeForwards;
 	
@@ -126,14 +133,16 @@ UIImage* _UICreateScreenUIImage();
 														  function:CubicEaseInOut
 														 fromValue:1.0
 														   toValue:1.5];
-	scale.duration = 0.25;
+	scale.duration = 0.15;
 	scale.removedOnCompletion = NO;
 	scale.fillMode = kCAFillModeForwards;
 	
 	[self.window.layer addAnimation:opacity forKey:@"opacity"];
 	[self.window.layer addAnimation:scale forKey:@"scale"];
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		_isLaunchingApp = NO;
+		
 		[self.window setHidden:YES];
 		[applicationSnapshot setImage:nil];
 		[applicationSnapshot setHidden:YES];

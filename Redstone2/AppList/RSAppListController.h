@@ -6,13 +6,37 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RSAppListController : UIViewController {
+@class RSAppListSection, RSApp;
+
+@interface RSAppListController : UIViewController <UIScrollViewDelegate> {
 	NSMutableArray* sections;
 	NSMutableArray* apps;
 	NSMutableDictionary* appsBySection;
+	
+	UIView* sectionBackgroundContainer;
+	UIImageView* sectionBackgroundImage;
+	UIView* sectionBackgroundOverlay;
+	
+	RSFlyoutMenu* pinMenu;
 }
 
 + (id)sharedInstance;
+
+- (void)updateSectionsWithOffset:(CGFloat)offset;
+
+- (void)setSectionOverlayAlpha:(CGFloat)alpha;
+
+- (void)updateSectionOverlayPosition;
+
+- (void)loadApps;
+
+- (void)layoutContentsWithSections:(BOOL)addSections;
+
+- (void)sortAppsAndLayout:(NSArray*)_sections;
+
+- (RSAppListSection*)sectionWithLetter:(NSString*)letter;
+
+- (RSApp*)appForLeafIdentifier:(NSString*)leafIdentifier;
 
 - (CGFloat)getMaxDelayForAnimation;
 

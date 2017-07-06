@@ -17,6 +17,12 @@
 	RSSoundController* soundController;
 }
 
+
+/**
+ Returns the global RSCore instance because a static instance just isn't enough
+
+ @return A global instance of \p RSCore
+ */
 + (id)sharedInstance;
 
 /**
@@ -27,6 +33,16 @@
  */
 - (id)initWithWindow:(UIWindow*)window;
 
-- (void)frontDisplayDidChange;
+/**
+ Handles a change frontmost application
+ @param application The currently frontmost application
+ */
+- (void)frontDisplayDidChange:(id)application;
 
+/**
+ Overrides the default iOS Home button press event to reset various things in Redstone
+
+ @return A boolean value that specifies if the default event can be fired
+ */
+- (BOOL)handleMenuButtonEvent;
 @end

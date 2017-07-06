@@ -20,6 +20,17 @@
 
 %end // %hook SpringBoard
 
+%hook SBHomeHardwareButton
+
+// iOS 10
+- (void)singlePressUp:(id)arg1 {
+	if ([[RSCore sharedInstance] handleMenuButtonEvent]) {
+		%orig;
+	}
+}
+
+%end // %hook SBHomeHardwareButton
+
 %end // %group core
 
 %ctor {

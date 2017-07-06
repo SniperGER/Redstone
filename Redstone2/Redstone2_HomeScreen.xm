@@ -21,7 +21,7 @@ BOOL hasBeenUnlockedBefore;
 - (void)frontDisplayDidChange:(id)arg1 {
 	%orig(arg1);
 	
-	[[RSCore sharedInstance] frontDisplayDidChange];
+	[[RSCore sharedInstance] frontDisplayDidChange:arg1];
 }
 
 %end // %hook SpringBoard
@@ -62,14 +62,16 @@ BOOL hasBeenUnlockedBefore;
 			[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
 			
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay+0.31 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+#if (!TARGET_OS_SIMULATOR)
 				[[RSLaunchScreenController sharedInstance] animateIn];
+#endif
 				
 				[(UIScrollView*)[[RSStartScreenController sharedInstance] view] setContentOffset:CGPointMake(0, -24)];
 				[(UIScrollView*)[[RSAppListController sharedInstance] view] setContentOffset:CGPointZero];
 				
 				%orig;
 				
-				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero];
 				});
 			});
@@ -88,7 +90,7 @@ BOOL hasBeenUnlockedBefore;
 			if ([[RSLaunchScreenController sharedInstance] launchIdentifier] != nil) {
 				[[RSLaunchScreenController sharedInstance] animateCurrentApplicationSnapshot];
 				[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:nil];
-				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 					[[RSStartScreenController sharedInstance] animateIn];
 					
 					%orig;
@@ -97,8 +99,10 @@ BOOL hasBeenUnlockedBefore;
 				if (hasBeenUnlockedBefore) {
 					[[RSHomeScreenController sharedInstance] deviceHasBeenUnlocked];
 				} else {
-					[[RSStartScreenController sharedInstance] animateIn];
 					hasBeenUnlockedBefore = YES;
+					
+					[[RSStartScreenController sharedInstance] animateIn];
+					[[RSAppListController sharedInstance] animateIn];
 				}
 				
 				%orig;

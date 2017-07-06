@@ -60,15 +60,17 @@ NSBundle* redstoneBundle;
 				 @"BackgroundColor": [UIColor colorWithWhite:0.22 alpha:1.0],
 				 @"InvertedForegroundColor": [UIColor blackColor],
 				 @"InvertedBackgroundColor": [UIColor whiteColor],
-				 @"OpaqueBackgroundColor": [UIColor colorWithWhite:0.0 alpha:0.75]
+				 @"OpaqueBackgroundColor": [UIColor colorWithWhite:0.0 alpha:0.75],
+				 @"BorderColor": [UIColor colorWithWhite:0.46 alpha:1.0]
 				 };
 	} else if ([themeName isEqualToString:@"light"]) {
 		return @{
 				 @"ForegroundColor": [UIColor blackColor],
-				 @"BackgroundColor": [UIColor whiteColor],
+				 @"BackgroundColor": [UIColor colorWithWhite:0.95 alpha:1.0],
 				 @"InvertedForegroundColor": [UIColor whiteColor],
 				 @"InvertedBackgroundColor": [UIColor colorWithWhite:0.22 alpha:1.0],
-				 @"OpaqueBackgroundColor": [UIColor colorWithWhite:1.0 alpha:0.75]
+				 @"OpaqueBackgroundColor": [UIColor colorWithWhite:1.0 alpha:0.75],
+				 @"BorderColor": [UIColor colorWithWhite:0.80 alpha:1.0]
 				 };
 	}
 	

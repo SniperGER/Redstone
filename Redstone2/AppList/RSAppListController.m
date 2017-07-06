@@ -1,13 +1,13 @@
 #import "../Redstone.h"
 
 @implementation RSAppListController
-
-static RSAppListController* sharedInstance;
-
+	
+	static RSAppListController* sharedInstance;
+	
 + (id)sharedInstance {
 	return sharedInstance;
 }
-
+	
 - (id)init {
 	if (self = [super init]) {
 		sharedInstance = self;
@@ -15,19 +15,78 @@ static RSAppListController* sharedInstance;
 	
 	return self;
 }
-
+	
 - (void)loadView {
 	self.view = [[RSAppListScrollView alloc] initWithFrame:CGRectMake(screenWidth, 70, screenWidth, screenHeight - 70)];
+	[(UIScrollView*)self.view setDelegate:self];
+	
+	sectionBackgroundContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
+	[sectionBackgroundContainer setClipsToBounds:YES];
+	
+	sectionBackgroundImage = [[UIImageView alloc] initWithImage:[RSAesthetics homeScreenWallpaper]];
+	[sectionBackgroundImage setFrame:CGRectMake(0, -70, screenWidth, screenHeight)];
+	[sectionBackgroundImage setTransform:CGAffineTransformMakeScale(1.5, 1.5)];
+	[sectionBackgroundContainer addSubview:sectionBackgroundImage];
+	
+	sectionBackgroundOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
+	[sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.75]];
+	[sectionBackgroundContainer addSubview:sectionBackgroundOverlay];
 }
-
+	
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
 	[self loadApps];
 }
+	
+#pragma mark Delegate
+	
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+	
+}
+	
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+	[self updateSectionsWithOffset:[(UIScrollView*)self.view contentOffset].y];
+}
+	
+- (void)updateSectionsWithOffset:(CGFloat)offset {
+	for (int i=0; i<[sections count]; i++) {
+		RSAppListSection* section = [sections objectAtIndex:i];
+		
+		if (section.yPosition - offset < 0 && (i+1) < sections.count) {
+			if ([sections objectAtIndex:i+1] && (offset + 60) < [[sections objectAtIndex:i+1] yPosition]) {
+				[section setFrame:CGRectMake(0, offset, self.view.frame.size.width, 60)];
+				[sectionBackgroundContainer setFrame:CGRectMake(0, offset, self.view.frame.size.width, 60)];
+				[sectionBackgroundImage setCenter:CGPointMake(screenWidth/2 + (-screenWidth + [[RSHomeScreenController sharedInstance] contentOffset].x),
+															  screenHeight/2 - 70 - [[RSHomeScreenController sharedInstance] parallaxPosition])];
+			} else {
+				[section setFrame:CGRectMake(0, [[sections objectAtIndex:i+1] yPosition] - 60, self.view.frame.size.width, 60)];
+				[sectionBackgroundContainer setFrame:CGRectMake(0, [[sections objectAtIndex:i+1] yPosition] - 60, self.view.frame.size.width, 60)];
+				[sectionBackgroundImage setCenter:CGPointMake(screenWidth/2  + (-screenWidth + [[RSHomeScreenController sharedInstance] contentOffset].x),
+															  screenHeight/2 + (offset - [[sections objectAtIndex:i+1] yPosition] - 10)  - [[RSHomeScreenController sharedInstance] parallaxPosition])];
+			}
+		} else {
+			[section setFrame:CGRectMake(0, [section yPosition], self.view.frame.size.width, 60)];
+		}
+	}
+	
+	if (offset <= 0) {
+		[sectionBackgroundContainer setHidden:YES];
+	} else {
+		[sectionBackgroundContainer setHidden:NO];
+	}
+}
+	
+- (void)setSectionOverlayAlpha:(CGFloat)alpha {
+	[sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:alpha]];
+}
 
+- (void)updateSectionOverlayPosition {
+	[self updateSectionsWithOffset:[(UIScrollView*)self.view contentOffset].y];
+}
+	
 #pragma mark App Management
-
+	
 - (void)loadApps {
 	if (sections && appsBySection) {
 		[sections makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -105,9 +164,8 @@ static RSAppListController* sharedInstance;
 	}
 	
 	[self layoutContentsWithSections:YES];
-	//[(UIScrollView*)[self view] setContentSize:CGSizeMake(screenWidth, visibleApps.count * 50)];
 }
-
+	
 - (void)layoutContentsWithSections:(BOOL)addSections {
 	NSMutableArray* _sections = [[NSMutableArray alloc] init];
 	
@@ -126,7 +184,7 @@ static RSAppListController* sharedInstance;
 	
 	[self sortAppsAndLayout:sections];
 }
-
+	
 - (void)sortAppsAndLayout:(NSArray*)_sections {
 	NSString* alphabet = @"#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
 	
@@ -143,7 +201,6 @@ static RSAppListController* sharedInstance;
 			[section setYPosition:yPos];
 			
 			yPos += 60;
-			[self.view addSubview:section];
 			
 			for (RSApp* app in currentSection) {
 				[app setFrame:CGRectMake(0, yPos, screenWidth, 56)];
@@ -154,16 +211,25 @@ static RSAppListController* sharedInstance;
 		}
 	}
 	
+	NSArray* sortedSections = [sections sortedArrayUsingComparator:^NSComparisonResult(RSAppListSection* app1, RSAppListSection* app2) {
+		return [[NSNumber numberWithFloat:app1.yPosition] compare:[NSNumber numberWithFloat:app2.yPosition]];
+	}];
+	sections = [sortedSections mutableCopy];
+	
+	[self.view addSubview:sectionBackgroundContainer];
+	for (int i=0; i<sections.count; i++) {
+		[self.view addSubview:[sections objectAtIndex:i]];
+	}
+	
 	CGRect contentRect = CGRectZero;
 	for (UIView *view in self.view.subviews) {
 		contentRect = CGRectUnion(contentRect, view.frame);
 	}
-	[(UIScrollView*)[self view] setContentSize:contentRect.size];
+	[(UIScrollView*)self.view setContentSize:contentRect.size];
 	
-	//[sectionBackgroundContainer setFrame:CGRectMake(0, 0, screenWidth, 60)];
-	//[self.view insertSubview:sectionBackgroundContainer belowSubview:[_sections objectAtIndex:0]];
+	[sectionBackgroundContainer setFrame:CGRectMake(0, 0, screenWidth, 60)];
 }
-
+	
 - (RSAppListSection*)sectionWithLetter:(NSString*)letter {
 	if (letter != nil) {
 		for (RSAppListSection* section in sections) {
@@ -176,7 +242,7 @@ static RSAppListController* sharedInstance;
 	
 	return nil;
 }
-
+	
 - (RSApp*)appForLeafIdentifier:(NSString*)leafIdentifier {
 	for (RSApp* app in apps) {
 		if ([[app.icon applicationBundleID] isEqualToString:leafIdentifier]) {
@@ -187,9 +253,9 @@ static RSAppListController* sharedInstance;
 	
 	return nil;
 }
-
+	
 # pragma mark Animations
-
+	
 - (CGFloat)getMaxDelayForAnimation {
 	NSMutableArray* viewsInView = [NSMutableArray new];
 	
@@ -203,11 +269,91 @@ static RSAppListController* sharedInstance;
 	
 	return viewsInView.count * 0.01;
 }
-
-- (void)animateIn {
 	
+- (void)animateIn {
+	NSMutableArray* viewsInView = [NSMutableArray new];
+	NSMutableArray* viewsNotInView = [NSMutableArray new];
+	
+	for (RSApp* view in self.view.subviews) {
+		if (view != sectionBackgroundContainer && ![view isKindOfClass:[UIImageView class]] && !view.hidden) {
+			[view setTiltEnabled:NO];
+			[view.layer removeAllAnimations];
+			[view setTransform:CGAffineTransformIdentity];
+			
+			if ( CGRectIntersectsRect(self.view.bounds, view.frame)) {
+				[viewsInView addObject:view];
+			} else {
+				[viewsNotInView addObject:view];
+			}
+		}
+	}
+	
+	viewsInView = [[viewsInView sortedArrayUsingComparator:^NSComparisonResult(UIView* view1, UIView* view2) {
+		return [[NSNumber numberWithFloat:view1.frame.origin.y] compare:[NSNumber numberWithFloat:view2.frame.origin.y]];
+	}] mutableCopy];
+	
+	for (UIView* view in viewsNotInView) {
+		[view setHidden:YES];
+	}
+	
+	CAAnimation* scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"
+														  function:CubicEaseOut
+														 fromValue:0.8
+														   toValue:1.0];
+	[scale setDuration:0.4];
+	[scale setRemovedOnCompletion:NO];
+	[scale setFillMode:kCAFillModeForwards];
+	
+	CAAnimation* opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
+															function:CubicEaseIn
+														   fromValue:0.0
+															 toValue:1.0];
+	[opacity setDuration:0.3];
+	[opacity setRemovedOnCompletion:NO];
+	[opacity setFillMode:kCAFillModeForwards];
+	
+	float maxDelay = [viewsInView count] * 0.01;
+	
+	for (UIView* view in viewsInView) {
+		[view.layer setShouldRasterize:YES];
+		[view.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
+		[view.layer setContentsScale:[[UIScreen mainScreen] scale]];
+		
+		CGPoint basePoint = [view convertPoint:view.bounds.origin toView:self.view];
+		
+		CGFloat layerX = -(basePoint.x - CGRectGetMidX(self.view.bounds))/view.frame.size.width;
+		CGFloat layerY = -(basePoint.y - CGRectGetMidY(self.view.bounds))/view.frame.size.height;
+		
+		CGFloat delay = [viewsInView indexOfObject:view] * 0.01;
+		
+		[view setCenter:CGPointMake(CGRectGetMidX(self.view.bounds),
+									CGRectGetMidY(self.view.bounds))];
+		[view.layer setAnchorPoint:CGPointMake(layerX, layerY)];
+		
+		[scale setBeginTime:CACurrentMediaTime() + delay];
+		[opacity setBeginTime:CACurrentMediaTime() + delay];
+		
+		[view.layer addAnimation:scale forKey:@"scale"];
+		[view.layer addAnimation:opacity forKey:@"opacity"];
+	}
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[self.view setUserInteractionEnabled:YES];
+		
+		for (UIView* view in self.view.subviews) {
+			[view setUserInteractionEnabled:YES];
+			[view.layer removeAllAnimations];
+			[view.layer setOpacity:1];
+			[view setAlpha:1.0];
+			[view setHidden:NO];
+			
+			if ([view isKindOfClass:[RSApp class]] || [view isKindOfClass:[RSAppListSection class]]) {
+				[(RSApp*)view setTiltEnabled:YES];
+			}
+		}
+	});
 }
-
+	
 - (void)animateOut {
 	RSApp* sender = [self appForLeafIdentifier:[[RSLaunchScreenController sharedInstance] launchIdentifier]];
 	
@@ -215,7 +361,7 @@ static RSAppListController* sharedInstance;
 	NSMutableArray* viewsNotInView = [NSMutableArray new];
 	
 	for (RSApp* view in self.view.subviews) {
-		if (![view isKindOfClass:[UIImageView class]] && !view.hidden) {
+		if (view != sectionBackgroundContainer && ![view isKindOfClass:[UIImageView class]] && !view.hidden) {
 			[view setTiltEnabled:NO];
 			[view.layer removeAllAnimations];
 			[view setTransform:CGAffineTransformIdentity];
@@ -291,7 +437,7 @@ static RSAppListController* sharedInstance;
 			[view.layer removeAllAnimations];
 		}
 		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			for (UIView* view in self.view.subviews) {
 				[view setHidden:NO];
 				[view.layer setOpacity:1];
@@ -302,8 +448,8 @@ static RSAppListController* sharedInstance;
 				}
 			}
 		});
-
+		
 	});
 }
-
-@end
+	
+	@end

@@ -26,6 +26,8 @@
  */
 + (id)sharedInstance;
 
+- (CGFloat)parallaxPosition;
+
 /**
  Sets the parallax value of \p wallpaperView based on \p RSStartScreenController's scroll view offset
  */
@@ -42,6 +44,10 @@
  */
 - (void)setScrollEnabled:(BOOL)scrollEnabled;
 
+- (CGPoint)contentOffset;
+
 - (void)setContentOffset:(CGPoint)offset;
+
+- (void)setContentOffset:(CGPoint)offset animated:(BOOL)animated;
 
 @end
