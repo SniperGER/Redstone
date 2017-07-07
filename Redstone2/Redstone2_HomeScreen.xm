@@ -66,13 +66,12 @@ BOOL hasBeenUnlockedBefore;
 				[[RSLaunchScreenController sharedInstance] animateIn];
 #endif
 				
-				[(UIScrollView*)[[RSStartScreenController sharedInstance] view] setContentOffset:CGPointMake(0, -24)];
-				[(UIScrollView*)[[RSAppListController sharedInstance] view] setContentOffset:CGPointZero];
-				
 				%orig;
 				
 				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero];
+					[(UIScrollView*)[[RSStartScreenController sharedInstance] view] setContentOffset:CGPointMake(0, -24)];
+					[(UIScrollView*)[[RSAppListController sharedInstance] view] setContentOffset:CGPointZero];
 				});
 			});
 			break;
@@ -115,10 +114,27 @@ BOOL hasBeenUnlockedBefore;
 
 %end
 
+%hook SBIconModel
+
+-(void)addIcon:(id)arg1 {
+	%orig;
+	
+	/*if ([arg1 isKindOfClass:%c(SBDownloadingIcon)]) {
+		NSLog(@"[Redstone | Home Screen] start downloading app: \"%@\", \"%@\"", [arg1 displayName], [arg1 realDisplayName]);
+	}*/
+	%log;
+	
+	[[RSAppListController sharedInstance] addAppForIcon:arg1];
+}
+
+%end // %hook SBIconModel
+
 %hook SBIconImageView
 
 -(void)setProgressState:(long long)arg1 paused:(BOOL)arg2 percent:(double)arg3 animated:(BOOL)arg4 {
 	%orig;
+	
+	[[RSAppListController sharedInstance] setDownloadProgressForIcon:[[self icon] applicationBundleID] progress:arg3 state:arg1];
 }
 
 %end // %hook SBIconImageView

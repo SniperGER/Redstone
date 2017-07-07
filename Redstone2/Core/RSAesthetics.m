@@ -5,6 +5,14 @@ NSBundle* redstoneBundle;
 
 @implementation RSAesthetics
 
++ (NSString*)localizedStringForKey:(NSString*)key {
+	if (!redstoneBundle) {
+		redstoneBundle = [NSBundle bundleWithPath:RESOURCE_PATH];
+	}
+	
+	return [redstoneBundle localizedStringForKey:key value:nil table:nil];
+}
+
 + (UIImage*)lockScreenWallpaper {
 	NSData* lockscreenWallpaper = [NSData dataWithContentsOfFile:LOCK_WALLPAPER_PATH];
 	
@@ -61,7 +69,8 @@ NSBundle* redstoneBundle;
 				 @"InvertedForegroundColor": [UIColor blackColor],
 				 @"InvertedBackgroundColor": [UIColor whiteColor],
 				 @"OpaqueBackgroundColor": [UIColor colorWithWhite:0.0 alpha:0.75],
-				 @"BorderColor": [UIColor colorWithWhite:0.46 alpha:1.0]
+				 @"BorderColor": [UIColor colorWithWhite:0.46 alpha:1.0],
+				 @"TrackColor": [UIColor colorWithWhite:0.43 alpha:1.0]
 				 };
 	} else if ([themeName isEqualToString:@"light"]) {
 		return @{
@@ -70,7 +79,8 @@ NSBundle* redstoneBundle;
 				 @"InvertedForegroundColor": [UIColor whiteColor],
 				 @"InvertedBackgroundColor": [UIColor colorWithWhite:0.22 alpha:1.0],
 				 @"OpaqueBackgroundColor": [UIColor colorWithWhite:1.0 alpha:0.75],
-				 @"BorderColor": [UIColor colorWithWhite:0.80 alpha:1.0]
+				 @"BorderColor": [UIColor colorWithWhite:0.80 alpha:1.0],
+				 @"TrackColor": [UIColor colorWithWhite:0.66 alpha:1.0]
 				 };
 	}
 	

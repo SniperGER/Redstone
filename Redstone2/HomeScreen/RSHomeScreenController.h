@@ -26,6 +26,11 @@
  */
 + (id)sharedInstance;
 
+/**
+ Returns the current parallax position of the Home Screen wallpaper
+
+ @return The current parallax position
+ */
 - (CGFloat)parallaxPosition;
 
 /**
@@ -33,8 +38,16 @@
  */
 - (void)setParallaxPosition;
 
+/**
+ Fires a fade in animation if the device has been unlocked before
+ */
 - (void)deviceHasBeenUnlocked;
 
+/**
+ Launches an app either from Start Screen or App List, fires the launch animation and returns the calculated animation delay
+
+ @return The current animation delay, based on Home Screen scroll view position
+ */
 - (CGFloat)launchApplication;
 
 /**
@@ -44,10 +57,26 @@
  */
 - (void)setScrollEnabled:(BOOL)scrollEnabled;
 
+/**
+ Returns the current offset of the Home Screen scroll view
+
+ @return The current Home Screen scroll view content offset
+ */
 - (CGPoint)contentOffset;
 
+/**
+ Sets the new offset of the Home Screen scroll view
+
+ @param offset The new Home Screen scroll view content offset
+ */
 - (void)setContentOffset:(CGPoint)offset;
 
+/**
+ Sets the new offset of the Home Screen scroll view
+ 
+ @param offset The new Home Screen scroll view content offset
+ @param animated \p YES to animate the transition at a constant velocity to the new offset, \p NO to make the transition immediate.
+ */
 - (void)setContentOffset:(CGPoint)offset animated:(BOOL)animated;
 
 @end

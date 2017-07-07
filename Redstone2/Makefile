@@ -21,7 +21,7 @@ Redstone2_FILES += Libraries/UIView+Easing.m Libraries/UIFont+WDCustomLoader.m L
 Redstone2_FILES += Core/RSCore.m Core/RSPreferences.m Core/RSMetrics.m Core/RSAesthetics.m
 
 # UI
-Redstone2_FILES += UI/RSTiltView.m UI/RSFlyoutMenu.m
+Redstone2_FILES += UI/RSTiltView.m UI/RSFlyoutMenu.m UI/RSProgressBar.m
 
 # Home Screen
 Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenScrollView.m
@@ -33,7 +33,7 @@ Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenSc
 Redstone2_FILES += StartScreen/RSStartScreenController.m StartScreen/RSStartScreenScrollView.m StartScreen/RSTile.m StartScreen/RSTileInfo.m
 
 # App List
-Redstone2_FILES += AppList/RSAppListController.m AppList/RSAppListScrollView.m AppList/RSAppListSection.m AppList/RSApp.m
+Redstone2_FILES += AppList/RSAppListController.m AppList/RSAppListScrollView.m AppList/RSAppListSection.m AppList/RSApp.m AppList/RSDownloadingApp.m
 
 # Launch Screen
 Redstone2_FILES += LaunchScreen/RSLaunchScreenController.m

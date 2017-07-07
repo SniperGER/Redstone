@@ -18,6 +18,12 @@
 	
 - (void)loadView {
 	self.view = [[RSAppListScrollView alloc] initWithFrame:CGRectMake(screenWidth, 70, screenWidth, screenHeight - 70)];
+	
+}
+	
+- (void)viewDidLoad {
+	[super viewDidLoad];
+	
 	[(UIScrollView*)self.view setDelegate:self];
 	
 	sectionBackgroundContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
@@ -31,12 +37,22 @@
 	sectionBackgroundOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
 	[sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.75]];
 	[sectionBackgroundContainer addSubview:sectionBackgroundOverlay];
-}
 	
-- (void)viewDidLoad {
-	[super viewDidLoad];
+	self.pinMenu = [RSFlyoutMenu new];
+	[self.pinMenu addActionWithTitle:[RSAesthetics localizedStringForKey:@"PIN_TO_START"] target:self action:@selector(pinSelectedApp)];
+	[self.pinMenu addActionWithTitle:[RSAesthetics localizedStringForKey:@"UNINSTALL"] target:self action:@selector(uninstallSelectedApp)];
+	
+	dismissRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePinMenu)];
+	[dismissRecognizer setEnabled:NO];
+	[self.view addGestureRecognizer:dismissRecognizer];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceFinishedLock) name:@"RedstoneDeviceHasFinishedLock" object:nil];
 	
 	[self loadApps];
+}
+
+- (void)deviceFinishedLock {
+	[self hidePinMenu];
 }
 	
 #pragma mark Delegate
@@ -103,7 +119,7 @@
 	NSString* numbers = @"1234567890";
 	
 	for (int i=0; i<28; i++) {
-		[appsBySection setObject:[@[] mutableCopy] forKey:[alphabet substringWithRange:NSMakeRange(i, 1)]];
+		[appsBySection setObject:[NSMutableArray new] forKey:[alphabet substringWithRange:NSMakeRange(i, 1)]];
 	}
 	
 	NSArray* visibleApps = [[[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] visibleIconIdentifiers] allObjects];
@@ -111,41 +127,43 @@
 	for (int i=0; i<[visibleApps count]; i++) {
 		SBLeafIcon* icon = [[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[visibleApps objectAtIndex:i]];
 		
-		if (icon && [icon applicationBundleID] != nil && ![[icon applicationBundleID] isEqualToString:@""]) {
-			RSApp* application = [[RSApp alloc] initWithFrame:CGRectMake(0, i*50, screenWidth, 50) leafIdentifier:[visibleApps objectAtIndex:i]];
-			
-			[self.view addSubview:application];
-			[apps addObject:application];
-			
-			NSString* first;
-			if (application.tileInfo.localizedDisplayName) {
-				first = [[application.tileInfo.localizedDisplayName substringWithRange:NSMakeRange(0,1)] uppercaseString];
-			} else if (application.tileInfo.displayName) {
-				first = [[application.tileInfo.displayName substringWithRange:NSMakeRange(0,1)] uppercaseString];
-			} else {
-				first = [[[application.icon displayName] substringWithRange:NSMakeRange(0,1)] uppercaseString];
-			}
-			
-			if (first != nil) {
-				BOOL isString = [alphabet rangeOfString:first].location != NSNotFound;
-				BOOL isNumeric = [numbers rangeOfString:first].location != NSNotFound;
+		if (![icon isKindOfClass:NSClassFromString(@"SBDownloadingIcon")]) {
+			if (icon && [icon applicationBundleID] != nil && ![[icon applicationBundleID] isEqualToString:@""]) {
+				RSApp* application = [[RSApp alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 50) leafIdentifier:[visibleApps objectAtIndex:i]];
 				
-				NSString* supposedSectionLetter = @"";
+				[self.view addSubview:application];
+				[apps addObject:application];
 				
-				if (isString) {
-					[[appsBySection objectForKey:first] addObject:application];
-					supposedSectionLetter = first;
-				} else if (isNumeric) {
-					[[appsBySection objectForKey:@"#"] addObject:application];
-					supposedSectionLetter = @"#";
+				NSString* first;
+				if (application.tileInfo.localizedDisplayName) {
+					first = [[application.tileInfo.localizedDisplayName substringWithRange:NSMakeRange(0,1)] uppercaseString];
+				} else if (application.tileInfo.displayName) {
+					first = [[application.tileInfo.displayName substringWithRange:NSMakeRange(0,1)] uppercaseString];
 				} else {
-					[[appsBySection objectForKey:@"@"] addObject:application];
-					supposedSectionLetter = @"@";
+					first = [[[application.icon displayName] substringWithRange:NSMakeRange(0,1)] uppercaseString];
 				}
 				
-				if ([self sectionWithLetter:supposedSectionLetter] == nil) {
-					RSAppListSection* section = [[RSAppListSection alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60) letter:supposedSectionLetter];
-					[sections addObject:section];
+				if (first != nil) {
+					BOOL isString = [alphabet rangeOfString:first].location != NSNotFound;
+					BOOL isNumeric = [numbers rangeOfString:first].location != NSNotFound;
+					
+					NSString* supposedSectionLetter = @"";
+					
+					if (isString) {
+						[[appsBySection objectForKey:first] addObject:application];
+						supposedSectionLetter = first;
+					} else if (isNumeric) {
+						[[appsBySection objectForKey:@"#"] addObject:application];
+						supposedSectionLetter = @"#";
+					} else {
+						[[appsBySection objectForKey:@"@"] addObject:application];
+						supposedSectionLetter = @"@";
+					}
+					
+					if ([self sectionWithLetter:supposedSectionLetter] == nil) {
+						RSAppListSection* section = [[RSAppListSection alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60) letter:supposedSectionLetter];
+						[sections addObject:section];
+					}
 				}
 			}
 		}
@@ -159,7 +177,7 @@
 				return [[app1.icon displayName] caseInsensitiveCompare:[app2.icon displayName]];
 			}];
 			
-			[appsBySection setObject:arrayToSort forKey:[alphabet substringWithRange:NSMakeRange(i,1)]];
+			[appsBySection setObject:[arrayToSort mutableCopy] forKey:[alphabet substringWithRange:NSMakeRange(i,1)]];
 		}
 	}
 	
@@ -227,9 +245,115 @@
 	}
 	[(UIScrollView*)self.view setContentSize:contentRect.size];
 	
-	[sectionBackgroundContainer setFrame:CGRectMake(0, 0, screenWidth, 60)];
+	//[sectionBackgroundContainer setFrame:CGRectMake(0, 0, screenWidth, 60)];
+	[self updateSectionOverlayPosition];
 }
+
+- (void)addAppForIcon:(SBLeafIcon*)icon {
+	if ([self appForLeafIdentifier:[icon applicationBundleID]]) {
+		return;
+	}
 	
+	NSString* alphabet = @"#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
+	NSString* numbers = @"1234567890";
+	
+	if (icon && [icon applicationBundleID] != nil && ![[icon applicationBundleID] isEqualToString:@""]) {
+		if ([icon isKindOfClass:NSClassFromString(@"SBDownloadingIcon")]) {
+			
+			NSMutableString* actualLeafIdentifier = [[NSMutableString alloc] initWithString:[icon applicationBundleID]];
+			[actualLeafIdentifier replaceOccurrencesOfString:@"com.apple.downloadingicon-" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [icon applicationBundleID].length)];
+			
+			RSDownloadingApp* downloadingApp = [[RSDownloadingApp alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 50) leafIdentifier:actualLeafIdentifier];
+			
+			[downloadingApp setIcon:icon];
+			[downloadingApp setDisplayName:[icon realDisplayName]];
+			
+			[self.view addSubview:downloadingApp];
+			[apps addObject:downloadingApp];
+			
+			NSString* first = [[[downloadingApp displayName] substringWithRange:NSMakeRange(0, 1)] uppercaseString];
+			
+			if (first != nil) {
+				BOOL isString = [alphabet rangeOfString:first].location != NSNotFound;
+				BOOL isNumeric = [numbers rangeOfString:first].location != NSNotFound;
+				
+				NSString* supposedSectionLetter = @"";
+				
+				if (isString) {
+					[[appsBySection objectForKey:first] addObject:downloadingApp];
+					supposedSectionLetter = first;
+				} else if (isNumeric) {
+					[[appsBySection objectForKey:@"#"] addObject:downloadingApp];
+					supposedSectionLetter = @"#";
+				} else {
+					[[appsBySection objectForKey:@"@"] addObject:downloadingApp];
+					supposedSectionLetter = @"@";
+				}
+				
+				if ([self sectionWithLetter:supposedSectionLetter] == nil) {
+					RSAppListSection* section = [[RSAppListSection alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60) letter:supposedSectionLetter];
+					[sections addObject:section];
+				}
+			}
+		} else {
+			[self loadApps];
+		}
+		/*RSApp* application = [[RSApp alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 50) leafIdentifier:[icon applicationBundleID]];
+		
+		[self.view addSubview:application];
+		[apps addObject:application];
+		
+		NSString* first;
+		
+		if (application.tileInfo.localizedDisplayName) {
+			first = [[application.tileInfo.localizedDisplayName substringWithRange:NSMakeRange(0,1)] uppercaseString];
+		} else if (application.tileInfo.displayName) {
+			first = [[application.tileInfo.displayName substringWithRange:NSMakeRange(0,1)] uppercaseString];
+		} else if ([application.icon isKindOfClass:NSClassFromString(@"SBDownloadingIcon")]) {
+			first = [[[application.icon realDisplayName] substringWithRange:NSMakeRange(0,1)] uppercaseString];
+		} else {
+			first = [[[application.icon displayName] substringWithRange:NSMakeRange(0,1)] uppercaseString];
+		}
+		
+		if (first != nil) {
+			BOOL isString = [alphabet rangeOfString:first].location != NSNotFound;
+			BOOL isNumeric = [numbers rangeOfString:first].location != NSNotFound;
+			
+			NSString* supposedSectionLetter = @"";
+			
+			if (isString) {
+				[[appsBySection objectForKey:first] addObject:application];
+				supposedSectionLetter = first;
+			} else if (isNumeric) {
+				[[appsBySection objectForKey:@"#"] addObject:application];
+				supposedSectionLetter = @"#";
+			} else {
+				[[appsBySection objectForKey:@"@"] addObject:application];
+				supposedSectionLetter = @"@";
+			}
+			
+			if ([self sectionWithLetter:supposedSectionLetter] == nil) {
+				RSAppListSection* section = [[RSAppListSection alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60) letter:supposedSectionLetter];
+				[sections addObject:section];
+			}
+		}*/
+	}
+	
+	for (int i=0; i<28; i++) {
+		NSArray* arrayToSort = [appsBySection objectForKey:[alphabet substringWithRange:NSMakeRange(i,1)]];
+		
+		if ([arrayToSort count] > 0) {
+			arrayToSort = [arrayToSort sortedArrayUsingComparator:^NSComparisonResult(RSApp* app1, RSApp* app2) {
+				return [[app1 displayName] caseInsensitiveCompare:[app2 displayName]];
+			}];
+			
+			[appsBySection setObject:[arrayToSort mutableCopy] forKey:[alphabet substringWithRange:NSMakeRange(i,1)]];
+		}
+	}
+	
+	[self layoutContentsWithSections:YES];
+}
+
 - (RSAppListSection*)sectionWithLetter:(NSString*)letter {
 	if (letter != nil) {
 		for (RSAppListSection* section in sections) {
@@ -252,6 +376,91 @@
 	}
 	
 	return nil;
+}
+
+- (void)showPinMenuForApp:(RSApp*)app withPoint:(CGPoint)point {
+	self.selectedApp = app;
+	
+	if ([[RSStartScreenController sharedInstance] tileForLeafIdentifier:[[self.selectedApp icon] applicationBundleID]]) {
+		[self.pinMenu setActionDisabled:YES atIndex:0];
+	} else {
+		[self.pinMenu setActionDisabled:NO atIndex:0];
+	}
+	
+	[self.pinMenu setActionHidden:![[self.selectedApp icon] isUninstallSupported] atIndex:1];
+	
+	[[RSHomeScreenController sharedInstance] setScrollEnabled:NO];
+	[(UIScrollView*)self.view setScrollEnabled:NO];
+	[dismissRecognizer setEnabled:YES];
+	
+	for (UIView* view in self.view.subviews) {
+		[view setUserInteractionEnabled:NO];
+	}
+	
+	CGRect globalFrame = [self.view convertRect:app.frame toView:[[RSHomeScreenController sharedInstance] window]];
+	
+	[self.pinMenu appearAtPosition:CGPointMake(point.x, globalFrame.origin.y)];
+}
+
+- (void)hidePinMenu {
+	[self.pinMenu disappear];
+	
+	for (UIView* view in self.view.subviews) {
+		[view setUserInteractionEnabled:YES];
+	}
+	
+	[dismissRecognizer setEnabled:NO];
+	[[RSHomeScreenController sharedInstance] setScrollEnabled:YES];
+	[(UIScrollView*)self.view setScrollEnabled:YES];
+}
+
+- (void)pinSelectedApp {
+	[self hidePinMenu];
+	
+	if ([[RSStartScreenController sharedInstance] tileForLeafIdentifier:[[self.selectedApp icon] applicationBundleID]]) {
+		return;
+	}
+	
+	[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero animated:YES];
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[[RSStartScreenController sharedInstance] pinTileWithIdentifier:[[self.selectedApp icon] applicationBundleID]];
+		self.selectedApp = nil;
+	});
+}
+
+- (void)uninstallSelectedApp {
+	[self hidePinMenu];
+	
+	if ([self.selectedApp.icon isUninstallSupported]) {
+		[self.selectedApp.icon setUninstalled];
+		[self.selectedApp.icon completeUninstall];
+		
+		//SBLeafIcon* icon = [[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[self.selectedApp.icon applicationBundleID]];
+		//[[objc_getClass("SBApplicationController") sharedInstance] uninstallApplication:[self.selectedApp.icon application]];
+		
+		[[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] removeIconForIdentifier:[self.selectedApp.icon applicationBundleID]];
+		
+		[UIView animateWithDuration:0.2 animations:^{
+			[self.selectedApp setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+			
+			[self.selectedApp setTransform:CGAffineTransformMakeScale(0.85, 0.85)];
+			[self.selectedApp.layer setOpacity:0.0];
+		} completion:^(BOOL finished) {
+			self.selectedApp = nil;
+			[self loadApps];
+		}];
+	}
+}
+
+- (void)setDownloadProgressForIcon:(NSString*)leafIdentifier progress:(float)progress state:(int)state {
+	if (![self appForLeafIdentifier:leafIdentifier]) {
+		return;
+	}
+
+	if ([[self appForLeafIdentifier:leafIdentifier] isKindOfClass:[RSDownloadingApp class]]) {
+		[(RSDownloadingApp*)[self appForLeafIdentifier:leafIdentifier] setDownloadProgress:progress forState:state];
+	}
 }
 	
 # pragma mark Animations

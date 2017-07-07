@@ -10,6 +10,13 @@
 
 @interface RSAesthetics : NSObject
 
+/**
+ Returns a string matching \p key in the current language (if available)
+
+ @param key The key matching the string
+ @return A string matching \p key in the current language
+ */
++ (NSString*)localizedStringForKey:(NSString*)key;
 
 /**
  Returns a user's currently selected Lock Screen wallpaper

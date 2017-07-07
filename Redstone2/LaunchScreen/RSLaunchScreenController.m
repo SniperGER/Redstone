@@ -82,9 +82,17 @@ UIImage* _UICreateScreenUIImage();
 	[scale setRemovedOnCompletion:NO];
 	[scale setFillMode:kCAFillModeForwards];
 	[launchImageView.layer addAnimation:scale forKey:@"scale"];
+	
+	
+	// Fix stuck launch screen for root apps (/Applications)
+	
+	rootTimeout = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(animateOut) userInfo:nil repeats:NO];
 }
 
 - (void)animateOut {
+	[rootTimeout invalidate];
+	rootTimeout = nil;
+	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		CAAnimation* opacity = [CAKeyframeAnimation animationWithKeyPath:@"opacity"
 																function:CubicEaseInOut

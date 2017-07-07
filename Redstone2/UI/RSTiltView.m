@@ -157,7 +157,7 @@
 - (void)setFrame:(CGRect)frame {
 	[super setFrame:frame];
 	
-	[self.titleLabel setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+	//[self.titleLabel setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 }
 
 - (void)addTarget:(id)target action:(SEL)action {

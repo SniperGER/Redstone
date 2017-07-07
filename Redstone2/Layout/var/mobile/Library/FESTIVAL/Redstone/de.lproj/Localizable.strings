@@ -1,6 +1,6 @@
 /* App List */
 "SEARCH" = "Suchen";
-"PIN_TO_START" = "Auf Startseite anheften";
+"PIN_TO_START" = "An „Start“ anheften";
 "UNINSTALL" = "Deinstallieren";
 "NO_RESULTS_FOUND" = "Keine Ergebnisse für %@ gefunden.";
 "ALL_APPS" = "Alle Apps";

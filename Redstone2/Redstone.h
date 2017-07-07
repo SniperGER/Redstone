@@ -45,6 +45,7 @@
 #pragma mark UI
 #import "UI/RSTiltView.h"
 #import "UI/RSFlyoutMenu.h"
+#import "UI/RSProgressBar.h"
 
 #pragma mark Home Screen
 #import "HomeScreen/RSHomeScreenController.h"
@@ -63,6 +64,7 @@
 #import "AppList/RSAppListScrollView.h"
 #import "AppList/RSAppListSection.h"
 #import "AppList/RSApp.h"
+#import "AppList/RSDownloadingApp.h"
 
 #pragma mark Launch Screen
 #import "LaunchScreen/RSLaunchScreenController.h"

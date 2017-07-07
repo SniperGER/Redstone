@@ -31,6 +31,10 @@
 
 %end // %hook SBHomeHardwareButton
 
+static void lockedDevice(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneDeviceHasFinishedLock" object:nil];
+}
+
 %end // %group core
 
 %ctor {
@@ -40,6 +44,9 @@
 		NSLog(@"[Redstone | Core] Initializing Core");
 		
 		%init(core);
+		
+		// Device has been locked
+		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, lockedDevice, CFSTR("com.apple.springboard.lockcomplete"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 		
 #if (!TARGET_OS_SIMULATOR)
 		[OBJCIPC registerIncomingMessageFromAppHandlerForMessageName:@"Redstone.Application.BecameActive"  handler:^NSDictionary *(NSDictionary *message) {

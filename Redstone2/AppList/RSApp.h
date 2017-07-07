@@ -6,10 +6,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class RSTiltView, RSTileInfo, SBLeafIcon;
+@class RSTiltView, RSProgressBar, RSTileInfo, SBLeafIcon;
 
 @interface RSApp : RSTiltView {
 	UILabel* appLabel;
+	
+	UIView* appImageBackground;
 	UIImageView* appImageView;
 }
 
@@ -24,5 +26,9 @@
  @return An instance of RSApp representing an app matching the bundle identifier \p leafIdetifier
  */
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafIdentifier;
+
+- (NSString*)displayName;
+
+- (void)setDisplayName:(NSString*)displayName;
 
 @end

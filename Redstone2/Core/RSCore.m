@@ -55,9 +55,12 @@ static id currentApplication;
 }
 
 - (BOOL)handleMenuButtonEvent {
-	if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")]) {
+	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
+	
+	if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")] || frontApp != nil) {
 		return YES;
 	}
+	
 	if ([RSLaunchScreenController sharedInstance]) {
 		if ([[RSLaunchScreenController sharedInstance] isLaunchingApp]) {
 			return NO;
@@ -65,12 +68,18 @@ static id currentApplication;
 	}
 	
 	if ([RSStartScreenController sharedInstance]) {
+		if ([[[RSAppListController sharedInstance] pinMenu] open]) {
+			[[RSAppListController sharedInstance] hidePinMenu];
+			return NO;
+		}
 		if ([[RSStartScreenController sharedInstance] isEditing]) {
 			[[RSStartScreenController sharedInstance] setIsEditing:NO];
 			return NO;
 		}
 		
-		if ([[RSHomeScreenController sharedInstance] contentOffset].x != 0 || [(UIScrollView*)[[RSStartScreenController sharedInstance] view] contentOffset].y != -24) {
+		if ([[RSHomeScreenController sharedInstance] contentOffset].x != 0
+			|| [(UIScrollView*)[[RSStartScreenController sharedInstance] view] contentOffset].y != -24
+			|| [(UIScrollView*)[[RSAppListController sharedInstance] view] contentOffset].y != 0) {
 			[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero animated:YES];
 			[(UIScrollView*)[[RSStartScreenController sharedInstance] view] setContentOffset:CGPointMake(0, -24) animated:YES];
 			[(UIScrollView*)[[RSAppListController sharedInstance] view] setContentOffset:CGPointZero animated:YES];

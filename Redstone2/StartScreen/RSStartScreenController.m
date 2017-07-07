@@ -23,6 +23,8 @@ static RSStartScreenController* sharedInstance;
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceFinishedLock) name:@"RedstoneDeviceHasFinishedLock" object:nil];
+	
 	[self loadTiles];
 }
 
@@ -33,6 +35,10 @@ static RSStartScreenController* sharedInstance;
 		}
 	}
 	return nil;
+}
+
+- (void)deviceFinishedLock {
+	[self setIsEditing:NO];
 }
 
 #pragma mark Tile Management
@@ -153,7 +159,7 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	[self eliminateEmptyRows];
-	[(UIScrollView*)self.view setContentOffset:CGPointMake(0, MAX([(UIScrollView*)self.view contentSize].height - self.view.bounds.size.height + 64, -24))];
+	[(UIScrollView*)self.view setContentOffset:CGPointMake(0, MAX([(UIScrollView*)self.view contentSize].height - self.view.bounds.size.height + 64, -24)) animated:YES];
 }
 
 - (void)unpinTile:(RSTile*)tile {

@@ -1,6 +1,8 @@
 #import "SpringBoard-Class.h"
 #import "SBApplication.h"
+#import "SBApplicationController.h"
 #import "SBIconController.h"
+#import "SBIconImageView.h"
 #import "SBIconModel.h"
 #import "SBLeafIcon.h"
 #import "SBUIController.h"

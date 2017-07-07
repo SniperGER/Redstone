@@ -147,6 +147,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 			[[RSStartScreenController sharedInstance] setSelectedTile:self];
 		}
 	} else {
+		self.icon = [[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[self.icon applicationBundleID]];
+		
 		[self setTransform:CGAffineTransformIdentity];
 		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[self.icon applicationBundleID]];
 		[[objc_getClass("SBIconController") sharedInstance] _launchIcon:self.icon];

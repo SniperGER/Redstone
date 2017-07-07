@@ -11,6 +11,8 @@
 	UIImageView* launchImageView;
 	
 	UIImageView* applicationSnapshot;
+	
+	NSTimer* rootTimeout;
 }
 
 @property (nonatomic, strong) UIWindow* window;
