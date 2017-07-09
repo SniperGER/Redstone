@@ -35,6 +35,7 @@
 #import "Libraries/UIFont+WDCustomLoader.h"
 #import "Libraries/CAKeyframeAnimation+AHEasing.h"
 #import "Libraries/easing.h"
+#import "Libraries/UIImageAverageColorAddition.h"
 
 #pragma mark Core
 #import "Core/RSCore.h"
@@ -46,6 +47,9 @@
 #import "UI/RSTiltView.h"
 #import "UI/RSFlyoutMenu.h"
 #import "UI/RSProgressBar.h"
+#import "UI/RSAlertController.h"
+#import "UI/RSAlertAction.h"
+#import "UI/RSTextField.h"
 
 #pragma mark Home Screen
 #import "HomeScreen/RSHomeScreenController.h"
@@ -65,6 +69,7 @@
 #import "AppList/RSAppListSection.h"
 #import "AppList/RSApp.h"
 #import "AppList/RSDownloadingApp.h"
+#import "AppList/RSJumpList.h"
 
 #pragma mark Launch Screen
 #import "LaunchScreen/RSLaunchScreenController.h"

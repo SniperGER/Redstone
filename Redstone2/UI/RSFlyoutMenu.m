@@ -63,10 +63,14 @@
 }
 
 - (void)appearAtPosition:(CGPoint)position {
+	if (self.isOpen) {
+		return;
+	}
+	
 	[self.layer removeAllAnimations];
 	AudioServicesPlaySystemSound(1520);
 	
-	self.open = YES;
+	self.isOpen = YES;
 	
 	if (position.x <= screenWidth / 3) {
 		CGRect baseFrame = CGRectMake(0,
@@ -113,7 +117,11 @@
 }
 
 - (void)disappear {
-	self.open = NO;
+	if (!self.isOpen) {
+		return;
+	}
+	
+	self.isOpen = NO;
 	[self setHidden:YES];
 }
 

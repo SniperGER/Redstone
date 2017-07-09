@@ -6,6 +6,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class RSTiltView;
+
 @interface RSStartScreenScrollView : UIScrollView <UIScrollViewDelegate>
+
+@property (nonatomic, strong) RSTiltView* allAppsButton;
 
 @end

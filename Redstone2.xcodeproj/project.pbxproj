@@ -433,6 +433,9 @@
 		8D56D7191F08BED0009E3070 /* Redstone2_UIKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D56D7181F08BED0009E3070 /* Redstone2_UIKit.plist */; };
 		8D5AA3361F0A2D4100DC2073 /* RSAppListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5AA3351F0A2D4100DC2073 /* RSAppListController.m */; };
 		8D5AA3391F0A2E8D00DC2073 /* RSAppListScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5AA3381F0A2E8D00DC2073 /* RSAppListScrollView.m */; };
+		8D6284641F104CA7006C09B1 /* RSJumpList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D6284631F104CA7006C09B1 /* RSJumpList.m */; };
+		8D6284671F10C9DA006C09B1 /* RSAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D6284661F10C9DA006C09B1 /* RSAlertController.m */; };
+		8D62846B1F120D22006C09B1 /* RSAlertAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D62846A1F120D22006C09B1 /* RSAlertAction.m */; };
 		8D63E36E1F04D91F00FC242C /* RSTiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D63E36D1F04D91F00FC242C /* RSTiltView.m */; };
 		8D98AFC41F0D37C800B26D32 /* RSFlyoutMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D98AFC31F0D37C800B26D32 /* RSFlyoutMenu.m */; };
 		8D98AFC61F0D93C100B26D32 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 8D98AFC51F0D93C100B26D32 /* README.md */; };
@@ -450,6 +453,21 @@
 		8DCAFCC01F0A321A00038094 /* RSAppListSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCAFCBF1F0A321A00038094 /* RSAppListSection.m */; };
 		8DCAFCC31F0A327500038094 /* RSApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCAFCC21F0A327500038094 /* RSApp.m */; };
 		8DCB95401EFE4A9900C0038F /* Redstone2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DCB953F1EFE4A9900C0038F /* Redstone2.plist */; };
+		8DD198611F12C40C0080F4AD /* entry.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DD1985A1F12C40C0080F4AD /* entry.plist */; };
+		8DD198621F12C40C0080F4AD /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 8DD1985B1F12C40C0080F4AD /* Makefile */; };
+		8DD198641F12C40C0080F4AD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DD1985F1F12C40C0080F4AD /* Info.plist */; };
+		8DD1986A1F12C4300080F4AD /* PFHeaderCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8DD198671F12C4300080F4AD /* PFHeaderCell.mm */; };
+		8DD1986B1F12C4300080F4AD /* RDSAccentColorList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DD198691F12C4300080F4AD /* RDSAccentColorList.m */; };
+		8DD1986D1F12C4B10080F4AD /* Root.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DD1986C1F12C4B10080F4AD /* Root.plist */; };
+		8DD198701F12C54A0080F4AD /* RDSRootListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DD1986F1F12C54A0080F4AD /* RDSRootListController.m */; };
+		8DD198791F12C5F50080F4AD /* UIImageAverageColorAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DD198781F12C5F50080F4AD /* UIImageAverageColorAddition.m */; };
+		8DD198801F12CC4F0080F4AD /* banner~320w@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DD1987A1F12CC4F0080F4AD /* banner~320w@2x.png */; };
+		8DD198811F12CC4F0080F4AD /* banner~375w@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DD1987B1F12CC4F0080F4AD /* banner~375w@2x.png */; };
+		8DD198821F12CC4F0080F4AD /* banner~414w@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DD1987C1F12CC4F0080F4AD /* banner~414w@3x.png */; };
+		8DD198831F12CC4F0080F4AD /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DD1987D1F12CC4F0080F4AD /* icon.png */; };
+		8DD198841F12CC4F0080F4AD /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DD1987E1F12CC4F0080F4AD /* icon@2x.png */; };
+		8DD198851F12CC4F0080F4AD /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8DD1987F1F12CC4F0080F4AD /* icon@3x.png */; };
+		8DD198881F12DBC30080F4AD /* RSTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DD198871F12DBC30080F4AD /* RSTextField.m */; };
 		8DDC17E01F0581E500C57D6E /* control in Resources */ = {isa = PBXBuildFile; fileRef = 8DDC17DF1F0581E500C57D6E /* control */; };
 		8DDC17E81F059D8D00C57D6E /* UIView+Easing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DDC17E71F059D8D00C57D6E /* UIView+Easing.m */; };
 		8DED23621F0EF8C200394661 /* RSProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DED23611F0EF8C200394661 /* RSProgressBar.m */; };
@@ -899,6 +917,13 @@
 		8D5AA3371F0A2E8D00DC2073 /* RSAppListScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSAppListScrollView.h; sourceTree = "<group>"; };
 		8D5AA3381F0A2E8D00DC2073 /* RSAppListScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSAppListScrollView.m; sourceTree = "<group>"; };
 		8D6284611F103A28006C09B1 /* SBApplicationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBApplicationController.h; sourceTree = "<group>"; };
+		8D6284621F104CA7006C09B1 /* RSJumpList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSJumpList.h; sourceTree = "<group>"; };
+		8D6284631F104CA7006C09B1 /* RSJumpList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSJumpList.m; sourceTree = "<group>"; };
+		8D6284651F10C9DA006C09B1 /* RSAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAlertController.h; sourceTree = "<group>"; };
+		8D6284661F10C9DA006C09B1 /* RSAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAlertController.m; sourceTree = "<group>"; };
+		8D6284681F115ACD006C09B1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8D6284691F120D22006C09B1 /* RSAlertAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAlertAction.h; sourceTree = "<group>"; };
+		8D62846A1F120D22006C09B1 /* RSAlertAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAlertAction.m; sourceTree = "<group>"; };
 		8D63E36C1F04D91F00FC242C /* RSTiltView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSTiltView.h; sourceTree = "<group>"; };
 		8D63E36D1F04D91F00FC242C /* RSTiltView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTiltView.m; sourceTree = "<group>"; };
 		8D98AFC21F0D37C800B26D32 /* RSFlyoutMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFlyoutMenu.h; sourceTree = "<group>"; };
@@ -937,6 +962,26 @@
 		8DCAFCC11F0A327500038094 /* RSApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSApp.h; sourceTree = "<group>"; };
 		8DCAFCC21F0A327500038094 /* RSApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSApp.m; sourceTree = "<group>"; };
 		8DCB953F1EFE4A9900C0038F /* Redstone2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Redstone2.plist; sourceTree = "<group>"; };
+		8DD1985A1F12C40C0080F4AD /* entry.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = entry.plist; sourceTree = "<group>"; };
+		8DD1985B1F12C40C0080F4AD /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		8DD1985F1F12C40C0080F4AD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DD198661F12C4300080F4AD /* PFHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFHeaderCell.h; sourceTree = "<group>"; };
+		8DD198671F12C4300080F4AD /* PFHeaderCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PFHeaderCell.mm; sourceTree = "<group>"; };
+		8DD198681F12C4300080F4AD /* RDSAccentColorList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDSAccentColorList.h; sourceTree = "<group>"; };
+		8DD198691F12C4300080F4AD /* RDSAccentColorList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDSAccentColorList.m; sourceTree = "<group>"; };
+		8DD1986C1F12C4B10080F4AD /* Root.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Root.plist; sourceTree = "<group>"; };
+		8DD1986E1F12C54A0080F4AD /* RDSRootListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDSRootListController.h; sourceTree = "<group>"; };
+		8DD1986F1F12C54A0080F4AD /* RDSRootListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDSRootListController.m; sourceTree = "<group>"; };
+		8DD198771F12C5F50080F4AD /* UIImageAverageColorAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageAverageColorAddition.h; sourceTree = "<group>"; };
+		8DD198781F12C5F50080F4AD /* UIImageAverageColorAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageAverageColorAddition.m; sourceTree = "<group>"; };
+		8DD1987A1F12CC4F0080F4AD /* banner~320w@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banner~320w@2x.png"; sourceTree = "<group>"; };
+		8DD1987B1F12CC4F0080F4AD /* banner~375w@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banner~375w@2x.png"; sourceTree = "<group>"; };
+		8DD1987C1F12CC4F0080F4AD /* banner~414w@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "banner~414w@3x.png"; sourceTree = "<group>"; };
+		8DD1987D1F12CC4F0080F4AD /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		8DD1987E1F12CC4F0080F4AD /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		8DD1987F1F12CC4F0080F4AD /* icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@3x.png"; sourceTree = "<group>"; };
+		8DD198861F12DBC30080F4AD /* RSTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTextField.h; sourceTree = "<group>"; };
+		8DD198871F12DBC30080F4AD /* RSTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTextField.m; sourceTree = "<group>"; };
 		8DDC17DF1F0581E500C57D6E /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
 		8DDC17E61F059D8D00C57D6E /* UIView+Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Easing.h"; sourceTree = "<group>"; };
 		8DDC17E71F059D8D00C57D6E /* UIView+Easing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Easing.m"; sourceTree = "<group>"; };
@@ -974,6 +1019,7 @@
 				8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */,
 				8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */,
 				8D56D7131F08BDD7009E3070 /* Redstone2_UIKit */,
+				8DD198591F12C40C0080F4AD /* Redstone2_Prefs */,
 				8D9EDACA1F02FE1C00C97EEA /* headers */,
 				8D56D3771F07988D009E3070 /* Layout */,
 				8DDC17E51F059D7200C57D6E /* Libraries */,
@@ -2122,6 +2168,8 @@
 				8DCAFCC21F0A327500038094 /* RSApp.m */,
 				8DB0F4051F0F82F500B58CB6 /* RSDownloadingApp.h */,
 				8DB0F4061F0F82F500B58CB6 /* RSDownloadingApp.m */,
+				8D6284621F104CA7006C09B1 /* RSJumpList.h */,
+				8D6284631F104CA7006C09B1 /* RSJumpList.m */,
 			);
 			path = AppList;
 			sourceTree = "<group>";
@@ -2135,6 +2183,12 @@
 				8D98AFC31F0D37C800B26D32 /* RSFlyoutMenu.m */,
 				8DED23601F0EF8C200394661 /* RSProgressBar.h */,
 				8DED23611F0EF8C200394661 /* RSProgressBar.m */,
+				8D6284651F10C9DA006C09B1 /* RSAlertController.h */,
+				8D6284661F10C9DA006C09B1 /* RSAlertController.m */,
+				8D6284691F120D22006C09B1 /* RSAlertAction.h */,
+				8D62846A1F120D22006C09B1 /* RSAlertAction.m */,
+				8DD198861F12DBC30080F4AD /* RSTextField.h */,
+				8DD198871F12DBC30080F4AD /* RSTextField.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -2212,6 +2266,37 @@
 			path = AppSwitcher;
 			sourceTree = "<group>";
 		};
+		8DD198591F12C40C0080F4AD /* Redstone2_Prefs */ = {
+			isa = PBXGroup;
+			children = (
+				8DD1985A1F12C40C0080F4AD /* entry.plist */,
+				8DD1985B1F12C40C0080F4AD /* Makefile */,
+				8DD1986E1F12C54A0080F4AD /* RDSRootListController.h */,
+				8DD1986F1F12C54A0080F4AD /* RDSRootListController.m */,
+				8DD198681F12C4300080F4AD /* RDSAccentColorList.h */,
+				8DD198691F12C4300080F4AD /* RDSAccentColorList.m */,
+				8DD198661F12C4300080F4AD /* PFHeaderCell.h */,
+				8DD198671F12C4300080F4AD /* PFHeaderCell.mm */,
+				8DD1985E1F12C40C0080F4AD /* Resources */,
+			);
+			path = Redstone2_Prefs;
+			sourceTree = "<group>";
+		};
+		8DD1985E1F12C40C0080F4AD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8DD1985F1F12C40C0080F4AD /* Info.plist */,
+				8DD1986C1F12C4B10080F4AD /* Root.plist */,
+				8DD1987A1F12CC4F0080F4AD /* banner~320w@2x.png */,
+				8DD1987B1F12CC4F0080F4AD /* banner~375w@2x.png */,
+				8DD1987C1F12CC4F0080F4AD /* banner~414w@3x.png */,
+				8DD1987D1F12CC4F0080F4AD /* icon.png */,
+				8DD1987E1F12CC4F0080F4AD /* icon@2x.png */,
+				8DD1987F1F12CC4F0080F4AD /* icon@3x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		8DDC17E51F059D7200C57D6E /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -2223,6 +2308,8 @@
 				8D56D36F1F070752009E3070 /* CAKeyframeAnimation+AHEasing.m */,
 				8D56D3701F070752009E3070 /* easing.c */,
 				8D56D3711F070752009E3070 /* easing.h */,
+				8DD198771F12C5F50080F4AD /* UIImageAverageColorAddition.h */,
+				8DD198781F12C5F50080F4AD /* UIImageAverageColorAddition.m */,
 			);
 			name = Libraries;
 			path = Redstone2/Libraries;
@@ -2358,6 +2445,7 @@
 				8D56D6671F07988E009E3070 /* tile@2x.png in Resources */,
 				8D56D5A01F07988E009E3070 /* Haze@3x.png in Resources */,
 				8D56D5F21F07988E009E3070 /* tile-AppList@3x.png in Resources */,
+				8DD198851F12CC4F0080F4AD /* icon@3x.png in Resources */,
 				8D56D5D91F07988E009E3070 /* tile-AppList@2x.png in Resources */,
 				8D56D6481F07988E009E3070 /* tile@2x.png in Resources */,
 				8D56D5FA1F07988E009E3070 /* tile-AppList@3x.png in Resources */,
@@ -2369,6 +2457,7 @@
 				8D56D5E61F07988E009E3070 /* tile-AppList@3x.png in Resources */,
 				8D56D6491F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D6B91F07988E009E3070 /* tile-132x132@3x.png in Resources */,
+				8DD198811F12CC4F0080F4AD /* banner~375w@2x.png in Resources */,
 				8D56D6B81F07988E009E3070 /* tile-132x132@2x.png in Resources */,
 				8D56D6A21F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D6AA1F07988E009E3070 /* tile-132x132@3x.png in Resources */,
@@ -2522,6 +2611,7 @@
 				8D56D67D1F07988E009E3070 /* tile@2x.png in Resources */,
 				8D56D5B41F07988E009E3070 /* MostlySunny@3x.png in Resources */,
 				8D56D5D11F07988E009E3070 /* Tornado@3x.png in Resources */,
+				8DD198841F12CC4F0080F4AD /* icon@2x.png in Resources */,
 				8D56D6711F07988E009E3070 /* tile-132x132@2x.png in Resources */,
 				8D56D5D71F07988E009E3070 /* tile@2x.png in Resources */,
 				8D56D5C91F07988E009E3070 /* Sleet@3x.png in Resources */,
@@ -2571,6 +2661,7 @@
 				8D56D6B41F07988E009E3070 /* tile-AppList@3x.png in Resources */,
 				8D56D5C61F07988E009E3070 /* SevereThunderstorm@3x.png in Resources */,
 				8D56D6801F07988E009E3070 /* tile-AppList@3x.png in Resources */,
+				8DD198641F12C40C0080F4AD /* Info.plist in Resources */,
 				8D56D6B21F07988E009E3070 /* Localizable.strings in Resources */,
 				8D56D6C71F07988E009E3070 /* tile-AppList@2x.png in Resources */,
 				8D56D5D21F07988E009E3070 /* TropicalStorm@2x.png in Resources */,
@@ -2613,6 +2704,7 @@
 				8D56D66A1F07988E009E3070 /* tile-AppList@3x.png in Resources */,
 				8D56D6F01F07988E009E3070 /* tile-AppList@2x.png in Resources */,
 				8D56D61F1F07988E009E3070 /* tile@2x.png in Resources */,
+				8DD1986D1F12C4B10080F4AD /* Root.plist in Resources */,
 				8D56D6231F07988E009E3070 /* tile@2x.png in Resources */,
 				8D56D7171F08BE7E009E3070 /* Tweak.xm in Resources */,
 				8D56D5C81F07988E009E3070 /* Sleet@2x.png in Resources */,
@@ -2635,6 +2727,7 @@
 				8D56D6081F07988E009E3070 /* tile-AppList@3x.png in Resources */,
 				8D56D70A1F07988E009E3070 /* tile-AppList@2x.png in Resources */,
 				8D56D6D01F07988E009E3070 /* tile-AppList@2x.png in Resources */,
+				8DD198831F12CC4F0080F4AD /* icon.png in Resources */,
 				8D56D5FC1F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D68F1F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D6F21F07988E009E3070 /* tile.plist in Resources */,
@@ -2650,8 +2743,10 @@
 				8D56D6681F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D58B1F07988E009E3070 /* Breezy@2x.png in Resources */,
 				8D56D61B1F07988E009E3070 /* tile@2x.png in Resources */,
+				8DD198821F12CC4F0080F4AD /* banner~414w@3x.png in Resources */,
 				8D56D6531F07988E009E3070 /* tile-AppList@3x.png in Resources */,
 				8D56D5A11F07988E009E3070 /* HeavyRain@2x.png in Resources */,
+				8DD198801F12CC4F0080F4AD /* banner~320w@2x.png in Resources */,
 				8D56D6511F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D5F61F07988E009E3070 /* tile-AppList@3x.png in Resources */,
 				8D56D68C1F07988E009E3070 /* tile@2x.png in Resources */,
@@ -2699,6 +2794,7 @@
 				8D56D7001F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D5DE1F07988E009E3070 /* tile-AppList@3x.png in Resources */,
 				8D56D5971F07988E009E3070 /* FlurrySnowShower@2x.png in Resources */,
+				8DD198611F12C40C0080F4AD /* entry.plist in Resources */,
 				8D56D6B31F07988E009E3070 /* tile-AppList@2x.png in Resources */,
 				8D56D6FA1F07988E009E3070 /* tile-AppList@3x.png in Resources */,
 				8D56D58F1F07988E009E3070 /* ConditionView.nib in Resources */,
@@ -2758,12 +2854,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5AA3361F0A2D4100DC2073 /* RSAppListController.m in Sources */,
+				8DD1986B1F12C4300080F4AD /* RDSAccentColorList.m in Sources */,
 				8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */,
+				8D6284641F104CA7006C09B1 /* RSJumpList.m in Sources */,
 				8D98AFC41F0D37C800B26D32 /* RSFlyoutMenu.m in Sources */,
 				8D56D7151F08BE44009E3070 /* Makefile in Sources */,
+				8D62846B1F120D22006C09B1 /* RSAlertAction.m in Sources */,
 				8D63E36E1F04D91F00FC242C /* RSTiltView.m in Sources */,
 				8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */,
 				8D5AA3391F0A2E8D00DC2073 /* RSAppListScrollView.m in Sources */,
+				8DD1986A1F12C4300080F4AD /* PFHeaderCell.mm in Sources */,
 				8DCAFCC31F0A327500038094 /* RSApp.m in Sources */,
 				8D98AFC61F0D93C100B26D32 /* README.md in Sources */,
 				8DED23621F0EF8C200394661 /* RSProgressBar.m in Sources */,
@@ -2779,9 +2879,14 @@
 				8D9EDAD71F0302A600C97EEA /* RSPreferences.m in Sources */,
 				8DC97C661F039D1A004A75CB /* RSStartScreenController.m in Sources */,
 				8DB985A61F04630400CD1AEB /* RSTile.m in Sources */,
+				8DD198881F12DBC30080F4AD /* RSTextField.m in Sources */,
+				8D6284671F10C9DA006C09B1 /* RSAlertController.m in Sources */,
 				8D56D3721F070752009E3070 /* CAKeyframeAnimation+AHEasing.m in Sources */,
 				8DC97C621F039C94004A75CB /* RSHomeScreenScrollView.m in Sources */,
 				8DB0F4071F0F82F500B58CB6 /* RSDownloadingApp.m in Sources */,
+				8DD198621F12C40C0080F4AD /* Makefile in Sources */,
+				8DD198701F12C54A0080F4AD /* RDSRootListController.m in Sources */,
+				8DD198791F12C5F50080F4AD /* UIImageAverageColorAddition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2801,6 +2906,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8D56D42E1F07988D009E3070 /* en */,
+				8D6284681F115ACD006C09B1 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -32,11 +32,18 @@ static RSHomeScreenController* sharedInstance;
 		
 		[scrollView addSubview:startScreenController.view];
 		[scrollView addSubview:appListController.view];
+		[scrollView addSubview:appListController.jumpList];
 		
 		[self setParallaxPosition];
+		
+		self.alertControllers = [NSMutableArray new];
 	}
 	
 	return self;
+}
+
+- (RSHomeScreenScrollView*)scrollView {
+	return scrollView;
 }
 
 - (CGFloat)parallaxPosition {
@@ -80,6 +87,8 @@ static RSHomeScreenController* sharedInstance;
 	[_scrollView setBackgroundColor:[[[RSAesthetics colorsForCurrentTheme] objectForKey:@"OpaqueBackgroundColor"]  colorWithAlphaComponent:progress]];
 	[[RSAppListController sharedInstance] setSectionOverlayAlpha:progress];
 	[[RSAppListController sharedInstance] updateSectionOverlayPosition];
+	
+	[appListController.searchBar resignFirstResponder];
 }
 
 - (void)setScrollEnabled:(BOOL)scrollEnabled {

@@ -10,5 +10,9 @@
 - (id)getUnmaskedIconImage:(int)arg1;
 - (void)setUninstalled;
 - (void)completeUninstall;
+- (id)uninstallAlertTitle;
+- (id)uninstallAlertBody;
+- (id)uninstallAlertConfirmTitle;
+- (id)uninstallAlertCancelTitle;
 
 @end

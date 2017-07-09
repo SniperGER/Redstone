@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) SBLeafIcon* icon;
 @property (nonatomic, strong) RSTileInfo* tileInfo;
+@property (nonatomic, assign) CGPoint originalCenter;
 
 /**
  Creates a new App List entry for an app with the bundle identifier \p leafIdentifier

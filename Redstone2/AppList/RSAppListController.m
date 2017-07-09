@@ -1,13 +1,13 @@
 #import "../Redstone.h"
 
 @implementation RSAppListController
-	
-	static RSAppListController* sharedInstance;
-	
+
+static RSAppListController* sharedInstance;
+
 + (id)sharedInstance {
 	return sharedInstance;
 }
-	
+
 - (id)init {
 	if (self = [super init]) {
 		sharedInstance = self;
@@ -15,16 +15,27 @@
 	
 	return self;
 }
-	
+
 - (void)loadView {
 	self.view = [[RSAppListScrollView alloc] initWithFrame:CGRectMake(screenWidth, 70, screenWidth, screenHeight - 70)];
 	
 }
-	
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
 	[(UIScrollView*)self.view setDelegate:self];
+	
+	self.searchBar = [[RSTextField alloc] initWithFrame:CGRectMake(screenWidth + 5, 24, screenWidth - 10, 40)];
+	[self.searchBar setPlaceholder:[RSAesthetics localizedStringForKey:@"SEARCH"]];
+	[self.searchBar addTarget:self action:@selector(showAppsFittingQuery) forControlEvents:UIControlEventEditingChanged];
+	[[[RSHomeScreenController sharedInstance] scrollView] addSubview:self.searchBar];
+	
+	noResultsLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, self.view.frame.size.width-10, 30)];
+	[noResultsLabel setTextColor:[UIColor colorWithWhite:0.5 alpha:1.0]];
+	[noResultsLabel setFont:[UIFont fontWithName:@"SegoeUI" size:17]];
+	[noResultsLabel setHidden:YES];
+	[self.view addSubview:noResultsLabel];
 	
 	sectionBackgroundContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
 	[sectionBackgroundContainer setClipsToBounds:YES];
@@ -35,12 +46,8 @@
 	[sectionBackgroundContainer addSubview:sectionBackgroundImage];
 	
 	sectionBackgroundOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60)];
-	[sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.75]];
+	[sectionBackgroundOverlay setBackgroundColor:[[RSAesthetics colorsForCurrentTheme][@"InvertedForegroundColor"] colorWithAlphaComponent:0.75]];
 	[sectionBackgroundContainer addSubview:sectionBackgroundOverlay];
-	
-	self.pinMenu = [RSFlyoutMenu new];
-	[self.pinMenu addActionWithTitle:[RSAesthetics localizedStringForKey:@"PIN_TO_START"] target:self action:@selector(pinSelectedApp)];
-	[self.pinMenu addActionWithTitle:[RSAesthetics localizedStringForKey:@"UNINSTALL"] target:self action:@selector(uninstallSelectedApp)];
 	
 	dismissRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidePinMenu)];
 	[dismissRecognizer setEnabled:NO];
@@ -49,22 +56,37 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceFinishedLock) name:@"RedstoneDeviceHasFinishedLock" object:nil];
 	
 	[self loadApps];
+	
+	self.pinMenu = [RSFlyoutMenu new];
+	[self.pinMenu addActionWithTitle:[RSAesthetics localizedStringForKey:@"PIN_TO_START"] target:self action:@selector(pinSelectedApp)];
+	[self.pinMenu addActionWithTitle:[RSAesthetics localizedStringForKey:@"UNINSTALL"] target:self action:@selector(uninstallSelectedApp)];
+	
+	self.jumpList = [[RSJumpList alloc] initWithFrame:CGRectMake(screenWidth, 0, screenWidth, screenHeight)];
+	
 }
 
 - (void)deviceFinishedLock {
 	[self hidePinMenu];
-}
+	[self hideJumpList];
 	
+	self.isUninstallingApp = NO;
+	[self dismissViewControllerAnimated:NO completion:nil];
+	
+	[self.searchBar resignFirstResponder];
+	[self.searchBar setText:@""];
+	[self showAppsFittingQuery];
+}
+
 #pragma mark Delegate
-	
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-	
+	[self.searchBar resignFirstResponder];
 }
-	
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	[self updateSectionsWithOffset:[(UIScrollView*)self.view contentOffset].y];
 }
-	
+
 - (void)updateSectionsWithOffset:(CGFloat)offset {
 	for (int i=0; i<[sections count]; i++) {
 		RSAppListSection* section = [sections objectAtIndex:i];
@@ -92,17 +114,30 @@
 		[sectionBackgroundContainer setHidden:NO];
 	}
 }
-	
+
 - (void)setSectionOverlayAlpha:(CGFloat)alpha {
-	[sectionBackgroundOverlay setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:alpha]];
+	[sectionBackgroundOverlay setBackgroundColor:[[RSAesthetics colorsForCurrentTheme][@"InvertedForegroundColor"] colorWithAlphaComponent:alpha]];
 }
 
 - (void)updateSectionOverlayPosition {
 	[self updateSectionsWithOffset:[(UIScrollView*)self.view contentOffset].y];
 }
-	
+
+- (void)jumpToSectionWithLetter:(NSString*)letter {
+	if ([self sectionWithLetter:letter]) {
+		for (RSAppListSection* section in sections) {
+			if ([section.displayName isEqualToString:letter]) {
+				int sectionOffset = section.yPosition;
+				int maxOffsetByScreen = [(UIScrollView*)[self view] contentSize].height - self.view.bounds.size.height + 80;
+				
+				[(UIScrollView*)self.view setContentOffset:CGPointMake(0, MIN(sectionOffset, maxOffsetByScreen))];
+			}
+		}
+	}
+}
+
 #pragma mark App Management
-	
+
 - (void)loadApps {
 	if (sections && appsBySection) {
 		[sections makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -183,7 +218,7 @@
 	
 	[self layoutContentsWithSections:YES];
 }
-	
+
 - (void)layoutContentsWithSections:(BOOL)addSections {
 	NSMutableArray* _sections = [[NSMutableArray alloc] init];
 	
@@ -202,7 +237,7 @@
 	
 	[self sortAppsAndLayout:sections];
 }
-	
+
 - (void)sortAppsAndLayout:(NSArray*)_sections {
 	NSString* alphabet = @"#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
 	
@@ -215,13 +250,16 @@
 			previousSection = [alphabet substringWithRange:NSMakeRange(i,1)];
 			
 			RSAppListSection* section = [self sectionWithLetter:previousSection];
+			
 			[section setFrame:CGRectMake(0, yPos, screenWidth, 60)];
+			[section setOriginalCenter:section.center];
 			[section setYPosition:yPos];
 			
 			yPos += 60;
 			
 			for (RSApp* app in currentSection) {
 				[app setFrame:CGRectMake(0, yPos, screenWidth, 56)];
+				[app setOriginalCenter:app.center];
 				[app setHidden:NO];
 				
 				yPos += 56;
@@ -298,45 +336,6 @@
 		} else {
 			[self loadApps];
 		}
-		/*RSApp* application = [[RSApp alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 50) leafIdentifier:[icon applicationBundleID]];
-		
-		[self.view addSubview:application];
-		[apps addObject:application];
-		
-		NSString* first;
-		
-		if (application.tileInfo.localizedDisplayName) {
-			first = [[application.tileInfo.localizedDisplayName substringWithRange:NSMakeRange(0,1)] uppercaseString];
-		} else if (application.tileInfo.displayName) {
-			first = [[application.tileInfo.displayName substringWithRange:NSMakeRange(0,1)] uppercaseString];
-		} else if ([application.icon isKindOfClass:NSClassFromString(@"SBDownloadingIcon")]) {
-			first = [[[application.icon realDisplayName] substringWithRange:NSMakeRange(0,1)] uppercaseString];
-		} else {
-			first = [[[application.icon displayName] substringWithRange:NSMakeRange(0,1)] uppercaseString];
-		}
-		
-		if (first != nil) {
-			BOOL isString = [alphabet rangeOfString:first].location != NSNotFound;
-			BOOL isNumeric = [numbers rangeOfString:first].location != NSNotFound;
-			
-			NSString* supposedSectionLetter = @"";
-			
-			if (isString) {
-				[[appsBySection objectForKey:first] addObject:application];
-				supposedSectionLetter = first;
-			} else if (isNumeric) {
-				[[appsBySection objectForKey:@"#"] addObject:application];
-				supposedSectionLetter = @"#";
-			} else {
-				[[appsBySection objectForKey:@"@"] addObject:application];
-				supposedSectionLetter = @"@";
-			}
-			
-			if ([self sectionWithLetter:supposedSectionLetter] == nil) {
-				RSAppListSection* section = [[RSAppListSection alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 60) letter:supposedSectionLetter];
-				[sections addObject:section];
-			}
-		}*/
 	}
 	
 	for (int i=0; i<28; i++) {
@@ -366,7 +365,7 @@
 	
 	return nil;
 }
-	
+
 - (RSApp*)appForLeafIdentifier:(NSString*)leafIdentifier {
 	for (RSApp* app in apps) {
 		if ([[app.icon applicationBundleID] isEqualToString:leafIdentifier]) {
@@ -379,6 +378,7 @@
 }
 
 - (void)showPinMenuForApp:(RSApp*)app withPoint:(CGPoint)point {
+	[self.view sendSubviewToBack:app];
 	self.selectedApp = app;
 	
 	if ([[RSStartScreenController sharedInstance] tileForLeafIdentifier:[[self.selectedApp icon] applicationBundleID]]) {
@@ -430,41 +430,126 @@
 }
 
 - (void)uninstallSelectedApp {
+	self.isUninstallingApp = YES;
 	[self hidePinMenu];
 	
-	if ([self.selectedApp.icon isUninstallSupported]) {
-		[self.selectedApp.icon setUninstalled];
-		[self.selectedApp.icon completeUninstall];
-		
-		//SBLeafIcon* icon = [[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[self.selectedApp.icon applicationBundleID]];
-		//[[objc_getClass("SBApplicationController") sharedInstance] uninstallApplication:[self.selectedApp.icon application]];
-		
-		[[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] removeIconForIdentifier:[self.selectedApp.icon applicationBundleID]];
-		
-		[UIView animateWithDuration:0.2 animations:^{
-			[self.selectedApp setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+	RSAlertController* alertController = [RSAlertController alertControllerWithTitle:[self.selectedApp.icon uninstallAlertTitle] message:[self.selectedApp.icon uninstallAlertBody]];
+	[alertController show];
+	
+	RSAlertAction* uninstallAction = [RSAlertAction actionWithTitle:[self.selectedApp.icon uninstallAlertConfirmTitle] style:UIAlertActionStyleDestructive handler:^{
+		if ([self.selectedApp.icon isUninstallSupported]) {
+			[self.selectedApp.icon setUninstalled];
+			[self.selectedApp.icon completeUninstall];
 			
-			[self.selectedApp setTransform:CGAffineTransformMakeScale(0.85, 0.85)];
-			[self.selectedApp.layer setOpacity:0.0];
-		} completion:^(BOOL finished) {
-			self.selectedApp = nil;
-			[self loadApps];
-		}];
-	}
+			[[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] removeIconForIdentifier:[self.selectedApp.icon applicationBundleID]];
+			
+			[UIView animateWithDuration:0.2 animations:^{
+				[self.selectedApp setEasingFunction:easeOutQuint forKeyPath:@"frame"];
+				
+				[self.selectedApp setTransform:CGAffineTransformMakeScale(0.9, 0.9)];
+				[self.selectedApp.layer setOpacity:0.0];
+			} completion:^(BOOL finished) {
+				self.selectedApp = nil;
+				self.isUninstallingApp = NO;
+				
+				[self loadApps];
+			}];
+		}
+	}];
+	
+	RSAlertAction* cancelAction = [RSAlertAction actionWithTitle:[self.selectedApp.icon uninstallAlertCancelTitle] style:UIAlertActionStyleDefault handler:^{
+		self.selectedApp = nil;
+		self.isUninstallingApp = NO;
+	}];
+	
+	[alertController addAction:uninstallAction];
+	[alertController addAction:cancelAction];
+	
 }
 
 - (void)setDownloadProgressForIcon:(NSString*)leafIdentifier progress:(float)progress state:(int)state {
 	if (![self appForLeafIdentifier:leafIdentifier]) {
 		return;
 	}
-
+	
 	if ([[self appForLeafIdentifier:leafIdentifier] isKindOfClass:[RSDownloadingApp class]]) {
 		[(RSDownloadingApp*)[self appForLeafIdentifier:leafIdentifier] setDownloadProgress:progress forState:state];
 	}
 }
+
+- (void)showAppsFittingQuery {
+	NSString* query = [self.searchBar text];
+	NSMutableArray* newSubviews = [NSMutableArray new];
 	
+	for (UIView* view in self.view.subviews) {
+		if (query != nil && ![query isEqualToString:@""] && [query length] > 0) {
+			if ([view isKindOfClass:[RSApp class]]) {
+				NSArray* displayName = [[[(RSApp*)view displayName] lowercaseString] componentsSeparatedByString:@" "];
+				
+				for (int i=0; i<[displayName count]; i++) {
+					if ([[displayName objectAtIndex:i] hasPrefix:[query lowercaseString]]) {
+						[newSubviews addObject:view];
+						break;
+					} else {
+						[view setHidden:YES];
+					}
+				}
+			} else {
+				[view setHidden:YES];
+			}
+		} else {
+			[view setHidden:NO];
+		}
+	}
+	
+	if ([newSubviews count] > 0 && (query != nil || ![query isEqualToString:@""])) {
+		for (UIView* view in self.view.subviews) {
+			[view setHidden:YES];
+		}
+		
+		newSubviews = [[newSubviews sortedArrayUsingComparator:^NSComparisonResult(RSApp* app1, RSApp* app2) {
+			return [[app1 displayName] caseInsensitiveCompare:[app2 displayName]];
+		}] mutableCopy];
+		
+		for (int i=0; i<[newSubviews count]; i++) {
+			RSApp* app = [newSubviews objectAtIndex:i];
+			[app setHidden:NO];
+			
+			CGRect frame = app.frame;
+			frame.origin.y = i * frame.size.height;
+			[app setFrame:frame];
+		}
+		
+		CGRect contentRect = CGRectZero;
+		for (UIView *view in self.view.subviews) {
+			if (!view.hidden) {
+				contentRect = CGRectUnion(contentRect, view.frame);
+			}
+		}
+		
+		[(UIScrollView*)self.view setContentSize:contentRect.size];
+	} else if ([newSubviews count] == 0 && query != nil && ![query isEqualToString:@""]) {
+		[self showNoResultsLabel:YES forQuery:query];
+	} else {
+		[self showNoResultsLabel:NO forQuery:nil];
+		[self sortAppsAndLayout:sections];
+	}
+}
+
+- (void)showNoResultsLabel:(BOOL)visible forQuery:(NSString*)query {
+	[noResultsLabel setHidden:!visible];
+	
+	if (query != nil && ![query isEqualToString:@""]) {
+		NSString* baseString = [NSString stringWithFormat:[RSAesthetics localizedStringForKey:@"NO_RESULTS_FOUND"], query];
+		NSRange range = [baseString rangeOfString:query options:NSBackwardsSearch];
+		NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:baseString];
+		[string addAttribute:NSForegroundColorAttributeName value:[RSAesthetics colorsForCurrentTheme][@"ForegroundColor"] range:range];
+		[noResultsLabel setAttributedText:string];
+	}
+}
+
 # pragma mark Animations
-	
+
 - (CGFloat)getMaxDelayForAnimation {
 	NSMutableArray* viewsInView = [NSMutableArray new];
 	
@@ -478,21 +563,35 @@
 	
 	return viewsInView.count * 0.01;
 }
-	
+
 - (void)animateIn {
 	NSMutableArray* viewsInView = [NSMutableArray new];
 	NSMutableArray* viewsNotInView = [NSMutableArray new];
 	
-	for (RSApp* view in self.view.subviews) {
-		if (view != sectionBackgroundContainer && ![view isKindOfClass:[UIImageView class]] && !view.hidden) {
-			[view setTiltEnabled:NO];
-			[view.layer removeAllAnimations];
-			[view setTransform:CGAffineTransformIdentity];
+	for (RSApp* app in apps) {
+		if (!app.hidden) {
+			[app setTiltEnabled:NO];
+			[app.layer removeAllAnimations];
+			[app setTransform:CGAffineTransformIdentity];
 			
-			if ( CGRectIntersectsRect(self.view.bounds, view.frame)) {
-				[viewsInView addObject:view];
+			if (CGRectIntersectsRect(self.view.bounds, app.frame)) {
+				[viewsInView addObject:app];
 			} else {
-				[viewsNotInView addObject:view];
+				[viewsNotInView addObject:app];
+			}
+		}
+	}
+	
+	for (RSAppListSection* section in sections) {
+		if (!section.hidden) {
+			[section setTiltEnabled:NO];
+			[section.layer removeAllAnimations];
+			[section setTransform:CGAffineTransformIdentity];
+			
+			if (CGRectIntersectsRect(self.view.bounds, section.frame)) {
+				[viewsInView addObject:section];
+			} else {
+				[viewsNotInView addObject:section];
 			}
 		}
 	}
@@ -549,36 +648,63 @@
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[self.view setUserInteractionEnabled:YES];
 		
-		for (UIView* view in self.view.subviews) {
-			[view setUserInteractionEnabled:YES];
-			[view.layer removeAllAnimations];
-			[view.layer setOpacity:1];
-			[view setAlpha:1.0];
-			[view setHidden:NO];
-			
-			if ([view isKindOfClass:[RSApp class]] || [view isKindOfClass:[RSAppListSection class]]) {
-				[(RSApp*)view setTiltEnabled:YES];
-			}
+		for (RSApp* app in apps) {
+			[app setUserInteractionEnabled:YES];
+			[app.layer removeAllAnimations];
+			[app.layer setOpacity:1];
+			[app setAlpha:1.0];
+			[app setHidden:NO];
+			[app setTiltEnabled:YES];
+			[app.layer setAnchorPoint:CGPointMake(0.5,0.5)];
+			[app setCenter:app.originalCenter];
 		}
+			 
+		for (RSAppListSection* section in sections) {
+			[section setUserInteractionEnabled:YES];
+			[section.layer removeAllAnimations];
+			[section.layer setOpacity:1];
+			[section setAlpha:1.0];
+			[section setHidden:NO];
+			[section setTiltEnabled:YES];
+			[section.layer setAnchorPoint:CGPointMake(0.5,0.5)];
+			[section setCenter:section.originalCenter];
+		}
+		
 	});
 }
-	
+
 - (void)animateOut {
+	[self.searchBar resignFirstResponder];
+	
 	RSApp* sender = [self appForLeafIdentifier:[[RSLaunchScreenController sharedInstance] launchIdentifier]];
 	
 	NSMutableArray* viewsInView = [NSMutableArray new];
 	NSMutableArray* viewsNotInView = [NSMutableArray new];
 	
-	for (RSApp* view in self.view.subviews) {
-		if (view != sectionBackgroundContainer && ![view isKindOfClass:[UIImageView class]] && !view.hidden) {
-			[view setTiltEnabled:NO];
-			[view.layer removeAllAnimations];
-			[view setTransform:CGAffineTransformIdentity];
+	for (RSApp* app in apps) {
+		if (!app.hidden) {
+			[app setTiltEnabled:NO];
+			[app.layer removeAllAnimations];
+			[app setTransform:CGAffineTransformIdentity];
 			
-			if ( CGRectIntersectsRect(self.view.bounds, view.frame)) {
-				[viewsInView addObject:view];
+			if (CGRectIntersectsRect(self.view.bounds, app.frame)) {
+				[viewsInView addObject:app];
 			} else {
-				[viewsNotInView addObject:view];
+				[viewsNotInView addObject:app];
+			}
+		}
+	}
+	
+	for (RSApp* section in sections) {
+		if (!section.hidden) {
+			[section setTiltEnabled:NO];
+			[section.layer removeAllAnimations];
+			[section setTransform:CGAffineTransformIdentity];
+			
+			if (CGRectIntersectsRect(self.view.bounds, section.frame)) {
+				[viewsInView addObject:section];
+			} else {
+				[viewsNotInView addObject:section];
 			}
 		}
 	}
@@ -651,14 +777,32 @@
 				[view setHidden:NO];
 				[view.layer setOpacity:1];
 				[view.layer removeAllAnimations];
-				
-				if ([view isKindOfClass:[RSApp class]] || [view isKindOfClass:[RSAppListSection class]]) {
-					[(RSApp*)view setTiltEnabled:YES];
-				}
 			}
+			
+			for (RSApp* app in apps) {
+				[app setTiltEnabled:YES];
+			}
+			for (RSAppListSection* section in sections) {
+				[section setTiltEnabled:YES];
+			}
+			
+			[self.searchBar setText:@""];
+			[self showAppsFittingQuery];
 		});
 		
 	});
 }
+
+#pragma mark Jump List
+
+- (void)showJumpList {
+	[self.jumpList animateIn];
 	
-	@end
+}
+
+- (void)hideJumpList {
+	[self.jumpList animateOut];
+	[[RSHomeScreenController sharedInstance] setScrollEnabled:YES];
+}
+
+@end

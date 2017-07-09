@@ -6,12 +6,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class RSAppListSection, RSApp, SBLeafIcon;
+@class RSTextField, RSAppListSection, RSApp, SBLeafIcon, RSFlyoutMenu, RSJumpList;
 
 @interface RSAppListController : UIViewController <UIScrollViewDelegate> {
 	NSMutableArray* sections;
 	NSMutableArray* apps;
 	NSMutableDictionary* appsBySection;
+
+	UILabel* noResultsLabel;
 	
 	UIView* sectionBackgroundContainer;
 	UIImageView* sectionBackgroundImage;
@@ -22,6 +24,9 @@
 
 @property (nonatomic, strong) RSApp* selectedApp;
 @property (nonatomic, strong) RSFlyoutMenu* pinMenu;
+@property (nonatomic, strong) RSJumpList* jumpList;
+@property (nonatomic, strong) RSTextField* searchBar;
+@property (nonatomic, assign) BOOL isUninstallingApp;
 
 /**
  Returns a global instance of \p RSAppListController
@@ -48,6 +53,8 @@
  Updates the section background's frame
  */
 - (void)updateSectionOverlayPosition;
+
+- (void)jumpToSectionWithLetter:(NSString*)letter;
 
 /**
  Load all installed apps into App List
@@ -101,6 +108,10 @@
 
 - (void)setDownloadProgressForIcon:(NSString*)leafIdentifier progress:(float)progress state:(int)state;
 
+- (void)showAppsFittingQuery;
+
+- (void)showNoResultsLabel:(BOOL)visible forQuery:(NSString*)query;
+
 /**
  Calculates the maximum animation delay and returns it as a float
  
@@ -117,5 +128,9 @@
  Fires the App List animation from the App List to an app
  */
 - (void)animateOut;
+
+- (void)showJumpList;
+
+- (void)hideJumpList;
 
 @end

@@ -10,7 +10,7 @@
 	NSMutableArray* actions;
 }
 
-@property (nonatomic, assign) BOOL open;
+@property (nonatomic, assign) BOOL isOpen;
 
 /**
  Updates the Flyout's size based on visible action count

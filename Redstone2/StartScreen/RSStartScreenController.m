@@ -71,7 +71,24 @@ static RSStartScreenController* sharedInstance;
 }
 
 - (void)saveTiles {
+	NSMutableArray* tilesToSave = [NSMutableArray new];
+	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
+	for (RSTile* tile in pinnedTiles) {
+		NSMutableDictionary* tileInfo = [NSMutableDictionary new];
+		
+		int tilePositionX = tile.basePosition.origin.x / sizeForPosition;
+		int tilePositionY = tile.basePosition.origin.y / sizeForPosition;
+		
+		[tileInfo setValue:[NSNumber numberWithInteger:tile.size] forKey:@"size"];
+		[tileInfo setValue:[NSNumber numberWithInteger:tilePositionY] forKey:@"row"];
+		[tileInfo setValue:[NSNumber numberWithInteger:tilePositionX] forKey:@"column"];
+		[tileInfo setValue:[tile.icon applicationBundleID] forKey:@"bundleIdentifier"];
+
+		[tilesToSave addObject:tileInfo];
+	}
+	
+	[RSPreferences setObject:tilesToSave forKey:[NSString stringWithFormat:@"%iColumnLayout", [RSMetrics columns]]];
 }
 
 - (RSTile*)tileForLeafIdentifier:(NSString*)leafIdentifier {
@@ -159,6 +176,7 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	[self eliminateEmptyRows];
+	[self saveTiles];
 	[(UIScrollView*)self.view setContentOffset:CGPointMake(0, MAX([(UIScrollView*)self.view contentSize].height - self.view.bounds.size.height + 64, -24)) animated:YES];
 }
 
@@ -207,7 +225,9 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	_isEditing = isEditing;
+	
 	[[RSHomeScreenController sharedInstance] setScrollEnabled:!isEditing];
+	[[(RSStartScreenScrollView*)self.view allAppsButton] setHidden:isEditing];
 	
 	if (isEditing) {
 		[UIView animateWithDuration:.2 animations:^{

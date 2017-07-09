@@ -14,6 +14,7 @@
 }
 
 @property (nonatomic, assign) int yPosition;
+@property (nonatomic, assign) CGPoint originalCenter;
 
 /**
  Initializes an App List section header with a given letter

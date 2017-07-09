@@ -8,6 +8,16 @@ static RSPreferences* sharedInstance;
 	return sharedInstance.preferences;
 }
 
++ (void)setValue:(nonnull id)value forKey:(NSString *)key {
+	[sharedInstance.preferences setValue:value forKey:key];
+	[sharedInstance.preferences writeToFile:PREFERENCES_PATH atomically:YES];
+}
+
++ (void)setObject:(nonnull id)object forKey:(NSString *)key {
+	[sharedInstance.preferences setObject:object forKey:key];
+	[sharedInstance.preferences writeToFile:PREFERENCES_PATH atomically:YES];
+}
+
 - (id)init {
 	if (self = [super init]) {
 		sharedInstance = self;
@@ -80,14 +90,6 @@ static RSPreferences* sharedInstance;
 
 - (id)objectForKey:(NSString*)key {
 	return [self.preferences objectForKey:key];
-}
-
-- (void)setValue:(nonnull id)value forKey:(NSString *)key {
-	[self.preferences setValue:value forKey:key];
-}
-
-- (void)setObject:(nonnull id)object forKey:(NSString *)key {
-	[self.preferences setObject:object forKey:key];
 }
 
 @end

@@ -4,7 +4,7 @@
 
 int columns = 3;
 
-+ (NSInteger)columns {
++ (int)columns {
 	return columns;
 }
 

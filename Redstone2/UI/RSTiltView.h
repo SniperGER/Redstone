@@ -7,6 +7,7 @@
 #import <UIKit/UIKit.h>
 
 @interface RSTiltView : UIView {
+	CALayer* highlightLayer;
 	BOOL isTilted;
 	BOOL isHighlighted;
 }
@@ -21,5 +22,7 @@
  Removes transform and highlight of a tilted view
  */
 - (void)untilt;
+
+- (void)addTarget:(id)target action:(SEL)action;
 
 @end

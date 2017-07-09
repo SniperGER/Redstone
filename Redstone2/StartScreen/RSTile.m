@@ -177,6 +177,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		
 		CGPoint relativePosition = [self.superview convertPoint:self.center toView:self.superview];
 		centerOffset = CGPointMake(relativePosition.x - touchLocation.x, relativePosition.y - touchLocation.y);
+		
+		[unpinButton setHidden:YES];
+		[scaleButton setHidden:YES];
 	}
 	
 	if (gestureRecognizer.state == UIGestureRecognizerStateChanged && panEnabled) {
@@ -187,6 +190,9 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		centerOffset = CGPointZero;
 		
 		[[RSStartScreenController sharedInstance] snapTile:self withTouchPosition:self.center];
+		
+		[unpinButton setHidden:NO];
+		[scaleButton setHidden:NO];
 	}
 }
 

@@ -18,6 +18,7 @@
 }
 
 @property (nonatomic, strong) UIWindow* window;
+@property (nonatomic, strong) NSMutableArray* alertControllers;
 
 /**
  Returns a global instance of \p RSHomeScreenController
@@ -25,6 +26,8 @@
  @return A global instance of \p RSHomeScreenController
  */
 + (id)sharedInstance;
+
+- (RSHomeScreenScrollView*)scrollView;
 
 /**
  Returns the current parallax position of the Home Screen wallpaper

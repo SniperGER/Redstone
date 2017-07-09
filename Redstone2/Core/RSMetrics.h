@@ -12,9 +12,9 @@
 /**
  Returns the currently active column count
 
- @return A \p NSInteger representing the currently active column count
+ @return A \p int representing the currently active column count
  */
-+ (NSInteger)columns;
++ (int)columns;
 
 
 /**

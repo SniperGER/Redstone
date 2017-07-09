@@ -6,6 +6,8 @@
 	if (self = [super initWithFrame:frame]) {
 		self.icon = [[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:leafIdentifier];
 		self.tileInfo = [[RSTileInfo alloc] initWithBundleIdentifier:leafIdentifier];
+		self.originalCenter = self.center;
+		[self.layer setZPosition:-100];
 		
 		[self setHighlightEnabled:YES];
 		
@@ -30,7 +32,7 @@
 		
 		appLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, frame.size.width-70, 54)];
 		[appLabel setFont:[UIFont fontWithName:@"SegoeUI-Semilight" size:20]];
-		[appLabel setTextColor:[UIColor whiteColor]];
+		[appLabel setTextColor:[RSAesthetics colorsForCurrentTheme][@"ForegroundColor"]];
 		
 		if (self.tileInfo.localizedDisplayName) {
 			[appLabel setText:self.tileInfo.localizedDisplayName];

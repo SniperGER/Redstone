@@ -9,8 +9,8 @@
 
 %group homeScreen
 
-BOOL isUnlocking;
-BOOL hasBeenUnlockedBefore;
+static BOOL isUnlocking;
+static BOOL hasBeenUnlockedBefore;
 
 %hook SpringBoard
 
@@ -86,11 +86,14 @@ BOOL hasBeenUnlockedBefore;
 			
 			isUnlocking = NO;
 			
-			if ([[RSLaunchScreenController sharedInstance] launchIdentifier] != nil) {
+			if ([[RSLaunchScreenController sharedInstance] launchIdentifier] != nil || frontApp != nil) {
 				[[RSLaunchScreenController sharedInstance] animateCurrentApplicationSnapshot];
-				[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:nil];
 				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 					[[RSStartScreenController sharedInstance] animateIn];
+					
+					dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+						[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:nil];
+					});
 					
 					%orig;
 				});
@@ -118,11 +121,6 @@ BOOL hasBeenUnlockedBefore;
 
 -(void)addIcon:(id)arg1 {
 	%orig;
-	
-	/*if ([arg1 isKindOfClass:%c(SBDownloadingIcon)]) {
-		NSLog(@"[Redstone | Home Screen] start downloading app: \"%@\", \"%@\"", [arg1 displayName], [arg1 realDisplayName]);
-	}*/
-	%log;
 	
 	[[RSAppListController sharedInstance] addAppForIcon:arg1];
 }

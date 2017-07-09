@@ -43,6 +43,10 @@ NSBundle* redstoneBundle;
 }
 
 + (UIColor*)accentColor {
+	if ([[[RSPreferences preferences] objectForKey:@"accentColor"] isEqualToString:@"auto"]) {
+		return [[self homeScreenWallpaper] mergedColor];
+	}
+	
 	return [self colorFromHexString:[[RSPreferences preferences] objectForKey:@"accentColor"]];
 }
 
@@ -70,7 +74,11 @@ NSBundle* redstoneBundle;
 				 @"InvertedBackgroundColor": [UIColor whiteColor],
 				 @"OpaqueBackgroundColor": [UIColor colorWithWhite:0.0 alpha:0.75],
 				 @"BorderColor": [UIColor colorWithWhite:0.46 alpha:1.0],
-				 @"TrackColor": [UIColor colorWithWhite:0.43 alpha:1.0]
+				 @"TrackColor": [UIColor colorWithWhite:0.43 alpha:1.0],
+				 @"DisabledColor": [UIColor colorWithWhite:0.3 alpha:1.0],
+				 @"ButtonColor": [UIColor colorWithWhite:0.38 alpha:1.0],
+				 @"TextFieldBackgroundColor": [UIColor blackColor],
+				 @"TextFieldPlaceholderColor": [UIColor colorWithWhite:0.6 alpha:1.0],
 				 };
 	} else if ([themeName isEqualToString:@"light"]) {
 		return @{
@@ -79,8 +87,12 @@ NSBundle* redstoneBundle;
 				 @"InvertedForegroundColor": [UIColor whiteColor],
 				 @"InvertedBackgroundColor": [UIColor colorWithWhite:0.22 alpha:1.0],
 				 @"OpaqueBackgroundColor": [UIColor colorWithWhite:1.0 alpha:0.75],
-				 @"BorderColor": [UIColor colorWithWhite:0.80 alpha:1.0],
-				 @"TrackColor": [UIColor colorWithWhite:0.66 alpha:1.0]
+				 @"BorderColor": [UIColor colorWithWhite:0.50 alpha:1.0],
+				 @"TrackColor": [UIColor colorWithWhite:0.66 alpha:1.0],
+				 @"DisabledColor": [UIColor colorWithWhite:0.7 alpha:1.0],
+				 @"ButtonColor": [UIColor colorWithWhite:0.72 alpha:1.0],
+				 @"TextFieldBackgroundColor": [UIColor colorWithWhite:0.9 alpha:0.85],
+				 @"TextFieldPlaceholderColor": [UIColor colorWithWhite:0.33 alpha:1.0],
 				 };
 	}
 	

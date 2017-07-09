@@ -14,7 +14,6 @@ static id currentApplication;
 		sharedInstance = self;
 		
 		homeScreenWindow = window;
-		[homeScreenWindow setHidden:YES];
 		
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeui.ttf", RESOURCE_PATH]]];
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segoeuil.ttf", RESOURCE_PATH]]];
@@ -23,6 +22,7 @@ static id currentApplication;
 		[UIFont registerFontFromURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Fonts/segmdl2.ttf", RESOURCE_PATH]]];
 		
 		if ([[[RSPreferences preferences] objectForKey:kRSPHomeScreenEnabledKey] boolValue]) {
+			[homeScreenWindow setHidden:YES];
 			homeScreenController = [RSHomeScreenController new];
 		}
 		
@@ -43,6 +43,10 @@ static id currentApplication;
 }
 
 - (void)frontDisplayDidChange:(id)application {
+	if (homeScreenController == nil) {
+		return;
+	}
+	
 	currentApplication = application;
 	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
@@ -57,21 +61,37 @@ static id currentApplication;
 - (BOOL)handleMenuButtonEvent {
 	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
-	if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")] || frontApp != nil) {
-		return YES;
-	}
-	
-	if ([RSLaunchScreenController sharedInstance]) {
-		if ([[RSLaunchScreenController sharedInstance] isLaunchingApp]) {
+	if (homeScreenController != nil) {
+		if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")] || frontApp != nil) {
+			return YES;
+		}
+		
+		if ([RSLaunchScreenController sharedInstance]) {
+			if ([[RSLaunchScreenController sharedInstance] isLaunchingApp]) {
+				return NO;
+			}
+		}
+		
+		if ([[RSAppListController sharedInstance] isUninstallingApp]) {
 			return NO;
 		}
-	}
-	
-	if ([RSStartScreenController sharedInstance]) {
-		if ([[[RSAppListController sharedInstance] pinMenu] open]) {
+		
+		if ([[[RSAppListController sharedInstance] jumpList] isOpen]) {
+			[[RSAppListController sharedInstance] hideJumpList];
+			return NO;
+		}
+		
+		if ([[[RSAppListController sharedInstance] pinMenu] isOpen]) {
 			[[RSAppListController sharedInstance] hidePinMenu];
 			return NO;
 		}
+		
+		if ([[[RSAppListController sharedInstance] searchBar] text].length > 0) {
+			[[[RSAppListController sharedInstance] searchBar] resignFirstResponder];
+			[[[RSAppListController sharedInstance] searchBar] setText:@""];
+			[[RSAppListController sharedInstance] showAppsFittingQuery];
+		}
+		
 		if ([[RSStartScreenController sharedInstance] isEditing]) {
 			[[RSStartScreenController sharedInstance] setIsEditing:NO];
 			return NO;

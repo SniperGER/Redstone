@@ -8,6 +8,11 @@
 	if (self) {
 		self.tiltEnabled = YES;
 		
+		highlightLayer = [CALayer new];
+		[highlightLayer setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+		[highlightLayer setOpacity:0];
+		[self.layer addSublayer:highlightLayer];
+		
 		self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 		[self.titleLabel setTextAlignment:NSTextAlignmentCenter];
 		[self addSubview:self.titleLabel];
@@ -24,10 +29,10 @@
 - (void)calculatePerspective {
 	[self.layer removeAllAnimations];
 	
-	CATransform3D transform = CATransform3DIdentity;
+	/*CATransform3D transform = CATransform3DIdentity;
 	transform.m34 = -1.0 / 2000;
 	
-	[self.layer setTransform:transform];
+	[self.layer setTransform:transform];*/
 }
 
 - (void)untilt {
@@ -42,7 +47,8 @@
 			}
 			
 			if (self.highlightEnabled && isHighlighted) {
-				[self setBackgroundColor:[UIColor clearColor]];
+				[highlightLayer setOpacity:0.0];
+				//[self setBackgroundColor:[UIColor clearColor]];
 			}
 		} completion:^(BOOL finished) {
 			isTilted = NO;
@@ -103,6 +109,8 @@
 			rotateY = CATransform3DRotate(self.layer.transform, deg2rad(angle), transformX, 0, 0 );
 			
 			CATransform3D finalTransform;
+			finalTransform.m34 = -1 / 2000;
+			
 			if (x<=(width/3)*2 && x>(width/3) && y<=(height/3)*2 && y>(height/3)) {
 				transformOrigX = 0.5;
 				transformOrigY = 0.5;
@@ -116,14 +124,22 @@
 		}
 	}
 	
+	[CATransaction begin];
+	[CATransaction setDisableActions:YES];
+	
 	if (self.highlightEnabled) {
 		isHighlighted = YES;
 		if (self.coloredHighlight) {
-			[self setBackgroundColor:[RSAesthetics accentColor]];
+			[highlightLayer setBackgroundColor:[RSAesthetics accentColor].CGColor];
+			//[self setBackgroundColor:[RSAesthetics accentColor]];
 		} else {
-			[self setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.2]];
+			[highlightLayer setBackgroundColor:[[RSAesthetics colorsForCurrentTheme][@"ForegroundColor"] colorWithAlphaComponent:0.2].CGColor];
+			//[self setBackgroundColor:[[RSAesthetics colorsForCurrentTheme][@"ForegroundColor"] colorWithAlphaComponent:0.2]];
 		}
+		[highlightLayer setOpacity:1.0];
 	}
+	
+	[CATransaction commit];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -157,6 +173,7 @@
 - (void)setFrame:(CGRect)frame {
 	[super setFrame:frame];
 	
+	[highlightLayer setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 	//[self.titleLabel setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 }
 
