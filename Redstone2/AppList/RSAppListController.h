@@ -54,6 +54,11 @@
  */
 - (void)updateSectionOverlayPosition;
 
+/**
+ Moves the App List scroll view to a given section header
+
+ @param letter The letter matching the section header
+ */
 - (void)jumpToSectionWithLetter:(NSString*)letter;
 
 /**
@@ -75,6 +80,11 @@
  */
 - (void)sortAppsAndLayout:(NSArray*)_sections;
 
+/**
+ Adds a new entry to App List when SpringBoard adds a new icon to iOS' home screen
+
+ @param icon The icon SpringBoard added to the home screen
+ */
 - (void)addAppForIcon:(SBLeafIcon*)icon;
 
 /**
@@ -106,10 +116,26 @@
  */
 - (void)hidePinMenu;
 
+/**
+ Sets the download state and progress for an App List entry matching \p leafIdentifier
+
+ @param leafIdentifier The bundle identifier to match an App List entry with
+ @param progress The current download progress
+ @param state The current download state
+ */
 - (void)setDownloadProgressForIcon:(NSString*)leafIdentifier progress:(float)progress state:(int)state;
 
+/**
+ Receives the text entered in App List's search bar and shows all entries fitting this query. If the search bar contains no text, all apps are shown again.
+ */
 - (void)showAppsFittingQuery;
 
+/**
+ Sets the visibilty of the "No results for" label and sets its query text
+
+ @param visible The visibility state of the "No results for" label
+ @param query The query to show in the label
+ */
 - (void)showNoResultsLabel:(BOOL)visible forQuery:(NSString*)query;
 
 /**
@@ -129,8 +155,14 @@
  */
 - (void)animateOut;
 
+/**
+ Shows App List's Jump List
+ */
 - (void)showJumpList;
 
+/**
+ Hides App List's Jump List
+ */
 - (void)hideJumpList;
 
 @end

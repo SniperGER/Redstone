@@ -28,6 +28,11 @@
  */
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafIdentifier;
 
+/**
+ Returns an App List entry's display name
+ 
+ @return An App List entry's display name
+ */
 - (NSString*)displayName;
 
 - (void)setDisplayName:(NSString*)displayName;

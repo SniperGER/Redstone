@@ -27,6 +27,12 @@
  */
 + (id)sharedInstance;
 
+
+/**
+ Returns the Home Screen scroll view
+
+ @return The Home Screen scroll view
+ */
 - (RSHomeScreenScrollView*)scrollView;
 
 /**

@@ -12,8 +12,14 @@
 
 @property (nonatomic, assign) BOOL isOpen;
 
+/**
+ Fires the Jump List animation for showing the Jump List
+ */
 - (void)animateIn;
 
+/**
+ Fires the Jump List animation for hiding the Jump List
+ */
 - (void)animateOut;
 
 @end

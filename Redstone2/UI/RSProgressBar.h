@@ -10,6 +10,11 @@
 	UIView* progressLayer;
 }
 
+/**
+ Sets the progress of a progress bar
+
+ @param progress The progress to be shown on a progress bar. A float between 0 and 1
+ */
 - (void)setProgress:(float)progress;
 
 @end

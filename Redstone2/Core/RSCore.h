@@ -17,7 +17,6 @@
 	RSSoundController* soundController;
 }
 
-
 /**
  Returns the global RSCore instance because a static instance just isn't enough
 
@@ -45,4 +44,5 @@
  @return A boolean value that specifies if the default event can be fired
  */
 - (BOOL)handleMenuButtonEvent;
+
 @end

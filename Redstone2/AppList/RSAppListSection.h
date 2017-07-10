@@ -25,6 +25,11 @@
  */
 - (id)initWithFrame:(CGRect)frame letter:(NSString*)letter;
 
+/**
+ Returns the section's display name
+
+ @return The section's display name
+ */
 - (NSString*)displayName;
 
 @end

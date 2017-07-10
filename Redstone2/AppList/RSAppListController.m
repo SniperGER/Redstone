@@ -283,7 +283,6 @@ static RSAppListController* sharedInstance;
 	}
 	[(UIScrollView*)self.view setContentSize:contentRect.size];
 	
-	//[sectionBackgroundContainer setFrame:CGRectMake(0, 0, screenWidth, 60)];
 	[self updateSectionOverlayPosition];
 }
 
