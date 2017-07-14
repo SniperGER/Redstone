@@ -75,27 +75,28 @@
 }
 
 - (void)resetHomeScreenLayout {
-	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@""
+	UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@""
 																			 message:@"This will reset your Start Screen layout to factory defaults."
 																	  preferredStyle:UIAlertControllerStyleActionSheet];
-	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+	UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
 														   style:UIAlertActionStyleCancel
 														 handler:nil];
 	
-	UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Reset Start Screen"
+	UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Reset Start Screen"
 													   style:UIAlertActionStyleDestructive
 													 handler:^(UIAlertAction *action) {
 														 NSMutableDictionary* preferences = [NSMutableDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/ml.festival.redstone.plist"];
-														 [preferences setObject:[NSArray arrayWithContentsOfFile:@"/var/mobile/Library/FESTIVAL/Redstone.bundle/2ColumnDefaultLayout.plist"] forKey:@"2ColumnLayout"];
+														 [preferences setObject:[NSArray arrayWithContentsOfFile:@"/var/mobile/Library/FESTIVAL/Redstone/2ColumnDefaultLayout.plist"] forKey:@"2ColumnLayout"];
 														 [preferences setObject:[NSArray arrayWithContentsOfFile:@"/var/mobile/Library/FESTIVAL/Redstone/3ColumnDefaultLayout.plist"] forKey:@"3ColumnLayout"];
 														 
 														 [preferences writeToFile:@"/var/mobile/Library/Preferences/ml.festival.redstone.plist" atomically:YES];
 														 
-														 system("killall backboardd");
+														 system("killall SpringBoard");
 													 }];
 	[alertController addAction:cancelAction];
-	[alertController addAction:okAction];
+	[alertController addAction:confirmAction];
 	[self presentViewController:alertController animated:YES completion:nil];
+
 }
 #pragma GCC diagnostic pop
 

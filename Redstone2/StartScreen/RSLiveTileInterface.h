@@ -21,5 +21,6 @@
 
 @optional
 - (void)triggerAnimation;
+- (void)prepareForRemoval;
 
 @end

@@ -11,7 +11,6 @@
 
 static BOOL isUnlocking;
 static BOOL hasBeenUnlockedBefore;
-static NSString* applicationIdentifier;
 
 %hook SpringBoard
 
@@ -152,6 +151,18 @@ static NSString* applicationIdentifier;
 }
 
 %end // %hook SBIconImageView
+
+%hook SBApplication
+
+- (void)setBadge:(id)arg1 {
+	%orig(arg1);
+	
+	if ([[RSStartScreenController sharedInstance] tileForLeafIdentifier:[self bundleIdentifier]]) {
+		[[[RSStartScreenController sharedInstance] tileForLeafIdentifier:[self bundleIdentifier]] setBadge:[arg1 intValue]];
+	}
+}
+
+%end // %hook SBApplication
 
 %hook SBDeckSwitcherViewController
 

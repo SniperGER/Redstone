@@ -795,8 +795,8 @@ static RSAppListController* sharedInstance;
 #pragma mark Jump List
 
 - (void)showJumpList {
+	[self.searchBar resignFirstResponder];
 	[self.jumpList animateIn];
-	
 }
 
 - (void)hideJumpList {

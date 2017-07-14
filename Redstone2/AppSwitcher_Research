@@ -1,0 +1,6 @@
+SBAppSwitcherModel
+	+ (id)sharedInstance
+	- (id)mainSwitcherDisplayItems
+
+SBAppSwitcherSnapshotView
+	- (id)initWithDisplayItem:application:orientation:preferringDownscaledSnapshot:async:withQueue:

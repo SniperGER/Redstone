@@ -188,7 +188,7 @@ static RSStartScreenController* sharedInstance;
 	}
 	
 	[pinnedTiles removeObject:tile];
-	[pinnedLeafIdentifiers removeObject:[tile.icon applicationBundleID]];
+	[pinnedLeafIdentifiers removeObject:tile.icon.applicationBundleID];
 	
 	[UIView animateWithDuration:.2 animations:^{
 		[tile setEasingFunction:easeOutQuint forKeyPath:@"frame"];

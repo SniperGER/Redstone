@@ -3,5 +3,6 @@
 @interface SBApplication : NSObject
 
 - (id)bundleIdentifier;
+- (id)badgeNumberOrString;
 
 @end

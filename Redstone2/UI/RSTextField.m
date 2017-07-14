@@ -16,11 +16,11 @@
 		clearButton = [[RSTiltView alloc] initWithFrame:CGRectMake(self.frame.size.width - 40, 0, 40, self.frame.size.height)];
 		[clearButton.titleLabel setFont:[UIFont fontWithName:@"SegoeMDL2Assets" size:14]];
 		[clearButton.titleLabel setText:@"\uE71E"];
+		[clearButton.titleLabel setTextColor:[[RSAesthetics colorsForCurrentTheme][@"TextFieldPlaceholderColor"] colorWithAlphaComponent:0.4]];
 		[clearButton addTarget:self action:@selector(clearTextField:)];
 		[clearButton setTiltEnabled:NO];
 		[clearButton setHighlightEnabled:YES];
 		[clearButton setColoredHighlight:YES];
-		[clearButton setAlpha:0.4];
 		[self setRightViewMode:UITextFieldViewModeAlways];
 		[self setRightView:clearButton];
 		
@@ -57,8 +57,8 @@
 	[self.layer setBorderColor:[RSAesthetics accentColor].CGColor];
 	[self setBackgroundColor:[UIColor whiteColor]];
 	[self setTextColor:[UIColor blackColor]];
-
-	[clearButton setAlpha:1.0];
+	
+	[clearButton.titleLabel setTextColor:[RSAesthetics colorsForCurrentTheme][@"TextFieldPlaceholderColor"]];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -66,7 +66,7 @@
 	[self setBackgroundColor:[RSAesthetics colorsForCurrentTheme][@"TextFieldBackgroundColor"]];
 	[self setTextColor:[RSAesthetics colorsForCurrentTheme][@"ForegroundColor"]];
 	
-	[clearButton setAlpha:0.4];
+	[clearButton.titleLabel setTextColor:[[RSAesthetics colorsForCurrentTheme][@"TextFieldPlaceholderColor"] colorWithAlphaComponent:0.4]];
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds {

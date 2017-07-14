@@ -514,6 +514,9 @@
 		8D56D7191F08BED0009E3070 /* Redstone2_UIKit.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D56D7181F08BED0009E3070 /* Redstone2_UIKit.plist */; };
 		8D5AA3361F0A2D4100DC2073 /* RSAppListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5AA3351F0A2D4100DC2073 /* RSAppListController.m */; };
 		8D5AA3391F0A2E8D00DC2073 /* RSAppListScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5AA3381F0A2E8D00DC2073 /* RSAppListScrollView.m */; };
+		8D61E9AA1F18D75600514586 /* AppSwitcher_Research in Resources */ = {isa = PBXBuildFile; fileRef = 8D61E9A91F18D75600514586 /* AppSwitcher_Research */; };
+		8D61E9B41F190F3200514586 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D30EB301F18332F00823521 /* Contacts.framework */; };
+		8D61E9BD1F190F6E00514586 /* RSPeopleTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D61E9BC1F190F6E00514586 /* RSPeopleTile.m */; };
 		8D6284641F104CA7006C09B1 /* RSJumpList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D6284631F104CA7006C09B1 /* RSJumpList.m */; };
 		8D6284671F10C9DA006C09B1 /* RSAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D6284661F10C9DA006C09B1 /* RSAlertController.m */; };
 		8D62846B1F120D22006C09B1 /* RSAlertAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D62846A1F120D22006C09B1 /* RSAlertAction.m */; };
@@ -1098,8 +1101,11 @@
 		8D5AA3351F0A2D4100DC2073 /* RSAppListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSAppListController.m; sourceTree = "<group>"; };
 		8D5AA3371F0A2E8D00DC2073 /* RSAppListScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSAppListScrollView.h; sourceTree = "<group>"; };
 		8D5AA3381F0A2E8D00DC2073 /* RSAppListScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSAppListScrollView.m; sourceTree = "<group>"; };
-		8D61E9A31F18BF4A00514586 /* Contacts.tile */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Contacts.tile; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D61E9A51F18BF4A00514586 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D61E9A31F18BF4A00514586 /* People.tile */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = People.tile; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D61E9A91F18D75600514586 /* AppSwitcher_Research */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AppSwitcher_Research; sourceTree = "<group>"; };
+		8D61E9B61F190F5100514586 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D61E9BB1F190F6E00514586 /* RSPeopleTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPeopleTile.h; sourceTree = "<group>"; };
+		8D61E9BC1F190F6E00514586 /* RSPeopleTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPeopleTile.m; sourceTree = "<group>"; };
 		8D6284611F103A28006C09B1 /* SBApplicationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBApplicationController.h; sourceTree = "<group>"; };
 		8D6284621F104CA7006C09B1 /* RSJumpList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSJumpList.h; sourceTree = "<group>"; };
 		8D6284631F104CA7006C09B1 /* RSJumpList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSJumpList.m; sourceTree = "<group>"; };
@@ -1213,6 +1219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D61E9B41F190F3200514586 /* Contacts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1266,6 +1273,7 @@
 				8D9EDAC81F02FDFA00C97EEA /* Redstone.h */,
 				8D9EDACD1F02FE6900C97EEA /* Redstone2_Core.xm */,
 				8DC97C591F0382E6004A75CB /* Redstone2_HomeScreen.xm */,
+				8D61E9A91F18D75600514586 /* AppSwitcher_Research */,
 				8D56D7131F08BDD7009E3070 /* Redstone2_UIKit */,
 				8DD198591F12C40C0080F4AD /* Redstone2_Prefs */,
 				8D9EDACA1F02FE1C00C97EEA /* headers */,
@@ -1288,7 +1296,7 @@
 			children = (
 				8D34D13F1EFDD28700B2D634 /* hiddenapp.app */,
 				8DE8D4391F14BA88003AA2DF /* Weather.tile */,
-				8D61E9A31F18BF4A00514586 /* Contacts.tile */,
+				8D61E9A31F18BF4A00514586 /* People.tile */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2500,13 +2508,14 @@
 			path = AppList;
 			sourceTree = "<group>";
 		};
-		8D61E9A41F18BF4A00514586 /* Contacts */ = {
+		8D61E9B51F190F5100514586 /* People */ = {
 			isa = PBXGroup;
 			children = (
-				8D61E9A51F18BF4A00514586 /* Info.plist */,
+				8D61E9B61F190F5100514586 /* Info.plist */,
+				8D61E9BB1F190F6E00514586 /* RSPeopleTile.h */,
+				8D61E9BC1F190F6E00514586 /* RSPeopleTile.m */,
 			);
-			name = Contacts;
-			path = ../../Contacts;
+			path = People;
 			sourceTree = "<group>";
 		};
 		8D63E36B1F04D86E00FC242C /* UI */ = {
@@ -2714,7 +2723,7 @@
 			children = (
 				8DCCE2B61F14BDAA0089A751 /* headers */,
 				8DE8D43A1F14BA88003AA2DF /* Weather */,
-				8D61E9A41F18BF4A00514586 /* Contacts */,
+				8D61E9B51F190F5100514586 /* People */,
 			);
 			path = Tiles;
 			sourceTree = "<group>";
@@ -2761,7 +2770,7 @@
 		};
 		8DDC17E11F05845E00C57D6E /* Install */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = do;
+			buildArgumentsString = "do -B";
 			buildConfigurationList = 8DDC17E21F05845E00C57D6E /* Build configuration list for PBXLegacyTarget "Install" */;
 			buildPhases = (
 			);
@@ -2794,21 +2803,22 @@
 			productReference = 8D34D13F1EFDD28700B2D634 /* hiddenapp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8D61E9A21F18BF4A00514586 /* Contacts */ = {
+		8D61E9A21F18BF4A00514586 /* People */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8D61E9A81F18BF4A00514586 /* Build configuration list for PBXNativeTarget "Contacts" */;
+			buildConfigurationList = 8D61E9A81F18BF4A00514586 /* Build configuration list for PBXNativeTarget "People" */;
 			buildPhases = (
 				8D61E99F1F18BF4A00514586 /* Sources */,
 				8D61E9A01F18BF4A00514586 /* Frameworks */,
 				8D61E9A11F18BF4A00514586 /* Resources */,
+				8D61E9B31F190EF800514586 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Contacts;
+			name = People;
 			productName = Contacts;
-			productReference = 8D61E9A31F18BF4A00514586 /* Contacts.tile */;
+			productReference = 8D61E9A31F18BF4A00514586 /* People.tile */;
 			productType = "com.apple.product-type.bundle";
 		};
 		8DE8D4381F14BA88003AA2DF /* Weather */ = {
@@ -2875,7 +2885,7 @@
 				8D34D1241EFDC71200B2D634 /* Build */,
 				8DDC17E11F05845E00C57D6E /* Install */,
 				8DE8D4381F14BA88003AA2DF /* Weather */,
-				8D61E9A21F18BF4A00514586 /* Contacts */,
+				8D61E9A21F18BF4A00514586 /* People */,
 			);
 		};
 /* End PBXProject section */
@@ -3295,6 +3305,7 @@
 				8D56D5911F07988E009E3070 /* Drizzle@2x.png in Resources */,
 				8D56D70F1F07988E009E3070 /* tile-AppList@3x.png in Resources */,
 				8D56D5B61F07988E009E3070 /* NoReport@3x.png in Resources */,
+				8D61E9AA1F18D75600514586 /* AppSwitcher_Research in Resources */,
 				8D56D65E1F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D5A21F07988E009E3070 /* HeavyRain@3x.png in Resources */,
 				8D56D5C51F07988E009E3070 /* SevereThunderstorm@2x.png in Resources */,
@@ -3412,6 +3423,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		8D61E9B31F190EF800514586 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Fix that code signing\ncodesign --force --sign - --timestamp=none $CODESIGNING_FOLDER_PATH/$PRODUCT_NAME\n\nrm -rf $PROJECT_DIR/$PROJECT_NAME/Layout/var/mobile/Library/FESTIVAL/Redstone/Live\\ Tiles/$PRODUCT_BUNDLE_IDENTIFIER.$WRAPPER_EXTENSION/\n\ncp -R $CODESIGNING_FOLDER_PATH/. $PROJECT_DIR/$PROJECT_NAME/Layout/var/mobile/Library/FESTIVAL/Redstone/Live\\ Tiles/$PRODUCT_BUNDLE_IDENTIFIER.$WRAPPER_EXTENSION/";
+		};
 		8DE8D43F1F14BABC003AA2DF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3474,6 +3498,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D61E9BD1F190F6E00514586 /* RSPeopleTile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3709,7 +3734,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				INFOPLIST_FILE = Contacts/Info.plist;
+				INFOPLIST_FILE = "$(PROJECT_DIR)/$(PROJECT_NAME)/Tiles/$(TARGET_NAME)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.MobileAddressBook;
@@ -3728,7 +3753,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				INFOPLIST_FILE = Contacts/Info.plist;
+				INFOPLIST_FILE = "$(PROJECT_DIR)/$(PROJECT_NAME)/Tiles/$(TARGET_NAME)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apple.MobileAddressBook;
@@ -3748,7 +3773,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-fobjc-arc";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3764,7 +3789,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-fobjc-arc";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3777,13 +3802,14 @@
 		8DE8D43D1F14BA88003AA2DF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = NO;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "/opt/theos/include/**";
-				INFOPLIST_FILE = "$(PROJECT_DIR)/$(PROJECT_NAME)/Tiles/Weather/Info.plist";
+				INFOPLIST_FILE = "$(PROJECT_DIR)/$(PROJECT_NAME)/Tiles/$(TARGET_NAME)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = (
 					/opt/theos/lib/,
@@ -3801,13 +3827,14 @@
 		8DE8D43E1F14BA88003AA2DF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = NO;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "/opt/theos/include/**";
-				INFOPLIST_FILE = "$(PROJECT_DIR)/$(PROJECT_NAME)/Tiles/Weather/Info.plist";
+				INFOPLIST_FILE = "$(PROJECT_DIR)/$(PROJECT_NAME)/Tiles/$(TARGET_NAME)/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = (
 					/opt/theos/lib/,
@@ -3852,13 +3879,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8D61E9A81F18BF4A00514586 /* Build configuration list for PBXNativeTarget "Contacts" */ = {
+		8D61E9A81F18BF4A00514586 /* Build configuration list for PBXNativeTarget "People" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8D61E9A61F18BF4A00514586 /* Debug */,
 				8D61E9A71F18BF4A00514586 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8DDC17E21F05845E00C57D6E /* Build configuration list for PBXLegacyTarget "Install" */ = {
 			isa = XCConfigurationList;

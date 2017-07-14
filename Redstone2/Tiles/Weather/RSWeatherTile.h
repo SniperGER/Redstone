@@ -16,6 +16,8 @@
 @end
 
 @interface RSWeatherInfoManager : NSObject
+@property (nonatomic, assign) id <RSWeatherInfoManagerDelegate>delegate;
+
 - (id)initWithDelegate:(id <RSWeatherInfoManagerDelegate>)delegate;
 - (BOOL)isMonitoringWeatherChangesForLocation:(CLLocation *)location;
 - (void)startMonitoringCurrentLocationWeatherChanges;

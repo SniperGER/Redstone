@@ -1,5 +1,11 @@
 #import "RSWeatherTile.h"
 
+@interface RSTile : NSObject
+
+- (void)setLiveTileHidden:(BOOL)arg1 animated:(BOOL)arg2;
+
+@end
+
 @implementation RSWeatherTile
 
 - (id)initWithFrame:(CGRect)frame tile:(RSTile *)tile {
@@ -43,10 +49,11 @@
 }
 
 - (void)update {
-	
+	return;
 }
 
 - (void)weatherInfoManager:(RSWeatherInfoManager *)weatherInfoManager didUpdateWeather:(RSWeatherCity *)city {
+	
 	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
 	[geocoder reverseGeocodeLocation:[city location] completionHandler:^(NSArray *placemarks, NSError *error) {
 		if (placemarks && placemarks.count > 0) {
@@ -59,10 +66,19 @@
 			[conditionView updateForCity:city];
 			[hourlyForecastView updateForCity:city];
 			[dayForecastView updateForCity:city];
+			
+			if (currentCity == nil) {
+				[self.tile setLiveTileHidden:NO animated:YES];
+			}
+			
+			currentCity = city;
 		}
 	}];
-	
-	currentCity = city;
+}
+
+- (void)prepareForRemoval {
+	[weatherManager stopMonitoringCurrentLocationWeatherChanges];
+	weatherManager = nil;
 }
 
 @end

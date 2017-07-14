@@ -77,7 +77,7 @@
 		float transformX = 0, transformY = 0, transformOrigX = 0, transformOrigY = 0;
 		
 		if (x>=0 && x <= width && y >= 0 && y <= height) {
-			float angle = 7.5;
+			float angle = 11;
 			
 			CATransform3D rotateX = CATransform3DIdentity;
 			CATransform3D rotateY = CATransform3DIdentity;
@@ -114,7 +114,7 @@
 			if (x<=(width/3)*2 && x>(width/3) && y<=(height/3)*2 && y>(height/3)) {
 				transformOrigX = 0.5;
 				transformOrigY = 0.5;
-				finalTransform = CATransform3DScale(self.layer.transform, 0.985, 0.985, 1);
+				finalTransform = CATransform3DScale(self.layer.transform, 0.970, 0.97, 1);
 			} else {
 				finalTransform = CATransform3DConcat(rotateX, rotateY);
 			}

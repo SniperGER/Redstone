@@ -23,6 +23,9 @@
 	UILabel* tileLabel;
 	UIImageView* tileImageView;
 	
+	int badgeValue;
+	UILabel* badgeLabel;
+	
 	UIView* unpinButton;
 	UIView* scaleButton;
 	UITapGestureRecognizer* unpinGestureRecognizer;
@@ -60,8 +63,14 @@
  */
 - (CGRect)basePosition;
 
+- (void)setBadge:(int)badgeCount;
+
 - (void)startLiveTile;
 
 - (void)stopLiveTile;
+
+- (void)setLiveTileHidden:(BOOL)hidden;
+
+- (void)setLiveTileHidden:(BOOL)hidden animated:(BOOL)animated;
 
 @end
