@@ -38,6 +38,8 @@ Please note that this Internal version currently only supports iOS 10
 * SSH configured for your device (`ssh-copy-id`)
 * [simject](https://github.com/angelxwind/simject) (optional, injects dylibs into Simulator)
 
+Please note that Redstone is currently using a custom made library that I haven't released the source code of yet, as it's currently only working on iOS 10. To compile Redstone without this library, remove `WeatherManager` from `Redstone2_LIBRARIES` and remove the Weather Live Tile from Target Dependecies.
+
 ### Build for devices
 
 * Change `THEOS_DEVICE_IP` to your device IP
