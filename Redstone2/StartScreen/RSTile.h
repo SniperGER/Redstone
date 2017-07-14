@@ -5,6 +5,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "RSLiveTileInterface.h"
 
 @class RSTiltView, SBLeafIcon, RSTileInfo;
 
@@ -26,6 +27,11 @@
 	UIView* scaleButton;
 	UITapGestureRecognizer* unpinGestureRecognizer;
 	UITapGestureRecognizer* scaleGestureRecognizer;
+	
+	UIView<RSLiveTileInterface>* liveTile;
+	NSTimer* liveTileUpdateTimer;
+	NSTimer* liveTileAnimationTimer;
+	NSInteger liveTilePageIndex;
 }
 
 @property (nonatomic, assign) int size;
@@ -53,5 +59,9 @@
  @return A \p CGRect containing the tile's position regardless of animations or transforms
  */
 - (CGRect)basePosition;
+
+- (void)startLiveTile;
+
+- (void)stopLiveTile;
 
 @end

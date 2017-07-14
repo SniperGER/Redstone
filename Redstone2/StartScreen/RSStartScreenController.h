@@ -133,4 +133,8 @@
  */
 - (void)animateOut;
 
+- (void)startLiveTiles;
+
+- (void)stopLiveTiles;
+
 @end

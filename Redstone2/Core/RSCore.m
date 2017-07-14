@@ -1,4 +1,5 @@
 #import "../Redstone.h"
+#import <dlfcn.h>
 
 @implementation RSCore
 
@@ -37,6 +38,7 @@ static id currentApplication;
 		if ([[[RSPreferences preferences] objectForKey:kRSPVolumeControlEnabledKey] boolValue]) {
 			//volumeController = [RSVolumeController new];
 		}
+		
 	}
 	
 	return self;
@@ -63,6 +65,7 @@ static id currentApplication;
 	
 	if (homeScreenController != nil) {
 		if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")] || frontApp != nil) {
+			[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
 			return YES;
 		}
 		

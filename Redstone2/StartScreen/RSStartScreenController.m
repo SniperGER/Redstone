@@ -39,6 +39,8 @@ static RSStartScreenController* sharedInstance;
 
 - (void)deviceFinishedLock {
 	[self setIsEditing:NO];
+	
+	[self stopLiveTiles];
 }
 
 #pragma mark Tile Management
@@ -487,6 +489,8 @@ static RSStartScreenController* sharedInstance;
 	NSMutableArray* appsInView = [NSMutableArray new];
 	NSMutableArray* appsNotInView = [NSMutableArray new];
 	
+	[self startLiveTiles];
+	
 	for (RSTile* tile in pinnedTiles) {
 		if (CGRectIntersectsRect(self.view.bounds, tile.basePosition)) {
 			[appsInView addObject:tile];
@@ -554,20 +558,24 @@ static RSStartScreenController* sharedInstance;
 		[tile.layer addAnimation:opacity forKey:@"opacity"];
 	}
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[self.view setUserInteractionEnabled:YES];
 		
 		for (RSTile* tile in pinnedTiles) {
 			[tile setTiltEnabled:YES];
 			[tile setUserInteractionEnabled:YES];
+		}
+	});
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		
+		for (RSTile* tile in pinnedTiles) {
 			[tile.layer removeAllAnimations];
 			[tile.layer setOpacity:1];
 			[tile setAlpha:1.0];
 			[tile setHidden:NO];
 			[tile.layer setAnchorPoint:CGPointMake(0.5,0.5)];
 			[tile setCenter:[tile originalCenter]];
-			
-			//[tile startLiveTile];
 		}
 	});
 }
@@ -664,7 +672,23 @@ static RSStartScreenController* sharedInstance;
 			[tile.layer setAnchorPoint:CGPointMake(0.5,0.5)];
 			[tile setCenter:[tile originalCenter]];
 		}
+		
+		[self stopLiveTiles];
 	});
+}
+
+#pragma mark Live Tiles
+
+- (void)startLiveTiles {
+	for (RSTile* tile in pinnedTiles) {
+		[tile startLiveTile];
+	}
+}
+
+- (void)stopLiveTiles {
+	for (RSTile* tile in pinnedTiles) {
+		[tile stopLiveTile];
+	}
 }
 
 @end

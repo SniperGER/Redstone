@@ -435,7 +435,7 @@ static RSAppListController* sharedInstance;
 	RSAlertController* alertController = [RSAlertController alertControllerWithTitle:[self.selectedApp.icon uninstallAlertTitle] message:[self.selectedApp.icon uninstallAlertBody]];
 	[alertController show];
 	
-	RSAlertAction* uninstallAction = [RSAlertAction actionWithTitle:[self.selectedApp.icon uninstallAlertConfirmTitle] style:UIAlertActionStyleDestructive handler:^{
+	RSAlertAction* uninstallAction = [RSAlertAction actionWithTitle:[self.selectedApp.icon uninstallAlertConfirmTitle] handler:^{
 		if ([self.selectedApp.icon isUninstallSupported]) {
 			[self.selectedApp.icon setUninstalled];
 			[self.selectedApp.icon completeUninstall];
@@ -456,7 +456,7 @@ static RSAppListController* sharedInstance;
 		}
 	}];
 	
-	RSAlertAction* cancelAction = [RSAlertAction actionWithTitle:[self.selectedApp.icon uninstallAlertCancelTitle] style:UIAlertActionStyleDefault handler:^{
+	RSAlertAction* cancelAction = [RSAlertAction actionWithTitle:[self.selectedApp.icon uninstallAlertCancelTitle] handler:^{
 		self.selectedApp = nil;
 		self.isUninstallingApp = NO;
 	}];

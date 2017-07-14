@@ -2,7 +2,7 @@
 
 @implementation RSAlertAction
 
-+ (id)actionWithTitle:(NSString *)title style:(UIAlertActionStyle)style handler:(void (^)(void))handler {
++ (id)actionWithTitle:(NSString *)title handler:(void (^)(void))handler {
 	RSAlertAction* action = [[RSAlertAction alloc] initWithFrame:CGRectZero];
 	[action.titleLabel setFont:[UIFont fontWithName:@"SegoeUI" size:17]];
 	[action.titleLabel setTextColor:[RSAesthetics colorsForCurrentTheme][@"ForegroundColor"]];

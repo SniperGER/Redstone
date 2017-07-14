@@ -11,6 +11,7 @@
 
 static BOOL isUnlocking;
 static BOOL hasBeenUnlockedBefore;
+static NSString* applicationIdentifier;
 
 %hook SpringBoard
 
@@ -30,7 +31,12 @@ static BOOL hasBeenUnlockedBefore;
 
 -(BOOL)_finishUIUnlockFromSource:(int)arg1 withOptions:(id)arg2 {
 	//[[RSStartScreenController sharedInstance] setTilesVisible:NO];
-	isUnlocking = YES;
+	
+	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
+	
+	if (frontApp == nil) {
+		isUnlocking = YES;
+	}
 	
 	return %orig;
 }
@@ -55,67 +61,77 @@ static BOOL hasBeenUnlockedBefore;
 - (void)__startAnimation {
 	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
-	switch ([self zoomDirection]) {
-		case 0: {
-			// Home Screen to App
-			CGFloat delay = [[RSHomeScreenController sharedInstance] launchApplication];
-			[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
-			
-			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay+0.31 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	if ([self zoomDirection] == 0) {
+		// Home Screen to App
+		
+		CGFloat delay = [[RSHomeScreenController sharedInstance] launchApplication];
+		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
+		
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay+0.31 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 #if (!TARGET_OS_SIMULATOR)
-				[[RSLaunchScreenController sharedInstance] animateIn];
+			[[RSLaunchScreenController sharedInstance] animateIn];
 #endif
-				
-				%orig;
-				
-				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero];
-					[(UIScrollView*)[[RSStartScreenController sharedInstance] view] setContentOffset:CGPointMake(0, -24)];
-					[(UIScrollView*)[[RSAppListController sharedInstance] view] setContentOffset:CGPointZero];
-				});
-			});
-			break;
-		}
-		case 1:
-			// App to Home Screen
-			if (!isUnlocking) {
+			
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 				[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero];
 				[(UIScrollView*)[[RSStartScreenController sharedInstance] view] setContentOffset:CGPointMake(0, -24)];
 				[(UIScrollView*)[[RSAppListController sharedInstance] view] setContentOffset:CGPointZero];
-			}
+			});
 			
-			isUnlocking = NO;
+			%orig;
+		});
+	} else if ([self zoomDirection] == 1) {
+		// App to Home Screen
+		
+		NSLog(@"[Redstone | Animation] App to Home Screen, frontApp: %@, isUnlocking: %i", [[RSLaunchScreenController sharedInstance] launchIdentifier], isUnlocking);
+		
+		if ([[RSLaunchScreenController sharedInstance] launchIdentifier] != nil && !isUnlocking) {
+			[[RSLaunchScreenController sharedInstance] animateCurrentApplicationSnapshot];
 			
-			if ([[RSLaunchScreenController sharedInstance] launchIdentifier] != nil || frontApp != nil) {
-				[[RSLaunchScreenController sharedInstance] animateCurrentApplicationSnapshot];
-				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-					[[RSStartScreenController sharedInstance] animateIn];
-					
-					dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-						[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:nil];
-					});
-					
-					%orig;
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				[[RSStartScreenController sharedInstance] animateIn];
+				
+				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+					[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:nil];
 				});
-			} else {
-				if (hasBeenUnlockedBefore) {
-					[[RSHomeScreenController sharedInstance] deviceHasBeenUnlocked];
-				} else {
-					hasBeenUnlockedBefore = YES;
-					
-					[[RSStartScreenController sharedInstance] animateIn];
-					[[RSAppListController sharedInstance] animateIn];
-				}
 				
 				%orig;
+			});
+		} else {
+			if (hasBeenUnlockedBefore) {
+				[[RSHomeScreenController sharedInstance] deviceHasBeenUnlocked];
+			} else {
+				hasBeenUnlockedBefore = YES;
+				
+				[[RSStartScreenController sharedInstance] animateIn];
+				[[RSAppListController sharedInstance] animateIn];
 			}
-			break;
-		default: break;
+			
+			%orig;
+		}
+		
+		isUnlocking = NO;
 	}
-	//%orig;
 }
 
-%end
+%end // %hook SBUIAnimationZoomApp
+
+%hook SBUIAnimationLockScreenToAppZoomIn
+
+-(void)__startAnimation {
+	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
+	
+	NSLog(@"[Redstone | Animation] Lock Screen to App: %@", [frontApp bundleIdentifier]);
+	
+	if (frontApp != nil) {
+		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
+		isUnlocking = NO;
+	}
+	
+	%orig;
+}
+
+%end // %hook SBUIAnimationLockScreenToAppZoomIn
 
 %hook SBIconModel
 
@@ -143,6 +159,7 @@ static BOOL hasBeenUnlockedBefore;
 	%orig;
 	
 	[[[RSLaunchScreenController sharedInstance] window] setHidden:YES];
+	//[self.view setHidden:YES];
 }
 
 %end // %hook SBDeckSwitcherViewController
