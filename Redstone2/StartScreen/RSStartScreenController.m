@@ -543,6 +543,8 @@ static RSStartScreenController* sharedInstance;
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
 	
+	[[[(RSStartScreenScrollView*)self.view allAppsButton] layer] addAnimation:opacity forKey:@"opacity"];
+	
 	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
 	int minX = INT_MAX, maxX = INT_MIN, minY = INT_MAX, maxY = INT_MIN;
@@ -598,6 +600,8 @@ static RSStartScreenController* sharedInstance;
 			[tile.layer setAnchorPoint:CGPointMake(0.5,0.5)];
 			[tile setCenter:[tile originalCenter]];
 		}
+		
+		[[[(RSStartScreenScrollView*)self.view allAppsButton] layer] removeAllAnimations];
 	});
 }
 
@@ -640,6 +644,8 @@ static RSStartScreenController* sharedInstance;
 	[opacity setDuration:0.2];
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
+	
+	[[[(RSStartScreenScrollView*)self.view allAppsButton] layer] addAnimation:opacity forKey:@"opacity"];
 	
 	CGFloat sizeForPosition = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
@@ -695,6 +701,10 @@ static RSStartScreenController* sharedInstance;
 		}
 		
 		[self stopLiveTiles];
+	});
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[[[(RSStartScreenScrollView*)self.view allAppsButton] layer] removeAllAnimations];
 	});
 }
 
