@@ -10,6 +10,8 @@
 
 %group core
 
+id sharedBBServer;
+
 %hook SpringBoard
 
 - (void)applicationDidFinishLaunching:(id)arg1 {
@@ -30,6 +32,22 @@
 }
 
 %end // %hook SBHomeHardwareButton
+
+%hook BBServer
+
+- (id)init {
+	BBServer* server = %orig;
+	sharedBBServer = server;
+	
+	return server;
+}
+
+%new
++ (id)sharedBBServer {
+	return sharedBBServer;
+}
+
+%end // %hook BBServer
 
 static void lockedDevice(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneDeviceHasFinishedLock" object:nil];

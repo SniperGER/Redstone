@@ -18,6 +18,10 @@ static RSPreferences* sharedInstance;
 	[sharedInstance.preferences writeToFile:PREFERENCES_PATH atomically:YES];
 }
 
++ (void)reloadPreferences {
+	sharedInstance = [[RSPreferences alloc] init];
+}
+
 - (id)init {
 	if (self = [super init]) {
 		sharedInstance = self;
@@ -55,6 +59,11 @@ static RSPreferences* sharedInstance;
 		// Accent Color
 		if (![self.preferences objectForKey:@"accentColor"]) {
 			[self.preferences setValue:@"#0078D7" forKey:@"accentColor"];
+		}
+		
+		// Show Wallpaper
+		if (![self.preferences objectForKey:@"showWallpaper"]) {
+			[self.preferences setValue:[NSNumber numberWithBool:NO] forKey:@"showWallpaper"];
 		}
 		
 		// Theme Color

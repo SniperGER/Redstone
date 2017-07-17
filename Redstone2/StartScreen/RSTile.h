@@ -7,7 +7,7 @@
 #import <UIKit/UIKit.h>
 #import "RSLiveTileInterface.h"
 
-@class RSTiltView, SBLeafIcon, RSTileInfo;
+@class RSTiltView, SBLeafIcon, RSTileInfo, BBBulletin;
 
 @interface RSTile : RSTiltView <UIGestureRecognizerDelegate> {
 	UITapGestureRecognizer* tapGestureRecognizer;
@@ -63,7 +63,11 @@
  */
 - (CGRect)basePosition;
 
+- (NSString*)displayName;
+
 - (void)setBadge:(int)badgeCount;
+
+- (int)badgeCount;
 
 - (void)startLiveTile;
 
@@ -72,5 +76,9 @@
 - (void)setLiveTileHidden:(BOOL)hidden;
 
 - (void)setLiveTileHidden:(BOOL)hidden animated:(BOOL)animated;
+
+- (void)addBulletin:(BBBulletin*)bulletin;
+
+- (void)removeBulletin:(BBBulletin*)bulletin;
 
 @end

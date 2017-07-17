@@ -64,6 +64,10 @@
 	[appLabel setText:displayName];
 }
 
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+	[appImageBackground setBackgroundColor:backgroundColor];
+}
+
 - (void)tapped:(UITapGestureRecognizer*)gestureRecognizer {
 	if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
 		self.icon = [[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[self.icon applicationBundleID]];

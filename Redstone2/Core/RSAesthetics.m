@@ -29,16 +29,20 @@ NSBundle* redstoneBundle;
 }
 
 + (UIImage*)homeScreenWallpaper {
-	NSData* homescreenWallpaper = [NSData dataWithContentsOfFile:HOME_WALLPAPER_PATH];
-	
-	if (!homescreenWallpaper) {
-		return [self lockScreenWallpaper];
-	} else {
-		CFDataRef homeWallpaperDataRef = (__bridge CFDataRef)homescreenWallpaper;
-		NSArray* imageArray = (__bridge NSArray*)CPBitmapCreateImagesFromData(homeWallpaperDataRef, NULL, 1, NULL);
-		UIImage* homeWallpaper = [UIImage imageWithCGImage:(CGImageRef)imageArray[0]];
+	if ([[[RSPreferences preferences] objectForKey:@"showWallpaper"] boolValue]) {
+		NSData* homescreenWallpaper = [NSData dataWithContentsOfFile:HOME_WALLPAPER_PATH];
 		
-		return homeWallpaper;
+		if (!homescreenWallpaper) {
+			return [self lockScreenWallpaper];
+		} else {
+			CFDataRef homeWallpaperDataRef = (__bridge CFDataRef)homescreenWallpaper;
+			NSArray* imageArray = (__bridge NSArray*)CPBitmapCreateImagesFromData(homeWallpaperDataRef, NULL, 1, NULL);
+			UIImage* homeWallpaper = [UIImage imageWithCGImage:(CGImageRef)imageArray[0]];
+			
+			return homeWallpaper;
+		}
+	} else {
+		return [self imageFromColor:[RSAesthetics colorsForCurrentTheme][@"InvertedForegroundColor"]];
 	}
 }
 
@@ -201,6 +205,17 @@ NSBundle* redstoneBundle;
 	float alpha = ((baseValue >> 0) & 0xFF)/255.0f;
 	
 	return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
+
++ (UIImage *)imageFromColor:(UIColor *)color {
+	CGRect rect = CGRectMake(0, 0, 1, 1);
+	UIGraphicsBeginImageContext(rect.size);
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	CGContextSetFillColorWithColor(context, [color CGColor]);
+	CGContextFillRect(context, rect);
+	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	return image;
 }
 
 @end

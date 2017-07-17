@@ -44,6 +44,8 @@
  */
 - (RSTile*)tileForLeafIdentifier:(NSString*)leafIdentifier;
 
+- (NSArray*)pinnedTiles;
+
 /**
  Updates the Start Screen scroll view content size based on the last tile's frame
  */

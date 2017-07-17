@@ -62,6 +62,8 @@
 #import "StartScreen/RSStartScreenScrollView.h"
 #import "StartScreen/RSTile.h"
 #import "StartScreen/RSTileInfo.h"
+#import "StartScreen/RSTileNotificationView.h"
+#import "StartScreen/RSBulletinView.h"
 
 #pragma mark App List
 #import "AppList/RSAppListController.h"
@@ -74,7 +76,8 @@
 #pragma mark Launch Screen
 #import "LaunchScreen/RSLaunchScreenController.h"
 
+#import "headers/SpringBoard/SpringBoard.h"
+#import "headers/BulletinBoard/BulletinBoard.h"
+
 static RSCore* redstone;
 static RSPreferences* redstonePreferences;
-
-#import "headers/SpringBoard/SpringBoard.h"

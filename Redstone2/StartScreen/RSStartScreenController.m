@@ -23,6 +23,7 @@ static RSStartScreenController* sharedInstance;
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accentColorChanged) name:@"RedstoneAccentColorChanged" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceFinishedLock) name:@"RedstoneDeviceHasFinishedLock" object:nil];
 	
 	[self loadTiles];
@@ -35,6 +36,12 @@ static RSStartScreenController* sharedInstance;
 		}
 	}
 	return nil;
+}
+
+- (void)accentColorChanged {
+	for (RSTile* tile in pinnedTiles) {
+		[tile setBackgroundColor:[RSAesthetics accentColorForTile:tile.tileInfo]];
+	}
 }
 
 - (void)deviceFinishedLock {
@@ -104,6 +111,10 @@ static RSStartScreenController* sharedInstance;
 	return nil;
 }
 
+- (NSArray*)pinnedTiles {
+	return [pinnedTiles copy];
+}
+
 - (void)updateStartContentSize {
 	if ([pinnedTiles count] <= 0) {
 		[(UIScrollView*)self.view setContentSize:CGSizeMake(self.view.bounds.size.width, 0)];
@@ -124,9 +135,13 @@ static RSStartScreenController* sharedInstance;
 	CGSize contentSize = CGSizeMake(self.view.frame.size.width,
 									[lastTile basePosition].origin.y + [lastTile basePosition].size.height);
 	
-	[UIView animateWithDuration:.1 animations:^{
+	if (contentSize.height > screenHeight) {
+		[UIView animateWithDuration:.1 animations:^{
+			[(UIScrollView*)self.view setContentSize:contentSize];
+		} completion:nil];
+	} else {
 		[(UIScrollView*)self.view setContentSize:contentSize];
-	} completion:nil];
+	}
 }
 
 - (void)pinTileWithIdentifier:(NSString*)leafIdentifier {
@@ -179,6 +194,10 @@ static RSStartScreenController* sharedInstance;
 	
 	[self eliminateEmptyRows];
 	[self saveTiles];
+	
+	[[(RSStartScreenScrollView*)self.view allAppsButton] setHidden:NO];
+	
+	[[RSHomeScreenController sharedInstance] setScrollEnabled:YES];
 	[(UIScrollView*)self.view setContentOffset:CGPointMake(0, MAX([(UIScrollView*)self.view contentSize].height - self.view.bounds.size.height + 64, -24)) animated:YES];
 }
 
@@ -201,6 +220,12 @@ static RSStartScreenController* sharedInstance;
 		
 		[self saveTiles];
 		[self eliminateEmptyRows];
+		
+		if ([pinnedTiles count] <= 0) {
+			[self setIsEditing:NO];
+			[[RSHomeScreenController sharedInstance] setScrollEnabled:NO];
+			[[RSHomeScreenController sharedInstance] setContentOffset:CGPointMake(screenWidth, 0) animated:YES];
+		}
 	}];
 }
 
@@ -229,7 +254,7 @@ static RSStartScreenController* sharedInstance;
 	_isEditing = isEditing;
 	
 	[[RSHomeScreenController sharedInstance] setScrollEnabled:!isEditing];
-	[[(RSStartScreenScrollView*)self.view allAppsButton] setHidden:isEditing];
+	[[(RSStartScreenScrollView*)self.view allAppsButton] setHidden:(isEditing || pinnedTiles.count == 0)];
 	
 	if (isEditing) {
 		[UIView animateWithDuration:.2 animations:^{
@@ -299,7 +324,6 @@ static RSStartScreenController* sharedInstance;
 		
 		for (RSTile* tile in pinnedTiles) {
 			if (tile != movedTile && CGRectIntersectsRect(tile.basePosition, movedTile.nextFrameUpdate) && tile.basePosition.origin.y < movedTile.nextFrameUpdate.origin.y && !didMoveTileIntoPosition) {
-				NSLog(@"[Redstone] A");
 				CGFloat moveDistance = (CGRectGetMaxY(tile.basePosition) - CGRectGetMinY(movedTile.nextFrameUpdate)) + [RSMetrics tileBorderSpacing];
 				
 				CGPoint newCenter = CGPointMake(movedTile.nextCenterUpdate.x,
@@ -327,9 +351,6 @@ static RSStartScreenController* sharedInstance;
 				}
 				
 				if (CGRectIntersectsRect(currentFrame, tileFrame)) {
-					NSLog(@"[Redstone] B");
-					NSLog(@"[Redstone] %@", NSStringFromCGRect(CGRectIntersection(currentFrame, tileFrame)));
-					
 					[stack addObject:tile];
 					
 					CGFloat moveDistance = (CGRectGetMaxY(currentFrame) - CGRectGetMinY(tileFrame)) + [RSMetrics tileBorderSpacing];
@@ -642,13 +663,13 @@ static RSStartScreenController* sharedInstance;
 																	  view.bounds))/tile.basePosition.size.width;
 		CGFloat layerY = -(tile.basePosition.origin.y - CGRectGetMidY(self.view.bounds))/tile.basePosition.size.height;
 		
-		int tileX = tile.basePosition.origin.x / sizeForPosition;
-		int tileY = tile.basePosition.origin.y / sizeForPosition;
-		CGFloat delay = (tileX * 0.01) + (tileY - minY) * 0.01;
-		
 		[tile setCenter:CGPointMake(CGRectGetMidX(self.view.bounds),
 									CGRectGetMidY(self.view.bounds))];
 		[tile.layer setAnchorPoint:CGPointMake(layerX, layerY)];
+		
+		int tileX = tile.basePosition.origin.x / sizeForPosition;
+		int tileY = tile.basePosition.origin.y / sizeForPosition;
+		CGFloat delay = (tileX * 0.01) + (tileY - minY) * 0.01;
 		
 		if (tile == sender) {
 			[self.view sendSubviewToBack:tile];

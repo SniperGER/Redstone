@@ -9,7 +9,6 @@
 
 %group homeScreen
 
-static BOOL isUnlocking;
 static BOOL hasBeenUnlockedBefore;
 
 %hook SpringBoard
@@ -34,7 +33,7 @@ static BOOL hasBeenUnlockedBefore;
 	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
 	if (frontApp == nil) {
-		isUnlocking = YES;
+		[[RSLaunchScreenController sharedInstance] setIsUnlocking:YES];
 	}
 	
 	return %orig;
@@ -72,7 +71,11 @@ static BOOL hasBeenUnlockedBefore;
 #endif
 			
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero];
+				if ([[RSStartScreenController sharedInstance] pinnedTiles].count > 0) {
+					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero];
+				} else {
+					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointMake(screenWidth, 0)];
+				}
 				[(UIScrollView*)[[RSStartScreenController sharedInstance] view] setContentOffset:CGPointMake(0, -24)];
 				[(UIScrollView*)[[RSAppListController sharedInstance] view] setContentOffset:CGPointZero];
 			});
@@ -82,13 +85,15 @@ static BOOL hasBeenUnlockedBefore;
 	} else if ([self zoomDirection] == 1) {
 		// App to Home Screen
 		
-		NSLog(@"[Redstone | Animation] App to Home Screen, frontApp: %@, isUnlocking: %i", [[RSLaunchScreenController sharedInstance] launchIdentifier], isUnlocking);
-		
-		if ([[RSLaunchScreenController sharedInstance] launchIdentifier] != nil && !isUnlocking) {
+		if ([[RSLaunchScreenController sharedInstance] launchIdentifier] != nil && ![[RSLaunchScreenController sharedInstance] isUnlocking]) {
 			[[RSLaunchScreenController sharedInstance] animateCurrentApplicationSnapshot];
 			
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				[[RSStartScreenController sharedInstance] animateIn];
+				if ([[RSStartScreenController sharedInstance] pinnedTiles].count > 0) {
+					[[RSStartScreenController sharedInstance] animateIn];
+				}
+				
+				[[RSAppListController sharedInstance] animateIn];
 				
 				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 					[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:nil];
@@ -109,7 +114,7 @@ static BOOL hasBeenUnlockedBefore;
 			%orig;
 		}
 		
-		isUnlocking = NO;
+		[[RSLaunchScreenController sharedInstance] setIsUnlocking:NO];
 	}
 }
 
@@ -120,11 +125,9 @@ static BOOL hasBeenUnlockedBefore;
 -(void)__startAnimation {
 	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
-	NSLog(@"[Redstone | Animation] Lock Screen to App: %@", [frontApp bundleIdentifier]);
-	
 	if (frontApp != nil) {
 		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
-		isUnlocking = NO;
+		[[RSLaunchScreenController sharedInstance] setIsUnlocking:NO];
 	}
 	
 	%orig;
@@ -175,11 +178,56 @@ static BOOL hasBeenUnlockedBefore;
 
 %end // %hook SBDeckSwitcherViewController
 
+%hook BBServer
+
+- (void)_addBulletin:(BBBulletin*)arg1 {
+	%orig;
+	
+	RSTile* tile = [[RSStartScreenController sharedInstance] tileForLeafIdentifier:[arg1 section]];
+	if (tile) {
+		[tile addBulletin:arg1];
+	}
+}
+
+- (void)_removeBulletin:(BBBulletin*)arg1 rescheduleTimerIfAffected:(BOOL)arg2 shouldSync:(BOOL)arg3 {
+	RSTile* tile = [[RSStartScreenController sharedInstance] tileForLeafIdentifier:[arg1 section]];
+	if (tile) {
+		[tile removeBulletin:arg1];
+	}
+	
+	%orig;
+}
+
+%end // %hook BBServer
+
+%hook SBWallpaperController
+
+- (void)_handleWallpaperChangedForVariant:(int)arg1 {
+	%orig(arg1);
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneWallpaperChanged" object:nil];
+}
+
+%end // %hook SBWallpaperController
+
+static void WallpaperChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+	[RSPreferences reloadPreferences];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneWallpaperChanged" object:nil];
+}
+
+static void AccentColorChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+	[RSPreferences reloadPreferences];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"RedstoneAccentColorChanged" object:nil];
+}
+
 %end // %group homeScreen
 
 %ctor {
 	if ([[[RSPreferences preferences] objectForKey:kRSPHomeScreenEnabledKey] boolValue]) {
 		NSLog(@"[Redstone | Home Screen] Initializing Home Screen");
 		%init(homeScreen);
+		
+		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, WallpaperChangedCallback, CFSTR("ml.festival.redstone.WallpaperChanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+		CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, AccentColorChangedCallback, CFSTR("ml.festival.redstone.AccentColorChanged"), NULL, CFNotificationSuspensionBehaviorCoalesce);
 	}
 }

@@ -11,7 +11,7 @@ include $(THEOS)/makefiles/common.mk
 TWEAK_NAME=Redstone2
 Redstone2_CFLAGS = -fobjc-arc
 Redstone2_LIBRARIES = objcipc
-Redstone2_PRIVATE_FRAMEWORKS = AppSupport
+Redstone2_PRIVATE_FRAMEWORKS = AppSupport BulletinBoard
 Redstone2_FILES = Redstone2_Core.xm Redstone2_HomeScreen.xm
 
 # Libraries
@@ -30,7 +30,7 @@ Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenSc
 # Redstone2_FILES +=
 
 # Start Screen
-Redstone2_FILES += StartScreen/RSStartScreenController.m StartScreen/RSStartScreenScrollView.m StartScreen/RSTile.m StartScreen/RSTileInfo.m
+Redstone2_FILES += StartScreen/RSStartScreenController.m StartScreen/RSStartScreenScrollView.m StartScreen/RSTile.m StartScreen/RSTileInfo.m StartScreen/RSTileNotificationView.m StartScreen/RSBulletinView.m
 
 # App List
 Redstone2_FILES += AppList/RSAppListController.m AppList/RSAppListScrollView.m AppList/RSAppListSection.m AppList/RSApp.m AppList/RSDownloadingApp.m AppList/RSJumpList.m

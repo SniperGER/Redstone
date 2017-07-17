@@ -20,9 +20,10 @@ static RSHomeScreenController* sharedInstance;
 		[self.window setWindowLevel:-2];
 		[self.window makeKeyAndVisible];
 		
-		wallpaperView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+		wallpaperView = [[UIImageView alloc] initWithImage:[RSAesthetics homeScreenWallpaper]];
+		[wallpaperView setBackgroundColor:[RSAesthetics colorsForCurrentTheme][@"InvertedForegroundColor"]];
 		[wallpaperView setContentMode:UIViewContentModeScaleAspectFill];
-		[wallpaperView setImage:[RSAesthetics homeScreenWallpaper]];
+		[wallpaperView setFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[wallpaperView setTransform:CGAffineTransformMakeScale(1.5, 1.5)];
 		[self.window addSubview:wallpaperView];
 		
@@ -34,12 +35,22 @@ static RSHomeScreenController* sharedInstance;
 		[scrollView addSubview:appListController.view];
 		[scrollView addSubview:appListController.jumpList];
 		
+		if ([startScreenController pinnedTiles].count == 0) {
+			[scrollView setContentOffset:CGPointMake(screenWidth, 0)];
+			[scrollView setScrollEnabled:NO];
+		}
 		[self setParallaxPosition];
 		
 		self.alertControllers = [NSMutableArray new];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateWallpaper) name:@"RedstoneWallpaperChanged" object:nil];
 	}
 	
 	return self;
+}
+
+- (void)updateWallpaper {
+	[wallpaperView setImage:[RSAesthetics homeScreenWallpaper]];
 }
 
 - (RSHomeScreenScrollView*)scrollView {
@@ -47,11 +58,15 @@ static RSHomeScreenController* sharedInstance;
 }
 
 - (CGFloat)parallaxPosition {
-	return (([(UIScrollView*)startScreenController.view contentOffset].y - 0) / [(UIScrollView*)startScreenController.view contentSize].height) * (screenWidth*1.5 - screenWidth);
+	CGFloat viewPosition = [(UIScrollView*)startScreenController.view contentOffset].y;
+	CGFloat viewHeight = MAX([(UIScrollView*)startScreenController.view contentOffset].y, screenHeight);
+	
+	CGFloat position = (viewPosition / viewHeight) * ((screenWidth * 1.5) - screenWidth);
+	return position;
 }
 
 - (void)setParallaxPosition {
-	CGFloat position = (([(UIScrollView*)startScreenController.view contentOffset].y - 0) / [(UIScrollView*)startScreenController.view contentSize].height) * (screenWidth*1.5 - screenWidth);
+	CGFloat position = [self parallaxPosition];
 	
 	[wallpaperView setTransform:CGAffineTransformConcat(CGAffineTransformMakeScale(1.5, 1.5), CGAffineTransformMakeTranslation(0, -position))];
 }
@@ -94,7 +109,11 @@ static RSHomeScreenController* sharedInstance;
 }
 
 - (void)setScrollEnabled:(BOOL)scrollEnabled {
-	[scrollView setScrollEnabled:scrollEnabled];
+	if ([startScreenController pinnedTiles].count > 0) {
+		[scrollView setScrollEnabled:scrollEnabled];
+	} else {
+		[scrollView setScrollEnabled:NO];
+	}
 }
 
 - (CGPoint)contentOffset {
@@ -102,7 +121,11 @@ static RSHomeScreenController* sharedInstance;
 }
 
 - (void)setContentOffset:(CGPoint)offset {
-	[scrollView setContentOffset:offset];
+	if ([startScreenController pinnedTiles].count > 0) {
+		[scrollView setContentOffset:offset];
+	} else {
+		[scrollView setContentOffset:CGPointMake(screenWidth, 0)];
+	}
 }
 
 - (void)setContentOffset:(CGPoint)offset animated:(BOOL)animated {

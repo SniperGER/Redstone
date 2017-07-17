@@ -164,7 +164,7 @@
 	</dict>
 	<dict>
 		<key>bundleIdentifier</key>
-		<string>eu.heinelt.ifile</string>
+		<string>com.tigisoftware.Filza</string>
 		<key>row</key>
 		<integer>10</integer>
 		<key>column</key>

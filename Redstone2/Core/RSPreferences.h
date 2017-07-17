@@ -33,6 +33,8 @@
  */
 + (void)setObject:(id)object forKey:(NSString*)key;
 
++ (void)reloadPreferences;
+
 /**
  Returns the value associated with a given key.
  

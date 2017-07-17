@@ -109,6 +109,8 @@
 			<string>accentColor</string>
 			<key>label</key>
 			<string>Accent Color</string>
+			<key>PostNotification</key>
+			<string>ml.festival.redstone.AccentColorChanged</string>
 			<key>validTitles</key>
 			<array>
 				<string>#FFB900</string>
@@ -215,6 +217,20 @@
 				<string>#3E65FF</string>
 				<string>auto</string>
 			</array>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<string>NO</string>
+			<key>defaults</key>
+			<string>ml.festival.redstone</string>
+			<key>key</key>
+			<string>showWallpaper</string>
+			<key>label</key>
+			<string>Show Wallpaper</string>
+			<key>PostNotification</key>
+			<string>ml.festival.redstone.WallpaperChanged</string>
 		</dict>
 		<dict>
 			<key>cell</key>

@@ -1,5 +1,7 @@
 #import "../Redstone.h"
 
+extern dispatch_queue_t __BBServerQueue;
+
 @implementation RSTile
 
 - (id)initWithFrame:(CGRect)frame leafIdentifier:(NSString*)leafIdentifier size:(int)size {
@@ -78,6 +80,8 @@
 		NSBundle* liveTileBundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Live Tiles/%@.tile", RESOURCE_PATH, leafIdentifier]];
 		if (liveTileBundle) {
 			liveTile = [[[liveTileBundle principalClass] alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, frame.size.height) tile:self];
+		} else if (self.tileInfo.displaysNotificationsOnTile) {
+			liveTile = [[RSTileNotificationView alloc] initWithFrame:CGRectMake(0, frame.size.height , frame.size.width, frame.size.height) tile:self];
 		}
 		
 		if (liveTile) {
@@ -163,6 +167,10 @@ float customRounding(float value) {
 					  self.layer.position.y - (height/2),
 					  width,
 					  height);
+}
+
+- (NSString*)displayName {
+	return tileLabel.text;
 }
 
 - (void)removeFromSuperview {
@@ -361,7 +369,11 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		[tileContainer setFrame:CGRectMake(0, tileContainer.frame.origin.y, self.bounds.size.width, self.bounds.size.height)];
 		[liveTile setFrame:CGRectMake(0, liveTile.frame.origin.y, self.bounds.size.width, self.bounds.size.height)];
 		
-		[self startLiveTile];
+		if ([liveTile isKindOfClass:[RSTileNotificationView class]]) {
+			[self setLiveTileHidden:(self.size < 2)];
+		} else {
+			[self startLiveTile];
+		}
 	}
 	
 	if (self.size < 2 || self.tileInfo.tileHidesLabel || [[self.tileInfo.labelHiddenForSizes objectForKey:[[NSNumber numberWithInt:self.size] stringValue]] boolValue]) {
@@ -457,6 +469,14 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		
 		[badgeLabel setHidden:NO];
 	}
+	
+	if ([liveTile isKindOfClass:[RSTileNotificationView class]]) {
+		[(RSTileNotificationView*)liveTile setBadge:badgeCount];
+	}
+}
+
+- (int)badgeCount {
+	return badgeValue;
 }
 
 - (void)startLiveTile {
@@ -475,7 +495,11 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	}
 	
 	if ([liveTile readyForDisplay]) {
-		[self setLiveTileHidden:NO];
+		if ([liveTile isKindOfClass:[RSTileNotificationView class]] && self.size < 2) {
+			[self setLiveTileHidden:YES];
+		} else {
+			[self setLiveTileHidden:NO];
+		}
 	}
 	
 	if ([liveTile updateInterval] > 0) {
@@ -617,6 +641,22 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	if (liveTilePageIndex >= liveTile.subviews.count) {
 		liveTilePageIndex = 0;
 	}
+}
+
+- (void)addBulletin:(BBBulletin*)bulletin {
+	if (![liveTile isKindOfClass:NSClassFromString(@"RSTileNotificationView")]) {
+		return;
+	}
+	
+	[(RSTileNotificationView*)liveTile addBulletin:bulletin delayIncomingBulletins:YES];
+}
+
+- (void)removeBulletin:(BBBulletin*)bulletin {
+	if (![liveTile isKindOfClass:NSClassFromString(@"RSTileNotificationView")]) {
+		return;
+	}
+	
+	[(RSTileNotificationView*)liveTile removeBulletin:bulletin];
 }
 
 @end

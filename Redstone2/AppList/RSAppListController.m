@@ -41,6 +41,7 @@ static RSAppListController* sharedInstance;
 	[sectionBackgroundContainer setClipsToBounds:YES];
 	
 	sectionBackgroundImage = [[UIImageView alloc] initWithImage:[RSAesthetics homeScreenWallpaper]];
+	[sectionBackgroundImage setContentMode:UIViewContentModeScaleAspectFill];
 	[sectionBackgroundImage setFrame:CGRectMake(0, -70, screenWidth, screenHeight)];
 	[sectionBackgroundImage setTransform:CGAffineTransformMakeScale(1.5, 1.5)];
 	[sectionBackgroundContainer addSubview:sectionBackgroundImage];
@@ -53,6 +54,8 @@ static RSAppListController* sharedInstance;
 	[dismissRecognizer setEnabled:NO];
 	[self.view addGestureRecognizer:dismissRecognizer];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(wallpaperChanged) name:@"RedstoneWallpaperChanged" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accentColorChanged) name:@"RedstoneAccentColorChanged" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceFinishedLock) name:@"RedstoneDeviceHasFinishedLock" object:nil];
 	
 	[self loadApps];
@@ -63,6 +66,16 @@ static RSAppListController* sharedInstance;
 	
 	self.jumpList = [[RSJumpList alloc] initWithFrame:CGRectMake(screenWidth, 0, screenWidth, screenHeight)];
 	
+}
+
+- (void)wallpaperChanged {
+	[sectionBackgroundImage setImage:[RSAesthetics homeScreenWallpaper]];
+}
+
+- (void)accentColorChanged {
+	for (RSApp* app in apps) {
+		[app setBackgroundColor:[RSAesthetics accentColorForTile:app.tileInfo]];
+	}
 }
 
 - (void)deviceFinishedLock {
@@ -575,6 +588,9 @@ static RSAppListController* sharedInstance;
 			
 			if (CGRectIntersectsRect(self.view.bounds, app.frame)) {
 				[viewsInView addObject:app];
+				
+				[app.layer setOpacity:0];
+				[app setHidden:NO];
 			} else {
 				[viewsNotInView addObject:app];
 			}
@@ -589,6 +605,9 @@ static RSAppListController* sharedInstance;
 			
 			if (CGRectIntersectsRect(self.view.bounds, section.frame)) {
 				[viewsInView addObject:section];
+				
+				[section.layer setOpacity:0];
+				[section setHidden:NO];
 			} else {
 				[viewsNotInView addObject:section];
 			}
@@ -619,6 +638,8 @@ static RSAppListController* sharedInstance;
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
 	
+	[self.searchBar.layer addAnimation:opacity forKey:@"opacity"];
+	
 	float maxDelay = [viewsInView count] * 0.01;
 	
 	for (UIView* view in viewsInView) {
@@ -626,16 +647,22 @@ static RSAppListController* sharedInstance;
 		[view.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
 		[view.layer setContentsScale:[[UIScreen mainScreen] scale]];
 		
-		CGPoint basePoint = [view convertPoint:view.bounds.origin toView:self.view];
+		float width = view.bounds.size.width;
+		float height = view.bounds.size.height;
 		
-		CGFloat layerX = -(basePoint.x - CGRectGetMidX(self.view.bounds))/view.frame.size.width;
-		CGFloat layerY = -(basePoint.y - CGRectGetMidY(self.view.bounds))/view.frame.size.height;
+		CGRect basePosition = CGRectMake(view.layer.position.x - (width/2),
+										 view.layer.position.y - (height/2),
+										 width,
+										 height);
 		
-		CGFloat delay = [viewsInView indexOfObject:view] * 0.01;
+		CGFloat layerX = -(basePosition.origin.x - CGRectGetMidX(self.view.bounds))/basePosition.size.width;
+		CGFloat layerY = -(basePosition.origin.y - CGRectGetMidY(self.view.bounds))/basePosition.size.height;
 		
 		[view setCenter:CGPointMake(CGRectGetMidX(self.view.bounds),
 									CGRectGetMidY(self.view.bounds))];
 		[view.layer setAnchorPoint:CGPointMake(layerX, layerY)];
+		
+		CGFloat delay = [viewsInView indexOfObject:view] * 0.01;
 		
 		[scale setBeginTime:CACurrentMediaTime() + delay];
 		[opacity setBeginTime:CACurrentMediaTime() + delay];
@@ -646,6 +673,9 @@ static RSAppListController* sharedInstance;
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[self.view setUserInteractionEnabled:YES];
+		
+		[self.searchBar.layer setOpacity:1];
+		[self.searchBar.layer removeAllAnimations];
 		
 		for (RSApp* app in apps) {
 			[app setUserInteractionEnabled:YES];
@@ -674,37 +704,33 @@ static RSAppListController* sharedInstance;
 
 - (void)animateOut {
 	[self.searchBar resignFirstResponder];
-	
+	[self.view setUserInteractionEnabled:NO];
 	RSApp* sender = [self appForLeafIdentifier:[[RSLaunchScreenController sharedInstance] launchIdentifier]];
 	
 	NSMutableArray* viewsInView = [NSMutableArray new];
 	NSMutableArray* viewsNotInView = [NSMutableArray new];
 	
 	for (RSApp* app in apps) {
-		if (!app.hidden) {
-			[app setTiltEnabled:NO];
-			[app.layer removeAllAnimations];
-			[app setTransform:CGAffineTransformIdentity];
-			
-			if (CGRectIntersectsRect(self.view.bounds, app.frame)) {
-				[viewsInView addObject:app];
-			} else {
-				[viewsNotInView addObject:app];
-			}
+		[app setTiltEnabled:NO];
+		[app.layer removeAllAnimations];
+		[app setTransform:CGAffineTransformIdentity];
+		
+		if (CGRectIntersectsRect(self.view.bounds, app.frame)) {
+			[viewsInView addObject:app];
+		} else {
+			[viewsNotInView addObject:app];
 		}
 	}
 	
 	for (RSApp* section in sections) {
-		if (!section.hidden) {
-			[section setTiltEnabled:NO];
-			[section.layer removeAllAnimations];
-			[section setTransform:CGAffineTransformIdentity];
-			
-			if (CGRectIntersectsRect(self.view.bounds, section.frame)) {
-				[viewsInView addObject:section];
-			} else {
-				[viewsNotInView addObject:section];
-			}
+		[section setTiltEnabled:NO];
+		[section.layer removeAllAnimations];
+		[section setTransform:CGAffineTransformIdentity];
+		
+		if (CGRectIntersectsRect(self.view.bounds, section.frame)) {
+			[viewsInView addObject:section];
+		} else {
+			[viewsNotInView addObject:section];
 		}
 	}
 	
@@ -732,6 +758,8 @@ static RSAppListController* sharedInstance;
 	[opacity setRemovedOnCompletion:NO];
 	[opacity setFillMode:kCAFillModeForwards];
 	
+	[self.searchBar.layer addAnimation:opacity forKey:@"opacity"];
+	
 	float maxDelay = [viewsInView count] * 0.01;
 	
 	for (UIView* view in viewsInView) {
@@ -739,16 +767,22 @@ static RSAppListController* sharedInstance;
 		[view.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
 		[view.layer setContentsScale:[[UIScreen mainScreen] scale]];
 		
-		CGPoint basePoint = [view convertPoint:view.bounds.origin toView:self.view];
+		float width = view.bounds.size.width;
+		float height = view.bounds.size.height;
 		
-		CGFloat layerX = -(basePoint.x - CGRectGetMidX(self.view.bounds))/view.frame.size.width;
-		CGFloat layerY = -(basePoint.y - CGRectGetMidY(self.view.bounds))/view.frame.size.height;
+		CGRect basePosition = CGRectMake(view.layer.position.x - (width/2),
+										 view.layer.position.y - (height/2),
+										 width,
+										 height);
 		
-		CGFloat delay = [viewsInView indexOfObject:view] * 0.01;
+		CGFloat layerX = -(basePosition.origin.x - CGRectGetMidX(self.view.bounds))/basePosition.size.width;
+		CGFloat layerY = -(basePosition.origin.y - CGRectGetMidY(self.view.bounds))/basePosition.size.height;
 		
 		[view setCenter:CGPointMake(CGRectGetMidX(self.view.bounds),
 									CGRectGetMidY(self.view.bounds))];
 		[view.layer setAnchorPoint:CGPointMake(layerX, layerY)];
+		
+		CGFloat delay = [viewsInView indexOfObject:view] * 0.01;
 		
 		if (view == sender) {
 			[self.view sendSubviewToBack:view];
@@ -766,12 +800,27 @@ static RSAppListController* sharedInstance;
 	}
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(maxDelay + 0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[self.searchBar.layer setOpacity:0];
+		[self.searchBar.layer removeAllAnimations];
+		
 		for (UIView* view in self.view.subviews) {
-			[view.layer setOpacity:0];
-			[view.layer removeAllAnimations];
+			if (view != sectionBackgroundContainer) {
+				[view.layer setOpacity:0];
+				[view.layer removeAllAnimations];
+				[view.layer setAnchorPoint:CGPointMake(0.5, 0.5)];
+				
+				if ([view isKindOfClass:[RSApp class]] || [view isKindOfClass:[RSAppListSection class]]) {
+					[view setCenter:[(RSApp*)view originalCenter]];
+				}
+			}
 		}
 		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[self.searchBar setText:@""];
+			[self showAppsFittingQuery];
+		});
+		
+		/*dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			for (UIView* view in self.view.subviews) {
 				[view setHidden:NO];
 				[view.layer setOpacity:1];
@@ -787,7 +836,7 @@ static RSAppListController* sharedInstance;
 			
 			[self.searchBar setText:@""];
 			[self showAppsFittingQuery];
-		});
+		});*/
 		
 	});
 }
