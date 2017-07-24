@@ -13,7 +13,11 @@ static RSHomeScreenController* sharedInstance;
 		sharedInstance = self;
 		
 		startScreenController = [RSStartScreenController new];
-		appListController = [RSAppListController new];
+		
+		if ([[[RSPreferences preferences] objectForKey:@"debugAppList"] boolValue]) {
+			appListController = [RSAppListController new];
+		}
+		//appSwitcherController = [RSAppSwitcherController new];
 		launchScreenController = [RSLaunchScreenController new];
 		
 		self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
@@ -35,6 +39,7 @@ static RSHomeScreenController* sharedInstance;
 		[scrollView addSubview:appListController.view];
 		[scrollView addSubview:appListController.jumpList];
 		
+		
 		if ([startScreenController pinnedTiles].count == 0) {
 			[scrollView setContentOffset:CGPointMake(screenWidth, 0)];
 			[scrollView setScrollEnabled:NO];
@@ -49,26 +54,28 @@ static RSHomeScreenController* sharedInstance;
 	return self;
 }
 
+- (RSStartScreenController*)startScreenController {
+	return startScreenController;
+}
+
+- (RSAppListController*)appListController {
+	return appListController;
+}
+
+- (RSAppSwitcherController*)appSwitcherController {
+	return appSwitcherController;
+}
+
+- (RSLaunchScreenController*)launchScreenController {
+	return launchScreenController;
+}
+
 - (void)updateWallpaper {
 	[wallpaperView setImage:[RSAesthetics homeScreenWallpaper]];
 }
 
 - (RSHomeScreenScrollView*)scrollView {
 	return scrollView;
-}
-
-- (CGFloat)parallaxPosition {
-	CGFloat viewPosition = [(UIScrollView*)startScreenController.view contentOffset].y;
-	CGFloat viewHeight = MAX([(UIScrollView*)startScreenController.view contentOffset].y, screenHeight);
-	
-	CGFloat position = (viewPosition / viewHeight) * ((screenWidth * 1.5) - screenWidth);
-	return position;
-}
-
-- (void)setParallaxPosition {
-	CGFloat position = [self parallaxPosition];
-	
-	[wallpaperView setTransform:CGAffineTransformConcat(CGAffineTransformMakeScale(1.5, 1.5), CGAffineTransformMakeTranslation(0, -position))];
 }
 
 - (void)deviceHasBeenUnlocked {
@@ -98,12 +105,27 @@ static RSHomeScreenController* sharedInstance;
 	return 0;
 }
 
+#pragma mark App Switcher
+
+- (void)showAppSwitcherIncludingHomeScreenCard:(BOOL)homeScreenCard {
+	[appSwitcherController setHomeScreenView:startScreenController.view];
+	[startScreenController.view setHidden:YES];
+	[[appSwitcherController window] makeKeyAndVisible];
+}
+
+- (void)hideAppSwitcher {
+	[startScreenController.view setHidden:NO];
+	[[appSwitcherController window] setHidden:YES];
+}
+
+#pragma mark Delegate Methods
+
 - (void)scrollViewDidScroll:(UIScrollView *)_scrollView {
 	CGFloat progress = MIN(_scrollView.contentOffset.x / _scrollView.frame.size.width, 0.75);
 	
 	[_scrollView setBackgroundColor:[[[RSAesthetics colorsForCurrentTheme] objectForKey:@"OpaqueBackgroundColor"]  colorWithAlphaComponent:progress]];
-	[[RSAppListController sharedInstance] setSectionOverlayAlpha:progress];
-	[[RSAppListController sharedInstance] updateSectionOverlayPosition];
+	[appListController setSectionOverlayAlpha:progress];
+	[appListController updateSectionOverlayPosition];
 	
 	[appListController.searchBar resignFirstResponder];
 }
@@ -130,6 +152,22 @@ static RSHomeScreenController* sharedInstance;
 
 - (void)setContentOffset:(CGPoint)offset animated:(BOOL)animated {
 	[scrollView setContentOffset:offset animated:animated];
+}
+
+#pragma mark Parallax Wallpaper
+
+- (CGFloat)parallaxPosition {
+	CGFloat viewPosition = [(UIScrollView*)startScreenController.view contentOffset].y;
+	CGFloat viewHeight = MAX([(UIScrollView*)startScreenController.view contentOffset].y, screenHeight);
+	
+	CGFloat position = (viewPosition / viewHeight) * ((screenWidth * 1.5) - screenWidth);
+	return position;
+}
+
+- (void)setParallaxPosition {
+	CGFloat position = [self parallaxPosition];
+	
+	[wallpaperView setTransform:CGAffineTransformConcat(CGAffineTransformMakeScale(1.5, 1.5), CGAffineTransformMakeTranslation(0, -position))];
 }
 
 @end

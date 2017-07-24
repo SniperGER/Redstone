@@ -12,6 +12,8 @@
 	if (self = [super initWithFrame:frame]) {
 		self.tile = tile;
 		
+		weatherPreferences = [objc_getClass("WeatherPreferences") sharedPreferences];
+		
 		NSBundle* tileBundle = [NSBundle bundleForClass:[self class]];
 		shortLookView = [[tileBundle loadNibNamed:@"ShortLookView" owner:self options:nil] objectAtIndex:0];
 		conditionView = [[tileBundle loadNibNamed:@"ConditionView" owner:self options:nil] objectAtIndex:0];
@@ -19,10 +21,59 @@
 		dayForecastView = [[tileBundle loadNibNamed:@"DayForecastView" owner:self options:nil] objectAtIndex:0];
 		
 		weatherManager = [[objc_getClass("RSWeatherInfoManager") alloc] initWithDelegate:self];
-		[weatherManager startMonitoringCurrentLocationWeatherChanges];
 	}
 	
 	return self;
+}
+
+- (void)weatherInfoManager:(RSWeatherInfoManager *)weatherInfoManager didUpdateWeather:(RSWeatherCity *)city {
+	
+	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+	[geocoder reverseGeocodeLocation:[city location] completionHandler:^(NSArray *placemarks, NSError *error) {
+		if (placemarks && placemarks.count > 0) {
+			CLPlacemark *placemark = placemarks[0];
+			NSDictionary *addressDictionary = placemark.addressDictionary;
+			
+			[city setName:[addressDictionary objectForKey:@"City"]];
+			
+			[shortLookView updateForCity:city];
+			[conditionView updateForCity:city];
+			[hourlyForecastView updateForCity:city];
+			[dayForecastView updateForCity:city];
+			
+			if (currentCity == nil) {
+				[self.tile setLiveTileHidden:NO animated:YES];
+			}
+			
+			currentCity = city;
+			if ([weatherPreferences isLocalWeatherEnabled]) {
+				localCity = city;
+			}
+		}
+	}];
+}
+
+- (void)hasStarted {
+	if ([weatherPreferences isLocalWeatherEnabled]) {
+		if (localCity != nil) {
+			currentCity = localCity;
+			
+			[shortLookView updateForCity:localCity];
+			[conditionView updateForCity:localCity];
+			[hourlyForecastView updateForCity:localCity];
+			[dayForecastView updateForCity:localCity];
+		}
+		
+		[weatherManager startMonitoringCurrentLocationWeatherChanges];
+	} else {
+		currentSelectedCity = [[weatherPreferences loadSavedCities] objectAtIndex:[weatherPreferences loadActiveCity]];
+		[weatherManager startMonitoringWeatherChangesForLocation:[currentSelectedCity location]];
+	}
+}
+
+- (void)hasStopped {
+	currentCity = nil;
+	[weatherManager stopMonitoringWeatherChangesForLocation:[currentSelectedCity location]];
 }
 
 - (NSArray*)viewsForSize:(int)size {
@@ -50,30 +101,6 @@
 
 - (void)update {
 	return;
-}
-
-- (void)weatherInfoManager:(RSWeatherInfoManager *)weatherInfoManager didUpdateWeather:(RSWeatherCity *)city {
-	
-	CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-	[geocoder reverseGeocodeLocation:[city location] completionHandler:^(NSArray *placemarks, NSError *error) {
-		if (placemarks && placemarks.count > 0) {
-			CLPlacemark *placemark = placemarks[0];
-			NSDictionary *addressDictionary = placemark.addressDictionary;
-			
-			[city setName:[addressDictionary objectForKey:@"City"]];
-			
-			[shortLookView updateForCity:city];
-			[conditionView updateForCity:city];
-			[hourlyForecastView updateForCity:city];
-			[dayForecastView updateForCity:city];
-			
-			if (currentCity == nil) {
-				[self.tile setLiveTileHidden:NO animated:YES];
-			}
-			
-			currentCity = city;
-		}
-	}];
 }
 
 - (void)prepareForRemoval {

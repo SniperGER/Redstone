@@ -21,13 +21,6 @@
 @property (nonatomic, assign) BOOL isUnlocking;
 
 /**
- Returns a global instance of \p RSLaunchScreenController
- 
- @return A global instance of \p RSLaunchScreenController
- */
-+ (id)sharedInstance;
-
-/**
  Fires the Launch Screen animation from the Start Screen to an app
  */
 - (void)animateIn;

@@ -56,6 +56,9 @@
 #import "HomeScreen/RSHomeScreenScrollView.h"
 
 #pragma mark App Switcher
+#import "AppSwitcher/RSAppSwitcherController.h"
+#import "AppSwitcher/RSAppSwitcherContainerView.h"
+#import "AppSwitcher/RSAppSwitcherScrollView.h"
 
 #pragma mark Start Screen
 #import "StartScreen/RSStartScreenController.h"

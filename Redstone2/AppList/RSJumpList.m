@@ -52,7 +52,7 @@
 					[jumpListLetter.titleLabel setText:letter];
 				}
 				
-				if ([[RSAppListController sharedInstance] sectionWithLetter:letter] != nil) {
+				if ([[[RSHomeScreenController sharedInstance] appListController] sectionWithLetter:letter] != nil) {
 					UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jumpToLetter:)];
 					[tapGestureRecognizer setCancelsTouchesInView:NO];
 					[jumpListLetter addGestureRecognizer:tapGestureRecognizer];
@@ -153,7 +153,7 @@
 	NSString* alphabet = @"#ABCDEFGHIJKLMNOPQRSTUVWXYZ@";
 	NSString* letter = [alphabet substringWithRange:NSMakeRange(gestureRecognizer.view.tag, 1)];
 	
-	[[RSAppListController sharedInstance] jumpToSectionWithLetter:letter];
+	[[[RSHomeScreenController sharedInstance] appListController] jumpToSectionWithLetter:letter];
 	[self animateOut];
 }
 

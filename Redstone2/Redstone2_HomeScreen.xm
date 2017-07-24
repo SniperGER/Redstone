@@ -33,7 +33,7 @@ static BOOL hasBeenUnlockedBefore;
 	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
 	if (frontApp == nil) {
-		[[RSLaunchScreenController sharedInstance] setIsUnlocking:YES];
+		[[[RSHomeScreenController sharedInstance] launchScreenController] setIsUnlocking:YES];
 	}
 	
 	return %orig;
@@ -59,25 +59,29 @@ static BOOL hasBeenUnlockedBefore;
 - (void)__startAnimation {
 	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
+	RSStartScreenController* startScreenController = [[RSHomeScreenController sharedInstance] startScreenController];
+	RSAppListController* appListController = [[RSHomeScreenController sharedInstance] appListController];
+	RSLaunchScreenController* launchScreenController = [[RSHomeScreenController sharedInstance] launchScreenController];
+	
 	if ([self zoomDirection] == 0) {
 		// Home Screen to App
 		
 		CGFloat delay = [[RSHomeScreenController sharedInstance] launchApplication];
-		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
+		[launchScreenController setLaunchIdentifier:[frontApp bundleIdentifier]];
 		
 		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay+0.31 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 #if (!TARGET_OS_SIMULATOR)
-			[[RSLaunchScreenController sharedInstance] animateIn];
+			[launchScreenController animateIn];
 #endif
 			
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				if ([[RSStartScreenController sharedInstance] pinnedTiles].count > 0) {
+				if ([startScreenController pinnedTiles].count > 0) {
 					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero];
 				} else {
 					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointMake(screenWidth, 0)];
 				}
-				[(UIScrollView*)[[RSStartScreenController sharedInstance] view] setContentOffset:CGPointMake(0, -24)];
-				[(UIScrollView*)[[RSAppListController sharedInstance] view] setContentOffset:CGPointZero];
+				[startScreenController setContentOffset:CGPointMake(0, -24)];
+				[appListController setContentOffset:CGPointZero];
 			});
 			
 			%orig;
@@ -85,18 +89,18 @@ static BOOL hasBeenUnlockedBefore;
 	} else if ([self zoomDirection] == 1) {
 		// App to Home Screen
 		
-		if ([[RSLaunchScreenController sharedInstance] launchIdentifier] != nil && ![[RSLaunchScreenController sharedInstance] isUnlocking]) {
-			[[RSLaunchScreenController sharedInstance] animateCurrentApplicationSnapshot];
+		if ([launchScreenController launchIdentifier] != nil && ![launchScreenController isUnlocking]) {
+			[launchScreenController animateCurrentApplicationSnapshot];
 			
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				if ([[RSStartScreenController sharedInstance] pinnedTiles].count > 0) {
-					[[RSStartScreenController sharedInstance] animateIn];
+				if ([startScreenController pinnedTiles].count > 0) {
+					[startScreenController animateIn];
 				}
 				
-				[[RSAppListController sharedInstance] animateIn];
+				[appListController animateIn];
 				
 				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-					[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:nil];
+					[launchScreenController setLaunchIdentifier:nil];
 				});
 				
 				%orig;
@@ -107,14 +111,14 @@ static BOOL hasBeenUnlockedBefore;
 			} else {
 				hasBeenUnlockedBefore = YES;
 				
-				[[RSStartScreenController sharedInstance] animateIn];
-				[[RSAppListController sharedInstance] animateIn];
+				[startScreenController animateIn];
+				[appListController animateIn];
 			}
 			
 			%orig;
 		}
 		
-		[[RSLaunchScreenController sharedInstance] setIsUnlocking:NO];
+		[launchScreenController setIsUnlocking:NO];
 	}
 }
 
@@ -125,9 +129,11 @@ static BOOL hasBeenUnlockedBefore;
 -(void)__startAnimation {
 	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
+	RSLaunchScreenController* launchScreenController = [[RSHomeScreenController sharedInstance] launchScreenController];
+	
 	if (frontApp != nil) {
-		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
-		[[RSLaunchScreenController sharedInstance] setIsUnlocking:NO];
+		[launchScreenController setLaunchIdentifier:[frontApp bundleIdentifier]];
+		[launchScreenController setIsUnlocking:NO];
 	}
 	
 	%orig;
@@ -140,7 +146,9 @@ static BOOL hasBeenUnlockedBefore;
 -(void)addIcon:(id)arg1 {
 	%orig;
 	
-	[[RSAppListController sharedInstance] addAppForIcon:arg1];
+	RSAppListController* appListController = [[RSHomeScreenController sharedInstance] appListController];
+	
+	[appListController addAppForIcon:arg1];
 }
 
 %end // %hook SBIconModel
@@ -150,7 +158,9 @@ static BOOL hasBeenUnlockedBefore;
 -(void)setProgressState:(long long)arg1 paused:(BOOL)arg2 percent:(double)arg3 animated:(BOOL)arg4 {
 	%orig;
 	
-	[[RSAppListController sharedInstance] setDownloadProgressForIcon:[[self icon] applicationBundleID] progress:arg3 state:arg1];
+	RSAppListController* appListController = [[RSHomeScreenController sharedInstance] appListController];
+	
+	[appListController setDownloadProgressForIcon:[[self icon] applicationBundleID] progress:arg3 state:arg1];
 }
 
 %end // %hook SBIconImageView
@@ -160,8 +170,10 @@ static BOOL hasBeenUnlockedBefore;
 - (void)setBadge:(id)arg1 {
 	%orig(arg1);
 	
-	if ([[RSStartScreenController sharedInstance] tileForLeafIdentifier:[self bundleIdentifier]]) {
-		[[[RSStartScreenController sharedInstance] tileForLeafIdentifier:[self bundleIdentifier]] setBadge:[arg1 intValue]];
+	RSStartScreenController* startScreenController = [[RSHomeScreenController sharedInstance] startScreenController];
+	
+	if ([startScreenController tileForLeafIdentifier:[self bundleIdentifier]]) {
+		[[startScreenController tileForLeafIdentifier:[self bundleIdentifier]] setBadge:[arg1 intValue]];
 	}
 }
 
@@ -169,11 +181,76 @@ static BOOL hasBeenUnlockedBefore;
 
 %hook SBDeckSwitcherViewController
 
+/*- (void)viewWillAppear:(BOOL)arg1 {
+	%orig;
+	
+	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
+	
+	[self.view setHidden:([RSAppSwitcherController sharedInstance] != nil)];
+	[[[RSLaunchScreenController sharedInstance] window] setHidden:YES];
+	[[RSHomeScreenController sharedInstance] showAppSwitcherIncludingHomeScreenCard:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)arg1 {
+	%orig;
+	
+	[self.view setHidden:([RSAppSwitcherController sharedInstance] != nil)];
+	[[[RSLaunchScreenController sharedInstance] window] setHidden:YES];
+}
+
+- (void)animateDismissalToDisplayItem:(id)arg1 forTransitionRequest:(id)arg2 withCompletion:(id)arg3 {
+	%orig;
+	
+	[self.view setHidden:YES];
+	[[RSHomeScreenController sharedInstance] hideAppSwitcher];
+}*/
+
 - (void)viewWillAppear:(BOOL)arg1 {
 	%orig;
 	
-	[[[RSLaunchScreenController sharedInstance] window] setHidden:YES];
-	//[self.view setHidden:YES];
+	RSLaunchScreenController* launchScreenController = [[RSHomeScreenController sharedInstance] launchScreenController];
+	RSAppSwitcherController* appSwitcherController = [[RSHomeScreenController sharedInstance] appSwitcherController];
+	
+	[[launchScreenController window] setHidden:YES];
+	
+	if (appSwitcherController) {
+		[self.view setHidden:YES];
+	}
+}
+
+- (void)viewDidDisappear:(BOOL)arg1 {
+	%orig;
+	
+	RSLaunchScreenController* launchScreenController = [[RSHomeScreenController sharedInstance] launchScreenController];
+	RSAppSwitcherController* appSwitcherController = [[RSHomeScreenController sharedInstance] appSwitcherController];
+	
+	[[launchScreenController window] setHidden:YES];
+	
+	if (appSwitcherController) {
+		[self.view setHidden:NO];
+	}
+}
+
+- (void)_animatePresentationWithCompletionBlock:(/*^block*/id)arg1  {
+	RSAppSwitcherController* appSwitcherController = [[RSHomeScreenController sharedInstance] appSwitcherController];
+	
+	if (appSwitcherController) {
+		[[RSHomeScreenController sharedInstance] showAppSwitcherIncludingHomeScreenCard:YES];
+	}
+	
+	%log;
+	%orig;
+}
+
+- (void)_animateDismissalWithCompletionBlock:(/*^block*/id)arg1 {
+	RSAppSwitcherController* appSwitcherController = [[RSHomeScreenController sharedInstance] appSwitcherController];
+	
+	if (appSwitcherController) {
+		[[RSHomeScreenController sharedInstance] hideAppSwitcher];
+	}
+	
+	%log;
+	%orig;
 }
 
 %end // %hook SBDeckSwitcherViewController
@@ -183,14 +260,18 @@ static BOOL hasBeenUnlockedBefore;
 - (void)_addBulletin:(BBBulletin*)arg1 {
 	%orig;
 	
-	RSTile* tile = [[RSStartScreenController sharedInstance] tileForLeafIdentifier:[arg1 section]];
+	RSStartScreenController* startScreenController = [[RSHomeScreenController sharedInstance] startScreenController];
+	
+	RSTile* tile = [startScreenController tileForLeafIdentifier:[arg1 section]];
 	if (tile) {
 		[tile addBulletin:arg1];
 	}
 }
 
 - (void)_removeBulletin:(BBBulletin*)arg1 rescheduleTimerIfAffected:(BOOL)arg2 shouldSync:(BOOL)arg3 {
-	RSTile* tile = [[RSStartScreenController sharedInstance] tileForLeafIdentifier:[arg1 section]];
+	RSStartScreenController* startScreenController = [[RSHomeScreenController sharedInstance] startScreenController];
+	
+	RSTile* tile = [startScreenController tileForLeafIdentifier:[arg1 section]];
 	if (tile) {
 		[tile removeBulletin:arg1];
 	}

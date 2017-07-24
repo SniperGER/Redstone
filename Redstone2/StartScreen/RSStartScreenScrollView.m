@@ -52,7 +52,7 @@
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-	if (CGRectContainsPoint(self.frame, point) || [[RSStartScreenController sharedInstance] isEditing]) {
+	if (CGRectContainsPoint(self.frame, point) || [[[RSHomeScreenController sharedInstance] startScreenController] isEditing]) {
 		return YES;
 	}
 	

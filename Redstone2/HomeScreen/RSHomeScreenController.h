@@ -6,11 +6,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class RSStartScreenController, RSAppListController, RSLaunchScreenController, RSHomeScreenScrollView;
+@class RSStartScreenController, RSAppListController, RSAppSwitcherController, RSLaunchScreenController, RSHomeScreenScrollView;
 
 @interface RSHomeScreenController : NSObject <UIScrollViewDelegate> {
 	RSStartScreenController* startScreenController;
 	RSAppListController* appListController;
+	RSAppSwitcherController* appSwitcherController;
 	RSLaunchScreenController* launchScreenController;
 	
 	UIImageView* wallpaperView;
@@ -27,6 +28,17 @@
  */
 + (id)sharedInstance;
 
+- (RSStartScreenController*)startScreenController;
+
+- (RSAppListController*)appListController;
+
+- (RSAppSwitcherController*)appSwitcherController;
+
+- (RSLaunchScreenController*)launchScreenController;
+
+- (void)showAppSwitcherIncludingHomeScreenCard:(BOOL)homeScreenCard;
+
+- (void)hideAppSwitcher;
 
 /**
  Returns the Home Screen scroll view

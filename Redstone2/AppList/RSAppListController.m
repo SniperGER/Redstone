@@ -2,20 +2,6 @@
 
 @implementation RSAppListController
 
-static RSAppListController* sharedInstance;
-
-+ (id)sharedInstance {
-	return sharedInstance;
-}
-
-- (id)init {
-	if (self = [super init]) {
-		sharedInstance = self;
-	}
-	
-	return self;
-}
-
 - (void)loadView {
 	self.view = [[RSAppListScrollView alloc] initWithFrame:CGRectMake(screenWidth, 70, screenWidth, screenHeight - 70)];
 	
@@ -90,6 +76,18 @@ static RSAppListController* sharedInstance;
 	[self showAppsFittingQuery];
 }
 
+- (CGPoint)contentOffset {
+	return [(UIScrollView*)self.view contentOffset];
+}
+
+- (void)setContentOffset:(CGPoint)contentOffset {
+	[(UIScrollView*)self.view setContentOffset:contentOffset];
+}
+
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated {
+	[(UIScrollView*)self.view setContentOffset:contentOffset animated:animated];
+}
+
 #pragma mark Delegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -97,7 +95,7 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	[self updateSectionsWithOffset:[(UIScrollView*)self.view contentOffset].y];
+	[self updateSectionsWithOffset:[self contentOffset].y];
 }
 
 - (void)updateSectionsWithOffset:(CGFloat)offset {
@@ -133,7 +131,7 @@ static RSAppListController* sharedInstance;
 }
 
 - (void)updateSectionOverlayPosition {
-	[self updateSectionsWithOffset:[(UIScrollView*)self.view contentOffset].y];
+	[self updateSectionsWithOffset:[self contentOffset].y];
 }
 
 - (void)jumpToSectionWithLetter:(NSString*)letter {
@@ -143,7 +141,7 @@ static RSAppListController* sharedInstance;
 				int sectionOffset = section.yPosition;
 				int maxOffsetByScreen = [(UIScrollView*)[self view] contentSize].height - self.view.bounds.size.height + 80;
 				
-				[(UIScrollView*)self.view setContentOffset:CGPointMake(0, MIN(sectionOffset, maxOffsetByScreen))];
+				[self setContentOffset:CGPointMake(0, MIN(sectionOffset, maxOffsetByScreen))];
 			}
 		}
 	}
@@ -393,7 +391,7 @@ static RSAppListController* sharedInstance;
 	[self.view sendSubviewToBack:app];
 	self.selectedApp = app;
 	
-	if ([[RSStartScreenController sharedInstance] tileForLeafIdentifier:[[self.selectedApp icon] applicationBundleID]]) {
+	if ([[[RSHomeScreenController sharedInstance] startScreenController] tileForLeafIdentifier:[[self.selectedApp icon] applicationBundleID]]) {
 		[self.pinMenu setActionDisabled:YES atIndex:0];
 	} else {
 		[self.pinMenu setActionDisabled:NO atIndex:0];
@@ -429,14 +427,14 @@ static RSAppListController* sharedInstance;
 - (void)pinSelectedApp {
 	[self hidePinMenu];
 	
-	if ([[RSStartScreenController sharedInstance] tileForLeafIdentifier:[[self.selectedApp icon] applicationBundleID]]) {
+	if ([[[RSHomeScreenController sharedInstance] startScreenController] tileForLeafIdentifier:[[self.selectedApp icon] applicationBundleID]]) {
 		return;
 	}
 	
 	[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero animated:YES];
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		[[RSStartScreenController sharedInstance] pinTileWithIdentifier:[[self.selectedApp icon] applicationBundleID]];
+		[[[RSHomeScreenController sharedInstance] startScreenController] pinTileWithIdentifier:[[self.selectedApp icon] applicationBundleID]];
 		self.selectedApp = nil;
 	});
 }
@@ -705,7 +703,7 @@ static RSAppListController* sharedInstance;
 - (void)animateOut {
 	[self.searchBar resignFirstResponder];
 	[self.view setUserInteractionEnabled:NO];
-	RSApp* sender = [self appForLeafIdentifier:[[RSLaunchScreenController sharedInstance] launchIdentifier]];
+	RSApp* sender = [self appForLeafIdentifier:[[[RSHomeScreenController sharedInstance] launchScreenController] launchIdentifier]];
 	
 	NSMutableArray* viewsInView = [NSMutableArray new];
 	NSMutableArray* viewsNotInView = [NSMutableArray new];

@@ -2,17 +2,10 @@
 
 @implementation RSLaunchScreenController
 
-static RSLaunchScreenController* sharedInstance;
 UIImage* _UICreateScreenUIImage();
-
-+ (id)sharedInstance {
-	return sharedInstance;
-}
 
 - (id)init {
 	if (self = [super init]) {
-		sharedInstance = self;
-		
 		self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
 		[self.window setWindowLevel:2];
 		[self.window setBackgroundColor:[RSAesthetics accentColor]];

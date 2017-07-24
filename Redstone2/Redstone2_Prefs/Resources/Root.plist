@@ -97,6 +97,38 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Component Debugging</string>
+			<key>footerText</key>
+			<string>Components in this list are currently tested internally for bugs, crashes and other issues. As a preview tester, you&apos;re welcome to enable these components and report any issues to @Sniper_GER on Twitter.</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>ml.festival.redstone</string>
+			<key>key</key>
+			<string>debugAppList</string>
+			<key>label</key>
+			<string>App List</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>ml.festival.redstone</string>
+			<key>key</key>
+			<string>debugLiveTiles</string>
+			<key>label</key>
+			<string>Live Tiles</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -222,7 +254,7 @@
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<string>NO</string>
+			<string>YES</string>
 			<key>defaults</key>
 			<string>ml.festival.redstone</string>
 			<key>key</key>

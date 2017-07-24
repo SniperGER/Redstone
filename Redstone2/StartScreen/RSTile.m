@@ -77,19 +77,21 @@ extern dispatch_queue_t __BBServerQueue;
 		}
 		
 		// Live Tile
-		NSBundle* liveTileBundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Live Tiles/%@.tile", RESOURCE_PATH, leafIdentifier]];
-		if (liveTileBundle) {
-			liveTile = [[[liveTileBundle principalClass] alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, frame.size.height) tile:self];
-		} else if (self.tileInfo.displaysNotificationsOnTile) {
-			liveTile = [[RSTileNotificationView alloc] initWithFrame:CGRectMake(0, frame.size.height , frame.size.width, frame.size.height) tile:self];
-		}
-		
-		if (liveTile) {
-			[liveTile setClipsToBounds:YES];
-			[tileWrapper addSubview:liveTile];
+		if ([[[RSPreferences preferences] objectForKey:@"debugLiveTiles"] boolValue]) {
+			NSBundle* liveTileBundle = [NSBundle bundleWithPath:[NSString stringWithFormat:@"%@/Live Tiles/%@.tile", RESOURCE_PATH, leafIdentifier]];
+			if (liveTileBundle) {
+				liveTile = [[[liveTileBundle principalClass] alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, frame.size.height) tile:self];
+			} else if (self.tileInfo.displaysNotificationsOnTile) {
+				liveTile = [[RSTileNotificationView alloc] initWithFrame:CGRectMake(0, frame.size.height , frame.size.width, frame.size.height) tile:self];
+			}
 			
-			if (![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked]) {
-				[self startLiveTile];
+			if (liveTile) {
+				[liveTile setClipsToBounds:YES];
+				[tileWrapper addSubview:liveTile];
+				
+				if (![[objc_getClass("SBUserAgent") sharedUserAgent] deviceIsLocked]) {
+					[self startLiveTile];
+				}
 			}
 		}
 		
@@ -193,18 +195,18 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 }
 
 - (void)tapped:(UITapGestureRecognizer*)gestureRecognizer {
-	if ([[RSStartScreenController sharedInstance] isEditing]) {
-		if ([[RSStartScreenController sharedInstance] selectedTile] == self) {
-			[[RSStartScreenController sharedInstance] setIsEditing:NO];
+	if ([[[RSHomeScreenController sharedInstance] startScreenController] isEditing]) {
+		if ([[[RSHomeScreenController sharedInstance] startScreenController] selectedTile] == self) {
+			[[[RSHomeScreenController sharedInstance] startScreenController] setIsEditing:NO];
 			//[longPressGestureRecognizer setEnabled:YES];
 		} else {
-			[[RSStartScreenController sharedInstance] setSelectedTile:self];
+			[[[RSHomeScreenController sharedInstance] startScreenController] setSelectedTile:self];
 		}
 	} else {
 		self.icon = [[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[self.icon applicationBundleID]];
 		
 		[self setTransform:CGAffineTransformIdentity];
-		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[self.icon applicationBundleID]];
+		[[[RSHomeScreenController sharedInstance] launchScreenController] setLaunchIdentifier:[self.icon applicationBundleID]];
 		[[objc_getClass("SBIconController") sharedInstance] _launchIcon:self.icon];
 	}
 }
@@ -212,12 +214,12 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 - (void)pressed:(UILongPressGestureRecognizer*)gestureRecognizer {
 	panEnabled = NO;
 	
-	if (![[RSStartScreenController sharedInstance] isEditing]) {
+	if (![[[RSHomeScreenController sharedInstance] startScreenController] isEditing]) {
 		[tapGestureRecognizer setEnabled:NO];
 		[tapGestureRecognizer setEnabled:YES];
 		
-		[[RSStartScreenController sharedInstance] setIsEditing:YES];
-		[[RSStartScreenController sharedInstance] setSelectedTile:self];
+		[[[RSHomeScreenController sharedInstance] startScreenController] setIsEditing:YES];
+		[[[RSHomeScreenController sharedInstance] startScreenController] setSelectedTile:self];
 		
 		[longPressGestureRecognizer setEnabled:NO];
 	}
@@ -227,7 +229,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	CGPoint touchLocation = [gestureRecognizer locationInView:self.superview];
 	
 	if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-		[[RSStartScreenController sharedInstance] setSelectedTile:self];
+		[[[RSHomeScreenController sharedInstance] startScreenController] setSelectedTile:self];
 		
 		CGPoint relativePosition = [self.superview convertPoint:self.center toView:self.superview];
 		centerOffset = CGPointMake(relativePosition.x - touchLocation.x, relativePosition.y - touchLocation.y);
@@ -243,7 +245,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	if (gestureRecognizer.state == UIGestureRecognizerStateEnded && panEnabled) {
 		centerOffset = CGPointZero;
 		
-		[[RSStartScreenController sharedInstance] snapTile:self withTouchPosition:self.center];
+		[[[RSHomeScreenController sharedInstance] startScreenController] snapTile:self withTouchPosition:self.center];
 		
 		[unpinButton setHidden:NO];
 		[scaleButton setHidden:NO];
@@ -274,7 +276,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 #pragma mark Editing Mode
 
 - (void)setIsSelectedTile:(BOOL)isSelectedTile {
-	if ([[RSStartScreenController sharedInstance] isEditing]) {
+	if ([[[RSHomeScreenController sharedInstance] startScreenController] isEditing]) {
 		_isSelectedTile = isSelectedTile;
 		
 		[self.layer removeAllAnimations];
@@ -282,8 +284,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		if (isSelectedTile) {
 			panEnabled = YES;
 			
-			[[(UIScrollView*)[[RSStartScreenController sharedInstance] view] panGestureRecognizer] setEnabled:NO];
-			[[(UIScrollView*)[[RSStartScreenController sharedInstance] view] panGestureRecognizer] setEnabled:YES];
+			[[(UIScrollView*)[[[RSHomeScreenController sharedInstance] startScreenController] view] panGestureRecognizer] setEnabled:NO];
+			[[(UIScrollView*)[[[RSHomeScreenController sharedInstance] startScreenController] view] panGestureRecognizer] setEnabled:YES];
 			
 			
 			[self.superview bringSubviewToFront:self];
@@ -329,7 +331,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 }
 
 - (void)unpin {
-	[[RSStartScreenController sharedInstance] unpinTile:self];
+	[[[RSHomeScreenController sharedInstance] startScreenController] unpinTile:self];
 }
 
 - (void)setNextSize {
@@ -349,8 +351,8 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	CGSize newTileSize = [RSMetrics tileDimensionsForSize:self.size];
 	CGFloat step = [RSMetrics tileDimensionsForSize:1].width + [RSMetrics tileBorderSpacing];
 	
-	CGFloat maxPositionX = [[RSStartScreenController sharedInstance] view].bounds.size.width - newTileSize.width;
-	CGFloat maxPositionY = [(UIScrollView*)[[RSStartScreenController sharedInstance] view] contentSize].height + [RSMetrics tileBorderSpacing];
+	CGFloat maxPositionX = [[[RSHomeScreenController sharedInstance] startScreenController] view].bounds.size.width - newTileSize.width;
+	CGFloat maxPositionY = [(UIScrollView*)[[[RSHomeScreenController sharedInstance] startScreenController] view] contentSize].height + [RSMetrics tileBorderSpacing];
 	
 	CGRect newFrame = CGRectMake(MIN(MAX(step * roundf((self.basePosition.origin.x / step)), 0), maxPositionX),
 								 MIN(MAX(step * roundf((self.basePosition.origin.y / step)), 0), maxPositionY),
@@ -370,7 +372,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		[liveTile setFrame:CGRectMake(0, liveTile.frame.origin.y, self.bounds.size.width, self.bounds.size.height)];
 		
 		if ([liveTile isKindOfClass:[RSTileNotificationView class]]) {
-			[self setLiveTileHidden:(self.size < 2)];
+			[self setLiveTileHidden:(self.size < 2 || ![liveTile readyForDisplay])];
 		} else {
 			[self startLiveTile];
 		}
@@ -403,7 +405,7 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	
 	[scaleButton setTransform:CGAffineTransformMakeRotation(deg2rad([self scaleButtonRotationForCurrentSize]))];
 	
-	[[RSStartScreenController sharedInstance] moveAffectedTilesForTile:self];
+	[[[RSHomeScreenController sharedInstance] startScreenController] moveAffectedTilesForTile:self];
 }
 
 - (CGFloat)scaleButtonRotationForCurrentSize {
@@ -494,6 +496,10 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		liveTileAnimationTimer = nil;
 	}
 	
+	if ([liveTile respondsToSelector:@selector(hasStarted)]) {
+		[liveTile hasStarted];
+	}
+	
 	if ([liveTile readyForDisplay]) {
 		if ([liveTile isKindOfClass:[RSTileNotificationView class]] && self.size < 2) {
 			[self setLiveTileHidden:YES];
@@ -545,6 +551,10 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	}
 	
 	[self setLiveTileHidden:YES];
+	
+	if ([liveTile respondsToSelector:@selector(hasStopped)]) {
+		[liveTile hasStopped];
+	}
 }
 
 - (void)setLiveTileHidden:(BOOL)hidden {

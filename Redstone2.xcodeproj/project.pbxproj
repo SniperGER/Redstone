@@ -529,6 +529,9 @@
 		8D9EDAD71F0302A600C97EEA /* RSPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EDAD61F0302A600C97EEA /* RSPreferences.m */; };
 		8DB02D931F1CAA59004CA50C /* tile.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8DB02D921F1CAA59004CA50C /* tile.plist */; };
 		8DB02D961F1CAD4D004CA50C /* RSBulletinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB02D951F1CAD4D004CA50C /* RSBulletinView.m */; };
+		8DB02D991F1D6065004CA50C /* RSAppSwitcherController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB02D981F1D6065004CA50C /* RSAppSwitcherController.m */; };
+		8DB02D9C1F1DE1F6004CA50C /* RSAppSwitcherContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB02D9B1F1DE1F6004CA50C /* RSAppSwitcherContainerView.m */; };
+		8DB02D9F1F1DE20F004CA50C /* RSAppSwitcherScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB02D9E1F1DE20F004CA50C /* RSAppSwitcherScrollView.m */; };
 		8DB0F4071F0F82F500B58CB6 /* RSDownloadingApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB0F4061F0F82F500B58CB6 /* RSDownloadingApp.m */; };
 		8DB9859C1F03CC8E00CD1AEB /* RSMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB9859B1F03CC8E00CD1AEB /* RSMetrics.m */; };
 		8DB985A31F04600C00CD1AEB /* RSAesthetics.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB985A21F04600C00CD1AEB /* RSAesthetics.m */; };
@@ -1136,6 +1139,12 @@
 		8DB02D921F1CAA59004CA50C /* tile.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tile.plist; sourceTree = "<group>"; };
 		8DB02D941F1CAD4D004CA50C /* RSBulletinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSBulletinView.h; sourceTree = "<group>"; };
 		8DB02D951F1CAD4D004CA50C /* RSBulletinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSBulletinView.m; sourceTree = "<group>"; };
+		8DB02D971F1D6065004CA50C /* RSAppSwitcherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppSwitcherController.h; sourceTree = "<group>"; };
+		8DB02D981F1D6065004CA50C /* RSAppSwitcherController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppSwitcherController.m; sourceTree = "<group>"; };
+		8DB02D9A1F1DE1F6004CA50C /* RSAppSwitcherContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppSwitcherContainerView.h; sourceTree = "<group>"; };
+		8DB02D9B1F1DE1F6004CA50C /* RSAppSwitcherContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppSwitcherContainerView.m; sourceTree = "<group>"; };
+		8DB02D9D1F1DE20F004CA50C /* RSAppSwitcherScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSAppSwitcherScrollView.h; sourceTree = "<group>"; };
+		8DB02D9E1F1DE20F004CA50C /* RSAppSwitcherScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSAppSwitcherScrollView.m; sourceTree = "<group>"; };
 		8DB0F4041F0F6CDC00B58CB6 /* SBIconImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBIconImageView.h; sourceTree = "<group>"; };
 		8DB0F4051F0F82F500B58CB6 /* RSDownloadingApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDownloadingApp.h; sourceTree = "<group>"; };
 		8DB0F4061F0F82F500B58CB6 /* RSDownloadingApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDownloadingApp.m; sourceTree = "<group>"; };
@@ -2636,6 +2645,12 @@
 		8DC97C631F039CE3004A75CB /* AppSwitcher */ = {
 			isa = PBXGroup;
 			children = (
+				8DB02D971F1D6065004CA50C /* RSAppSwitcherController.h */,
+				8DB02D981F1D6065004CA50C /* RSAppSwitcherController.m */,
+				8DB02D9A1F1DE1F6004CA50C /* RSAppSwitcherContainerView.h */,
+				8DB02D9B1F1DE1F6004CA50C /* RSAppSwitcherContainerView.m */,
+				8DB02D9D1F1DE20F004CA50C /* RSAppSwitcherScrollView.h */,
+				8DB02D9E1F1DE20F004CA50C /* RSAppSwitcherScrollView.m */,
 			);
 			path = AppSwitcher;
 			sourceTree = "<group>";
@@ -2797,7 +2812,7 @@
 		};
 		8DDC17E11F05845E00C57D6E /* Install */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "do -B";
+			buildArgumentsString = do;
 			buildConfigurationList = 8DDC17E21F05845E00C57D6E /* Build configuration list for PBXLegacyTarget "Install" */;
 			buildPhases = (
 			);
@@ -3485,6 +3500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D13A6F81F1B5ED500E7B5BF /* RSTileNotificationView.m in Sources */,
+				8DB02D991F1D6065004CA50C /* RSAppSwitcherController.m in Sources */,
 				8D5AA3361F0A2D4100DC2073 /* RSAppListController.m in Sources */,
 				8DD1986B1F12C4300080F4AD /* RDSAccentColorList.m in Sources */,
 				8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */,
@@ -3496,6 +3512,7 @@
 				8D9EDAD31F02FFCD00C97EEA /* RSCore.m in Sources */,
 				8D5AA3391F0A2E8D00DC2073 /* RSAppListScrollView.m in Sources */,
 				8DD1986A1F12C4300080F4AD /* PFHeaderCell.mm in Sources */,
+				8DB02D9F1F1DE20F004CA50C /* RSAppSwitcherScrollView.m in Sources */,
 				8DCAFCC31F0A327500038094 /* RSApp.m in Sources */,
 				8DE8D4431F14BB28003AA2DF /* RSWeatherTile.m in Sources */,
 				8D98AFC61F0D93C100B26D32 /* README.md in Sources */,
@@ -3506,6 +3523,7 @@
 				8D56D3761F070915009E3070 /* RSTileInfo.m in Sources */,
 				8D56CFCA1F06286A009E3070 /* RSStartScreenScrollView.m in Sources */,
 				8DB02D961F1CAD4D004CA50C /* RSBulletinView.m in Sources */,
+				8DB02D9C1F1DE1F6004CA50C /* RSAppSwitcherContainerView.m in Sources */,
 				8DB985A31F04600C00CD1AEB /* RSAesthetics.m in Sources */,
 				8DCAFCC01F0A321A00038094 /* RSAppListSection.m in Sources */,
 				8DB9859C1F03CC8E00CD1AEB /* RSMetrics.m in Sources */,

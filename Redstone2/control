@@ -1,6 +1,6 @@
 Package: ml.festival.redstone
 Name: Redstone Insider Preview
-Depends: mobilesubstrate, firmware (>= 9.0)
+Depends: mobilesubstrate, cc.tweak.libobjcipc, ml.festival.libweathermanager, firmware (>= 9.0)
 Conflicts: gsc.ipad
 Icon: file:///Library/PreferenceBundles/Redstone.bundle/icon@2x.png
 Architecture: iphoneos-arm

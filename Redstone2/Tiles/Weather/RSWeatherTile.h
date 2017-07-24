@@ -27,8 +27,11 @@
 @end
 
 @interface RSWeatherTile : UIView <RSLiveTileInterface, RSWeatherInfoManagerDelegate> {
+	WeatherPreferences* weatherPreferences;
 	RSWeatherInfoManager* weatherManager;
 	RSWeatherCity* currentCity;
+	RSWeatherCity* localCity;
+	City* currentSelectedCity;
 	
 	RSWeatherShortLookView* shortLookView;
 	RSWeatherConditionView* conditionView;

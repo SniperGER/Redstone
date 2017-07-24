@@ -19,12 +19,11 @@
 @property (nonatomic, assign) BOOL isEditing;
 @property (nonatomic, strong) RSTile* selectedTile;
 
-/**
- Returns a global instance of \p RSStartScreenController
- 
- @return A global instance of \p RSStartScreenController
- */
-+ (id)sharedInstance;
+- (CGPoint)contentOffset;
+
+- (void)setContentOffset:(CGPoint)contentOffset;
+
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated;
 
 /**
  Loads the current tile layout saved in Redstone's preferences and fills the Start Screen

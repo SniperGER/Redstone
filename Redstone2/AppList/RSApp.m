@@ -73,7 +73,7 @@
 		self.icon = [[(SBIconController*)[objc_getClass("SBIconController") sharedInstance] model] leafIconForIdentifier:[self.icon applicationBundleID]];
 		
 		[self setTransform:CGAffineTransformIdentity];
-		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[self.icon applicationBundleID]];
+		[[[RSHomeScreenController sharedInstance] launchScreenController] setLaunchIdentifier:[self.icon applicationBundleID]];
 		[[objc_getClass("SBIconController") sharedInstance] _launchIcon:self.icon];
 	}
 }
@@ -81,7 +81,7 @@
 - (void)pressed:(UILongPressGestureRecognizer*)gestureRecognizer {
 	if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
 		[self setTransform:CGAffineTransformIdentity];
-		[[RSAppListController sharedInstance] showPinMenuForApp:self withPoint:[gestureRecognizer locationInView:self]];
+		[[[RSHomeScreenController sharedInstance] appListController] showPinMenuForApp:self withPoint:[gestureRecognizer locationInView:self]];
 	}
 }
 

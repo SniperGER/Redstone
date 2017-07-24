@@ -2,18 +2,16 @@
 
 @implementation RSStartScreenController
 
-static RSStartScreenController* sharedInstance;
-
-+ (id)sharedInstance {
-	return sharedInstance;
+- (CGPoint)contentOffset {
+	return [(UIScrollView*)self.view contentOffset];
 }
 
-- (id)init {
-	if (self = [super init]) {
-		sharedInstance = self;
-	}
-	
-	return self;
+- (void)setContentOffset:(CGPoint)contentOffset {
+	[(UIScrollView*)self.view setContentOffset:contentOffset];
+}
+
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated {
+	[(UIScrollView*)self.view setContentOffset:contentOffset animated:animated];
 }
 
 - (void)loadView {
@@ -198,7 +196,7 @@ static RSStartScreenController* sharedInstance;
 	[[(RSStartScreenScrollView*)self.view allAppsButton] setHidden:NO];
 	
 	[[RSHomeScreenController sharedInstance] setScrollEnabled:YES];
-	[(UIScrollView*)self.view setContentOffset:CGPointMake(0, MAX([(UIScrollView*)self.view contentSize].height - self.view.bounds.size.height + 64, -24)) animated:YES];
+	[self setContentOffset:CGPointMake(0, MAX([(UIScrollView*)self.view contentSize].height - self.view.bounds.size.height + 64, -24)) animated:YES];
 }
 
 - (void)unpinTile:(RSTile*)tile {
@@ -608,7 +606,7 @@ static RSStartScreenController* sharedInstance;
 - (void)animateOut {
 	// Home Screen to App
 	[self.view setUserInteractionEnabled:NO];
-	RSTile* sender = [self tileForLeafIdentifier:[[RSLaunchScreenController sharedInstance] launchIdentifier]];
+	RSTile* sender = [self tileForLeafIdentifier:[[[RSHomeScreenController sharedInstance] launchScreenController] launchIdentifier]];
 	
 	NSMutableArray* appsInView = [NSMutableArray new];
 	NSMutableArray* appsNotInView = [NSMutableArray new];

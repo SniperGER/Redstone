@@ -53,10 +53,11 @@ static id currentApplication;
 	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
 	
 	if (frontApp) {
-		[[RSStartScreenController sharedInstance] setTilesVisible:NO];
-		[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
+		[[homeScreenController startScreenController] setTilesVisible:NO];
+		[[homeScreenController startScreenController] setIsEditing:NO];
+		[[homeScreenController launchScreenController] setLaunchIdentifier:[frontApp bundleIdentifier]];
 	} else {
-		[[RSStartScreenController sharedInstance] setTilesVisible:YES];
+		[[homeScreenController startScreenController] setTilesVisible:YES];
 	}
 }
 
@@ -65,53 +66,53 @@ static id currentApplication;
 	
 	if (homeScreenController != nil) {
 		if  ([currentApplication isKindOfClass:NSClassFromString(@"SBDashBoardViewController")] || frontApp != nil) {
-			[[RSLaunchScreenController sharedInstance] setLaunchIdentifier:[frontApp bundleIdentifier]];
+			[[homeScreenController launchScreenController] setLaunchIdentifier:[frontApp bundleIdentifier]];
 			return YES;
 		}
 		
-		if ([RSLaunchScreenController sharedInstance]) {
-			if ([[RSLaunchScreenController sharedInstance] isLaunchingApp]) {
+		if ([homeScreenController launchScreenController]) {
+			if ([[homeScreenController launchScreenController] isLaunchingApp]) {
 				return NO;
 			}
 		}
 		
-		if ([[RSAppListController sharedInstance] isUninstallingApp]) {
+		if ([[homeScreenController appListController] isUninstallingApp]) {
 			return NO;
 		}
 		
-		if ([[[RSAppListController sharedInstance] jumpList] isOpen]) {
-			[[RSAppListController sharedInstance] hideJumpList];
+		if ([[[homeScreenController appListController] jumpList] isOpen]) {
+			[[homeScreenController appListController] hideJumpList];
 			return NO;
 		}
 		
-		if ([[[RSAppListController sharedInstance] pinMenu] isOpen]) {
-			[[RSAppListController sharedInstance] hidePinMenu];
+		if ([[[homeScreenController appListController] pinMenu] isOpen]) {
+			[[homeScreenController appListController] hidePinMenu];
 			return NO;
 		}
 		
-		if ([[[RSAppListController sharedInstance] searchBar] text].length > 0) {
-			[[[RSAppListController sharedInstance] searchBar] resignFirstResponder];
-			[[[RSAppListController sharedInstance] searchBar] setText:@""];
-			[[RSAppListController sharedInstance] showAppsFittingQuery];
+		if ([[[homeScreenController appListController] searchBar] text].length > 0) {
+			[[[homeScreenController appListController] searchBar] resignFirstResponder];
+			[[[homeScreenController appListController] searchBar] setText:@""];
+			[[homeScreenController appListController] showAppsFittingQuery];
 		}
 		
-		if ([[[RSAppListController sharedInstance] searchBar] isFirstResponder]) {
-			[[[RSAppListController sharedInstance] searchBar] resignFirstResponder];
+		if ([[[homeScreenController appListController] searchBar] isFirstResponder]) {
+			[[[homeScreenController appListController] searchBar] resignFirstResponder];
 			return NO;
 		}
 		
-		if ([[RSStartScreenController sharedInstance] isEditing]) {
-			[[RSStartScreenController sharedInstance] setIsEditing:NO];
+		if ([[homeScreenController startScreenController] isEditing]) {
+			[[homeScreenController startScreenController] setIsEditing:NO];
 			return NO;
 		}
 		
 		if (([[RSHomeScreenController sharedInstance] contentOffset].x != 0
-			|| [(UIScrollView*)[[RSStartScreenController sharedInstance] view] contentOffset].y != -24
-			|| [(UIScrollView*)[[RSAppListController sharedInstance] view] contentOffset].y != 0)
-			&& [[RSStartScreenController sharedInstance] pinnedTiles].count > 0) {
+			|| [[homeScreenController startScreenController] contentOffset].y != -24
+			|| [[homeScreenController appListController] contentOffset].y != 0)
+			&& [[homeScreenController startScreenController] pinnedTiles].count > 0) {
 			[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero animated:YES];
-			[(UIScrollView*)[[RSStartScreenController sharedInstance] view] setContentOffset:CGPointMake(0, -24) animated:YES];
-			[(UIScrollView*)[[RSAppListController sharedInstance] view] setContentOffset:CGPointZero animated:YES];
+			[[homeScreenController startScreenController] setContentOffset:CGPointMake(0, -24) animated:YES];
+			[[homeScreenController appListController] setContentOffset:CGPointZero animated:YES];
 			
 			return NO;
 		}

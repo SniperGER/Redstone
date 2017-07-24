@@ -24,7 +24,7 @@
 
 - (void)setDownloadProgress:(float)progress forState:(int)state {
 	if (state == 0) {
-		[[RSAppListController sharedInstance] loadApps];
+		[[[RSHomeScreenController sharedInstance] appListController] loadApps];
 	} else if (state == 1) {
 		
 	} else if (state == 2) {

@@ -37,7 +37,7 @@
 - (void)tapped:(UITapGestureRecognizer*)gestureRecognizer {
 	if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
 		[self untilt];
-		[[RSAppListController sharedInstance] showJumpList];
+		[[[RSHomeScreenController sharedInstance] appListController] showJumpList];
 	}
 }
 

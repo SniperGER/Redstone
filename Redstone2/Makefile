@@ -27,7 +27,7 @@ Redstone2_FILES += UI/RSTiltView.m UI/RSFlyoutMenu.m UI/RSProgressBar.m UI/RSAle
 Redstone2_FILES += HomeScreen/RSHomeScreenController.m HomeScreen/RSHomeScreenScrollView.m
 
 # App Switcher
-# Redstone2_FILES +=
+Redstone2_FILES += AppSwitcher/RSAppSwitcherController.m AppSwitcher/RSAppSwitcherContainerView.m AppSwitcher/RSAppSwitcherScrollView.m
 
 # Start Screen
 Redstone2_FILES += StartScreen/RSStartScreenController.m StartScreen/RSStartScreenScrollView.m StartScreen/RSTile.m StartScreen/RSTileInfo.m StartScreen/RSTileNotificationView.m StartScreen/RSBulletinView.m

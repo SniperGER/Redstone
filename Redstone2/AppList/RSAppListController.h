@@ -28,12 +28,11 @@
 @property (nonatomic, strong) RSTextField* searchBar;
 @property (nonatomic, assign) BOOL isUninstallingApp;
 
-/**
- Returns a global instance of \p RSAppListController
- 
- @return A global instance of \p RSAppListController
- */
-+ (id)sharedInstance;
+- (CGPoint)contentOffset;
+
+- (void)setContentOffset:(CGPoint)contentOffset;
+
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated;
 
 /**
  App List's scroll view has moved, update section header positions

@@ -63,7 +63,7 @@ static RSPreferences* sharedInstance;
 		
 		// Show Wallpaper
 		if (![self.preferences objectForKey:@"showWallpaper"]) {
-			[self.preferences setValue:[NSNumber numberWithBool:NO] forKey:@"showWallpaper"];
+			[self.preferences setValue:[NSNumber numberWithBool:YES] forKey:@"showWallpaper"];
 		}
 		
 		// Theme Color
@@ -89,6 +89,16 @@ static RSPreferences* sharedInstance;
 		// 3 column tile layout
 		if (![self.preferences objectForKey:kRSP3ColumnLayoutKey]) {
 			[self.preferences setObject:[NSArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/3ColumnDefaultLayout.plist", RESOURCE_PATH]] forKey:kRSP3ColumnLayoutKey];
+		}
+		
+		// Component Debugging
+		
+		if (![self.preferences objectForKey:@"debugAppList"]) {
+			[self.preferences setValue:[NSNumber numberWithBool:NO] forKey:@"debugAppList"];
+		}
+		
+		if (![self.preferences objectForKey:@"debugLiveTiles"]) {
+			[self.preferences setValue:[NSNumber numberWithBool:NO] forKey:@"debugLiveTiles"];
 		}
 		
 		[self.preferences writeToFile:PREFERENCES_PATH atomically:YES];
