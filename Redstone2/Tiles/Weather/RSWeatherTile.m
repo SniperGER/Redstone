@@ -72,7 +72,6 @@
 }
 
 - (void)hasStopped {
-	currentCity = nil;
 	[weatherManager stopMonitoringWeatherChangesForLocation:[currentSelectedCity location]];
 }
 
