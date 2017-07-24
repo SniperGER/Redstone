@@ -11,6 +11,72 @@
 
 static BOOL hasBeenUnlockedBefore;
 
+void playApplicationZoomAnimation(int direction, void (^callback)()) {
+	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
+	
+	RSStartScreenController* startScreenController = [[RSHomeScreenController sharedInstance] startScreenController];
+	RSAppListController* appListController = [[RSHomeScreenController sharedInstance] appListController];
+	RSLaunchScreenController* launchScreenController = [[RSHomeScreenController sharedInstance] launchScreenController];
+	
+	if (direction == 0) {
+		// Home Screen to App
+		
+		CGFloat delay = [[RSHomeScreenController sharedInstance] launchApplication];
+		[launchScreenController setLaunchIdentifier:[frontApp bundleIdentifier]];
+		
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay+0.31 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//#if (!TARGET_OS_SIMULATOR)
+			[launchScreenController animateIn];
+//#endif
+			
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				if ([startScreenController pinnedTiles].count > 0) {
+					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero];
+				} else {
+					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointMake(screenWidth, 0)];
+				}
+				[startScreenController setContentOffset:CGPointMake(0, -24)];
+				[appListController setContentOffset:CGPointZero];
+			});
+			
+			callback();
+		});
+	} else if (direction == 1) {
+		// App to Home Screen
+		
+		if ([launchScreenController launchIdentifier] != nil && ![launchScreenController isUnlocking]) {
+			[launchScreenController animateCurrentApplicationSnapshot];
+			
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				if ([startScreenController pinnedTiles].count > 0) {
+					[startScreenController animateIn];
+				}
+				
+				[appListController animateIn];
+				
+				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+					[launchScreenController setLaunchIdentifier:nil];
+				});
+				
+				callback();
+			});
+		} else {
+			if (hasBeenUnlockedBefore) {
+				[[RSHomeScreenController sharedInstance] deviceHasBeenUnlocked];
+			} else {
+				hasBeenUnlockedBefore = YES;
+				
+				[startScreenController animateIn];
+				[appListController animateIn];
+			}
+			
+			callback();
+		}
+		
+		[launchScreenController setIsUnlocking:NO];
+	}
+}
+
 %hook SpringBoard
 
 - (long long) homeScreenRotationStyle {
@@ -57,72 +123,36 @@ static BOOL hasBeenUnlockedBefore;
 %hook SBUIAnimationZoomApp
 
 - (void)__startAnimation {
-	SBApplication* frontApp = [(SpringBoard*)[UIApplication sharedApplication] _accessibilityFrontMostApplication];
-	
-	RSStartScreenController* startScreenController = [[RSHomeScreenController sharedInstance] startScreenController];
-	RSAppListController* appListController = [[RSHomeScreenController sharedInstance] appListController];
-	RSLaunchScreenController* launchScreenController = [[RSHomeScreenController sharedInstance] launchScreenController];
-	
-	if ([self zoomDirection] == 0) {
-		// Home Screen to App
-		
-		CGFloat delay = [[RSHomeScreenController sharedInstance] launchApplication];
-		[launchScreenController setLaunchIdentifier:[frontApp bundleIdentifier]];
-		
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay+0.31 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-#if (!TARGET_OS_SIMULATOR)
-			[launchScreenController animateIn];
-#endif
-			
-			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				if ([startScreenController pinnedTiles].count > 0) {
-					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointZero];
-				} else {
-					[[RSHomeScreenController sharedInstance] setContentOffset:CGPointMake(screenWidth, 0)];
-				}
-				[startScreenController setContentOffset:CGPointMake(0, -24)];
-				[appListController setContentOffset:CGPointZero];
-			});
-			
-			%orig;
-		});
-	} else if ([self zoomDirection] == 1) {
-		// App to Home Screen
-		
-		if ([launchScreenController launchIdentifier] != nil && ![launchScreenController isUnlocking]) {
-			[launchScreenController animateCurrentApplicationSnapshot];
-			
-			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				if ([startScreenController pinnedTiles].count > 0) {
-					[startScreenController animateIn];
-				}
-				
-				[appListController animateIn];
-				
-				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-					[launchScreenController setLaunchIdentifier:nil];
-				});
-				
-				%orig;
-			});
-		} else {
-			if (hasBeenUnlockedBefore) {
-				[[RSHomeScreenController sharedInstance] deviceHasBeenUnlocked];
-			} else {
-				hasBeenUnlockedBefore = YES;
-				
-				[startScreenController animateIn];
-				[appListController animateIn];
-			}
-			
-			%orig;
-		}
-		
-		[launchScreenController setIsUnlocking:NO];
-	}
+	playApplicationZoomAnimation([self zoomDirection], ^{
+		%orig;
+	});
 }
 
 %end // %hook SBUIAnimationZoomApp
+
+// iOS 9
+%hook SBUIAnimationZoomUpApp
+
+// Home Screen to App
+- (void)_startAnimation {
+	playApplicationZoomAnimation(0, ^{
+		%orig;
+	});
+}
+
+%end // %hook SBUIAnimationZoomUpApp
+
+// iOS 9
+%hook SBUIAnimationZoomDownApp
+
+// App to Home Screen
+- (void)_startAnimation {
+	playApplicationZoomAnimation(1, ^{
+		%orig;
+	});
+}
+
+%end // %hook SBUIAnimationZoomDownApp
 
 %hook SBUIAnimationLockScreenToAppZoomIn
 

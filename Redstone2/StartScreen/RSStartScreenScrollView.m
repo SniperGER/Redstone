@@ -33,7 +33,10 @@
 		[self.allAppsButton addTarget:[^{
 			[[RSHomeScreenController sharedInstance] setContentOffset:CGPointMake(screenWidth, 0) animated:YES];
 		} copy] action:@selector(invoke)];
-		[self addSubview:self.allAppsButton];
+		
+		if ([[[RSPreferences preferences] objectForKey:@"debugAppList"] boolValue]) {
+			[self addSubview:self.allAppsButton];
+		}
 	}
 	
 	return self;
