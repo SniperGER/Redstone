@@ -53,6 +53,10 @@
 	}
 }
 
+- (void)donate {
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.paypal.me/SniperGER/1"] options:@{} completionHandler:nil];
+}
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 

@@ -4,6 +4,7 @@
 	UIWindow* settingsView;
 }
 
+- (void)donate;
 
 - (void)killSpringBoard;
 - (void)resetHomeScreenLayout;

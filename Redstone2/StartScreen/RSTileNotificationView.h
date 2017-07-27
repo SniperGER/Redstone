@@ -22,6 +22,7 @@
 }
 
 @property (nonatomic, strong) RSTile* tile;
+@property (nonatomic, assign) BOOL started;
 @property (nonatomic, strong) NSMutableArray* bulletins;
 
 //- (UIView*)viewWithBulletin:(BBBulletin*)bulletin;

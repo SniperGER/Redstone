@@ -12,6 +12,7 @@
 
 @required
 @property (nonatomic, strong) RSTile* tile;
+@property (nonatomic, assign) BOOL started;
 
 - (id)initWithFrame:(CGRect)frame tile:(RSTile*)tile;
 - (NSArray*)viewsForSize:(int)size;

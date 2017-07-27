@@ -15,6 +15,9 @@
 		8D30EB381F1839F300823521 /* Icon_PoP@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D30EB341F1839F300823521 /* Icon_PoP@3x.png */; };
 		8D30EB391F1839F300823521 /* Icon_Wind@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D30EB351F1839F300823521 /* Icon_Wind@2x.png */; };
 		8D30EB3A1F1839F300823521 /* Icon_Wind@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D30EB361F1839F300823521 /* Icon_Wind@3x.png */; };
+		8D31ECBA1F26AAC400C17E2B /* RDSCreditsListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D31ECB91F26AAC400C17E2B /* RDSCreditsListController.m */; };
+		8D31ECBC1F26AAF000C17E2B /* Credits.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D31ECBB1F26AAF000C17E2B /* Credits.plist */; };
+		8D31ECBF1F26ABDA00C17E2B /* RDSCreditsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D31ECBE1F26ABDA00C17E2B /* RDSCreditsCell.m */; };
 		8D5057421F18AE0800149A90 /* RSWeatherHourlyForecastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5057411F18AE0800149A90 /* RSWeatherHourlyForecastView.m */; };
 		8D5057451F18AE1800149A90 /* RSWeatherDayForecastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5057441F18AE1800149A90 /* RSWeatherDayForecastView.m */; };
 		8D5057481F18AE2800149A90 /* RSWeatherShortLookView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5057471F18AE2800149A90 /* RSWeatherShortLookView.m */; };
@@ -567,6 +570,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8DA2E1E01F293874000EE23A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8D34D1201EFDC71200B2D634 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D61E9A21F18BF4A00514586;
+			remoteInfo = People;
+		};
 		8DCFFDD41F175F4F004E3320 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8D34D1201EFDC71200B2D634 /* Project object */;
@@ -592,6 +602,11 @@
 		8D30EB351F1839F300823521 /* Icon_Wind@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_Wind@2x.png"; sourceTree = "<group>"; };
 		8D30EB361F1839F300823521 /* Icon_Wind@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_Wind@3x.png"; sourceTree = "<group>"; };
 		8D30EB3B1F189BAD00823521 /* RSLiveTileInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSLiveTileInterface.h; sourceTree = "<group>"; };
+		8D31ECB81F26AAC400C17E2B /* RDSCreditsListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDSCreditsListController.h; sourceTree = "<group>"; };
+		8D31ECB91F26AAC400C17E2B /* RDSCreditsListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDSCreditsListController.m; sourceTree = "<group>"; };
+		8D31ECBB1F26AAF000C17E2B /* Credits.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Credits.plist; sourceTree = "<group>"; };
+		8D31ECBD1F26ABDA00C17E2B /* RDSCreditsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDSCreditsCell.h; sourceTree = "<group>"; };
+		8D31ECBE1F26ABDA00C17E2B /* RDSCreditsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDSCreditsCell.m; sourceTree = "<group>"; };
 		8D34D12F1EFDC8F700B2D634 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		8D34D13F1EFDD28700B2D634 /* hiddenapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hiddenapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D50573F1F18AA8B00149A90 /* SBUserAgent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBUserAgent.h; sourceTree = "<group>"; };
@@ -2720,6 +2735,10 @@
 				8DD1986F1F12C54A0080F4AD /* RDSRootListController.m */,
 				8DD198681F12C4300080F4AD /* RDSAccentColorList.h */,
 				8DD198691F12C4300080F4AD /* RDSAccentColorList.m */,
+				8D31ECB81F26AAC400C17E2B /* RDSCreditsListController.h */,
+				8D31ECB91F26AAC400C17E2B /* RDSCreditsListController.m */,
+				8D31ECBD1F26ABDA00C17E2B /* RDSCreditsCell.h */,
+				8D31ECBE1F26ABDA00C17E2B /* RDSCreditsCell.m */,
 				8DD198661F12C4300080F4AD /* PFHeaderCell.h */,
 				8DD198671F12C4300080F4AD /* PFHeaderCell.mm */,
 				8DD1985E1F12C40C0080F4AD /* Resources */,
@@ -2732,6 +2751,7 @@
 			children = (
 				8DD1985F1F12C40C0080F4AD /* Info.plist */,
 				8DD1986C1F12C4B10080F4AD /* Root.plist */,
+				8D31ECBB1F26AAF000C17E2B /* Credits.plist */,
 				8DD1987A1F12CC4F0080F4AD /* banner~320w@2x.png */,
 				8DD1987B1F12CC4F0080F4AD /* banner~375w@2x.png */,
 				8DD1987C1F12CC4F0080F4AD /* banner~414w@3x.png */,
@@ -2812,13 +2832,14 @@
 		};
 		8DDC17E11F05845E00C57D6E /* Install */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = do;
+			buildArgumentsString = "do -B";
 			buildConfigurationList = 8DDC17E21F05845E00C57D6E /* Build configuration list for PBXLegacyTarget "Install" */;
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "$(PROJECT_DIR)/$(PROJECT_NAME)";
 			dependencies = (
+				8DA2E1E11F293874000EE23A /* PBXTargetDependency */,
 				8DCFFDD51F175F4F004E3320 /* PBXTargetDependency */,
 			);
 			name = Install;
@@ -2984,6 +3005,7 @@
 				8D56D6491F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D6B91F07988E009E3070 /* tile-132x132@3x.png in Resources */,
 				8DD198811F12CC4F0080F4AD /* banner~375w@2x.png in Resources */,
+				8D31ECBC1F26AAF000C17E2B /* Credits.plist in Resources */,
 				8D56D6B81F07988E009E3070 /* tile-132x132@2x.png in Resources */,
 				8D56D6A21F07988E009E3070 /* tile@3x.png in Resources */,
 				8D56D6AA1F07988E009E3070 /* tile-132x132@3x.png in Resources */,
@@ -3501,6 +3523,7 @@
 			files = (
 				8D13A6F81F1B5ED500E7B5BF /* RSTileNotificationView.m in Sources */,
 				8DB02D991F1D6065004CA50C /* RSAppSwitcherController.m in Sources */,
+				8D31ECBF1F26ABDA00C17E2B /* RDSCreditsCell.m in Sources */,
 				8D5AA3361F0A2D4100DC2073 /* RSAppListController.m in Sources */,
 				8DD1986B1F12C4300080F4AD /* RDSAccentColorList.m in Sources */,
 				8DC97C5D1F038409004A75CB /* RSHomeScreenController.m in Sources */,
@@ -3521,6 +3544,7 @@
 				8D56D36D1F07048B009E3070 /* RSLaunchScreenController.m in Sources */,
 				8DDC17E81F059D8D00C57D6E /* UIView+Easing.m in Sources */,
 				8D56D3761F070915009E3070 /* RSTileInfo.m in Sources */,
+				8D31ECBA1F26AAC400C17E2B /* RDSCreditsListController.m in Sources */,
 				8D56CFCA1F06286A009E3070 /* RSStartScreenScrollView.m in Sources */,
 				8DB02D961F1CAD4D004CA50C /* RSBulletinView.m in Sources */,
 				8DB02D9C1F1DE1F6004CA50C /* RSAppSwitcherContainerView.m in Sources */,
@@ -3565,6 +3589,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8DA2E1E11F293874000EE23A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D61E9A21F18BF4A00514586 /* People */;
+			targetProxy = 8DA2E1E01F293874000EE23A /* PBXContainerItemProxy */;
+		};
 		8DCFFDD51F175F4F004E3320 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8DE8D4381F14BA88003AA2DF /* Weather */;

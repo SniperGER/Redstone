@@ -563,10 +563,20 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	}
 	
 	if (!hidden) {
+		if ([liveTile started]) {
+			return;
+		}
+		[liveTile setStarted:YES];
+		
 		[tileContainer setFrame:CGRectMake(0, -self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 		[liveTile setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
 		[tileContainer setHidden:YES];
 	} else {
+		if (![liveTile started]) {
+			return;
+		}
+		[liveTile setStarted:NO];
+		
 		[tileContainer setHidden:NO];
 		[tileContainer setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
 		[liveTile setFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
@@ -582,6 +592,11 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 		[self setLiveTileHidden:hidden];
 	} else {
 		if (!hidden) {
+			if ([liveTile started]) {
+				return;
+			}
+			[liveTile setStarted:YES];
+			
 			[tileContainer setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
 			[liveTile setFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 			
@@ -598,6 +613,11 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 				[tileContainer setHidden:YES];
 			}];
 		} else {
+			if (![liveTile started]) {
+				return;
+			}
+			[liveTile setStarted:NO];
+			
 			[tileContainer setHidden:NO];
 			[tileContainer setFrame:CGRectMake(0, -self.bounds.size.height, self.bounds.size.width, self.bounds.size.height)];
 			[liveTile setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];

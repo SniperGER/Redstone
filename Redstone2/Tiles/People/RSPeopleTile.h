@@ -9,6 +9,7 @@
 }
 
 @property (nonatomic, strong) RSTile* tile;
+@property (nonatomic, assign) BOOL started;
 
 @end
 
